@@ -79,6 +79,11 @@ class UserManager {
     return isSameDay(this.jwtParsed.iat, Date.now())
   }
 
+  @computed get loggedIn() {
+    // TODO: check token exp for refresh token usage
+    return userModel.loggedIn || this.token
+  }
+
   @action clearUser = (pathname: string = '/') => {
     userModel.logOut()
     this.user = USER_DEFAULTS

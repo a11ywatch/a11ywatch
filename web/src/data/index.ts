@@ -29,3 +29,4 @@ export {
 } from './local'
 
 export { appModel, initAppModel, userModel } from './models'
+export { useAuthedRedirect } from './routing'

@@ -7,9 +7,5 @@ afterAll(async () => {
 });
 
 test("root page renders properly", async () => {
-  try {
-    return await request(app).get("/").expect(ROOT);
-  } catch (e) {
-    console.error(e);
-  }
+  return await request(app).get("/").expect(ROOT);
 });

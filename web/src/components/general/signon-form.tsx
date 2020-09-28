@@ -76,8 +76,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const DASHBOARD_URL = '/dashboard'
-
 interface SignOnProps {
   loginView?: boolean
   home?: boolean
@@ -91,6 +89,7 @@ const SignOnForm: FunctionComponent<SignOnProps> = ({ loginView, home }) => {
   )
   const emailRef = useRef<any>(null)
   const passwordRef = useRef<any>(null)
+  const DASHBOARD_URL = '/dashboard'
 
   useMemo(() => {
     if (data) {
