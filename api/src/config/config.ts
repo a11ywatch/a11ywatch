@@ -24,7 +24,6 @@ const replaceDockerNetwork = (url: string): string => {
 };
 
 export const config = {
-  API_URL: replaceDockerNetwork(process.env.API_URL),
   DEV,
   DB_URL: process.env.DB_URL,
   DB_NAME: process.env.DB_NAME,
@@ -38,7 +37,6 @@ export const config = {
   STRIPE_BASIC_PLAN: process.env.STRIPE_BASIC_PLAN,
   STRIPE_PREMIUM_PLAN: process.env.STRIPE_PREMIUM_PLAN,
   URL_SOURCE: replaceDockerNetwork(process.env.ROOT_URL),
-  CLIENT_URL_ADANET: replaceDockerNetwork(process.env.CLIENT_URL_ADANET),
   DOCKER_ENV: process.env.DOCKER_ENV,
   EMAIL_SERVICE_URL: process.env.EMAIL_SERVICE_URL,
   EMAIL_CLIENT_ID: process.env.EMAIL_CLIENT_ID,

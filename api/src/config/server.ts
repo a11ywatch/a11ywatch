@@ -6,14 +6,16 @@
 
 import { config } from "./config";
 
-const { API_URL, CLIENT_URL, CRAWL_URL, CLIENT_URL_ADANET, DEV } = config;
+const { CLIENT_URL, CRAWL_URL, DEV } = config;
 
 export const whitelist = [
   CLIENT_URL,
   String(CLIENT_URL).replace("http", "https"),
   CRAWL_URL,
-  CLIENT_URL_ADANET,
-  API_URL,
+  // TODO: REMOVE STRINGS - CREATE ENV ARRAY OF WHITELIST MAP
+  "https://a11ywatch.com",
+  "http://www.adafirm.net",
+  "http://www.enableyoursite.com",
 ].filter((url) => url);
 
 if (DEV) {
