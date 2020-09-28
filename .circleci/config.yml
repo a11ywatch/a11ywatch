@@ -1,0 +1,22 @@
+version: 2.1
+jobs:
+  mav:
+    docker:
+      - image: circleci/node:current
+    steps:
+      - checkout
+      - run:
+          command: cd mav && npm install && npm test
+  web:
+    docker:
+      - image: circleci/node:current
+    steps:
+      - checkout
+      - run:
+          command: cd web && npm install && npm test
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - mav
+      - web

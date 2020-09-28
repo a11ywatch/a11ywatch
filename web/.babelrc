@@ -1,0 +1,37 @@
+{
+  "presets": ["next/babel", "@zeit/next-typescript/babel"],
+  "plugins": [
+    [
+      "styled-components",
+      { "ssr": true, "displayName": true, "preprocess": false }
+    ],
+    "@babel/plugin-proposal-export-default-from",
+    "@babel/plugin-proposal-optional-chaining",
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-transform-flow-strip-types",
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    [
+      "babel-plugin-import",
+      {
+        "libraryName": "@material-ui/core",
+        "libraryDirectory": "",
+        "camel2DashComponentName": false
+      },
+      "core"
+    ],
+    [
+      "babel-plugin-import",
+      {
+        "libraryName": "@material-ui/icons",
+        "libraryDirectory": "",
+        "camel2DashComponentName": false
+      },
+      "icons"
+    ]
+  ],
+  "env": {
+    "development": {
+      "compact": false
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "verbose": true,
+  "ignore": [
+    "node_modules/!(is-node)",
+    "node_modules/is-node/node_modules",
+    ".next"
+  ],
+  "watch": ["server"],
+  "ext": "js json ts tsx"
+}

@@ -1,0 +1,4 @@
+types
+!src/types
+dist
+/node_modules

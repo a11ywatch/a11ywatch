@@ -1,0 +1,7 @@
+node_modules
+yarn-error.log
+dist
+Dockerfile
+Dockerfile.dev
+sample.env
+README.md

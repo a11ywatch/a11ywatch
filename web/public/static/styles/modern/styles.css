@@ -1,0 +1,19 @@
+::-webkit-scrollbar {
+  width: 12px;
+  padding-left: 2px;
+  padding-right: 2px;
+  background: #4c61d8;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 2px solid #3f51b5;
+  background: #4b5cc0;
+  border-radius: 4px;
+  max-width: 5px;
+}
+
+.goog-te-banner-frame {
+  bottom: 0;
+  top: unset !important;
+  display: none;
+}

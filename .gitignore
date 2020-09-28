@@ -1,0 +1,38 @@
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env*
+
+# db data
+/dump
+
+/node_modules
+
+# aws cli
+AWSCLIV2.pkg
+ecs-cli.asc
+ecs-params.yml
+ecs.config
+creds_input.yml
+ecs-registry-creds**
+ec2runinst.json
+dockerhub-iam-policy-tasks-role.json
+
+**/etc
+
+#  build
+dist
+.vscode
+docker-builds
+## storybook
+storybook-static
+
+# logs
+yarn-error.log
+npm-debug.log
+

@@ -1,0 +1,25 @@
+version: "3.0"
+services:
+  ui:
+    container_name: ui
+    build:
+      context: ./ui
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./ui/src:/usr/src/app/src
+      - ./ui/.storybook:/usr/src/app/.storybook
+      - ./ui/tsconfig.json:/usr/src/app/tsconfig.json
+      - ./ui/tailwindcss-config.js:/usr/src/app/tailwindcss-config.js
+      - ./ui/theme.js:/usr/src/app/theme.js
+    environment:
+      - NODE_ENV=development
+    networks:
+      - front-net
+    ports:
+      - "6006:6006"
+
+networks:
+  front-net:
+
+volumes:
+  ui:

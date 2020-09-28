@@ -1,0 +1,50 @@
+{
+  "name": "mav",
+  "version": "0.0.1",
+  "private": true,
+  "description": "tensorflow ai get img alts and more",
+  "main": "./dist/server.js",
+  "scripts": {
+    "dev": "nodemon -e js,ts,graphql -r ts-node/register src/server.ts",
+    "test": "jest",
+    "lint": "eslint .",
+    "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",
+    "start": "node dist/server.js"
+  },
+  "engines": {
+    "node": "14.3.0"
+  },
+  "dependencies": {
+    "@tensorflow-models/coco-ssd": "2.0.3",
+    "@tensorflow-models/facemesh": "0.0.3",
+    "@tensorflow-models/mobilenet": "2.0.4",
+    "@tensorflow/tfjs-node-gpu": "1.7.4",
+    "body-parser": "^1.19.0",
+    "canvas": "^2.6.1",
+    "cors": "2.8.0",
+    "date-fns": "2.7.0",
+    "dotenv": "8.2.0",
+    "express": "4.14.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.14",
+    "eslint": "3.8.1",
+    "eslint-config-airbnb": "12.0.0",
+    "eslint-plugin-import": "2.0.1",
+    "eslint-plugin-jsx-a11y": "2.2.2",
+    "eslint-plugin-react": "6.4.1",
+    "jest": "^26.4.2",
+    "nodemon": "1.9.1",
+    "prettier": "^2.0.5",
+    "ts-jest": "^26.4.0",
+    "ts-loader": "6.2.2",
+    "ts-node": "8.8.2",
+    "tsconfig-paths-webpack-plugin": "3.2.0",
+    "tscpaths": "0.0.9",
+    "typescript": "3.8.3",
+    "typescript-eslint": "0.0.1-alpha.0"
+  },
+  "jest": {
+    "preset": "ts-jest"
+  }
+}

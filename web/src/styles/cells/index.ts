@@ -1,0 +1,1 @@
+export { cellStyles } from './cells'

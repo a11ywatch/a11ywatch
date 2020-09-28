@@ -1,0 +1,14 @@
+{
+  "ignoreRoot": [
+    ".git",
+    ".nyc_output",
+    ".sass-cache",
+    "bower-components",
+    "coverage"
+  ],
+  "ignore": [
+    "node_modules/!(is-node)",
+    "node_modules/is-node/node_modules",
+    "src/scripts"
+  ]
+}

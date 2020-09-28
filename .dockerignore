@@ -1,0 +1,12 @@
+node_modules
+npm-debug.log
+storybook-static
+yarn-error.lock
+watcher/target
+ui/dist
+ecs-cli.asc
+AWSCLIV2.pkg
+LICENSE
+dump
+.next
+.vscode

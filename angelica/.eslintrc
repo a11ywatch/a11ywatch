@@ -1,0 +1,61 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["airbnb", "prettier"],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "jsx-a11y",
+    "import",
+    "prettier",
+    "flowtype"
+  ],
+  "settings": {
+    "import/resolver": {
+      "babel-module": {},
+      "node": {
+        "extensions": [".native.js"]
+      }
+    }
+  },
+  "rules": {
+    "jsx-a11y/anchor-is-valid": 0,
+    "jsx-a11y/anchor-has-content": 0,
+    "camelcase": [
+      1,
+      { "allow": ["__webpack_hash__", "__webpack_chunkname__"] }
+    ],
+    "no-unused-expressions": 0,
+    "no-return-assign": 0,
+    "no-param-reassign": 0,
+    "import/prefer-default-export": 0,
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "no-nested-ternary": 1,
+    "no-use-before-define": ["error", { "variables": false }],
+    "no-underscore-dangle": [1, { "allow": ["_id"] }],
+    "react/destructuring-assignment": 1,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/prop-types": [0],
+    "no-empty": 0,
+    "react-hooks/rules-of-hooks": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "es5",
+        "singleQuote": false,
+        "jsxSingleQuote": true,
+        "printWidth": 80,
+        "semi": false
+      }
+    ]
+  },
+  "env": {
+    "jest": true,
+    "es6": true,
+    "browser": true
+  },
+  "globals": {
+    "__DEV__": true,
+    "__webpack_hash__": true,
+    "__webpack_chunkname__": true
+  }
+}

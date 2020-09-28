@@ -1,0 +1,16 @@
+title = "A11yWatch Test website"
+base_url = "https://www.a11ywatchtest.com"
+description = "Test A11yWatch on an example website"
+
+generate_rss = true
+highlight_code = true
+compile_sass = true
+highlight_theme = "base16-ocean-dark"
+
+[link_checker]
+skip_anchor_prefixes = [
+    "https://github.com/",
+]
+
+[extra]
+author = "Jeff Mendez"

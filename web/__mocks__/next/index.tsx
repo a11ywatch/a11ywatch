@@ -1,0 +1,1 @@
+export dynamic from './dynamic'

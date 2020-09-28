@@ -1,0 +1,30 @@
+{
+  "name": "logger",
+  "version": "1.0.0",
+  "description": "loging server for a11ywatch",
+  "main": "./dist/server.js",
+  "author": "Jeffrey Mendez",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",
+    "dev": "nodemon -e js,ts -r ts-node/register src/server.ts",
+    "start": "NODE_ENV=production node dist/server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.0",
+    "cron": "^1.8.2",
+    "express": "4.14.0"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/cors": "^2.8.7",
+    "@types/node": "^14.6.0",
+    "nodemon": "^2.0.3",
+    "prettier": "^2.0.5",
+    "ts-node": "^8.9.1",
+    "tscpaths": "0.0.9",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^3.8.3"
+  }
+}

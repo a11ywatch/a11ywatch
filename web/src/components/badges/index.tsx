@@ -1,0 +1,6 @@
+export { SpectrumBadge } from './spectrum'
+export { GithubBadge } from './github'
+export { TwitterBadge } from './twitter'
+export { FacebookBadge } from './facebook'
+export { LinkedinBadge } from './linkedin'
+export { GoogleIcon } from './google'

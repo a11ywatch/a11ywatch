@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "module": "commonjs",
+    "target": "es6",
+    "lib": ["es5", "es6", "es7", "es2017", "dom"],
+    "sourceMap": true,
+    "allowJs": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "rootDirs": ["src", "stories"],
+    "baseUrl": "src",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "declaration": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true
+  },
+  "include": ["./src"],
+  "exclude": [
+    "node_modules",
+    "build",
+    "scripts",
+    ".storybook",
+    "storybook-static",
+    "config",
+    "**/*.stories.tsx",
+    "__mocks__",
+    "**/*.test.tsx",
+    "**/*.spec.tsx"
+  ]
+}

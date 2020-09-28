@@ -1,0 +1,55 @@
+.row {
+  flex-direction: row;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.alignCenter {
+  justify-content: center;
+  align-items: center;
+}
+
+.hide {
+  visibility: hidden;
+}
+
+.mainButton {
+  min-width: 110px !important;
+  min-height: 35px;
+}
+
+.tipType {
+  padding: 0px !important;
+  flex: 1;
+  border-radius: 0px !important;
+}
+
+.fixes {
+  display: flex;
+  justify-content: center;
+  min-height: 50px;
+  align-items: center;
+  flex: 1;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.reccList {
+  list-style-type: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  overflow: hidden !important;
+  background: white;
+}
+
+.dark {
+  background-color: #484848 !important;
+  color: #fff !important;
+}
+
+.light {
+  color: #484848 !important;
+}

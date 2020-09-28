@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "allowJs": true,
+    "alwaysStrict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "moduleResolution": "node",
+    "noEmit": false,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "esnext",
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["./src/*"],
+      "@app-strings": ["./src/content/strings/a11y"],
+      "@app-theme": ["./src/theme/main/index.ts"],
+      "ui": ["./node_modules/@a11ywatch/ui/main"]
+    }
+  },
+  "exclude": ["node_modules"],
+  "include": ["next-env.d.ts", "./src/**/*.ts", "./src/**/*.tsx"]
+}

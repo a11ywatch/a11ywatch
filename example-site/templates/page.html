@@ -1,0 +1,22 @@
+{% extends "index.html" %}
+
+{% block description %}
+    {{ page.description }}
+{% endblock description %}
+
+{% block content %}
+    <div class="post">
+        <div class="post__title">
+            <h1>{{ page.title | safe }}</h1>
+            <div class="post__meta">
+                {% if page.date %}{{ page.date | date(format="%Y-%m-%d") }}{% endif %}
+                {% if page.extra.updated %}(last updated: {{ page.extra.updated | date(format="%Y-%m-%d") }}){% endif %}
+            </div>
+            <hr />
+        </div>
+
+        <div class="post__body">
+            {{ page.content | safe }}
+        </div>
+    </div>
+{% endblock content %}

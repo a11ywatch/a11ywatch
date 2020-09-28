@@ -1,0 +1,11 @@
+*.pyc
+output/
+cache/
+srv.pid
+pelican.pid
+node_modules/
+npm-debug.log
+.idea/
+site/static/app.css
+public/
+example-site.pem

@@ -1,0 +1,32 @@
+{
+  "name": "cdn-server",
+  "version": "1.0.0",
+  "description": "cdn server for a11ywatch",
+  "main": "./dist/server.js",
+  "author": "Jeffrey Mendez",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",
+    "dev": "nodemon -e js,ts -r ts-node/register src/server.ts",
+    "start": "NODE_ENV=production node dist/server.js"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.666.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.0",
+    "express": "4.14.0",
+    "uglify-js": "^3.7.4"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
+    "@types/cors": "^2.8.7",
+    "@types/node": "^14.6.0",
+    "nodemon": "^2.0.3",
+    "prettier": "^2.0.5",
+    "ts-node": "^8.9.1",
+    "tscpaths": "0.0.9",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^3.8.3"
+  }
+}

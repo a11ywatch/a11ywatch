@@ -1,0 +1,167 @@
+version: "3.0"
+services:
+  api:
+    container_name: api
+    env_file: ./api/.env
+    build:
+      context: ./api
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./api/src:/usr/src/app/src
+    depends_on:
+      - angelica
+      - watcher
+      - cdn-server
+      - mongodb
+    networks:
+      - back-net
+      - front-net
+    ports:
+      - "8080:8080"
+
+  angelica:
+    container_name: angelica
+    env_file: ./angelica/.env
+    build:
+      context: ./angelica
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./angelica/src:/usr/src/app/src
+      - ./angelica/.env:/usr/src/app/.env
+    depends_on:
+      - mav
+      - cdn-server
+    networks:
+      - back-net
+    ports:
+      - "8040:8040"
+
+  mav:
+    container_name: mav
+    env_file: ./mav/.env
+    build:
+      context: ./mav
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./mav/src:/usr/src/app/src
+    networks:
+      - back-net
+    ports:
+      - "8020:8020"
+
+  logger:
+    container_name: logger
+    env_file: ./logger/.env
+    build:
+      context: ./logger
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./logger/src:/usr/src/app/src
+    networks:
+      - back-net
+    ports:
+      - "8022:8022"
+
+  web:
+    container_name: web
+    build:
+      context: ./web
+      dockerfile: ./Dockerfile.dev
+      args:
+        - GITHUB_TOKEN=$GITHUB_TOKEN
+    env_file:
+      - ./web/.env
+    volumes:
+      - ./web/src:/usr/src/app/src
+      - ./web/api:/usr/src/app/api
+      - ./web/public:/usr/src/app/public
+      - ./web/next.config.js:/usr/src/app/next.config.js
+      - ./web/postcss.config.js:/usr/src/app/postcss.config.js
+      - ./web/tsconfig.json:/usr/src/app/tsconfig.json
+      - ./web/domain-map.js:/usr/src/app/domain-map.js
+      - ./web/dynamic-paths.js:/usr/src/app/dynamic-paths.js
+    networks:
+      - front-net
+    ports:
+      - "3000:3000"
+
+  example-site:
+    container_name: example-site
+    env_file: ./example-site/.env
+    build:
+      context: ./example-site
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./example-site/:/usr/src/app/
+    networks:
+      - front-net
+    ports:
+      - "8050:8050"
+
+  cdn-server:
+    env_file: ./cdn-server/.env
+    container_name: cdn-server
+    build:
+      context: ./cdn-server
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./cdn-server/src:/usr/src/app/src
+      - ./cdn-server/package.json:/usr/src/app/package.json
+    networks:
+      - back-net
+      - front-net
+    ports:
+      - "8090:8090"
+
+  iframe-server:
+    env_file: ./iframe-server/.env
+    container_name: iframe-server
+    build:
+      context: ./iframe-server
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./iframe-server/src:/usr/src/app/src
+    networks:
+      - front-net
+    ports:
+      - "8010:8010"
+
+  watcher:
+    container_name: watcher
+    env_file: ./watcher/.env
+    build:
+      context: ./watcher
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./watcher/src:/usr/src/app/src
+    networks:
+      - back-net
+    ports:
+      - "8000:8000"
+
+  mongodb:
+    container_name: mongodb
+    networks:
+      - back-net
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=ada-application-core
+
+networks:
+  front-net:
+  back-net:
+
+volumes:
+  mongodb:
+  api:
+  angelica:
+  watcher:
+  cdn-server:
+  web:
+  iframe-server:
+  logger:
+  example-site:
