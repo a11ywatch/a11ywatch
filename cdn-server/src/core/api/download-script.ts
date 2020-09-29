@@ -5,7 +5,7 @@
  **/
 
 import { join } from "path";
-import { DEV, getFile } from "../../lib";
+import { DEV, getFile } from "../../";
 
 export const downloadScript = (req, res) => {
   const url = `/scripts/${req.params.domain}/${req.params.cdnPath}`;

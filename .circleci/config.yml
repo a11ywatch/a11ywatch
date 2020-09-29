@@ -21,6 +21,13 @@ jobs:
       - checkout
       - run:
           command: cd iframe-server && npm install && npm test
+  cdn-server:
+    docker:
+      - image: circleci/node:current
+    steps:
+      - checkout
+      - run:
+          command: cd cdn-server && npm install && npm test
 workflows:
   version: 2
   build_and_test:
@@ -28,3 +35,4 @@ workflows:
       - mav
       - web
       - iframe-server
+      - cdn-server

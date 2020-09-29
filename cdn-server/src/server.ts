@@ -4,7 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import { app, init } from "./lib";
+import { app, initApp } from "./app";
 import {
   addScript,
   getRoot,
@@ -22,4 +22,14 @@ app
   .get(DOWNLOAD_SCRIPT, downloadScript)
   .post(ADD_SCRIPT, addScript);
 
-init();
+const server = initApp();
+
+export const killServer = () => {
+  return new Promise((resolve) => {
+    server.close(() => {
+      resolve(console.log("HTTP server closed"));
+    });
+  });
+};
+
+export { app as cdnServer };

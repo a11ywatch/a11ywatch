@@ -7,14 +7,19 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import { PORT } from "./config";
+import { PORT, corsOptions } from "./config";
 
 const app = express();
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
-const init = () =>
-  app.listen(PORT, () => console.log(`server listening on port ${PORT}!`));
+function initApp() {
+  const server = app.listen(PORT, function () {
+    console.log(`server listening on port ${this.address().port}!`);
+  });
 
-export { app, init };
+  return server;
+}
+
+export { app, initApp };
