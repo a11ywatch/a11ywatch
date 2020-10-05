@@ -1,5 +1,7 @@
 # A11yWatch
 
+[![A11yWatch](https://circleci.com/gh/A11yWatch/a11ywatch.svg?style=svg)](https://circleci.com/gh/A11yWatch/a11ywatch)
+
 ![A11yWatch](web/public/static/img/favicon.png?raw=true "A11yWatch Logo")
 
 monolith distributed system for accessibility, performance, and other productivity improvements
