@@ -26,23 +26,14 @@ const replaceDockerNetwork = (url: string) => {
 };
 
 const AI_SERVICE_URL = replaceDockerNetwork(process.env.AI_SERVICE_URL);
-const WATCHER_CLIENT_URL = replaceDockerNetwork(process.env.WATCHER_CLIENT_URL);
 const SCRIPTS_CDN_URL_HOST = process.env.SCRIPTS_CDN_URL_HOST;
 const MAIN_API_URL = process.env.MAIN_API_URL;
 
 export const config = {
   DEV,
-  WATCHER_CLIENT_URL,
   AI_SERVICE_URL,
   SCRIPTS_CDN_URL: process.env.SCRIPTS_CDN_URL,
   SCRIPTS_CDN_URL_HOST,
 };
 
-export {
-  DEV,
-  DOCKER_ENV,
-  WATCHER_CLIENT_URL,
-  AI_SERVICE_URL,
-  SCRIPTS_CDN_URL_HOST,
-  MAIN_API_URL,
-};
+export { DEV, DOCKER_ENV, AI_SERVICE_URL, SCRIPTS_CDN_URL_HOST, MAIN_API_URL };

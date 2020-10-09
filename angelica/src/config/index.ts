@@ -9,7 +9,6 @@ export {
   DEV,
   DOCKER_ENV,
   MAIN_API_URL,
-  WATCHER_CLIENT_URL,
   AI_SERVICE_URL,
   SCRIPTS_CDN_URL_HOST,
 } from "./config";
