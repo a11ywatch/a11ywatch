@@ -25,7 +25,7 @@ const CustomWork = [
   'Decline the work due to timing/etc.',
 ]
 
-const bold = { fontWeight: 'bold' }
+const bold = { fontWeight: 800 }
 
 const ComponentName = 'Consulting'
 

@@ -12,13 +12,7 @@ import { strings } from '@app-strings'
 
 import { Link } from './link'
 import { FixedCopyRight } from './fixed-copy-right'
-import {
-  GithubBadge,
-  TwitterBadge,
-  FacebookBadge,
-  LinkedinBadge,
-  SpectrumBadge,
-} from '../badges'
+import { GithubBadge, TwitterBadge, SpectrumBadge } from '../badges'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -113,8 +107,6 @@ const Footer = ({ sticky }: { sticky?: boolean }) => {
               </Typography>
               <ul className={classes.linkContainer}>
                 {[
-                  { icon: LinkedinBadge },
-                  { icon: FacebookBadge },
                   { icon: TwitterBadge },
                   { icon: GithubBadge },
                   { icon: SpectrumBadge },
