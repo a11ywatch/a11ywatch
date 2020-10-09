@@ -63,12 +63,8 @@ export const Routes = [
     nav: false,
     href: 'website-accessibility-checker',
     name: 'Web Accessibility Checker',
+    type: 'explore',
   },
-  // {
-  //   nav: false,
-  //   href: 'https://www.miniprograms.xyz',
-  //   name: 'Mini Programs',
-  // },
   {
     nav: false,
     href: 'web-accessibility',
@@ -96,6 +92,12 @@ export const Routes = [
     nav: true,
     href: 'register',
     name: 'Register',
+  },
+  {
+    nav: false,
+    href: 'https://www.miniprograms.xyz',
+    name: 'Mini Programs',
+    type: 'resources',
   },
 ]
 

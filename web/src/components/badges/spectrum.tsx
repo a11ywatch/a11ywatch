@@ -5,25 +5,51 @@
  **/
 
 import React from 'react'
-import { IconButton, SvgIcon, Tooltip } from '@material-ui/core'
+import { Typography, Tooltip } from '@material-ui/core'
+import { strings } from '@app-strings'
+import { styleSpace } from './style'
 
-export const SpectrumBadge = () => {
-  return (
-    <Tooltip title='Join A11yWatch on Spectrum'>
-      <IconButton
-        component={'a'}
-        href='https://spectrum.chat/a11ywatch'
-        aria-label='A11yWatch on Spectrum'
-        rel='noopener noreferrer'
+export const SpectrumBadge = ({
+  style = styleSpace,
+  href = 'https://spectrum.chat/a11ywatch',
+  inline,
+  size = 'small',
+}: any) => {
+  const title = 'Spectrum'
+  const label = `${strings.appName} on ${title}`
+  const src = `static/img/${title.toLowerCase()}.svg`
+  const height = size === 'small' ? 20 : 36
+  const width = size === 'small' ? 20 : 36
+  const imageStyle = { width, height }
+
+  if (inline) {
+    return (
+      <a
+        href={href}
+        style={!inline ? style : {}}
         target='_blank'
-        style={{ background: 'none' }}
+        aria-label={label}
       >
-        <SvgIcon viewBox='0 0 16 16' fontSize={'small'}>
-          <g>
-            <path d='M0,1.067A1.067,1.067,0,0,1,1.067,0H2A14,14,0,0,1,16,14v.933A1.067,1.067,0,0,1,14.933,16H9.067A1.067,1.067,0,0,1,8,14.933V14A6,6,0,0,0,2,8H1.067A1.067,1.067,0,0,1,0,6.933Z'></path>
-          </g>
-        </SvgIcon>
-      </IconButton>
+        <div style={{ display: 'flex' }}>
+          <img src={src} alt={label} style={imageStyle} />
+          <Typography variant={'subtitle2'} style={{ marginLeft: 12 }}>
+            {title}
+          </Typography>
+        </div>
+      </a>
+    )
+  }
+
+  return (
+    <Tooltip title={label}>
+      <a
+        href={href}
+        style={!inline ? style : {}}
+        target='_blank'
+        aria-label={label}
+      >
+        <img src={src} alt={label} style={imageStyle} />
+      </a>
     </Tooltip>
   )
 }

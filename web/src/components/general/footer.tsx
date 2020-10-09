@@ -17,6 +17,7 @@ import {
   TwitterBadge,
   FacebookBadge,
   LinkedinBadge,
+  SpectrumBadge,
 } from '../badges'
 
 const useStyles = makeStyles((theme) => ({
@@ -112,13 +113,14 @@ const Footer = ({ sticky }: { sticky?: boolean }) => {
               </Typography>
               <ul className={classes.linkContainer}>
                 {[
-                  { icon: <LinkedinBadge inline /> },
-                  { icon: <FacebookBadge inline /> },
-                  { icon: <TwitterBadge inline /> },
-                  { icon: <GithubBadge inline /> },
+                  { icon: LinkedinBadge },
+                  { icon: FacebookBadge },
+                  { icon: TwitterBadge },
+                  { icon: GithubBadge },
+                  { icon: SpectrumBadge },
                 ].map(({ icon }: any, i: number) => (
                   <li className={classes.link} key={i}>
-                    {icon}
+                    {React.createElement(icon, { inline: true })}
                   </li>
                 ))}
               </ul>

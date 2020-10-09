@@ -3,6 +3,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
+
 import React, { useMemo } from 'react'
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -20,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       paddingTop: '18%',
     },
+  },
+  detailedContainer: {
+    paddingTop: '6%',
   },
   title: {
     width: '100%',
@@ -53,7 +57,11 @@ function CtaIntro({ checker }: any) {
   const roll = rollStyles()
 
   return (
-    <section className={classes.root}>
+    <section
+      className={`${classes.root}${
+        checker ? ` ${classes.detailedContainer}` : ''
+      }`}
+    >
       {checker ? (
         <>
           <Typography variant='h2' component={'h1'}>
