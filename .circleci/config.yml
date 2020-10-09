@@ -29,7 +29,6 @@ jobs:
       - run:
           command: cd cdn-server && npm install && npm test
 workflows:
-  version: 2
   build_and_test:
     jobs:
       - mav
