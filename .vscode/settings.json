@@ -1,0 +1,11 @@
+{
+	"graphqlForVSCode.trace.server": "verbose",
+	"editor.formatOnPaste": false,
+	"editor.formatOnType": false,
+	"formattingToggle.affects": [
+		"formatOnSave"
+	],
+	"css.customData": [
+		".vscode/css_custom_data.json"
+	]
+}

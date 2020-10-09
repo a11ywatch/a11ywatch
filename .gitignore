@@ -27,7 +27,6 @@ dockerhub-iam-policy-tasks-role.json
 
 #  build
 dist
-.vscode
 docker-builds
 ## storybook
 storybook-static
