@@ -14,9 +14,6 @@ function parseJwt(token?: string): any {
   }
 
   try {
-    // const base64HeaderUrl = token.split('.')[0]
-    // const base64Header = base64HeaderUrl.replace('-', '+').replace('_', '/')
-    // const headerData = JSON.parse(atob(base64Header))
     const base64Url = token.split('.')[1]
     const base64 = base64Url.replace('-', '+').replace('_', '/')
 

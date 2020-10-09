@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) A11yWatch, LLC. and its affiliates.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ **/
+
 import { makeStyles } from '@material-ui/core/styles'
 
 const rollAnimation = '$roll 10s ease 1s infinite'

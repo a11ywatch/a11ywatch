@@ -14,8 +14,10 @@ const AppConfig = {
 
 const SCRIPTS_CDN_URL_HOST = process.env.SCRIPTS_CDN_URL_HOST
 const INTERCOM_APPID = process.env.INTERCOM_APPID
+const APP_TYPE = process.env.APP_TYPE || 'main' // DYNAMIC DOMAIN GENERATOR
+
+// GOOGLE
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
-const APP_TYPE = process.env.APP_TYPE || 'main'
 const GOOGLE_ANALYTIC_ID = process.env.GOOGLE_ANALYTIC_ID
 
 const API_ENDPOINT =

@@ -4,7 +4,7 @@
 
 ![A11yWatch](web/public/static/img/favicon.png?raw=true "A11yWatch Logo")
 
-monolith distributed system for accessibility, performance, and other productivity improvements
+system for accessibility, performance, and other productivity improvements
 
 ## Docker
 

@@ -22,7 +22,6 @@ export const onLoad = (
       if (typeof setFrameContent === 'function') {
         setFrameContent(setHtmlViewContent)
       }
-      // issue && IframeManager.initIssueFix(issue)
     }
   } catch (e) {
     console.error(e)
