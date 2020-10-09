@@ -17,7 +17,9 @@ const INTERCOM_APPID = process.env.INTERCOM_APPID
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
 const APP_TYPE = process.env.APP_TYPE || 'main'
 const GOOGLE_ANALYTIC_ID = process.env.GOOGLE_ANALYTIC_ID
-const API_ENDPOINT = process.env.API_ENDPOINT || 'http://localhost:8080'
+
+const API_ENDPOINT =
+  String(process.env.API).replace('/graphql', '') || 'http://localhost:8080'
 
 export {
   AppConfig,

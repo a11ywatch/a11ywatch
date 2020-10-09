@@ -34,7 +34,6 @@ const replaceDockerNetwork = (url) => {
 const env = Object.assign({}, parsed, {
   dev,
   APP_TYPE: process.env.APP_TYPE || 'main',
-  API: replaceDockerNetwork(process.env.API),
   WEB_SOCKET_URL: replaceDockerNetwork(process.env.WEB_SOCKET_URL),
   STRIPE_KEY:
     process.env.STRIPE_KEY_PROD && !dev
@@ -47,7 +46,6 @@ const env = Object.assign({}, parsed, {
   INTERCOM_APPID: process.env.INTERCOM_APPID,
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_ANALYTIC_ID: process.env.GOOGLE_ANALYTIC_ID,
-  API_ENDPOINT: process.env.API_ENDPOINT,
   // PREVENT SETTING ENVS
   NODE_ENV: undefined,
   NODE_MODULES_CACHE: undefined,
