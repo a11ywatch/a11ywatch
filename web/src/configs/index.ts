@@ -12,6 +12,7 @@ export {
   APP_TYPE,
   GOOGLE_ANALYTIC_ID,
   API_ENDPOINT,
+  STRIPE_KEY,
 } from './app-config'
 export { Routes, LoggedInRoutes, LOGGIN_ROUTES } from './routes'
 export { features } from './features'

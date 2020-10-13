@@ -9,7 +9,6 @@ const AppConfig = {
   graphQLUrlDocker: process.env.API_URI_DOCKER,
   webSocketUrl: process.env.WEB_SOCKET_URL,
   dev: process.env.NODE_ENV !== 'production',
-  STRIPE_KEY: process.env.STRIPE_KEY,
 }
 
 const SCRIPTS_CDN_URL_HOST = process.env.SCRIPTS_CDN_URL_HOST
@@ -21,7 +20,10 @@ const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
 const GOOGLE_ANALYTIC_ID = process.env.GOOGLE_ANALYTIC_ID
 
 const API_ENDPOINT =
-  String(process.env.API).replace('/graphql', '') || 'http://localhost:8080'
+  String(process.env.API).replace('/graphql', '/api') ||
+  'http://localhost:8080/api'
+
+const STRIPE_KEY = process.env.STRIPE_KEY
 
 export {
   AppConfig,
@@ -31,4 +33,5 @@ export {
   APP_TYPE,
   GOOGLE_ANALYTIC_ID,
   API_ENDPOINT,
+  STRIPE_KEY,
 }

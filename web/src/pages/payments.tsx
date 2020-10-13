@@ -19,7 +19,7 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { getDate } from 'date-fns'
-import { AppConfig as Config } from '@app/configs'
+import { STRIPE_KEY } from '@app/configs'
 import { strings } from '@app-strings'
 import { withApollo } from '@app/apollo'
 import { NavBar, PageTitle, Box } from '@app/components/general'
@@ -165,7 +165,7 @@ function Payments({ hideTitle = false }) {
                 <StripeCheckout
                   token={onToken}
                   name={state.basic ? 'Basic' : 'Premium'}
-                  stripeKey={Config.STRIPE_KEY + ''}
+                  stripeKey={STRIPE_KEY + ''}
                   email={data?.email || ''}
                   // @ts-ignore
                   disabled={Boolean(!state.basic && !state.premium)}

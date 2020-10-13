@@ -13,6 +13,7 @@ export const whitelist = [
   String(CLIENT_URL).replace("http", "https"),
   CRAWL_URL,
   // TODO: REMOVE STRINGS - CREATE ENV ARRAY OF WHITELIST MAP
+  "https://a11bot.herokuapp.com",
   "http://www.adafirm.net",
   "http://www.enableyoursite.com",
 ].filter((url) => url);

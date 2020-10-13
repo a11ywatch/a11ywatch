@@ -73,14 +73,14 @@ function ApiInfo() {
 
   const copyText = (e: any) => {
     e?.preventDefault()
-    const textString = `${API_ENDPOINT}/api/getImage`
+    const textString = `${API_ENDPOINT}/getImage`
     navigator.clipboard.writeText(textString)
     AppManager.toggleSnack(true, `Copied: ${textString}`, 'success')
   }
 
   const copyMav = (e: any) => {
     e?.preventDefault()
-    const textString = `${API_ENDPOINT}/api/website-check?url=www.example.com&jwt=${UserManager?.token}`
+    const textString = `${API_ENDPOINT}/website-check?url=www.example.com&jwt=${UserManager?.token}`
     navigator.clipboard.writeText(textString)
     AppManager.toggleSnack(true, `Copied: ${textString}`, 'success')
   }
@@ -147,7 +147,7 @@ function ApiInfo() {
                   <CopyIcon />
                 </IconButton>
                 <Typography variant='subtitle1' component='p'>
-                  {`${API_ENDPOINT}/api/website-check?url=http://example.com`}
+                  {`${API_ENDPOINT}/website-check?url=http://example.com`}
                 </Typography>
               </div>
               <Typography
@@ -166,7 +166,7 @@ function ApiInfo() {
                   <CopyIcon />
                 </IconButton>
                 <Typography variant='subtitle1' component='p'>
-                  {`${API_ENDPOINT}/api/getImage`}
+                  {`${API_ENDPOINT}/getImage`}
                 </Typography>
               </div>
               <Typography

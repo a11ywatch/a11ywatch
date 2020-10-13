@@ -34,8 +34,8 @@ const replaceDockerNetwork = (url) => {
 const env = Object.assign({}, parsed, {
   dev,
   APP_TYPE: process.env.APP_TYPE || 'main',
-  graphQLUrl: replaceDockerNetwork(process.env.API),
-  graphQLUrlDocker: replaceDockerNetwork(process.env.API_URI_DOCKER),
+  API: replaceDockerNetwork(process.env.API),
+  API_URI_DOCKER: replaceDockerNetwork(process.env.API_URI_DOCKER),
   WEB_SOCKET_URL: replaceDockerNetwork(process.env.WEB_SOCKET_URL),
   STRIPE_KEY:
     process.env.STRIPE_KEY_PROD && !dev
