@@ -8,14 +8,12 @@ import { config } from "./config";
 
 const { CLIENT_URL, CRAWL_URL, DEV } = config;
 
+const apiUrls = String(CLIENT_URL).split(",");
+
 export const whitelist = [
-  CLIENT_URL,
-  String(CLIENT_URL).replace("http", "https"),
+  ...apiUrls,
+  ...apiUrls.map((url) => url.replace("http", "https")),
   CRAWL_URL,
-  // TODO: REMOVE STRINGS - CREATE ENV ARRAY OF WHITELIST MAP
-  "https://a11bot.herokuapp.com",
-  "http://www.adafirm.net",
-  "http://www.enableyoursite.com",
 ].filter((url) => url);
 
 if (DEV) {
