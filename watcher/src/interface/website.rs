@@ -4,6 +4,8 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-pub mod crawl;
-pub mod index;
-pub mod monitor;
+#[derive(Debug, Serialize, Deserialize)]
+pub struct WebPage {
+	pub url: String,
+	pub id: u32,
+}

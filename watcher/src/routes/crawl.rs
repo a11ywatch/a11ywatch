@@ -14,20 +14,9 @@ use spider;
 use rocket_contrib::json::Json;
 use spider::website::Website;
 
+use super::super::interface::page::Page;
+use super::super::interface::website::WebPage;
 use super::monitor::monitor_page;
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct WebPage {
-	url: String,
-	id: u32,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct Page {
-	pages: Vec<String>,
-	user_id: u32,
-	domain: String,
-}
 
 #[post("/crawl", format = "json", data = "<user>")]
 pub fn crawl_page(user: Json<WebPage>) -> String {

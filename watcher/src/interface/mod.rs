@@ -4,6 +4,5 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-pub mod crawl;
-pub mod index;
-pub mod monitor;
+pub mod page;
+pub mod website;

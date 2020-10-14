@@ -18,6 +18,7 @@ extern crate serde_derive;
 extern crate dotenv;
 extern crate serde_json;
 
+mod interface;
 mod routes;
 
 pub fn rocket() -> rocket::Rocket {
