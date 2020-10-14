@@ -8,28 +8,21 @@ import express from "express";
 import http from "http";
 import cors from "cors";
 import { CronJob } from "cron";
-import { ApolloServer } from "apollo-server-express";
 import bodyParser from "body-parser";
 
-import { corsOptions, config, logServerInit, BYPASS_AUTH } from "./config";
+import { corsOptions, config, logServerInit } from "./config";
 
 import { imageDetect } from "./core/external";
 import { getUser } from "./core/utils";
-import { schema } from "./core/schema";
 import {
-  AUTH_ERROR,
+  // AUTH_ERROR,
   TOKEN_EXPIRED_ERROR,
   RATE_EXCEEDED_ERROR,
 } from "./core/strings";
 
 import { SubDomainController } from "./core/controllers/subdomains";
-import { ScriptsController } from "./core/controllers/scripts";
-import { HistoryController } from "./core/controllers/history";
-import { WebsitesController, websiteWatch } from "./core/controllers/websites";
+import { websiteWatch } from "./core/controllers/websites";
 import { UsersController } from "./core/controllers/users";
-import { IssuesController } from "./core/controllers/issues";
-import { FeaturesController } from "./core/controllers/features";
-import { AnalyticsController } from "./core/controllers/analytics";
 import {
   CRAWL_WEBSITE,
   CONFIRM_EMAIL,
@@ -41,50 +34,16 @@ import {
   UNSUBSCRIBE_EMAILS,
 } from "./core/routes";
 import { initDbConnection } from "./database";
+import { Server } from "./apollo-server";
 
-const { GRAPHQL_PORT, DEV } = config;
+const server = new Server();
+
+const { GRAPHQL_PORT } = config;
 const app = express();
 
 app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ type: "application/*+json" }));
-
-// TODO: MOVE APOLLO SERVER FROM THIS FILE
-const server = new ApolloServer({
-  tracing: DEV,
-  schema,
-  subscriptions: {
-    keepAlive: 10000,
-  },
-  context: ({ req, connection }) => {
-    if (connection) {
-      return connection?.context;
-    }
-    const user = getUser(req.headers?.authorization);
-
-    console.log(`OPERATION: ${req.body?.operationName}`);
-
-    if (!user && !BYPASS_AUTH.includes(req.body?.operationName)) {
-      throw new Error(
-        req.headers?.authorization ? TOKEN_EXPIRED_ERROR : AUTH_ERROR
-      );
-    }
-
-    return {
-      user,
-      models: {
-        User: UsersController({ user }),
-        Website: WebsitesController({ user }),
-        Issue: IssuesController({ user }),
-        Features: FeaturesController({ user }),
-        SubDomain: SubDomainController({ user }),
-        History: HistoryController({ user }),
-        Analytics: AnalyticsController({ user }),
-        Scripts: ScriptsController({ user }),
-      },
-    };
-  },
-});
 
 // TODO: MOVE API ROUTES FROM THIS FILE
 app.get(ROOT, (req, res) => {
@@ -324,7 +283,10 @@ server.installSubscriptionHandlers(httpServer);
 
 httpServer.listen(GRAPHQL_PORT, async () => {
   await initDbConnection(null);
-  logServerInit(GRAPHQL_PORT, server);
+  logServerInit(GRAPHQL_PORT, {
+    subscriptionsPath: server.subscriptionsPath,
+    graphqlPath: server.graphqlPath,
+  });
   if (process.env.DYNO === "web.1" || !process.env.DYNO) {
     const job = new CronJob("00 00 00 * * *", websiteWatch);
     job.start();

@@ -34,6 +34,7 @@ export const config = {
   WATCHER_CLIENT_URL: replaceDockerNetwork(process.env.WATCHER_CLIENT_URL),
   CRAWL_URL: replaceDockerNetwork(process.env.CRAWL_URL),
   SCRIPTS_CDN_URL: replaceDockerNetwork(process.env.SCRIPTS_CDN_URL),
+  SUBSCRIPTION_TIMOUT: process.env.SUBSCRIPTION_TIMOUT,
   STRIPE_BASIC_PLAN: process.env.STRIPE_BASIC_PLAN,
   STRIPE_PREMIUM_PLAN: process.env.STRIPE_PREMIUM_PLAN,
   URL_SOURCE: replaceDockerNetwork(process.env.ROOT_URL),
