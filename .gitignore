@@ -6,7 +6,10 @@
 
 # misc
 .DS_Store
-.env*
+
+# env
+**.env
+!.env.example
 
 # db data
 /dump
