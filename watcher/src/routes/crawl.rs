@@ -7,14 +7,14 @@
 use rocket;
 use rocket_contrib;
 // #[macro_use] extern crate dotenv_codegen;
-use dotenv;
-use reqwest;
+
 use serde_json;
 use spider;
 
 use rocket_contrib::json::Json;
 use spider::website::Website;
-use std::collections::HashMap;
+
+use super::monitor::monitor_page;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct WebPage {
@@ -27,22 +27,6 @@ pub struct Page {
 	pages: Vec<String>,
 	user_id: u32,
 	domain: String,
-}
-
-#[tokio::main]
-pub async fn post_website(serialized: String) {
-	let crawl_api_url = dotenv::var("CRAWL_URL").unwrap();
-	let page_url = crawl_api_url.to_string();
-	let mut map = HashMap::new();
-
-	map.insert("data", serialized);
-
-	reqwest::Client::new()
-		.post(&page_url)
-		.form(&map)
-		.send()
-		.await
-		.unwrap();
 }
 
 #[post("/crawl", format = "json", data = "<user>")]
@@ -70,7 +54,7 @@ pub fn crawl_page(user: Json<WebPage>) -> String {
 	};
 	let serialized = serde_json::to_string(&page).unwrap();
 
-	post_website(serialized);
+	monitor_page(serialized);
 
 	format!("Watcher, crawled!")
 }
