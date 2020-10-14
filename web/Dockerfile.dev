@@ -7,9 +7,7 @@ ARG GITHUB_TOKEN
 
 RUN apk add --update bash jq
 
-COPY package*.json .env docker-setup.sh ./
-
-# RUN chmod +x ./docker-setup.sh && ./docker-setup.sh $GITHUB_TOKEN $NODE_ENV
+COPY package*.json .env ./
 
 RUN npm install
 
