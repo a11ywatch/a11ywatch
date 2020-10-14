@@ -13,9 +13,10 @@ Make sure to have [Rust](https://doc.rust-lang.org/book/ch01-01-installation.htm
 
 ### Development
 
-First time setup run `chmod +x ./bootstrap.sh && ./bootstrap.sh` can skip if using docker. If building the `ui` package pass in `-f development-ui` with the inital start command below.
+First time setup run `chmod +x ./bootstrap.sh && ./bootstrap.sh`. If building the `ui` package pass in `-f development-ui` with the inital start command below.
 
-1.  `docker-compose -f development.yml up`
+1. `chmod +x ./bootstrap.sh && ./bootstrap.sh`
+2. `docker-compose -f development.yml up`
 
 ### Services
 
