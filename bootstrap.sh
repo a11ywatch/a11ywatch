@@ -12,7 +12,7 @@ node_build="npm install && npm run build"
 # Install web
 cd web
 ($cpenv && $node_build) &
-cd ..
+cd .. 
 
 # Install api
 cd api
@@ -41,7 +41,7 @@ cd ..
 
 # Install example-site
 cd example-site
-($cpenv && brew install zola && brew upgrade zola) &
+($cpenv && brew install zola) &
 cd ..
 
 # Install iframe-server
