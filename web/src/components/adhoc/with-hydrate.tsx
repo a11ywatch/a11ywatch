@@ -7,7 +7,7 @@
 import { useEffect } from 'react'
 import { userModel } from '@app/data'
 
-// MOVE OUTSIDE THIS FOLDER TO CONTAINER DIR
+// TODO: RENAME to WithAppInit
 export function WithHydrate({ children }: { children?: any }): any {
   useEffect(() => {
     userModel.initModel({

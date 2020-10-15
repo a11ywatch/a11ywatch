@@ -3,7 +3,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
-import React, { useState, useEffect } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import {
   Container,
   Typography,
@@ -64,28 +64,35 @@ const useStyles = makeStyles(() => ({
 function Profile() {
   const classes = useStyles()
   const { data = {}, loading, updateUser, updateUserData } = userData()
-  const [changePassword, setChangePassword] = useState(false)
-  const [currentPassword, setCurrentPassword] = useState('')
-  const [newPassword, setNewPassword] = useState('')
+  const [changePassword, setChangePassword] = useState<boolean>(false)
+  const [currentPassword, setCurrentPassword] = useState<string>('')
+  const [newPassword, setNewPassword] = useState<string>('')
   const { user } = data
 
-  const onChangeCurrent = (event: any) => {
-    setCurrentPassword(event.target.value)
-  }
+  const onChangeCurrent = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setCurrentPassword(e.target.value)
+    },
+    []
+  )
 
-  const onChangeNew = (event: any) => {
-    setNewPassword(event.target.value)
-  }
+  const onChangeNew = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewPassword(e.target.value)
+  }, [])
 
-  const updatePassword = (e: any) => {
-    e?.preventDefault()
+  const updatePassword = useCallback((e: React.FormEvent) => {
+    e.preventDefault()
     updateUser({
       variables: {
         password: currentPassword,
         newPassword,
       },
     })
-  }
+  }, [])
+
+  const togglePassword = useCallback(() => {
+    setChangePassword(!changePassword)
+  }, [])
 
   useEffect(() => {
     if (updateUserData?.updateUser?.success) {
@@ -116,7 +123,7 @@ function Profile() {
               component='p'
               className={classes.email}
             >
-              {user?.email}
+              {user.email}
             </Typography>
           )}
           <Typography variant='subtitle1' component='p'>
@@ -132,7 +139,7 @@ function Profile() {
             >
               {user?.role === 0
                 ? 'Free'
-                : user?.role === 1
+                : user.role === 1
                 ? 'Basic'
                 : 'Premium'}
             </Typography>
@@ -158,7 +165,7 @@ function Profile() {
               <IconButton
                 className={classes.defaultButton}
                 aria-label='Clear update password form'
-                onClick={() => setChangePassword(!changePassword)}
+                onClick={togglePassword}
                 color='inherit'
               >
                 <CloseIcon fontSize='small' />
@@ -181,10 +188,10 @@ function Profile() {
                       onChange={onChangeCurrent}
                       className={classes.input}
                       color='secondary'
-                      // @ts-ignore
-                      minLength='6'
-                      // @ts-ignore
-                      pattern='password'
+                      inputProps={{
+                        minLength: 6,
+                        pattern: 'password',
+                      }}
                       autoComplete='current-password'
                       value={currentPassword}
                       id='current_password'
@@ -196,10 +203,10 @@ function Profile() {
                       onChange={onChangeNew}
                       className={classes.input}
                       color='secondary'
-                      // @ts-ignore
-                      pattern='password'
-                      // @ts-ignore
-                      minLength='6'
+                      inputProps={{
+                        minLength: 6,
+                        pattern: 'password',
+                      }}
                       autoComplete='new-password'
                       value={newPassword}
                       id='new_password'
@@ -231,7 +238,7 @@ function Profile() {
           )}
           {!changePassword ? (
             <Button
-              onClick={() => setChangePassword(!changePassword)}
+              onClick={togglePassword}
               className={classes.submit}
               type='button'
               variant='outlined'

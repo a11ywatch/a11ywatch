@@ -12,13 +12,6 @@ import { strings } from '@app-strings'
 import { withApollo } from '@app/apollo'
 import { WithHydrate } from '@app/components/adhoc'
 
-const center = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  flex: 1,
-}
-
 function WebsiteDetails() {
   const router = useRouter()
   const { websiteUrl } = router.query
@@ -31,7 +24,14 @@ function WebsiteDetails() {
       {websiteUrl ? (
         <AdaIframe url={websiteUrl} issue={issue} />
       ) : (
-        <div style={center}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flex: 1,
+          }}
+        >
           <Pulse />
         </div>
       )}

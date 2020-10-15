@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 function ApiInfo() {
   const classes = useStyles()
   const { data = {}, loading } = userData()
-  const [keyVisible, setKey] = useState(false)
+  const [keyVisible, setKey] = useState<boolean>(false)
   const { user } = data
 
   const copyText = useCallback(

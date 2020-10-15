@@ -5,6 +5,7 @@
  **/
 import React, { useState } from 'react'
 import StripeCheckout from 'react-stripe-checkout'
+import { getDate } from 'date-fns'
 
 import {
   Container,
@@ -17,16 +18,16 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@material-ui/core'
+
 import { makeStyles } from '@material-ui/core/styles'
-import { getDate } from 'date-fns'
+import { WithHydrate } from '@app/components/adhoc'
+import { NavBar, PageTitle, Box } from '@app/components/general'
+import { SimpleListItemSkeleton } from '@app/components/placeholders'
 import { STRIPE_KEY } from '@app/configs'
 import { strings } from '@app-strings'
 import { withApollo } from '@app/apollo'
-import { NavBar, PageTitle, Box } from '@app/components/general'
-import { SimpleListItemSkeleton } from '@app/components/placeholders'
 import { paymentsData } from '@app/data'
 import { getOrdinalSuffix } from '@app/utils'
-import { WithHydrate } from '@app/components/adhoc'
 
 import Pricing from './pricing'
 

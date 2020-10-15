@@ -54,7 +54,7 @@ function Analytics() {
           <Box my={4}>
             <PageTitle title={'All Analytics'} />
             {loading && !dataSource.length ? (
-              <List className={`${classes.center}`}>
+              <List className={classes.center}>
                 <Box key={0} className={`${classes.center} ${classes.box}`}>
                   <Skeleton
                     variant='text'
@@ -78,10 +78,7 @@ function Analytics() {
               <List>
                 {dataSource?.map((source: any, i: number) => {
                   return (
-                    <li
-                      key={`${source.pageUrl} ${i}`}
-                      className={`${classes.flex}`}
-                    >
+                    <li key={`${source.pageUrl} ${i}`} className={classes.flex}>
                       <VictoryChart
                         theme={VictoryTheme.material}
                         domainPadding={{ x: 12 }}

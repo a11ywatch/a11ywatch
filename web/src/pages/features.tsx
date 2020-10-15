@@ -9,15 +9,17 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Footer, Spacer, MarketingDrawer, Box } from '@app/components/general'
 import { strings } from '@app-strings'
 
-const paperStyles = { display: 'flex', flex: 1, padding: 12, margin: 3 }
-
 const useStyles = makeStyles(({ breakpoints, palette, spacing }) => ({
-  paper: Object.assign({}, paperStyles, {
+  paper: {
+    display: 'flex',
+    flex: 1,
+    padding: 12,
+    margin: 3,
     border: `2px solid ${palette.secondary.main}`,
     [breakpoints.down(1100)]: {
       flexDirection: 'column',
     },
-  }),
+  },
   bottomSpace: {
     [breakpoints.down(1100)]: {
       marginBottom: spacing(1),
@@ -42,7 +44,7 @@ const imgStyles = { maxHeight: '30vh', maxWidth: '20vw' }
 
 function Features() {
   const classes = useStyles()
-  const paperStyles = classes.paper
+  const { paper } = classes
 
   return (
     <MarketingDrawer homeMenu={ComponentName.toLowerCase()}>
@@ -55,7 +57,7 @@ function Features() {
             Main Features
           </Typography>
           <div className={classes.row}>
-            <Paper className={paperStyles}>
+            <Paper className={paper}>
               <div
                 style={{ textAlign: 'left', marginRight: 12 }}
                 className={classes.bottomSpace}
@@ -83,7 +85,7 @@ function Features() {
                 alt={'women and accessible app'}
               />
             </Paper>
-            <Paper className={paperStyles}>
+            <Paper className={paper}>
               <img
                 src='static/img/cloud_files.svg'
                 style={imgStyles}
@@ -115,7 +117,7 @@ function Features() {
             </Paper>
           </div>
           <div className={classes.row}>
-            <Paper className={paperStyles}>
+            <Paper className={paper}>
               <img
                 src='static/img/heatmap.svg'
                 style={imgStyles}
@@ -142,7 +144,7 @@ function Features() {
                 </Typography>
               </div>
             </Paper>
-            <Paper className={paperStyles}>
+            <Paper className={paper}>
               <div
                 style={{ textAlign: 'left', marginRight: 12 }}
                 className={classes.bottomSpace}
