@@ -10,9 +10,8 @@ dotenv.config();
 
 export const DEV = process.env.NODE_ENV !== "production";
 
-const proxyDockerUrls = ["mav", "localhost", "angelica", "cdn-server", "api"];
-
 const replaceDockerNetwork = (url: string): string => {
+  const proxyDockerUrls = ["mav", "localhost", "angelica", "cdn-server", "api"];
   if (!DEV && process.env.DOCKER_ENV) {
     const hasIndex = proxyDockerUrls.findIndex((urls) => url.includes(urls));
 
@@ -37,7 +36,7 @@ export const config = {
   SUBSCRIPTION_TIMOUT: process.env.SUBSCRIPTION_TIMOUT,
   STRIPE_BASIC_PLAN: process.env.STRIPE_BASIC_PLAN,
   STRIPE_PREMIUM_PLAN: process.env.STRIPE_PREMIUM_PLAN,
-  URL_SOURCE: process.env.ROOT_URL,
+  ROOT_URL: process.env.ROOT_URL,
   DOCKER_ENV: process.env.DOCKER_ENV,
   EMAIL_SERVICE_URL: process.env.EMAIL_SERVICE_URL,
   EMAIL_CLIENT_ID: process.env.EMAIL_CLIENT_ID,

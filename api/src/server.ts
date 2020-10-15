@@ -4,12 +4,14 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
+import type { Server as HttpServer } from "http";
+import type { AddressInfo } from "net";
 import express from "express";
 import http from "http";
 import cors from "cors";
-import { CronJob } from "cron";
 import bodyParser from "body-parser";
 
+import { CronJob } from "cron";
 import { corsOptions, config, logServerInit } from "./config";
 
 import { websiteWatch } from "./core/controllers/websites";
@@ -63,17 +65,29 @@ app.route(WEBSITE_CHECK).get(websiteCrawlAuthed).post(websiteCrawlAuthed);
 app.route(CONFIRM_EMAIL).get(cors(), confirmEmail).post(cors(), confirmEmail);
 
 server.applyMiddleware({ app, cors: false });
+
 const httpServer = http.createServer(app);
+
 server.installSubscriptionHandlers(httpServer);
 
-httpServer.listen(GRAPHQL_PORT, async () => {
-  await initDbConnection(null);
-  logServerInit(GRAPHQL_PORT, {
+const initServer = async (): Promise<HttpServer> => {
+  await initDbConnection();
+  const listener = await httpServer.listen(GRAPHQL_PORT);
+
+  logServerInit((listener.address() as AddressInfo).port, {
     subscriptionsPath: server.subscriptionsPath,
     graphqlPath: server.graphqlPath,
   });
+
+  // ONLY RUN OFF FIRST NODE TODO: SPLIT WORK IN GROUPS BY DYNO COUNT
   if (process.env.DYNO === "web.1" || !process.env.DYNO) {
-    const job = new CronJob("00 00 00 * * *", websiteWatch);
-    job.start();
+    new CronJob("00 00 00 * * *", websiteWatch).start();
   }
-});
+
+  return listener;
+};
+
+initServer();
+
+export { initServer };
+export default server;

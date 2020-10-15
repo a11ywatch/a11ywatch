@@ -35,7 +35,7 @@ const serverConfig = {
   },
   context: ({ req, connection }) => {
     if (connection) {
-      return connection?.context;
+      return connection.context;
     }
     const user = getUser(req.headers?.authorization);
 

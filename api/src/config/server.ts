@@ -5,7 +5,7 @@
  **/
 import { config } from "./config";
 
-const { CLIENT_URL, CRAWL_URL, DEV } = config;
+const { CLIENT_URL, CRAWL_URL, ROOT_URL, DEV } = config;
 
 const apiUrls = String(CLIENT_URL).split(",");
 
@@ -62,7 +62,7 @@ export const BYPASS_AUTH = [
 
 export const cronTimer = DEV ? "0 1 * * *" : "0 16 * * *";
 
-const source = DEV ? "localhost" : "a11ywatch";
+const source = DEV ? "localhost" : ROOT_URL;
 
 export const logServerInit = (port, { graphqlPath, subscriptionsPath }) => {
   console.log([

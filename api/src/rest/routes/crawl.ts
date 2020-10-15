@@ -4,9 +4,9 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import { UsersController, SubDomainController } from "../../core/controllers";
-import { getUser } from "../../core/utils";
-import { TOKEN_EXPIRED_ERROR, RATE_EXCEEDED_ERROR } from "../../core/strings";
+import { UsersController, SubDomainController } from "@app/core/controllers";
+import { getUser } from "@app/core/utils";
+import { TOKEN_EXPIRED_ERROR, RATE_EXCEEDED_ERROR } from "@app/core/strings";
 
 // RESPONSE FROM WATCHER SERVICE
 const websiteCrawl = async (req, res) => {

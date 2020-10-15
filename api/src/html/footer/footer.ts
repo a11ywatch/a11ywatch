@@ -1,3 +1,5 @@
+import { config } from "@app/config";
+
 interface MarketingFooterParams {
   userId: number;
   domain: string;
@@ -12,7 +14,7 @@ const footer: Footer = {
     userId,
     domain,
   }) => `<footer style="margin-top:30px; padding: 6px;">
-<a href="${process.env.ROOT_URL}/api/unsubscribe-emails?id=${userId}&domain=${domain}" target="_blank" style="font-size:12px">Unsubscribe</a>
+<a href="${config.ROOT_URL}/api/unsubscribe-emails?id=${userId}&domain=${domain}" target="_blank" style="font-size:12px">Unsubscribe</a>
 <div style="margin-top:30px; font-weight: 100; text-align: center;">Powered by A11yWatch, LLC</div>
 </footer>`,
 };

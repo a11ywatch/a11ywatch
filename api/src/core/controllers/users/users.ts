@@ -28,12 +28,7 @@ import { EMAIL_VERIFIED } from "../../static";
 import { CountersController } from "../counters";
 import { WebsitesController } from "../websites";
 
-const {
-  STRIPE_KEY,
-  STRIPE_PREMIUM_PLAN,
-  STRIPE_BASIC_PLAN,
-  URL_SOURCE,
-} = config;
+const { STRIPE_KEY, STRIPE_PREMIUM_PLAN, STRIPE_BASIC_PLAN, ROOT_URL } = config;
 
 const stripe = require("stripe")(STRIPE_KEY);
 
@@ -581,7 +576,7 @@ export const UsersController: UserControllerType = (
 
     if (user) {
       const emailConfirmCode = randomBytes(4).toString("hex");
-      const resetLink = `${URL_SOURCE}/api/confirmEmail?code=${emailConfirmCode}`;
+      const resetLink = `${ROOT_URL}/api/confirmEmail?code=${emailConfirmCode}`;
       const emailExpDate = addMinutes(Date.now(), 30);
       try {
         await transporter.verify();
