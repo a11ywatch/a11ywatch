@@ -4,7 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-const { resolve, join } = require('path')
+const { resolve } = require('path')
 const { parsed } = require('dotenv').config()
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
@@ -31,7 +31,8 @@ const replaceDockerNetwork = (url) => {
   return url
 }
 
-const env = Object.assign({}, parsed, {
+const env = {
+  ...parsed,
   dev,
   APP_TYPE: process.env.APP_TYPE || 'main',
   API: replaceDockerNetwork(process.env.API),
@@ -51,7 +52,7 @@ const env = Object.assign({}, parsed, {
   // PREVENT SETTING ENVS
   NODE_ENV: undefined,
   NODE_MODULES_CACHE: undefined,
-})
+}
 
 module.exports = withPWA({
   pwa: {
@@ -59,23 +60,17 @@ module.exports = withPWA({
     register: true,
   },
   compress: true,
-  generateBuildId: async () => {
-    if (process.env.SOURCE_VERSION) {
-      return `cust-next-build-${process.env.SOURCE_VERSION}`
-    }
-
-    return null
-  },
+  generateBuildId: async () =>
+    process.env.SOURCE_VERSION
+      ? `cust-next-build-${process.env.SOURCE_VERSION}`
+      : null,
   dev,
   env,
   cssModules: true,
   typescriptLoaderOptions: {
     transpileOnly: false,
   },
-  webpack: (
-    config,
-    { buildId, dev: development, isServer, defaultLoaders, webpack }
-  ) => {
+  webpack: (config, { buildId, dev: development, defaultLoaders }) => {
     generateSiteMap(process.env.DOMAIN_NAME)
     const { themeType, stringType } = domainMap(process.env.APP_TYPE)
     const { uiIncludes, uiStylePath, uiComponentPath } = getDynamicPaths({
@@ -105,7 +100,7 @@ module.exports = withPWA({
     )
 
     const rule = config.module.rules
-      .find((rule) => rule.oneOf)
+      .find((rl) => rl.oneOf)
       .oneOf.find(
         (r) => r.issuer && r.issuer.include && r.issuer.include.includes('_app')
       )
@@ -125,12 +120,9 @@ module.exports = withPWA({
         filename: 'static/[name].worker.js',
       })
     )
-    config.resolve.alias = Object.assign({}, config.resolve.alias, {
+    config.resolve.alias = {
+      ...config.resolve.alias,
       ['@app-theme']: resolve(__dirname, `./src/theme/${themeType}`),
-      ['@app-strings']: resolve(
-        __dirname,
-        `./src/content/strings/${stringType}`
-      ),
       ['@app-strings']: resolve(
         __dirname,
         `./src/content/strings/${stringType}`
@@ -138,7 +130,7 @@ module.exports = withPWA({
       ['@app-ui-stylesheet']: uiStylePath,
       ['@app']: resolve(__dirname, './src'),
       ['ui']: uiComponentPath,
-    })
+    }
 
     if (!development) {
       if (!Array.isArray(config.optimization.minimizer)) {

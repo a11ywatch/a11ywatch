@@ -7,7 +7,7 @@ const { resolve } = require('path')
 
 const A11Y_WATCH_PATH = './node_modules/@a11ywatch'
 
-const getDynamicPaths = ({ themeType, dev }) => ({
+const getDynamicPaths = ({ themeType }) => ({
   uiIncludes: [
     resolve(__dirname, `${A11Y_WATCH_PATH}/ui/common`),
     resolve(__dirname, `${A11Y_WATCH_PATH}/ui/${themeType}`),

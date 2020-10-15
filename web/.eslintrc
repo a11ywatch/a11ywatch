@@ -29,6 +29,7 @@
       1,
       { "allow": ["__webpack_hash__", "__webpack_chunkname__"] }
     ],
+   "spaced-comment": 0,
     "no-unused-expressions": 0,
     "no-return-assign": 0,
     "no-param-reassign": 0,
@@ -46,7 +47,7 @@
       "error",
       {
         "trailingComma": "es5",
-        "singleQuote": false,
+        "singleQuote": true,
         "jsxSingleQuote": true,
         "printWidth": 80,
         "semi": false
