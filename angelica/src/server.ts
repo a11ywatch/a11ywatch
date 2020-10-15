@@ -4,76 +4,29 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-const express = require("express");
-const http = require("http");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const {
-  adjustScript,
-  crawlWebsite,
-  editScript,
-} = require("./core/controllers");
-const { detectImageModel } = require("./ai");
-const { corsOptions, logServerInit } = require("./config");
+import type { AddressInfo } from "net";
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import { adjustScript, crawlWebsite, editScript } from "./core/controllers";
+import { detectImageModel } from "./ai";
+import { corsOptions, logServerInit } from "./config";
+import { root } from "./rest/routes";
 
 const app = express();
 
 app.use(cors(corsOptions));
-
-app.get("/", (req, res) => {
-  res.json({
-    server_status: "online",
-  });
-});
-
 app.use(bodyParser.json({ limit: "100mb", extended: true }));
+
+app.get("/", root);
 
 app.post("/api/getPageIssues", async (req, res, next) => {
   try {
-    if (req.body) {
-      const data = await crawlWebsite({
-        url: req.body.url && decodeURIComponent(req.body.url),
-        userId: req.body.userId,
-        pageHeaders: req.body.pageHeaders,
-        authed: req.body.authed,
-      });
-
-      res.send(JSON.stringify(data));
-    } else {
-      next();
-    }
-  } catch (dataIssue) {
-    console.log(`top level: `, dataIssue);
-    next();
-  }
-});
-
-app.post("/api/detectImage", async (req, res, next) => {
-  try {
-    if (req.body) {
-      const data = await detectImageModel({
-        img: req.body.img,
-      });
-
-      res.json(data);
-    } else {
-      next();
-    }
-  } catch (dataIssue) {
-    console.log(`top level: `, dataIssue);
-    next();
-  }
-});
-
-app.post("/api/updateScript", async (req, res, next) => {
-  try {
-    const executeMethod = req.body?.editScript ? editScript : adjustScript;
-
-    const data = await executeMethod({
-      url: req.body?.url && decodeURIComponent(req.body.url),
-      userId: req.body?.userId,
-      script: req.body?.script,
-      newScript: req.body?.newScript,
+    const data = await crawlWebsite({
+      url: decodeURIComponent(req.body.url + ""),
+      userId: req.body.userId,
+      pageHeaders: req.body.pageHeaders,
+      authed: req.body.authed,
     });
 
     res.send(JSON.stringify(data));
@@ -83,8 +36,46 @@ app.post("/api/updateScript", async (req, res, next) => {
   }
 });
 
-const port = process.env.PORT || 0;
+app.post("/api/detectImage", async (req, res, next) => {
+  try {
+    const data = await detectImageModel({
+      img: req.body.img,
+    });
 
-app.listen(port, () => {
-  logServerInit(port);
+    res.json(data);
+  } catch (e) {
+    console.log(`top level: `, e);
+    next();
+  }
 });
+
+app.post("/api/updateScript", async (req, res, next) => {
+  try {
+    const { editScript: edit, url, userId, script, newScript } = req.body;
+    const executeMethod = edit ? editScript : adjustScript;
+
+    const data = await executeMethod(
+      Object.assign(
+        {},
+        {
+          url: decodeURIComponent(url + ""),
+          userId,
+          script,
+          newScript,
+        },
+        edit ? {} : { newScript }
+      )
+    );
+
+    res.send(JSON.stringify(data));
+  } catch (e) {
+    console.log(`top level: `, e);
+    next();
+  }
+});
+
+const coreServer = app.listen(process.env.PORT || 0, () => {
+  logServerInit((coreServer.address() as AddressInfo).port);
+});
+
+export default coreServer;

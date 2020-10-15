@@ -87,7 +87,7 @@ const initServer = async (): Promise<HttpServer> => {
   return listener;
 };
 
-initServer();
+const coreServer = initServer();
 
 export { initServer };
-export default server;
+export default coreServer;
