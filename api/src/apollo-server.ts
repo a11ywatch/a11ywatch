@@ -61,6 +61,6 @@ const serverConfig = {
   },
 };
 
-const Server = ApolloServer.bind(ApolloServer, serverConfig);
+const Server = ApolloServer.bind(null, serverConfig);
 
 export { Server, serverConfig };
