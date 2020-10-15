@@ -14,7 +14,7 @@ import {
 import { Footer, MarketingDrawer, Box } from '@app/components/general'
 import { strings } from '@app-strings'
 
-const LanguageSupport = [
+const Reqs = [
   'Javascript',
   'React',
   'Graphql',
@@ -56,7 +56,7 @@ function Careers() {
             Required Skills:
           </Typography>
           <List>
-            {LanguageSupport.map((item: any) => {
+            {Reqs.map((item: string) => {
               return (
                 <ListItem key={item}>
                   <Typography variant='subtitle2' component='p' gutterBottom>

@@ -54,6 +54,12 @@ export const Routes = [
     type: 'explore',
   },
   {
+    nav: false,
+    href: 'consulting',
+    name: 'Consulting',
+    type: 'resources',
+  },
+  {
     nav: true,
     href: 'https://a11ywatch.blog',
     name: 'Blog',

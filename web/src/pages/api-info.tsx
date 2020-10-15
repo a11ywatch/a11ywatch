@@ -3,7 +3,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { Container, Typography, Button, IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import CopyIcon from '@material-ui/icons/FileCopy'
@@ -71,19 +71,25 @@ function ApiInfo() {
   const [keyVisible, setKey] = useState(false)
   const { user } = data
 
-  const copyText = (e: any) => {
-    e?.preventDefault()
-    const textString = `${API_ENDPOINT}/getImage`
-    navigator.clipboard.writeText(textString)
-    AppManager.toggleSnack(true, `Copied: ${textString}`, 'success')
-  }
+  const copyText = useCallback(
+    (mav: boolean) => (
+      e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ): void => {
+      e.preventDefault()
+      const textString = `${API_ENDPOINT}/${
+        !mav
+          ? `website-check?url=www.example.com&jwt=${UserManager?.token}`
+          : 'getImage'
+      }`
+      navigator.clipboard.writeText(textString)
+      AppManager.toggleSnack(true, `Copied: ${textString}`, 'success')
+    },
+    []
+  )
 
-  const copyMav = (e: any) => {
-    e?.preventDefault()
-    const textString = `${API_ENDPOINT}/website-check?url=www.example.com&jwt=${UserManager?.token}`
-    navigator.clipboard.writeText(textString)
-    AppManager.toggleSnack(true, `Copied: ${textString}`, 'success')
-  }
+  const toggleKey = useCallback(() => {
+    setKey(!keyVisible)
+  }, [])
 
   return (
     <>
@@ -92,7 +98,7 @@ function ApiInfo() {
         <Box>
           <PageTitle title={`API`} />
           <Typography variant='subtitle1' component='p'>
-            Add authorization header with the jwt format 'Bearer $TOKEN'
+            Add authorization header with the jwt format <i>Bearer TOKEN</i>
           </Typography>
           {!data?.user && loading ? (
             <TextSkeleton className={classes.email} />
@@ -101,9 +107,7 @@ function ApiInfo() {
               <Button
                 className={classes.payments}
                 type='button'
-                onClick={() => {
-                  setKey(!keyVisible)
-                }}
+                onClick={toggleKey}
                 variant='outlined'
               >
                 {keyVisible ? 'HIDE TOKEN' : 'VIEW TOKEN'}
@@ -128,8 +132,8 @@ function ApiInfo() {
               component='p'
               className={classes.email}
             >
-              {user?.apiUsage?.usage || 0}/
-              {user?.role === 0 ? 3 : user?.role === 1 ? 25 : 100}
+              {user.apiUsage?.usage || 0}/
+              {user.role === 0 ? 3 : user.role === 1 ? 25 : 100}
             </Typography>
           )}
           <Typography variant='subtitle1' component='p'>
@@ -143,7 +147,10 @@ function ApiInfo() {
                 Page Issues : GET/POST
               </Typography>
               <div className={classes.row}>
-                <IconButton style={{ marginRight: 12 }} onClick={copyText}>
+                <IconButton
+                  style={{ marginRight: 12 }}
+                  onClick={copyText(false)}
+                >
                   <CopyIcon />
                 </IconButton>
                 <Typography variant='subtitle1' component='p'>
@@ -157,12 +164,16 @@ function ApiInfo() {
                 className={classes.bold}
               >
                 {`Params: { url: String }`}
+                {` Body: { url: String }`}
               </Typography>
               <Typography variant='subtitle2' component='p'>
-                Image Name : POST - body only
+                Image Name : POST
               </Typography>
               <div className={classes.row}>
-                <IconButton style={{ marginRight: 12 }} onClick={copyMav}>
+                <IconButton
+                  style={{ marginRight: 12 }}
+                  onClick={copyText(true)}
+                >
                   <CopyIcon />
                 </IconButton>
                 <Typography variant='subtitle1' component='p'>
@@ -175,7 +186,7 @@ function ApiInfo() {
                 gutterBottom
                 className={classes.bold}
               >
-                {`Params: { imageBase64: Base64 }`}
+                {`Body: { imageBase64: Base64 }`}
               </Typography>
             </>
           )}
