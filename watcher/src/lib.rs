@@ -16,7 +16,9 @@ extern crate spider;
 #[macro_use]
 extern crate serde_derive;
 extern crate dotenv;
+extern crate num_cpus;
 extern crate serde_json;
+extern crate sysinfo;
 
 mod interface;
 mod routes;
@@ -24,6 +26,11 @@ mod routes;
 pub fn rocket() -> rocket::Rocket {
 	rocket::ignite().mount(
 		"/",
-		routes![routes::index::landing, routes::crawl::crawl_page],
+		routes![
+			routes::index::landing,
+			routes::status::get_cpu,
+			routes::status::get_server_load,
+			routes::crawl::crawl_page
+		],
 	)
 }

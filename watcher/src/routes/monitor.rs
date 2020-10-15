@@ -10,19 +10,6 @@ use reqwest;
 
 use std::collections::HashMap;
 
-#[derive(Debug, Serialize, Deserialize)]
-pub struct WebPage {
-	url: String,
-	id: u32,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct Page {
-	pages: Vec<String>,
-	user_id: u32,
-	domain: String,
-}
-
 #[tokio::main]
 pub async fn monitor_page(serialized: String) {
 	let crawl_api_url = dotenv::var("CRAWL_URL").unwrap();
