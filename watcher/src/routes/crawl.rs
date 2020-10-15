@@ -25,25 +25,27 @@ pub fn crawl_page(user: Json<WebPage>) -> String {
 	//     crawl_api_url = dotenv!("CRAWL_URL").to_string();
 	// }
 	let domain = String::from(&user.url);
+	let domain_clone = domain.clone();
 	let mut website: Website = Website::new(&domain);
-	let mut vector: Vec<String> = Vec::new();
+	let mut pages: Vec<String> = Vec::new();
 
 	website.configuration.respect_robots_txt = true;
 	website.configuration.verbose = true;
 	website.crawl();
 
 	for page in website.get_pages() {
-		vector.push(page.get_url().to_string());
+		pages.push(page.get_url().to_string());
 	}
 
-	let page = Page {
-		pages: vector,
+	let web_site = Page {
+		pages,
 		user_id: user.id,
-		domain: domain,
+		domain,
 	};
-	let serialized = serde_json::to_string(&page).unwrap();
+
+	let serialized = serde_json::to_string(&web_site).unwrap();
 
 	monitor_page(serialized);
 
-	format!("Watcher, crawled!")
+	format!("crawled {}", domain_clone)
 }
