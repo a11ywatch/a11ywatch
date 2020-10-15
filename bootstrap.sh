@@ -2,7 +2,7 @@
 
 set -e
 
-echo "Project being boostraped"
+echo "Project being bootstraped"
 
 cpenv="cp .env.example.txt .env"
 node_build="npm install && npm run build"
