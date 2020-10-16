@@ -6,13 +6,13 @@
 
 import { fork } from "child_process";
 import validUrl from "valid-url";
+import getPageSpeed from "get-page-speed";
 import { format } from "prettier";
 
 import {
   puppetPool,
   checkCdn,
   grabHtmlSource,
-  getPageSpeed,
   initUrl,
   scriptBuild,
   sourceBuild,

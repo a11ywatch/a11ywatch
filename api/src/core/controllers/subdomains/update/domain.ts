@@ -4,8 +4,9 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
+import getPageSpeed from "get-page-speed";
 import { SUCCESS, WEBSITE_NOT_FOUND } from "@app/core/strings";
-import { arrayAverage, getPageSpeed } from "@app/core/utils";
+import { arrayAverage } from "@app/core/utils";
 import { WebsitesController } from "../../websites";
 import { getDomain, getDomains } from "../find";
 

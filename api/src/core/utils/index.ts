@@ -12,7 +12,6 @@ export { websiteSearchParams } from "./controller-filter";
 export { getPageUrl } from "./get-page-url";
 export { stringFormater } from "./string-formater";
 export { arrayAverage } from "./calculations";
-export { getPageSpeed } from "./analytics";
 export { initUrl } from "./init-url";
 export { sourceBuild } from "./source-build";
 export { realUser } from "./getters";

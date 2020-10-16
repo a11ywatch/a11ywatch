@@ -22,6 +22,5 @@ export {
   launchPuppeter,
   skipContentCheck,
 } from "./pupet";
-export { getPageSpeed } from "./analytics";
 export { initUrl } from "./init-url";
 export { sourceBuild } from "./source-build";
