@@ -26,7 +26,6 @@ function MarketingMenu({ home = '' }: Props) {
             button
             divider={index === 1}
             component={Link}
-            // @ts-ignore
             className={classes.drawerItem}
             href={home === `${href}` ? '/' : href}
             color={'inherit'}

@@ -29,11 +29,9 @@ const linkStyle = {
 
 const bold = { fontWeight: 600 }
 
-const ComponentName = 'WebAccessibility'
-
 function WebAccessibility() {
   return (
-    <MarketingDrawer homeMenu={ComponentName.toLowerCase()}>
+    <MarketingDrawer title={WebAccessibility.name}>
       <Container maxWidth='xl'>
         <Box>
           <Typography variant='h2' component='h1'>

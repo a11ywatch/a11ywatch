@@ -28,9 +28,9 @@ import {
   useEvents,
 } from '@app/data'
 import { filterSort } from '@app/lib'
-import { strings } from '@app-strings'
 import { withApollo } from '@app/apollo'
 import { WithHydrate } from '@app/components/adhoc'
+import { metaSetter } from '@app/utils'
 
 const noSSR = {
   ssr: false,
@@ -194,8 +194,6 @@ function Dashboard() {
   )
 }
 
-Dashboard.meta = {
-  title: `${strings.appName} - Dashboard`,
-}
+metaSetter(Dashboard)
 
 export default withApollo(Dashboard)

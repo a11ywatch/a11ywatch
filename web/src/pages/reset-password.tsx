@@ -123,7 +123,7 @@ function ResetPassword() {
   }
 
   return (
-    <MarketingDrawer title='Reset Password' homeMenu={'Reset-Password'}>
+    <MarketingDrawer title={ResetPassword.name}>
       <Container maxWidth='xl' className={classes.root}>
         <Typography
           variant='h2'

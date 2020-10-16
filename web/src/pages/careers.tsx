@@ -12,7 +12,7 @@ import {
   ListItem,
 } from '@material-ui/core'
 import { Footer, MarketingDrawer, Box } from '@app/components/general'
-import { strings } from '@app-strings'
+import { metaSetter } from '@app/utils'
 
 const Reqs = [
   'Javascript',
@@ -25,11 +25,9 @@ const Reqs = [
   'BS in Technology or Related Field - nice to have but not needed',
 ]
 
-const ComponentName = 'Careers'
-
 function Careers() {
   return (
-    <MarketingDrawer homeMenu={ComponentName.toLowerCase()}>
+    <MarketingDrawer title={Careers.name}>
       <Container maxWidth='xl'>
         <Box>
           <Typography variant='h2' component='h1' gutterBottom>
@@ -93,8 +91,6 @@ function Careers() {
   )
 }
 
-Careers.meta = {
-  title: `Careers at ${strings.appName}`,
-}
+metaSetter(Careers)
 
 export default Careers

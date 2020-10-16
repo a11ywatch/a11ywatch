@@ -27,14 +27,9 @@ const CustomWork = [
 
 const bold = { fontWeight: 800 }
 
-const ComponentName = 'Consulting'
-
 function Consulting() {
   return (
-    <MarketingDrawer
-      style={{ paddingBottom: 100 }}
-      homeMenu={ComponentName.toLowerCase()}
-    >
+    <MarketingDrawer style={{ paddingBottom: 100 }} title={Consulting.name}>
       <Container maxWidth='xl'>
         <Box>
           <Typography variant='h2' component='h1' style={bold}>
@@ -102,8 +97,6 @@ function Consulting() {
     </MarketingDrawer>
   )
 }
-
-Consulting.displayName = ComponentName
 
 Consulting.meta = {
   title: `Web accessibility consulting - ${strings.appName}`,

@@ -19,7 +19,7 @@ import { withApollo } from '@app/apollo'
 function WebsiteAccessibilityChecker() {
   return (
     <>
-      <MarketingDrawer homeMenu={'website-accessibility-checker'}>
+      <MarketingDrawer title={WebsiteAccessibilityChecker.name}>
         <Container maxWidth='xl'>
           <CtaProfessionalSupportButton />
           <CtaIntro checker />

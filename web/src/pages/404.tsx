@@ -10,7 +10,7 @@ import { strings } from '@app-strings'
 
 function PageNotFound() {
   return (
-    <MarketingDrawer homeMenu={'pagenotfound'}>
+    <MarketingDrawer title={PageNotFound.name}>
       <Container>
         <Box>
           <Typography variant='h1' component='h1' gutterBottom>

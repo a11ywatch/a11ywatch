@@ -24,10 +24,9 @@ import { WithHydrate } from '@app/components/adhoc'
 import { NavBar, PageTitle, Box } from '@app/components/general'
 import { SimpleListItemSkeleton } from '@app/components/placeholders'
 import { STRIPE_KEY } from '@app/configs'
-import { strings } from '@app-strings'
 import { withApollo } from '@app/apollo'
 import { paymentsData } from '@app/data'
-import { getOrdinalSuffix } from '@app/utils'
+import { getOrdinalSuffix, metaSetter } from '@app/utils'
 
 import Pricing from './pricing'
 
@@ -107,10 +106,10 @@ function Payments({ hideTitle = false }) {
 
   return (
     <WithHydrate>
-      <NavBar title={'Payments'} backButton notitle />
+      <NavBar title={Payments.name} backButton notitle />
       <Container maxWidth='xl'>
         <Box>
-          {hideTitle ? null : <PageTitle>Payments</PageTitle>}
+          {hideTitle ? null : <PageTitle>{Payments.name}</PageTitle>}
           {loading && !data ? (
             <>
               <Typography variant='subtitle1' component='p'>
@@ -219,8 +218,6 @@ function Payments({ hideTitle = false }) {
   )
 }
 
-Payments.meta = {
-  title: `${strings.appName} - Payments`,
-}
+metaSetter(Payments)
 
 export default withApollo(Payments)

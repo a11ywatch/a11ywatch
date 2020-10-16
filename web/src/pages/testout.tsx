@@ -13,7 +13,7 @@ import { withApollo } from '@app/apollo'
 function TestOut() {
   return (
     <>
-      <MarketingDrawer initClosed={true} renderCtaSearch homeMenu={'testout'}>
+      <MarketingDrawer initClosed={true} renderCtaSearch title={TestOut.name}>
         <TestView marketing />
       </MarketingDrawer>
       <SwipeableTemporaryDrawer />

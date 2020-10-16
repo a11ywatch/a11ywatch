@@ -12,8 +12,8 @@ import { NavBar, PageTitle, Box } from '@app/components/general'
 import { TextSkeleton } from '@app/components/placeholders'
 import { AppManager, UserManager } from '@app/managers'
 import { userData } from '@app/data'
-import { strings } from '@app-strings'
 import { withApollo } from '@app/apollo'
+import { metaSetter } from '@app/utils'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -196,8 +196,6 @@ function ApiInfo() {
   )
 }
 
-ApiInfo.meta = {
-  title: `${strings.appName} - API`,
-}
+metaSetter(ApiInfo)
 
 export default withApollo(ApiInfo)

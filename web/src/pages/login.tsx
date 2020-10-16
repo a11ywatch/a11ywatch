@@ -12,14 +12,12 @@ import {
   MarketingDrawer,
   SignOnForm,
 } from '@app/components/general'
-import { strings } from '@app-strings'
 import { withApollo } from '@app/apollo'
-
-const ComponentName = 'Login'
+import { metaSetter } from '@app/utils'
 
 function Login() {
   return (
-    <MarketingDrawer homeMenu={ComponentName.toLowerCase()}>
+    <MarketingDrawer title={Login.name}>
       <Container maxWidth='sm'>
         <Box>
           <SignOnForm loginView />
@@ -31,8 +29,6 @@ function Login() {
   )
 }
 
-Login.meta = {
-  title: `${strings.appName} - ${ComponentName}`,
-}
+metaSetter(Login)
 
 export default withApollo(Login)

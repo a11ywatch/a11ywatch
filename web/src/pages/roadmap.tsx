@@ -10,6 +10,7 @@ import { Footer, Spacer, MarketingDrawer, Box } from '@app/components/general'
 import { strings } from '@app-strings'
 import { theme } from '@app-theme'
 import { Shape } from 'ui'
+import { metaSetter } from '@app/utils'
 
 const paperStyles = { display: 'flex', flex: 1, padding: 12, marginTop: 12 }
 
@@ -37,18 +38,16 @@ const useStyles = makeStyles((t) => ({
   },
 }))
 
-const ComponentName = 'Roadmap'
-
 function RoadMap() {
   const classes = useStyles()
   const paperStyles = classes.paper
 
   return (
-    <MarketingDrawer homeMenu={ComponentName.toLowerCase()}>
+    <MarketingDrawer title={RoadMap.name}>
       <Container maxWidth='xl'>
         <Box>
           <Typography variant='h2' component='h1'>
-            {`${strings.appName} Tecnical Roadmap`}
+            {`${strings.appName} Technical Roadmap`}
           </Typography>
           <Typography variant='subtitle1' component='h2' gutterBottom>
             Outline
@@ -225,8 +224,6 @@ function RoadMap() {
   )
 }
 
-RoadMap.meta = {
-  title: `${strings.appName} - ${ComponentName}`,
-}
+metaSetter(RoadMap)
 
 export default RoadMap

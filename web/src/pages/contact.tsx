@@ -7,6 +7,7 @@ import React from 'react'
 import { Container, Typography, Box } from '@material-ui/core'
 import { Footer, Spacer, MarketingDrawer } from '@app/components/general'
 import { strings } from '@app-strings'
+import { metaSetter } from '@app/utils'
 
 const center = {
   display: 'flex',
@@ -27,7 +28,7 @@ const circleStyle = Object.assign(
 
 function Contact() {
   return (
-    <MarketingDrawer homeMenu={'contact'}>
+    <MarketingDrawer title={Contact.name}>
       <Container maxWidth='xl'>
         <Box my={4}>
           <Typography variant='h2' component='h1' gutterBottom>
@@ -96,8 +97,6 @@ function Contact() {
   )
 }
 
-Contact.meta = {
-  title: `${strings.appName} - Contact us`,
-}
+metaSetter(Contact)
 
 export default Contact

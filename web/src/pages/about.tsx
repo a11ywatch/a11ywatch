@@ -13,7 +13,7 @@ const bold = { fontWeight: 600 }
 
 function About() {
   return (
-    <MarketingDrawer homeMenu={'about'}>
+    <MarketingDrawer title={About.name}>
       <Container maxWidth='xl'>
         <Box>
           <Typography variant='h2' component='h1' gutterBottom>

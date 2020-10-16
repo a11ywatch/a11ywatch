@@ -8,6 +8,7 @@ import { Container, Paper, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Footer, Spacer, MarketingDrawer, Box } from '@app/components/general'
 import { strings } from '@app-strings'
+import { metaSetter } from '@app/utils'
 
 const useStyles = makeStyles(({ breakpoints, palette, spacing }) => ({
   paper: {
@@ -38,8 +39,6 @@ const useStyles = makeStyles(({ breakpoints, palette, spacing }) => ({
   },
 }))
 
-const ComponentName = 'Features'
-
 const imgStyles = { maxHeight: '30vh', maxWidth: '20vw' }
 
 function Features() {
@@ -47,7 +46,7 @@ function Features() {
   const { paper } = classes
 
   return (
-    <MarketingDrawer homeMenu={ComponentName.toLowerCase()}>
+    <MarketingDrawer title={Features.name}>
       <Container maxWidth='xl'>
         <Box>
           <Typography variant='h2' component='h1'>
@@ -180,8 +179,6 @@ function Features() {
   )
 }
 
-Features.meta = {
-  title: `${strings.appName} - ${ComponentName}`,
-}
+metaSetter(Features)
 
 export default Features

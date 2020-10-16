@@ -10,11 +10,9 @@ import { strings } from '@app-strings'
 
 const bold = { fontWeight: 600 }
 
-const ComponentName = 'Terms-Of-Service'
-
 function TermsOfService() {
   return (
-    <MarketingDrawer homeMenu={ComponentName.toLowerCase()}>
+    <MarketingDrawer title={TermsOfService.name}>
       <Container maxWidth='xl'>
         <Box>
           <Typography variant='h2' component='h1' gutterBottom>

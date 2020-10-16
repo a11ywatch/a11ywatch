@@ -12,15 +12,12 @@ import {
   SignOnForm,
   MarketingDrawer,
 } from '@app/components/general'
-import { strings } from '@app-strings'
 import { withApollo } from '@app/apollo'
+import { metaSetter } from '@app/utils'
 
 function Register() {
   return (
-    <MarketingDrawer
-      title={Register.name}
-      homeMenu={Register.name.toLowerCase()}
-    >
+    <MarketingDrawer title={Register.name}>
       <Container maxWidth='sm'>
         <Box>
           <SignOnForm />
@@ -32,8 +29,6 @@ function Register() {
   )
 }
 
-Register.meta = {
-  title: `${strings.appName} - ${Register.name}`,
-}
+metaSetter(Register)
 
 export default withApollo(Register)

@@ -16,7 +16,7 @@ export function MarketingDrawer({
   children,
   initClosed,
   renderCtaSearch,
-  homeMenu,
+  title,
   navPosition,
 }: any) {
   const classes = navigationStyles()
@@ -29,7 +29,7 @@ export function MarketingDrawer({
         className={classes.appBar}
         marketingLinks={
           <MarketingNavMenu
-            home={homeMenu}
+            home={String(title).toLowerCase()}
             className={classes.horizontal}
             registerClassName={classes.register}
             classHiddenMobile={classes.classHiddenMobile}

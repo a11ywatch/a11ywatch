@@ -16,10 +16,10 @@ import {
   Spacer,
   Price,
 } from '@app/components/general'
-import { strings } from '@app-strings'
 
 import { priceConfig } from '@app/configs'
 import { withApollo } from '@app/apollo'
+import { metaSetter } from '@app/utils'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -50,8 +50,6 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-const ComponentName = 'Pricing'
-
 function Pricing({
   priceOnly = false,
   basic = false,
@@ -72,7 +70,7 @@ function Pricing({
   }
   // TODO: ADD LOGIN BUTTON
   return (
-    <MarketingDrawer homeMenu={ComponentName.toLowerCase()}>
+    <MarketingDrawer title={Pricing.name}>
       <Container maxWidth='xl'>
         <Box>
           <Typography variant='h2' component='h1' gutterBottom>
@@ -124,8 +122,6 @@ function Pricing({
   )
 }
 
-Pricing.meta = {
-  title: `${strings.appName} - ${ComponentName}`,
-}
+metaSetter(Pricing)
 
 export default withApollo(Pricing)
