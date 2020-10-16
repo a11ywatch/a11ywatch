@@ -15,13 +15,11 @@ import {
 import { strings } from '@app-strings'
 import { withApollo } from '@app/apollo'
 
-const ComponentName = 'Register'
-
 function Register() {
   return (
     <MarketingDrawer
-      title={ComponentName}
-      homeMenu={ComponentName.toLowerCase()}
+      title={Register.name}
+      homeMenu={Register.name.toLowerCase()}
     >
       <Container maxWidth='sm'>
         <Box>
@@ -35,7 +33,7 @@ function Register() {
 }
 
 Register.meta = {
-  title: `${strings.appName} - ${ComponentName}`,
+  title: `${strings.appName} - ${Register.name}`,
 }
 
 export default withApollo(Register)
