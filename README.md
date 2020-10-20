@@ -9,13 +9,13 @@ system for accessibility, performance, and other productivity improvements
 ## Docker
 
 The simplest way to get started is to use docker also make sure to configue app secrets before starting.
-Make sure to have [Rust](https://doc.rust-lang.org/book/ch01-01-installation.html) installed since the Watcher service requires it. In development if using docker-compose MONGODB is used on port `27017`
+In development if using docker-compose MONGODB is used on port `27017`
 
 ### Development
 
-First time setup run `chmod +x ./bootstrap.sh && ./bootstrap.sh`. If building the `ui` package pass in `-f development-ui` with the inital start command below.
+First time setup run `./bootstrap.sh`. If building the `ui` package pass in `-f development-ui` with the inital start command below.
 
-1. `chmod +x ./bootstrap.sh && ./bootstrap.sh`
+1. `./bootstrap.sh`
 2. `docker-compose -f development.yml up`
 
 ### Services
