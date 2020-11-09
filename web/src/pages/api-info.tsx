@@ -89,7 +89,7 @@ function ApiInfo() {
 
   const toggleKey = useCallback(() => {
     setKey(!keyVisible)
-  }, [])
+  }, [keyVisible])
 
   return (
     <>
