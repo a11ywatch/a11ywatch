@@ -53,12 +53,12 @@ export const Routes = [
     name: 'API',
     type: 'explore',
   },
-  {
-    nav: false,
-    href: 'consulting',
-    name: 'Consulting',
-    type: 'resources',
-  },
+  // {
+  //   nav: false,
+  //   href: 'consulting',
+  //   name: 'Consulting',
+  //   type: 'resources',
+  // },
   {
     nav: true,
     href: 'https://a11ywatch.blog',
