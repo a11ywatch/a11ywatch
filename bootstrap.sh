@@ -5,58 +5,39 @@ set -e
 echo "Project being bootstraped"
 
 cpenv="cp .env.example.txt .env"
-node_build="npm install && npm run build"
+node_build="npm run build"
+node_install="npm install"
 
-($cpenv) &
+$cpenv
 
 # Install web
-cd web
-($cpenv && $node_build) &
-cd .. 
+(cd web && $cpenv && $node_install && cd ..)
 
 # Install api
-cd api
-($cpenv && $node_build) &
-cd ..
+(cd api && $cpenv && $node_install && cd ..)
 
 # Install angelica
-cd angelica
-($cpenv && $node_build) &
-cd ..
+(cd angelica && $cpenv && $node_install && cd ..)
 
 # Install cdn-server
-cd cdn-server
-($cpenv && $node_build) &
-cd ..
+(cd cdn-server && $cpenv && $node_install && cd ..)
 
 # Install mav
-cd mav
-($cpenv && $node_build) &
-cd ..
-
-# Install ui
-cd ui
-($node_build) &
-cd ..
+(cd mav && $cpenv && $node_install && cd ..)
 
 # Install example-site
-cd example-site
-($cpenv && brew install zola) &
-cd ..
+(cd example-site && $cpenv && $node_install && cd ..)
 
 # Install iframe-server
-cd iframe-server
-($cpenv && $node_build) &
-cd ..
+(cd iframe-server && $cpenv && $node_install && cd ..)
 
 # Install logger
-cd logger
-($cpenv && $node_build) &
-cd ..
+(cd logger && $cpenv && $node_install && cd ..)
+
+# Install ui
+(cd ui && $node_install && cd ..)
 
 # Install watcher and make sure RUST is installed. For windows make sure to go to https://www.rust-lang.org/tools/install and manually cd into the folder and run cargo run
-cd watcher
-($cpenv && curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh && cargo run) &
-cd ..
+(cd watcher && $cpenv && curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh && cargo build && cd ../)
 
 echo "Ready to run in docker or local environments"
