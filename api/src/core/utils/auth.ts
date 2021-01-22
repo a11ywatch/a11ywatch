@@ -8,8 +8,7 @@ import fs from "fs";
 import jwt from "jsonwebtoken";
 import { config } from "@app/config";
 
-let PRIVATE_KEY = config.PRIVATE_KEY;
-let PUBLIC_KEY = config.PUBLIC_KEY;
+let { PRIVATE_KEY, PUBLIC_KEY } = config;
 
 try {
   if (!PRIVATE_KEY) {

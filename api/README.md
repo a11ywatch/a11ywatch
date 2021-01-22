@@ -34,6 +34,10 @@ Below is not needed to run locally currently.
 
 To get the emailer working add your `private.key` and `public.key` to the root of the project through ssh or another method.
 
+## Release
+
+In order to send a production build using a docker image make sure to add your servers private and pubic keys at the root of the sub directory before building.
+
 ## LICENSE
 
 check the license file in the root of the project.
