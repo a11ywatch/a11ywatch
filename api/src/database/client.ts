@@ -56,10 +56,12 @@ const connect = async (collectionType = "Websites") => {
 
   let collection = [];
 
-  try {
-    collection = await db.collection(collectionType);
-  } catch (e) {
-    console.error("collection not found:", e);
+  if (db) {
+    try {
+      collection = await db.collection(collectionType);
+    } catch (e) {
+      console.error("collection not found:", e);
+    }
   }
 
   return [collection, client];

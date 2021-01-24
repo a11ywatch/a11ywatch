@@ -7,7 +7,6 @@
 const validThemes = ['main', 'business', 'modern']
 
 const domainMap = (domainType) => {
-  // TODO: use a different env var to detect domain strings process.env.APP_NAME ( move app strings to seperate lib )
   let stringType = ''
 
   switch (domainType) {
@@ -23,7 +22,7 @@ const domainMap = (domainType) => {
   }
 
   return {
-    themeType: (validThemes.includes(domainType) && domainType) || 'main',
+    themeType: validThemes.includes(domainType) || 'main',
     stringType,
   }
 }

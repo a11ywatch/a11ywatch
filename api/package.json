@@ -12,15 +12,13 @@
     "start": "NODE_ENV=production node dist/server.js"
   },
   "engines": {
-    "node": "14.0.0"
+    "node": "v12.x"
   },
   "dependencies": {
-    "abort-controller": "^3.0.0",
     "apollo-server": "2.9.7",
     "apollo-server-express": "2.9.7",
-    "connect-timeout": "^1.9.0",
     "cors": "2.8.0",
-    "cron": "^1.8.2",
+    "cron": "1.8.2",
     "date-fns": "2.7.0",
     "dotenv": "8.2.0",
     "express": "4.14.0",
@@ -34,13 +32,12 @@
     "nodemailer": "6.3.1",
     "stripe": "7.14.0",
     "subscriptions-transport-ws": "0.3.1",
-    "throng": "^4.0.0",
-    "valid-url": "^1.0.9"
+    "valid-url": "1.0.9"
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.2.3",
     "@types/jest": "^26.0.20",
-    "@types/node": "^10.5.0",
+    "@types/node": "^10.17.51",
     "babel-jest": "^26.6.3",
     "eslint": "3.8.1",
     "eslint-config-airbnb": "12.0.0",
@@ -50,7 +47,7 @@
     "jest": "^26.6.3",
     "jest-config": "^26.6.3",
     "nodemon": "1.9.1",
-    "prettier": "^2.0.5",
+    "prettier": "^2.2.1",
     "supertest": "^6.1.1",
     "ts-jest": "^26.4.4",
     "ts-loader": "6.2.2",

@@ -10,15 +10,20 @@ import { config } from "@app/config";
 
 let { PRIVATE_KEY, PUBLIC_KEY } = config;
 
-try {
-  if (!PRIVATE_KEY) {
+if (!PRIVATE_KEY) {
+  try {
     PRIVATE_KEY = fs.readFileSync("./private.key", "utf8");
+  } catch (e) {
+    console.error(e);
   }
-  if (!PUBLIC_KEY) {
+}
+
+if (!PUBLIC_KEY) {
+  try {
     PUBLIC_KEY = fs.readFileSync("./public.key", "utf8");
+  } catch (e) {
+    console.error(e);
   }
-} catch (e) {
-  console.error(e);
 }
 
 const issuer = "AUTH/RESOURCE";
@@ -46,7 +51,7 @@ export function signJwt({ email, role, keyid }, options = {}) {
       audience: role,
       keyid,
     },
-    PRIVATE_KEY,
+    String(PRIVATE_KEY).trim(),
     Object.assign({}, signOptions, options)
   );
 }
@@ -54,7 +59,7 @@ export function signJwt({ email, role, keyid }, options = {}) {
 export function verifyJwt(token, options = {}) {
   return jwt.verify(
     token,
-    PUBLIC_KEY,
+    String(PUBLIC_KEY).trim(),
     Object.assign({}, signOptions, options, { algorithm: [algorithm] })
   );
 }

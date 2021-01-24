@@ -32,10 +32,10 @@ app.prepare().then(() => {
         res.send(text)
       }
     } catch (e) {
-      console.error(e)
+      console.error('iframe api endpoint error', e)
     }
   })
-
+  // @ts-ignore
   server.all('*', cors(), (req, res) => handle(req, res))
 
   server.listen(port, () => console.log(`app ready on ${`port: ${port}`}`))

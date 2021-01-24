@@ -41,9 +41,9 @@ import {
 const { GRAPHQL_PORT } = config;
 
 function initServer(): HttpServer {
+  initDbConnection();
   const server = new Server();
   const app = express();
-  initDbConnection();
 
   app.use(cors(corsOptions));
   app.use(bodyParser.urlencoded({ extended: true }));

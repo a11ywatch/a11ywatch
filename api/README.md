@@ -11,6 +11,10 @@ if using this service in a docker env make sure to create a .env file and add th
 1. `npm install`
 2. `npm run dev`
 
+## Authentication
+
+In order for auth to work you need to create a private.key and public.key at the root of the api sub dir. You can also use `PRIVATE_KEY` and `PUBLIC_KEY` env variables instead.
+
 ## Database
 
 Below is not needed to run locally currently.
