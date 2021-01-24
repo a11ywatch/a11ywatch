@@ -4,4 +4,4 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-export { connect, client, initDbConnection } from "./client";
+export { connect, client, initDbConnection, closeDbConnection } from "./client";

@@ -4,11 +4,12 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import dotenv from "dotenv";
+import { config as envConf } from "dotenv";
 
-dotenv.config();
+envConf();
 
 export const DEV = process.env.NODE_ENV !== "production";
+export const TEST_ENV = process.env.NODE_ENV === "test";
 
 const replaceDockerNetwork = (url: string): string => {
   const proxyDockerUrls = ["mav", "localhost", "angelica", "cdn-server", "api"];

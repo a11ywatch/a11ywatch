@@ -4,6 +4,6 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-export { config } from "./config";
+export { config, TEST_ENV } from "./config";
 export { features } from "./features";
 export { corsOptions, cronTimer, logServerInit, BYPASS_AUTH } from "./server";

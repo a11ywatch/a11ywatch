@@ -32,6 +32,8 @@ node_modules
 # Optional REPL history
 .node_repl_history
 
+#test
+globalConfig.json
 
 .env
 .env.staging

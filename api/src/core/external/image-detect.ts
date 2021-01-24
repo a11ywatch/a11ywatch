@@ -23,7 +23,7 @@ export const imageDetect = async ({ img }: { img: string }): Promise<any> => {
         (source?.length && source[0] !== "<" && JSON.parse(source)) || null;
     }
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
   return dataSource;
 };

@@ -40,7 +40,6 @@
     "eslint-plugin-react": "6.4.1",
     "jest": "^26.4.2",
     "jest-config": "^26.6.3",
-    "jest-transform-stub": "^2.0.0",
     "nodemon": "1.9.1",
     "ts-jest": "^26.4.4",
     "ts-loader": "6.2.2",

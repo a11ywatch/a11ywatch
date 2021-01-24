@@ -31,7 +31,7 @@ export const emailMessager = {
         const info = await transporter.sendMail(mailconfig);
         console.log("Email sent: " + info?.response);
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
     }
   },

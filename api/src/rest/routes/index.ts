@@ -5,7 +5,6 @@
  **/
 
 export { root } from "./root";
-export { unSubEmails } from "./subscriptions";
 export {
   scanWebsite,
   crawlWebsite,
@@ -13,4 +12,4 @@ export {
   websiteCrawlAuthed,
 } from "./crawl";
 export { detectImage } from "./services";
-export { confirmEmail } from "./user";
+export { confirmEmail, unSubEmails } from "./user";

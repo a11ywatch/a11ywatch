@@ -1,5 +1,12 @@
 version: 2.1
 jobs:
+  api:
+    docker:
+      - image: circleci/node:14.0.0
+    steps:
+      - checkout
+      - run:
+          command: cd api && npm install && npm test
   angelica:
     docker:
       - image: jeffmendez19/puppateer-node-light
@@ -38,6 +45,7 @@ jobs:
 workflows:
   build_and_test:
     jobs:
+      - api
       - mav
       - angelica
       - web

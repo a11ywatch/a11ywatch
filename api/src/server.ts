@@ -25,7 +25,7 @@ import {
   WEBSITE_CHECK,
   UNSUBSCRIBE_EMAILS,
 } from "./core/routes";
-import { initDbConnection } from "./database";
+import { initDbConnection, closeDbConnection } from "./database";
 import { Server } from "./apollo-server";
 import {
   confirmEmail,
@@ -38,56 +38,57 @@ import {
   websiteCrawlAuthed,
 } from "./rest/routes";
 
-const server = new Server();
-
 const { GRAPHQL_PORT } = config;
-const app = express();
 
-// OPTIONS
-app.use(cors(corsOptions));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json({ type: "application/*+json" }));
-app.options(CONFIRM_EMAIL, cors());
-app.options(WEBSITE_CHECK, cors());
+function initServer(): HttpServer {
+  const server = new Server();
+  const app = express();
+  initDbConnection();
 
-// GET
-app.get(ROOT, root);
-app.get(UNSUBSCRIBE_EMAILS, cors(), unSubEmails);
+  app.use(cors(corsOptions));
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.json({ type: "application/*+json" }));
+  app.options(CONFIRM_EMAIL, cors());
+  app.options(WEBSITE_CHECK, cors());
 
-// POST
-app.post(WEBSITE_CRAWL, websiteCrawl);
-app.post(CRAWL_WEBSITE, crawlWebsite);
-app.post(SCAN_WEBSITE_ASYNC, scanWebsite);
-app.post(IMAGE_CHECK, cors(), detectImage);
+  app.get(ROOT, root);
+  app.get(UNSUBSCRIBE_EMAILS, cors(), unSubEmails);
+  app.post(WEBSITE_CRAWL, websiteCrawl);
+  app.post(CRAWL_WEBSITE, crawlWebsite);
+  app.post(SCAN_WEBSITE_ASYNC, scanWebsite);
+  app.post(IMAGE_CHECK, cors(), detectImage);
+  app.route(WEBSITE_CHECK).get(websiteCrawlAuthed).post(websiteCrawlAuthed);
+  app.route(CONFIRM_EMAIL).get(cors(), confirmEmail).post(cors(), confirmEmail);
 
-// GET/POST
-app.route(WEBSITE_CHECK).get(websiteCrawlAuthed).post(websiteCrawlAuthed);
-app.route(CONFIRM_EMAIL).get(cors(), confirmEmail).post(cors(), confirmEmail);
+  server.applyMiddleware({ app, cors: false });
 
-server.applyMiddleware({ app, cors: false });
+  const httpServer = http.createServer(app);
 
-const httpServer = http.createServer(app);
+  server.installSubscriptionHandlers(httpServer);
 
-server.installSubscriptionHandlers(httpServer);
-
-const initServer = async (): Promise<HttpServer> => {
-  await initDbConnection();
-  const listener = await httpServer.listen(GRAPHQL_PORT);
+  const listener = httpServer.listen(GRAPHQL_PORT);
 
   logServerInit((listener.address() as AddressInfo).port, {
     subscriptionsPath: server.subscriptionsPath,
     graphqlPath: server.graphqlPath,
   });
 
-  // ONLY RUN OFF FIRST NODE TODO: SPLIT WORK IN GROUPS BY DYNO COUNT
   if (process.env.DYNO === "web.1" || !process.env.DYNO) {
     new CronJob("00 00 00 * * *", websiteWatch).start();
   }
 
   return listener;
-};
+}
 
 const coreServer = initServer();
 
-export { initServer };
+const killServer = async () => {
+  try {
+    await Promise.all([closeDbConnection(), coreServer?.close()]);
+  } catch (e) {
+    console.error("failed to kill server", e);
+  }
+};
+
+export { initServer, killServer };
 export default coreServer;

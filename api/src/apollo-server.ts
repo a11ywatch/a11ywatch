@@ -10,11 +10,7 @@ import { config, BYPASS_AUTH } from "./config";
 
 import { getUser } from "./core/utils";
 import { schema } from "./core/schema";
-import {
-  AUTH_ERROR,
-  TOKEN_EXPIRED_ERROR,
-  //   RATE_EXCEEDED_ERROR,
-} from "./core/strings";
+import { AUTH_ERROR, TOKEN_EXPIRED_ERROR } from "./core/strings";
 
 import { SubDomainController } from "./core/controllers/subdomains";
 import { ScriptsController } from "./core/controllers/scripts";

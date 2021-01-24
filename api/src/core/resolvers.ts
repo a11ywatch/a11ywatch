@@ -19,9 +19,9 @@ import {
 } from "./data";
 
 export const resolvers = {
-  Script,
   Query,
   Mutation,
+  Script,
   Subscription,
   User,
   Analytic,

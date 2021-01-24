@@ -5,32 +5,73 @@
  **/
 
 import { MongoClient } from "mongodb";
-import { config } from "@app/config";
+import { config, TEST_ENV } from "@app/config";
 
-const client = new MongoClient(config.DB_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+interface Global extends NodeJS.Global {
+  __MONGO_URI__?: string;
+  __MONGO_DB_NAME__?: string;
+}
 
-const initDbConnection = async (cb?: Function) => {
+const appGlobal: Global = global;
+
+const [DB_URI, DB_NAME, DB_CONFIG] = TEST_ENV
+  ? [
+      appGlobal?.__MONGO_URI__,
+      appGlobal?.__MONGO_DB_NAME__,
+      {
+        useUnifiedTopology: true,
+      },
+    ]
+  : [
+      config.DB_URL,
+      config.DB_NAME,
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      },
+    ];
+
+const client = new MongoClient(DB_URI, DB_CONFIG);
+
+const initDbConnection = async (cb?: () => void) => {
   try {
     await client.connect();
-    if (cb && typeof cb === "function") {
-      cb();
-    }
   } catch (e) {
     console.error("database connection establishment failed:", e);
+  } finally {
+    if (typeof cb === "function") {
+      cb();
+    }
   }
 };
 
 const connect = async (collectionType = "Websites") => {
+  let db;
+
   try {
-    const db = await client.db(config.DB_NAME);
-    const collection = await db.collection(collectionType);
-    return [collection, client];
+    db = await client.db(DB_NAME);
   } catch (e) {
     console.error("database connection failed:", e);
   }
+
+  let collection = [];
+
+  try {
+    collection = await db.collection(collectionType);
+  } catch (e) {
+    console.error("collection not found:", e);
+  }
+
+  return [collection, client];
 };
 
-export { client, connect, initDbConnection };
+const closeDbConnection = async () => {
+  try {
+    await client?.close();
+    console.log("DB connection closed");
+  } catch (e) {
+    console.error("failed to kill db connection", e);
+  }
+};
+
+export { client, connect, initDbConnection, closeDbConnection };
