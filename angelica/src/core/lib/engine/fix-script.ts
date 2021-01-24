@@ -19,10 +19,15 @@ import {
 } from "./models/issue-type";
 import { fixInvalid } from "./fix/js";
 
+type ExtraConfig = {
+  alt?: string;
+  lang?: string;
+};
+
 function getIssueFixScript(
   issue,
-  index,
-  extraConfig = {
+  index: number,
+  extraConfig: ExtraConfig = {
     alt: "",
     lang: "en",
   }
@@ -41,6 +46,10 @@ function getIssueFixScript(
   };
 
   const fix = () => fixInvalid(fixProps, extraConfig);
+
+  if (!message) {
+    return "";
+  }
 
   if (message.includes(EMPTY_HEAD_TITLE_TYPE)) {
     return fix().head;

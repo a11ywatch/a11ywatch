@@ -16,7 +16,7 @@ export const adjustScript = async ({
   script: resolver,
 }) => {
   const enabledSkip = resolver?.scriptMeta?.skipContentEnabled;
-  let { domain, cdnSourceStripped } = sourceBuild(urlMap);
+  const { domain, cdnSourceStripped } = sourceBuild(urlMap);
 
   try {
     let scriptBody = resolver?.script;

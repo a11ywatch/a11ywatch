@@ -45,7 +45,7 @@ export const detectImageModel = async (
     }
     return null;
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return null;
   }
 };
