@@ -153,7 +153,7 @@ function FadeBlock({ search, loading, className, hiddenClass }: any) {
 
 function CtaSearchBar({ children, checker }: any) {
   const classes = useStyles()
-  const [searchFocused, setSearchFocused] = useState()
+  const [searchFocused, setSearchFocused] = useState<boolean>()
   const ref = useRef(null)
   const { search, setSearch, loading, toggleModal } = useSearch()
 

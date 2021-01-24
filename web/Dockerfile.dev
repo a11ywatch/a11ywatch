@@ -5,8 +5,6 @@ WORKDIR /usr/src/app
 ARG NODE_ENV
 ARG GITHUB_TOKEN
 
-RUN apk add --update bash jq
-
 COPY package*.json .env ./
 
 RUN npm install
