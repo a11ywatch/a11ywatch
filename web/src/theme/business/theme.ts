@@ -44,10 +44,8 @@ export const theme = (function () {
       primary: blue,
       secondary: {
         main: blue[300],
-        default: blue[500],
       },
       background: {
-        main: '#20232a',
         default: '#20232a',
         paper: '#1a1a1a',
       },

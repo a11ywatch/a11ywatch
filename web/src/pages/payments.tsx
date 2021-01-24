@@ -54,16 +54,15 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-const defaultState = {
-  basic: true,
-  premium: false,
-}
-
 function Payments({ hideTitle = false }) {
+  const defaultState = {
+    basic: true,
+    premium: false,
+  }
   const classes = useStyles()
   const { data, loading, addSubscription, cancelSubscription } = paymentsData()
-  const [state, setState] = useState(defaultState)
-  const [open, setOpen] = useState(false)
+  const [state, setState] = useState<any>(defaultState)
+  const [open, setOpen] = useState<boolean>(false)
 
   const handleChange = (newState: any) => () => {
     setState({

@@ -157,10 +157,10 @@ function CtaSearchBar({ children, checker }: any) {
   const ref = useRef(null)
   const { search, setSearch, loading, toggleModal } = useSearch()
 
-  const toggleSearch = (open: boolean) => () => {
+  const toggleSearch = (open: boolean = false) => () => {
     // @ts-ignore
     open && !searchFocused && ref?.current?.focus()
-    setSearchFocused(open)
+    setSearchFocused(!!open)
   }
 
   // const hasWebsite = website?.issues?.length

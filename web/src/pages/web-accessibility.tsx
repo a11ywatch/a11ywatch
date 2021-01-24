@@ -9,27 +9,26 @@ import { Footer, MarketingDrawer, Box } from '@app/components/general'
 import { theme } from '@app-theme'
 import { strings } from '@app-strings'
 
-const checklistLinks = [
-  { href: 'https://a11yproject.com/checklist/' },
-  {
-    href:
-      'https://medium.com/@krisrivenburgh/the-ada-checklist-website-compliance-guidelines-for-2019-in-plain-english-123c1d58fad9',
-  },
-  {
-    href: 'https://developer.mozilla.org/en-US/docs/Web/Accessibility',
-  },
-]
-
-const linkStyle = {
-  color: theme.palette.primary.main,
-  textDecoration: 'underline',
-  fontSize: 16,
-  fontWeight: 600,
-}
-
-const bold = { fontWeight: 600 }
-
 function WebAccessibility() {
+  const checklistLinks = [
+    { href: 'https://a11yproject.com/checklist/' },
+    {
+      href:
+        'https://medium.com/@krisrivenburgh/the-ada-checklist-website-compliance-guidelines-for-2019-in-plain-english-123c1d58fad9',
+    },
+    {
+      href: 'https://developer.mozilla.org/en-US/docs/Web/Accessibility',
+    },
+  ]
+
+  const linkStyle = {
+    color: theme.palette.primary.main,
+    textDecoration: 'underline',
+    fontSize: 16,
+    fontWeight: 600,
+  }
+
+  const bold = { fontWeight: 600 }
   return (
     <MarketingDrawer title={WebAccessibility.name}>
       <Container maxWidth='xl'>

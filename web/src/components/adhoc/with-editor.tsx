@@ -15,7 +15,7 @@ const ReactSizeDetector = dynamic(import('react-resize-detector'), {
 })
 
 const WithEditor = ({ setScript, children = '' }: any) => {
-  const [value, setValue] = useState(children || '')
+  const [value, setValue] = useState<any>(children || '')
 
   useEffect(() => {
     setScript(value)

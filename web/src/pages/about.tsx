@@ -9,9 +9,8 @@ import { Container, Typography } from '@material-ui/core'
 import { MarketingDrawer, Footer, Box } from '@app/components/general'
 import { strings } from '@app-strings'
 
-const bold = { fontWeight: 600 }
-
 function About() {
+  const bold = { fontWeight: 600 }
   return (
     <MarketingDrawer title={About.name}>
       <Container maxWidth='xl'>

@@ -27,11 +27,8 @@ function AuthMenu({
   registerClassName,
 }: Props): any {
   const router = useRouter()
-  const [anchorEl, setAnchorEl] = useState(null)
-  // const transformProps = {
-  //   vertical: 'top',
-  //   horizontal: 'right',
-  // }
+  const [anchorEl, setAnchorEl] = useState<any>(null)
+
   const handleMenu = (event?: any) => {
     setAnchorEl(event?.currentTarget)
   }

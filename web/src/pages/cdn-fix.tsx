@@ -22,9 +22,8 @@ import { withApollo } from '@app/apollo'
 import { strings } from '@app-strings'
 import { WithHydrate } from '@app/components/adhoc'
 
-const route_title = 'CDN'
-
 function CDNFix() {
+  const route_title = 'CDN'
   const { data, loading } = scriptsData(true)
   const { search } = useSearchFilter()
   const dataSource = groupBy('domain')(filterSort(data, search))

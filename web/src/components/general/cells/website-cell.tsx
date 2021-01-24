@@ -55,7 +55,8 @@ export function WebsiteCell({
   pageHeaders,
 }: any) {
   const classes = useStyles()
-  const [anchorEl, setAnchorEl] = useState(null)
+  const [anchorEl, setAnchorEl] = useState<any>(null)
+
   const handleMenu = (event: any) => {
     setAnchorEl(event?.currentTarget)
   }

@@ -73,7 +73,6 @@ services:
       - ./web/.env
     volumes:
       - ./web/src:/usr/src/app/src
-      - ./web/api:/usr/src/app/api
       - ./web/public:/usr/src/app/public
       - ./web/next.config.js:/usr/src/app/next.config.js
       - ./web/postcss.config.js:/usr/src/app/postcss.config.js

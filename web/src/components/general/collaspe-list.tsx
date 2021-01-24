@@ -83,13 +83,13 @@ function MainCell({
   scriptLoading,
   newItemUpdate,
 }: any) {
-  const [source, setSource] = useState(sourceData)
-  const [newScript, setScript] = useState(sourceData)
-  const [checked, setChecked] = useState(
+  const [source, setSource] = useState<any>(sourceData)
+  const [newScript, setScript] = useState<any>(sourceData)
+  const [checked, setChecked] = useState<any>(
     !source?.issueMeta?.skipContentIncluded &&
       source?.scriptMeta?.skipContentEnabled
   )
-  const [editMode, setEdit] = useState(false)
+  const [editMode, setEdit] = useState<boolean>(false)
   const freeAccount = UserManager.freeAccount && !UserManager.firstDay
 
   useEffect(() => {
@@ -226,7 +226,7 @@ function CollaspeListEntry({
 }: any) {
   const sectionTitle = item[0]
   const sectionData = item[1]
-  const [newItemUpdate, setUpdate] = useState({ key: null, script: null })
+  const [newItemUpdate, setUpdate] = useState<any>({ key: null, script: null })
 
   useEffect(() => {
     const scriptData = updateScriptData?.updateScript
@@ -278,7 +278,7 @@ function CollaspeListEntry({
 
 export function CollaspeList({ dataSource }: any) {
   const classes = useStyles()
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState<boolean>(true)
   const entries = Object.entries(dataSource)
   const { updateScript, updateScriptData, scriptLoading } = scriptData(
     '',

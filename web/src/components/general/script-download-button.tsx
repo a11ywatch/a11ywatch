@@ -11,7 +11,7 @@ const convertDownloadPath = (cdn: string) =>
   cdn?.replace('scripts/', 'download/')
 
 export function ScriptDownloadButton({ cdn_url, cdn_url_min }: any) {
-  const [menuOpen, toggleMenu] = useState(null)
+  const [menuOpen, toggleMenu] = useState<any>(null)
 
   const handleMenu = (event: any) => {
     toggleMenu(event.currentTarget)

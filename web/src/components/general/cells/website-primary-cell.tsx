@@ -204,10 +204,7 @@ function RenderIssue({
 // TODO SPLIT CELLS OUT
 export function WebsitePrimaryCell({
   handleClickOpen,
-  // handleClose,
-  // open,
   item,
-  // refetch,
   url,
   handleClickOpenPlayer,
   issuesModal = false,
@@ -220,8 +217,8 @@ export function WebsitePrimaryCell({
   noMaxHeight,
 }: any) {
   const classes = useStyles()
-  const [anchorEl, setAnchorEl] = useState(null)
-  const [issueView, setIssueView] = useState(error)
+  const [anchorEl, setAnchorEl] = useState<any>(null)
+  const [issueView, setIssueView] = useState<any>(error)
 
   const handleMenu = (event: any) => {
     setAnchorEl(event.currentTarget)

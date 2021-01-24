@@ -122,8 +122,8 @@ const useStyles = makeStyles((theme: MergedTheme) => ({
 
 export function FormDialog({ buttonTitle = 'Add Website', okPress }: any) {
   const classes = useStyles()
-  const [open, setOpen] = useState(false)
-  const [websitUrl, setUrl] = useState('')
+  const [open, setOpen] = useState<boolean>(false)
+  const [websitUrl, setUrl] = useState<string>('')
 
   const {
     customHeader,
@@ -134,8 +134,8 @@ export function FormDialog({ buttonTitle = 'Add Website', okPress }: any) {
     setCustomHeader,
   } = useInputHeader()
 
-  const [https, setTransportType] = useState(true)
-  const [extension, setExtension] = useState('.com')
+  const [https, setTransportType] = useState<boolean>(true)
+  const [extension, setExtension] = useState<string>('.com')
   const inputRef = useRef(null)
 
   const handleClickOpen = () => {

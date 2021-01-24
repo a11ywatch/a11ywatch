@@ -14,18 +14,17 @@ import {
 import { Footer, MarketingDrawer, Box } from '@app/components/general'
 import { metaSetter } from '@app/utils'
 
-const Reqs = [
-  'Javascript',
-  'React',
-  'Graphql',
-  'Node',
-  'Skilled at technical problem solving.',
-  'Must be able to communicate effectively and work with team members and members of other functional teams to coordinate and meet deliverables.',
-  'Rust - nice to have some of our main services are built using this',
-  'BS in Technology or Related Field - nice to have but not needed',
-]
-
 function Careers() {
+  const Reqs = [
+    'Javascript',
+    'React',
+    'Graphql',
+    'Node',
+    'Skilled at technical problem solving.',
+    'Must be able to communicate effectively and work with team members and members of other functional teams to coordinate and meet deliverables.',
+    'Rust - nice to have some of our main services are built using this',
+    'BS in Technology or Related Field - nice to have but not needed',
+  ]
   return (
     <MarketingDrawer title={Careers.name}>
       <Container maxWidth='xl'>

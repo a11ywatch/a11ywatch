@@ -54,6 +54,6 @@ function Scripts() {
 }
 
 Scripts.meta = {
-  title: `${strings.appName} - Scripts`,
+  title: `${strings.appName} - ${TITLE}`,
 }
 export default withApollo(Scripts)

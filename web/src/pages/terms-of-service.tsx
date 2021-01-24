@@ -8,9 +8,8 @@ import { Container, Typography } from '@material-ui/core'
 import { Mailto, Footer, MarketingDrawer, Box } from '@app/components/general'
 import { strings } from '@app-strings'
 
-const bold = { fontWeight: 600 }
-
 function TermsOfService() {
+  const bold = { fontWeight: 600 }
   return (
     <MarketingDrawer title={TermsOfService.name}>
       <Container maxWidth='xl'>

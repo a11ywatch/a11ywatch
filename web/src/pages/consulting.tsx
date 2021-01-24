@@ -3,31 +3,31 @@ import { Container, Typography, List, ListItem } from '@material-ui/core'
 import { MarketingDrawer, Footer, Box } from '@app/components/general'
 import { strings } from '@app-strings'
 
-const LanguageSupport = [
-  'HTML',
-  'CSS',
-  'Javascript',
-  'React',
-  'React-native',
-  '.NET',
-  'Electron',
-  'Ionic',
-  'Angular',
-  'Swift',
-  'Java',
-  'Obj-C',
-  'Vue',
-]
-
-const CustomWork = [
-  'Give you an estimate of time and price if the work is straightforward.',
-  'Give alternative solutions depending on project situation.',
-  'Decline the work due to timing/etc.',
-]
-
-const bold = { fontWeight: 800 }
-
 function Consulting() {
+  const LanguageSupport = [
+    'HTML',
+    'CSS',
+    'Javascript',
+    'React',
+    'React-native',
+    '.NET',
+    'Electron',
+    'Ionic',
+    'Angular',
+    'Swift',
+    'Java',
+    'Obj-C',
+    'Vue',
+  ]
+
+  const CustomWork = [
+    'Give you an estimate of time and price if the work is straightforward.',
+    'Give alternative solutions depending on project situation.',
+    'Decline the work due to timing/etc.',
+  ]
+
+  const bold = { fontWeight: 800 }
+
   return (
     <MarketingDrawer style={{ paddingBottom: 100 }} title={Consulting.name}>
       <Container maxWidth='xl'>

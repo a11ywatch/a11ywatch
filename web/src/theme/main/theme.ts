@@ -35,12 +35,6 @@ export const theme = (function () {
         color: '#fff',
         fontWeight: 600,
       },
-      link: {
-        [':hover']: {
-          textUnderLine: 'none',
-        },
-        minHeight: '42px',
-      },
       h3: {
         lineHeight: '1.3px',
       },
@@ -50,12 +44,10 @@ export const theme = (function () {
       primary: grey,
       secondary: {
         main: indigo[400],
-        default: indigo[400],
       },
       warning: orange,
       error: red,
       background: {
-        main: '#1a1a1a',
         default: '#1a1a1a',
       },
     },

@@ -43,12 +43,10 @@ export const theme = (function () {
       primary: indigo,
       secondary: {
         main: indigo[600],
-        default: indigo[700],
       },
       warning: orange,
       error: red,
       background: {
-        main: '#1a1a1a',
         default: '#1a1a1a',
         paper: '#1a1a1a',
       },
