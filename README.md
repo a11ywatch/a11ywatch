@@ -6,11 +6,6 @@
 
 system for accessibility, performance, and other productivity improvements
 
-## Docker
-
-The simplest way to get started is to use docker also make sure to configue app secrets before starting.
-In development if using docker-compose MONGODB is used on port `27017`
-
 ### Development
 
 First time setup run `./bootstrap.sh`. If building the `ui` package pass in `-f development-ui` with the inital start command below.
@@ -20,18 +15,19 @@ First time setup run `./bootstrap.sh`. If building the `ui` package pass in `-f 
 
 ### Services
 
-| Service                         | Container Purpose                                              | Default Port |
-| ------------------------------- | -------------------------------------------------------------- | ------------ |
-| [web](/web)                     | web application that interacts with the main api               | 3000         |
-| [api](/api)                     | central core api for the monolith                              | 8080         |
-| [mav](/mav)                     | image detector api for generating names with probability       | 8020         |
-| [angelica](/angelica)           | website issue detector api engine with accessibility fixes     | 8040         |
-| [watcher](/watcher)             | gather all urls/webpages api for a website                     | 8000         |
-| [cdn-server](/cdn-server)       | create and store js scripts to fix web issues                  | 8090         |
-| [iframe-server](/iframe-server) | render websites on proxy domain for manipulation               | 8010         |
-| [example-site](/example-site)   | create and test issues for the accessibility engine (optional) | 8050         |
-| [ui](/ui)                       | main central ui components that can be re-used (optional)      | 6006         |
-| [logger](/logger)               | stream of all logs across micro-services (optional)            | 8022         |
+| Service                             | Container Purpose                                              | Default Port |
+| ----------------------------------- | -------------------------------------------------------------- | ------------ |
+| [web](/web)                         | web application that interacts with the main api               | 3000         |
+| [api](/api)                         | central core api for the monolith                              | 8080         |
+| [mav](/mav)                         | image detector api for generating names with probability       | 8020         |
+| [angelica](/angelica)               | website issue detector api engine with accessibility fixes     | 8040         |
+| [watcher](/watcher)                 | gather all urls/webpages api for a website                     | 8000         |
+| [cdn-server](/cdn-server)           | create and store js scripts to fix web issues                  | 8090         |
+| [iframe-server](/iframe-server)     | render websites on proxy domain for manipulation               | 8010         |
+| [example-site](/example-site)       | create and test issues for the accessibility engine (optional) | 8050         |
+| [ui](/ui)                           | main central ui components that can be re-used (optional)      | 6006         |
+| [logger](/logger)                   | stream of all logs across micro-services (optional)            | 8022         |
+| [mongodb](https://www.mongodb.com/) | central database for website and user data storage             | 27017        |
 
 ### Deployment
 

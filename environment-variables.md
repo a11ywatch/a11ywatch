@@ -4,7 +4,7 @@
 
 ## Loading Environment Variables
 
-A11yWatch has support for loading environment variables from `.env` files.
+A11yWatch has support for loading environment variables from `.env` files. Each sub-directory has a indivual .env file to manage.
 
 An example `.env`:
 
