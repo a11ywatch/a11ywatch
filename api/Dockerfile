@@ -8,6 +8,8 @@ RUN npm install
 
 COPY . .
 
+RUN yarn bootstrap
+
 RUN yarn build
 
 CMD [ "node", "./dist/index.js" ]

@@ -5,6 +5,7 @@
   "description": "a11ywatch central api",
   "main": "./dist/server.js",
   "scripts": {
+    "bootstrap": "./bootstrap.sh",
     "dev": "nodemon -e js,ts,graphql -r ts-node/register/transpile-only -r tsconfig-paths/register src/server.ts",
     "test": "jest --forceExit",
     "lint": "eslint .",

@@ -8,4 +8,6 @@ RUN npm install
 
 COPY . .
 
+RUN yarn bootstrap
+
 CMD [ "yarn", "dev" ]

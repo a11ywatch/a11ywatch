@@ -4,7 +4,8 @@ set -e
 
 echo "Project being bootstraped"
 
-cpenv="cp .env.example.txt .env"
+cpenv="sh $PWD/load-env.sh"
+
 node_build="npm run build"
 node_install="npm install"
 
@@ -14,7 +15,7 @@ $cpenv
 (cd web && $cpenv && $node_install && cd ..)
 
 # Install api
-(cd api && $cpenv && $node_install && cd ..)
+(cd api && $cpenv && $node_install && npm run bootstrap && cd ..)
 
 # Install angelica
 (cd angelica && $cpenv && $node_install && cd ..)
@@ -38,6 +39,6 @@ $cpenv
 (cd ui && $node_install && cd ..)
 
 # Install watcher and make sure RUST is installed. For windows make sure to go to https://www.rust-lang.org/tools/install and manually cd into the folder and run cargo run
-(cd watcher && $cpenv && curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh && cargo build && cd ../)
+(cd watcher && $cpenv && curl https://sh.rustup.rs -sSf | sh -s -- -y && cargo build && cd ../)
 
 echo "Ready to run in docker or local environments"
