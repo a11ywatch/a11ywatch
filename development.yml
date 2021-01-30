@@ -67,10 +67,10 @@ services:
     build:
       context: ./web
       dockerfile: ./Dockerfile.dev
-      args:
-        - GITHUB_TOKEN=$GITHUB_TOKEN
     env_file:
       - ./web/.env
+    depends_on:
+      - api
     volumes:
       - ./web/src:/usr/src/app/src
       - ./web/public:/usr/src/app/public
@@ -133,6 +133,9 @@ services:
       dockerfile: ./Dockerfile.dev
     volumes:
       - ./watcher/src:/usr/src/app/src
+      - ./watcher/scripts:/usr/src/app/scripts
+      - ./watcher/tests:/usr/src/app/tests
+      - ./watcher/target:/usr/src/app/target
     networks:
       - back-net
     ports:
@@ -148,7 +151,7 @@ services:
     volumes:
       - mongodb:/data/db
     environment:
-      - MONGO_INITDB_DATABASE=ada-application-core
+      - MONGO_INITDB_DATABASE=${DB_NAME:-a11ywatch}
 
 networks:
   front-net:

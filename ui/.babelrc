@@ -1,8 +1,0 @@
-{
-  "presets": ["@babel/preset-env", "@babel/preset-react"],
-  "plugins": [
-    "@babel/plugin-syntax-dynamic-import",
-    "@babel/plugin-transform-modules-commonjs"
-  ],
-  "ignore": ["@storybook/addon-actions", "@storybook/addon-a11y"]
-}

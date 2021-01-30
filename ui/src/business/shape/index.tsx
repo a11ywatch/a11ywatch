@@ -1,1 +1,0 @@
-export { Shape } from "./shape";

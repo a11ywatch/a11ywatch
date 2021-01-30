@@ -25,7 +25,6 @@ First time setup run `./bootstrap.sh`. If building the `ui` package pass in `-f 
 | [cdn-server](/cdn-server)           | create and store js scripts to fix web issues                  | 8090         |
 | [iframe-server](/iframe-server)     | render websites on proxy domain for manipulation               | 8010         |
 | [example-site](/example-site)       | create and test issues for the accessibility engine (optional) | 8050         |
-| [ui](/ui)                           | main central ui components that can be re-used (optional)      | 6006         |
 | [logger](/logger)                   | stream of all logs across micro-services (optional)            | 8022         |
 | [mongodb](https://www.mongodb.com/) | central database for website and user data storage             | 27017        |
 
@@ -36,6 +35,11 @@ create your git remotes and name it the directory name. You can use the `deploy.
 ## Backers
 
 Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/a11ywatch#backer)]
+
+## Other Repos
+
+[a11ywatch-docs](https://github.com/A11yWatch/a11ywatch-docs)
+[a11ywatch-ui](https://github.com/A11yWatch/a11ywatch-ui)
 
 ## LICENSE
 

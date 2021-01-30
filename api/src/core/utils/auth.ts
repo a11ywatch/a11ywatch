@@ -4,27 +4,8 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import fs from "fs";
 import jwt from "jsonwebtoken";
-import { config } from "@app/config";
-
-let { PRIVATE_KEY, PUBLIC_KEY } = config;
-
-if (!PRIVATE_KEY) {
-  try {
-    PRIVATE_KEY = fs.readFileSync("./private.key", "utf8");
-  } catch (e) {
-    console.error(e);
-  }
-}
-
-if (!PUBLIC_KEY) {
-  try {
-    PUBLIC_KEY = fs.readFileSync("./public.key", "utf8");
-  } catch (e) {
-    console.error(e);
-  }
-}
+import { PRIVATE_KEY, PUBLIC_KEY } from "@app/config";
 
 const issuer = "AUTH/RESOURCE";
 const expiresIn = "365 days";

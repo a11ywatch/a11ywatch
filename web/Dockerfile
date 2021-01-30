@@ -2,7 +2,6 @@ FROM node:12.0.0-alpine
 
 WORKDIR /usr/src/app 
 
-ARG GITHUB_TOKEN
 ARG NODE_ENV
 
 RUN apk add --update bash jq

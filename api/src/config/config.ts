@@ -5,11 +5,12 @@
  **/
 
 import { config as envConf } from "dotenv";
+import fs from "fs";
 
 envConf();
 
-export const DEV = process.env.NODE_ENV !== "production";
-export const TEST_ENV = process.env.NODE_ENV === "test";
+const DEV = process.env.NODE_ENV !== "production";
+const TEST_ENV = process.env.NODE_ENV === "test";
 
 const replaceDockerNetwork = (url: string): string => {
   const proxyDockerUrls = ["mav", "localhost", "angelica", "cdn-server", "api"];
@@ -22,6 +23,33 @@ const replaceDockerNetwork = (url: string): string => {
   }
   return url;
 };
+
+let PUBLIC_KEY = String(process.env.PUBLIC_KEY).replace(/\\n/gm, "\n");
+let PRIVATE_KEY = String(process.env.PRIVATE_KEY).replace(/\\n/gm, "\n");
+let EMAIL_CLIENT_KEY = String(process.env.EMAIL_CLIENT_KEY).replace(
+  /\\n/gm,
+  "\n"
+);
+
+if (!PRIVATE_KEY) {
+  try {
+    PRIVATE_KEY = fs.readFileSync("./private.key", "utf8");
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+if (!PUBLIC_KEY) {
+  try {
+    PUBLIC_KEY = fs.readFileSync("./public.key", "utf8");
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+if (!EMAIL_CLIENT_KEY && PRIVATE_KEY) {
+  EMAIL_CLIENT_KEY = PRIVATE_KEY;
+}
 
 export const config = {
   DEV,
@@ -41,7 +69,9 @@ export const config = {
   DOCKER_ENV: process.env.DOCKER_ENV,
   EMAIL_SERVICE_URL: process.env.EMAIL_SERVICE_URL,
   EMAIL_CLIENT_ID: process.env.EMAIL_CLIENT_ID,
-  EMAIL_CLIENT_KEY: process.env.EMAIL_CLIENT_KEY,
-  PUBLIC_KEY: String(process.env.PUBLIC_KEY).replace(/\\n/gm, "\n"),
-  PRIVATE_KEY: String(process.env.PRIVATE_KEY).replace(/\\n/gm, "\n"),
+  EMAIL_CLIENT_KEY,
+  PUBLIC_KEY,
+  PRIVATE_KEY,
 };
+
+export { DEV, TEST_ENV, PRIVATE_KEY, PUBLIC_KEY };

@@ -5,3 +5,5 @@ Dockerfile.dev
 sample.env
 README.md
 .eslintrc
+!public.key
+!private.key
