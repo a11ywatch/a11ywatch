@@ -52,6 +52,7 @@ export default function MyApp({ Component, pageProps }: MergedApp) {
         <meta name='theme-color' content={theme.palette.primary.main} />
         <meta name='mobile-web-app-capable' content='yes' />
         <link rel='manifest' href='/static/manifest.json' />
+        <meta name='format-detection' content='telephone=no' />
         <meta name='apple-mobile-web-app-capable' content='yes' />
         <link rel='apple-touch-icon' href='./static/img/favicon-small.png' />
         <link rel='icon' type='image/x-icon' href='./static/img/favicon.png' />
