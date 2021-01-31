@@ -129,6 +129,7 @@ module.exports = withPWA({
       ),
       ['@app-ui-stylesheet']: uiStylePath,
       ['@app']: resolve(__dirname, './src'),
+      ['@web-config']: resolve(__dirname, './web-config.js'),
       ['ui']: uiComponentPath,
     }
 

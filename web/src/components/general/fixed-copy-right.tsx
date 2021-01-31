@@ -7,6 +7,7 @@
 import React from 'react'
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import webConfig from '@web-config'
 
 const useStyles = makeStyles((theme) => ({
   sticky: {
@@ -52,6 +53,7 @@ interface Props {
 
 function FixedCopyRight({ sticky }: Props) {
   const classes = useStyles()
+  const { companyName } = webConfig
 
   return (
     <div className={`${classes.stickContainer} ${sticky ? classes.stick : ''}`}>
@@ -61,7 +63,7 @@ function FixedCopyRight({ sticky }: Props) {
           className={classes.text}
           gutterBottom={!sticky}
         >
-          © 2020 A11yWatch, LLC
+          © {new Date().getFullYear()} {companyName}, LLC
         </Typography>
       </div>
     </div>

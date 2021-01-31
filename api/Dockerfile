@@ -2,14 +2,16 @@ FROM node:12.0.0
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY package*.json bootstrap.sh ./
 
-RUN npm install
+RUN apk upgrade --update-cache --available && \
+	apk add openssl && \
+	rm -rf /var/cache/apk/*
+
+RUN npm run bootstrap && npm install
 
 COPY . .
 
-RUN yarn bootstrap
+RUN npm run build
 
-RUN yarn build
-
-CMD [ "node", "./dist/index.js" ]
+CMD [ "bootstrap.sh", "node", "./dist/index.js" ]

@@ -8,6 +8,7 @@ services:
       dockerfile: ./Dockerfile.dev
     volumes:
       - ./api/src:/usr/src/app/src
+      - ./api/__tests__:/usr/src/app/__tests__
     depends_on:
       - mongodb
       - angelica
@@ -79,6 +80,7 @@ services:
       - ./web/tsconfig.json:/usr/src/app/tsconfig.json
       - ./web/domain-map.js:/usr/src/app/domain-map.js
       - ./web/dynamic-paths.js:/usr/src/app/dynamic-paths.js
+      - ./web/web-config.js:/usr/src/app/web-config.js
     networks:
       - front-net
     ports:

@@ -1,13 +1,15 @@
 FROM node:12.0.0-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/app/
 
-COPY package*.json ./
+COPY package*.json bootstrap.sh *.key ./
 
-RUN npm install
+RUN apk upgrade --update-cache --available && \
+	apk add openssl && \
+	rm -rf /var/cache/apk/*
+
+RUN npm run bootstrap && npm install
 
 COPY . .
 
-RUN yarn bootstrap
-
-CMD [ "yarn", "dev" ]
+CMD [ "npm", "run", "dev" ]
