@@ -6,6 +6,10 @@
 
 system for accessibility, performance, and other productivity improvements
 
+### Getting Started
+
+Check out [docs](https://github.com/A11yWatch/a11ywatch-docs) for instructions on how to get started.
+
 ### Development
 
 First time setup run `./bootstrap.sh`. If building the `ui` package pass in `-f development-ui` with the inital start command below.
