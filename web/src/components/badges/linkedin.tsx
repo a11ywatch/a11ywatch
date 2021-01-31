@@ -6,16 +6,14 @@
 
 import React from 'react'
 import { Typography, Tooltip } from '@material-ui/core'
-import { styleSpace } from './style'
 import { strings } from '@app-strings'
+import { defaultProps } from './defaultProps'
+import type { BadgeProps } from './badge-types'
 
-export const LinkedinBadge = ({
-  style = styleSpace,
-  href = 'https://www.linkedin.com/company/a11ywatch',
-  inline,
-}: any) => {
+export const LinkedinBadge = ({ style, inline }: BadgeProps) => {
   const LINKEDIN = 'LinkedIn'
   const TITLE = `${strings.appName} on ${LINKEDIN}`
+  const href = 'https://www.linkedin.com/company/a11ywatch'
 
   if (inline) {
     return (
@@ -69,3 +67,5 @@ export const LinkedinBadge = ({
     </Tooltip>
   )
 }
+
+LinkedinBadge.defaultProps = defaultProps

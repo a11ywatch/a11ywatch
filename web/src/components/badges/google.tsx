@@ -5,8 +5,9 @@
  **/
 import React from 'react'
 import { SvgIcon } from '@material-ui/core'
+import type { BadgeProps } from './badge-types'
 
-export const GoogleIcon = ({ className }: any) => {
+export const GoogleIcon = ({ className }: BadgeProps) => {
   return (
     <SvgIcon
       viewBox='0 0 18 18'

@@ -8,13 +8,7 @@ system for accessibility, performance, and other productivity improvements
 
 ### Getting Started
 
-Check out [docs](https://github.com/A11yWatch/a11ywatch-docs) for instructions on how to get started.
-
-### Development
-
-Fore more information checkout [getting-started](https://a11ywatch.github.io/a11ywatch-docs/docs/getting-started)
-
-1. `docker-compose -f development.yml up`
+Check out [DOCS](https://a11ywatch.github.io/a11ywatch-docs/docs/getting-started) for instructions on how to get started.
 
 ### Services
 

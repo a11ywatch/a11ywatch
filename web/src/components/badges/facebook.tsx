@@ -6,16 +6,14 @@
 
 import React from 'react'
 import { Typography, Tooltip } from '@material-ui/core'
-import { styleSpace } from './style'
 import { strings } from '@app-strings'
+import { defaultProps } from './defaultProps'
+import type { BadgeProps } from './badge-types'
 
-export const FacebookBadge = ({
-  style = styleSpace,
-  href = 'https://www.facebook.com/A11ywatch-114828426730553/',
-  inline,
-}: any) => {
+export const FacebookBadge = ({ style, inline }: BadgeProps) => {
   const FACEBOOK = 'Facebook'
   const TITLE = `${strings.appName} on ${FACEBOOK}`
+  const href = 'https://www.facebook.com/A11ywatch-114828426730553/'
 
   if (inline) {
     return (
@@ -68,3 +66,5 @@ export const FacebookBadge = ({
     </Tooltip>
   )
 }
+
+FacebookBadge.defaultProps = defaultProps

@@ -5,51 +5,17 @@
  **/
 
 import React from 'react'
-import { Typography, Tooltip } from '@material-ui/core'
 import { strings } from '@app-strings'
-import { styleSpace } from './style'
+import { defaultProps } from './defaultProps'
+import type { BadgeProps } from './badge-types'
+import { Badge } from './badge'
 
-export const TwitterBadge = ({
-  style = styleSpace,
-  href = 'https://twitter.com/A11yWatcher',
-  inline,
-  size = 'small',
-}: any) => {
-  const title = 'Twitter'
-  const label = `${strings.appName} on ${title}`
-  const src = `static/img/${title.toLowerCase()}.svg`
-  const height = size === 'small' ? 20 : 36
-  const width = size === 'small' ? 20 : 36
-  const imageStyle = { width, height }
+export const TwitterBadge = (props: BadgeProps) => <Badge {...props} />
 
-  if (inline) {
-    return (
-      <a
-        href={href}
-        style={!inline ? style : {}}
-        target='_blank'
-        aria-label={label}
-      >
-        <div style={{ display: 'flex' }}>
-          <img src={src} alt={label} style={imageStyle} />
-          <Typography variant={'subtitle2'} style={{ marginLeft: 12 }}>
-            {title}
-          </Typography>
-        </div>
-      </a>
-    )
-  }
-
-  return (
-    <Tooltip title={label}>
-      <a
-        href={href}
-        style={!inline ? style : {}}
-        target='_blank'
-        aria-label={label}
-      >
-        <img src={src} alt={label} style={imageStyle} />
-      </a>
-    </Tooltip>
-  )
+TwitterBadge.defaultProps = {
+  ...defaultProps,
+  title: 'Twitter',
+  label: `${strings.appName} on Twitter`,
+  src: `static/img/twitter.svg`,
+  href: 'https://twitter.com/A11yWatcher',
 }

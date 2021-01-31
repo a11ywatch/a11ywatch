@@ -5,51 +5,17 @@
  **/
 
 import React from 'react'
-import { Typography, Tooltip } from '@material-ui/core'
 import { strings } from '@app-strings'
-import { styleSpace } from './style'
+import { Badge } from './badge'
+import { defaultProps } from './defaultProps'
+import type { BadgeProps } from './badge-types'
 
-export const SpectrumBadge = ({
-  style = styleSpace,
-  href = 'https://spectrum.chat/a11ywatch',
-  inline,
-  size = 'small',
-}: any) => {
-  const title = 'Spectrum'
-  const label = `${strings.appName} on ${title}`
-  const src = `static/img/${title.toLowerCase()}.svg`
-  const height = size === 'small' ? 20 : 36
-  const width = size === 'small' ? 20 : 36
-  const imageStyle = { width, height }
+export const SpectrumBadge = (props: BadgeProps) => <Badge {...props} />
 
-  if (inline) {
-    return (
-      <a
-        href={href}
-        style={!inline ? style : {}}
-        target='_blank'
-        aria-label={label}
-      >
-        <div style={{ display: 'flex' }}>
-          <img src={src} alt={label} style={imageStyle} />
-          <Typography variant={'subtitle2'} style={{ marginLeft: 12 }}>
-            {title}
-          </Typography>
-        </div>
-      </a>
-    )
-  }
-
-  return (
-    <Tooltip title={label}>
-      <a
-        href={href}
-        style={!inline ? style : {}}
-        target='_blank'
-        aria-label={label}
-      >
-        <img src={src} alt={label} style={imageStyle} />
-      </a>
-    </Tooltip>
-  )
+SpectrumBadge.defaultProps = {
+  ...defaultProps,
+  title: 'Spectrum',
+  label: `${strings.appName} on Spectrum`,
+  src: `static/img/spectrum.svg`,
+  href: 'https://spectrum.chat/a11ywatch',
 }
