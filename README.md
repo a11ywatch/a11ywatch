@@ -12,25 +12,13 @@ Check out [docs](https://github.com/A11yWatch/a11ywatch-docs) for instructions o
 
 ### Development
 
-First time setup run `./bootstrap.sh`. If building the `ui` package pass in `-f development-ui` with the inital start command below.
+Fore more information checkout [getting-started](https://a11ywatch.github.io/a11ywatch-docs/docs/getting-started)
 
-1. `./bootstrap.sh`
-2. `docker-compose -f development.yml up`
+1. `docker-compose -f development.yml up`
 
 ### Services
 
-| Service                             | Container Purpose                                              | Default Port |
-| ----------------------------------- | -------------------------------------------------------------- | ------------ |
-| [web](/web)                         | web application that interacts with the main api               | 3000         |
-| [api](/api)                         | central core api for the monolith                              | 8080         |
-| [mav](/mav)                         | image detector api for generating names with probability       | 8020         |
-| [angelica](/angelica)               | website issue detector api engine with accessibility fixes     | 8040         |
-| [watcher](/watcher)                 | gather all urls/webpages api for a website                     | 8000         |
-| [cdn-server](/cdn-server)           | create and store js scripts to fix web issues                  | 8090         |
-| [iframe-server](/iframe-server)     | render websites on proxy domain for manipulation               | 8010         |
-| [example-site](/example-site)       | create and test issues for the accessibility engine (optional) | 8050         |
-| [logger](/logger)                   | stream of all logs across micro-services (optional)            | 8022         |
-| [mongodb](https://www.mongodb.com/) | central database for website and user data storage             | 27017        |
+[Services](https://a11ywatch.github.io/a11ywatch-docs/docs/services)
 
 ### Deployment
 
@@ -39,11 +27,6 @@ create your git remotes and name it the directory name. You can use the `deploy.
 ## Backers
 
 Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/a11ywatch#backer)]
-
-## Other Repos
-
-[a11ywatch-docs](https://github.com/A11yWatch/a11ywatch-docs)
-[a11ywatch-ui](https://github.com/A11yWatch/a11ywatch-ui)
 
 ## LICENSE
 
