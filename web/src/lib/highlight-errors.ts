@@ -6,12 +6,12 @@
 
 import React from 'react'
 import { createPortal } from 'react-dom'
-import Color from 'color'
 import { Overlay } from '@app/components/general'
 import { Annotations } from '@app/components/ada'
-
 import { IframeManager, AppManager } from '@app/managers'
+import { getAccessibleColors } from './get-colors'
 import { bindItemClick } from './ada/bind'
+import { getFontContrastErrors } from './get-font-contrast-errors'
 
 // TODO: DEPRECATE THIS FILE
 export const highlightErrors = (iframeDOM: Document, url: string) => {
@@ -51,67 +51,57 @@ export const highlightErrors = (iframeDOM: Document, url: string) => {
       )
 
       if (parentBackgroundColor && elementColor) {
-        const background = Color(parentBackgroundColor)
-        const foreground = Color(elementColor)
-        const l1 = background.luminosity()
-        const l2 = foreground.luminosity()
-        const elumRatio = Number(
-          l1 >= l2 ? l1 + 0.05 / l2 + 0.05 : l2 + 0.05 / l1 + 0.05
-        )
+        const {
+          background,
+          foreground,
+          l1,
+          l2,
+          contrastRatio,
+        } = getAccessibleColors({
+          parentBackgroundColor,
+          elementColor,
+        })
 
-        const addLuminosity = !Number.isFinite(elumRatio) ? elumRatio : 0
-        const contrastRatio = background.contrast(foreground) + addLuminosity
+        const {
+          errorAALarge,
+          errorAASmall,
+          warningAALarge,
+          warningAASmall,
+          contrastFontError,
+        } = getFontContrastErrors({ elementFontSize, contrastRatio })
 
-        const errorAALarge =
-          contrastRatio < 2.5 && parseInt(elementFontSize, 10) >= 24
-        const errorAASmall =
-          contrastRatio < 2.5 && parseInt(elementFontSize, 10) <= 16
-        const warningAALarge =
-          contrastRatio < 2.9 && parseInt(elementFontSize, 10) >= 24
-        const warningAASmall =
-          contrastRatio < 2.9 && parseInt(elementFontSize, 10) <= 16
-
-        const error_state =
-          errorAALarge ||
-          errorAASmall ||
-          warningAALarge ||
-          warningAASmall ||
-          parseInt(elementFontSize, 10) < 8
         try {
-          if (error_state) {
+          if (contrastFontError) {
             const newElement = iframeDOM.createElement('div')
 
             elementParent?.insertBefore(newElement, item.nextSibling)
-
             IframeManager.setAdaElements({
               source: item,
               parent: elementParent,
             })
 
-            const annotationProps = {
-              contrastRatio: contrastRatio.toFixed(2),
-              source: item,
-              elementParent: elementParent,
-              portalID: IframeManager.portals.length,
-              errorType: {
-                errorAALarge,
-                errorAASmall,
-                warningAALarge,
-                warningAASmall,
-                smallFont: parseInt(elementFontSize, 10) < 8,
-                major: contrastRatio === Infinity,
-              },
-            }
-
             IframeManager.setPortals(
               createPortal(
-                React.createElement(Annotations, annotationProps),
+                React.createElement(Annotations, {
+                  contrastRatio: contrastRatio.toFixed(2),
+                  source: item,
+                  elementParent: elementParent,
+                  portalID: IframeManager.portals.length,
+                  errorType: {
+                    errorAALarge,
+                    errorAASmall,
+                    warningAALarge,
+                    warningAASmall,
+                    smallFont: parseInt(elementFontSize, 10) < 8,
+                    major: contrastRatio === Infinity,
+                  },
+                }),
                 newElement
               )
             )
           }
         } catch (e) {
-          console.error(e)
+          console.error('highlight a11y errors issue', e)
         }
       }
     })
