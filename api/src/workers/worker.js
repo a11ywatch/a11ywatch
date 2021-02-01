@@ -34,6 +34,6 @@ process.on("message", ({ urlMap, userId }) => {
       headers: { "Content-Type": "application/json" },
     });
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 });

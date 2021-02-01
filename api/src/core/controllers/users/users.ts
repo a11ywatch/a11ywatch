@@ -302,7 +302,6 @@ export const UsersController: UserControllerType = (
           }
         );
 
-        // console.log(stripeCustomer);
         let plan = STRIPE_BASIC_PLAN;
 
         if (parsedToken.plan === 1) {
@@ -485,7 +484,7 @@ export const UsersController: UserControllerType = (
 
         return { email: "true" };
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
     } else {
       throw new Error(GENERAL_ERROR);

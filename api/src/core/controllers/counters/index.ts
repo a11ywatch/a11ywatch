@@ -15,7 +15,7 @@ const CountersController = ({ user } = { user: null }) => ({
 
       return chain ? [counters, collection] : counters;
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   },
   getCounter: async ({ _id }, chain) => {
@@ -25,7 +25,7 @@ const CountersController = ({ user } = { user: null }) => ({
 
       return chain ? [counter, collection] : counter;
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   },
   getNextSequenceValue: async (sequenceName) => {

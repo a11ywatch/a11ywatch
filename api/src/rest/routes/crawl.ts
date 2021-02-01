@@ -17,7 +17,7 @@ const websiteCrawl = async (req, res) => {
       const { user_id, pages, domain } = JSON.parse(data);
 
       if (pages?.length === 0) {
-        console.log("page offline", domain);
+        console.log("Offline: ", domain);
         await UsersController().sendWebsiteOffline({ id: user_id, domain });
         res.send(false);
       } else {

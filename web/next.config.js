@@ -57,7 +57,7 @@ const env = {
 module.exports = withPWA({
   pwa: {
     dest: 'public',
-    register: true,
+    mode: process.env.WORKBOX_MODE || 'production',
   },
   compress: true,
   generateBuildId: async () =>

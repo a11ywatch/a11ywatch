@@ -69,7 +69,6 @@ export const generateWebsiteAverage = async (
           : "#EF9A9A",
     };
 
-    // console.log(`GENERATING AVG ADA SCORE: ${domain} - ${avgScore}`);
     if (allWebSites?.length) {
       await websiteCollection.updateOne(
         { domain, userId },
@@ -84,7 +83,7 @@ export const generateWebsiteAverage = async (
     }
 
     return avgScore;
-  } catch (generate_error) {
-    console.log(generate_error);
+  } catch (e) {
+    console.error(e);
   }
 };

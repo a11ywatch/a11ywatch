@@ -65,7 +65,7 @@ export const WebsitesController = ({ user } = { user: null }) => ({
 
       return chain ? [website, collection, collectionLength?.length] : website;
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   },
   getWebsites: async ({ userId }) => {
@@ -81,7 +81,7 @@ export const WebsitesController = ({ user } = { user: null }) => ({
         return [];
       }
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   },
   getWebsitesCrawler: async ({ userId, domain }, chain) => {
@@ -96,7 +96,7 @@ export const WebsitesController = ({ user } = { user: null }) => ({
 
       return chain ? [websites, collection] : websites;
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   },
   getWebsitesScan: async ({ userId, url, domain }, chain) => {
@@ -107,7 +107,7 @@ export const WebsitesController = ({ user } = { user: null }) => ({
 
       return chain ? [websites, collection] : websites;
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   },
   getAllWebsites: async () => {
@@ -121,7 +121,7 @@ export const WebsitesController = ({ user } = { user: null }) => ({
 
       return websites;
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   },
   addWebsite: async ({ userId, url: urlMap, customHeaders, audience }) => {

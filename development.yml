@@ -70,8 +70,6 @@ services:
       dockerfile: ./Dockerfile.dev
     env_file:
       - ./web/.env
-    depends_on:
-      - api
     volumes:
       - ./web/src:/usr/src/app/src
       - ./web/public:/usr/src/app/public
