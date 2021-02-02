@@ -116,12 +116,13 @@ export const WebsitesController = ({ user } = { user: null }) => ({
       const websites = await collection
         .find({ userId: { $gt: -1 } })
         .project({ url: 1, userId: 1 })
-        .limit(1000)
+        .limit(10000)
         .toArray();
 
-      return websites;
+      return websites || [];
     } catch (e) {
       console.error(e);
+      return [];
     }
   },
   addWebsite: async ({ userId, url: urlMap, customHeaders, audience }) => {
