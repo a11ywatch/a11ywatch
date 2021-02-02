@@ -16,7 +16,7 @@ import {
 import { strings } from '@app-strings'
 import { metaSetter } from '@app/utils'
 
-const useStyles = makeStyles(({ breakpoints, palette, spacing }) => ({
+const useStyles = makeStyles(({ breakpoints, palette }) => ({
   paper: {
     display: 'flex',
     flex: 1,

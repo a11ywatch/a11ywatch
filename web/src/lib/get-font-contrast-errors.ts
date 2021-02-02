@@ -5,43 +5,47 @@
  **/
 
 type GetFontContrastInput = {
-  contrastRatio?: number
-  elementFontSize?: string | number
+  contrastRatio: number
+  elementFontSize: string
 }
 
 type GetFontContrastReturn = {
-  errorAALarge?: number
-  errorAASmall?: number
-  warningAALarge?: number
-  warningAASmall?: number
+  errorAALarge: boolean
+  errorAASmall: boolean
+  warningAALarge: boolean
+  warningAASmall: boolean
+  contrastFontError: boolean
 }
 
 const getFontContrastErrors = ({
-  parentBackgroundColor,
-  elementColor,
+  elementFontSize,
+  contrastRatio,
 }: GetFontContrastInput): GetFontContrastReturn => {
-  const errorAALarge =
+  const errorAALarge = Boolean(
     contrastRatio < 2.5 && parseInt(elementFontSize, 10) >= 24
-  const errorAASmall =
+  )
+  const errorAASmall = Boolean(
     contrastRatio < 2.5 && parseInt(elementFontSize, 10) <= 16
-  const warningAALarge =
+  )
+  const warningAALarge = Boolean(
     contrastRatio < 2.9 && parseInt(elementFontSize, 10) >= 24
-  const warningAASmall =
+  )
+  const warningAASmall = Boolean(
     contrastRatio < 2.9 && parseInt(elementFontSize, 10) <= 16
-
-  const contrastFontError =
-    errorAALarge ||
-    errorAASmall ||
-    warningAALarge ||
-    warningAASmall ||
-    parseInt(elementFontSize, 10) < 8
+  )
 
   return {
     errorAALarge,
     errorAASmall,
     warningAALarge,
     warningAASmall,
-    contrastFontError,
+    contrastFontError: Boolean(
+      errorAALarge ||
+        errorAASmall ||
+        warningAALarge ||
+        warningAASmall ||
+        parseInt(elementFontSize, 10) < 8
+    ),
   }
 }
 

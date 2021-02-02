@@ -44,30 +44,33 @@ export const emailMessager = {
     },
     confirmedOnly = false,
   }: any) => {
-    if (realUser(userId)) {
+    if (realUser(userId) && data?.issues?.length) {
       const [userCollection] = await connect("Users");
       const findUser = await userCollection.findOne({ id: userId });
 
-      if (!findUser || (confirmedOnly && !findUser?.emailConfirmed)) {
+      if (
+        !findUser ||
+        !findUser?.alertEnabled ||
+        (confirmedOnly && !findUser?.emailConfirmed)
+      ) {
         return null;
       }
 
+      const currentDate = new Date();
+
       if (
-        (data?.issues?.length &&
-          findUser?.alertEnabled &&
-          !findUser.lastAlertDateStamp) ||
-        (findUser?.alertEnabled &&
-          !isSameDay(findUser?.lastAlertDateStamp, new Date()))
+        !findUser.lastAlertDateStamp ||
+        !isSameDay(findUser?.lastAlertDateStamp, currentDate)
       ) {
         try {
           await userCollection.findOneAndUpdate(
             { id: userId },
-            { $set: { lastAlertDateStamp: new Date() } }
+            { $set: { lastAlertDateStamp: currentDate } }
           );
 
           const mailconfig = Object.assign({}, mailOptions, {
             to: findUser.email,
-            subject: `${data?.issues?.length} issues found with ${
+            subject: `${data.issues.length} issues found with ${
               data?.pageUrl || data?.domain
             }.`,
             html: `${logoSvg}<br /><h1>${issuesFoundTemplate(

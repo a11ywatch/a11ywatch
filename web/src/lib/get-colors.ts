@@ -5,6 +5,7 @@
  **/
 
 import Color from 'color'
+import type { default as ColorType } from 'color'
 
 type GetColorInput = {
   parentBackgroundColor?: string
@@ -12,11 +13,11 @@ type GetColorInput = {
 }
 
 type GetColorReturn = {
-  background?: string
-  foreground?: string
-  l1?: string
-  l2?: string
-  contrastRatio?: number
+  background?: ColorType<string>
+  foreground?: ColorType<string>
+  l1?: any
+  l2?: any
+  contrastRatio: number
 }
 
 const getAccessibleColors = ({
@@ -30,13 +31,12 @@ const getAccessibleColors = ({
   const elumRatio = Number(
     l1 >= l2 ? l1 + 0.05 / l2 + 0.05 : l2 + 0.05 / l1 + 0.05
   )
-  const contrastRatio =
-    background.contrast(foreground) +
-    (!Number.isFinite(elumRatio) ? elumRatio : 0)
 
   return {
     background,
-    contrastRatio,
+    contrastRatio:
+      background.contrast(foreground) +
+      (!Number.isFinite(elumRatio) ? elumRatio : 0),
     foreground,
     l1,
     l2,

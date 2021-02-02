@@ -16,3 +16,4 @@ export { initUrl } from "./init-url";
 export { sourceBuild } from "./source-build";
 export { realUser } from "./getters";
 export { getUser } from "./get-user";
+export { usageExceededThreshold } from "./get-usage";

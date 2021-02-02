@@ -15,7 +15,6 @@ import {
 } from '@app/components/general'
 import { strings } from '@app-strings'
 import { theme } from '@app-theme'
-import { Shape } from 'ui'
 import { metaSetter } from '@app/utils'
 
 const paperStyles = { display: 'flex', flex: 1, padding: 12, marginTop: 12 }
@@ -48,6 +47,31 @@ function RoadMap() {
   const classes = useStyles()
   const paperStyles = classes.paper
 
+  function Image({ src, alt }: { src: string; alt: string }) {
+    return (
+      <img
+        alt={alt}
+        src={src}
+        style={{ maxHeight: '30vh' }}
+        className='hide-print'
+      />
+    )
+  }
+
+  function TypeHeading({ children }: { children: any }) {
+    return (
+      <Typography
+        variant='h5'
+        component='h3'
+        gutterBottom
+        className={classes.title}
+        style={{ fontWeight: 600 }}
+      >
+        {children}
+      </Typography>
+    )
+  }
+
   return (
     <MarketingDrawer title={RoadMap.name}>
       <Container maxWidth='xl'>
@@ -63,14 +87,7 @@ function RoadMap() {
             style={{ paddingLeft: 0, paddingRight: 0 }}
           >
             <div style={{ textAlign: 'left', marginRight: 12 }}>
-              <Typography
-                variant='h5'
-                component='h2'
-                gutterBottom
-                style={{ fontWeight: 600 }}
-              >
-                Web Accessibility Progression
-              </Typography>
+              <TypeHeading>Web Accessibility Progression</TypeHeading>
               <Typography variant='h6' component='h3' gutterBottom>
                 It is important to note the steps we are trying to take for the
                 ultimate level of compliance with minimal downsides along the
@@ -87,22 +104,12 @@ function RoadMap() {
             1
           </Circle>
           <Paper className={paperStyles}>
-            <img
+            <Image
               src='static/img/server.svg'
-              style={{ maxHeight: '30vh' }}
-              className='hide-print'
               alt={'javascript fixes from a cdn'}
             />
             <div style={{ textAlign: 'right', marginLeft: 12 }}>
-              <Typography
-                variant='h5'
-                component='h3'
-                gutterBottom
-                className={classes.title}
-                style={{ fontWeight: 600 }}
-              >
-                JS execution fixes
-              </Typography>
+              <TypeHeading>JS execution fixes</TypeHeading>
               <Typography variant='h6' component='h3' gutterBottom>
                 Our initial and simplest phase to get some level of fixes is to
                 provide a CDN to override the issues at runtime using
@@ -119,15 +126,7 @@ function RoadMap() {
           </Circle>
           <Paper className={paperStyles}>
             <div style={{ textAlign: 'left', marginRight: 12 }}>
-              <Typography
-                variant='h5'
-                component='h3'
-                gutterBottom
-                className={classes.title}
-                style={{ fontWeight: 600 }}
-              >
-                Editable Scripts
-              </Typography>
+              <TypeHeading>Editable Scripts</TypeHeading>
               <Typography variant='h6' component='h3' gutterBottom>
                 AI and machine learning has a bit to go to have spot on labeling
                 for image recognition. This means we need to have a level of
@@ -138,11 +137,9 @@ function RoadMap() {
                 can be applied on your custom CDN.
               </Typography>
             </div>
-            <img
+            <Image
               src='static/img/type_code.svg'
               alt={'edit your code with accuracy'}
-              style={{ maxHeight: '30vh' }}
-              className='hide-print'
             />
           </Paper>
           <Circle className={`${classes.circle} ${classes.circleRight}`}>
@@ -154,22 +151,9 @@ function RoadMap() {
               border: `2px solid ${theme.palette.secondary.main}`,
             }}
           >
-            <img
-              src='static/img/source_code.svg'
-              alt={'source code visual'}
-              style={{ maxHeight: '30vh' }}
-              className='hide-print'
-            />
+            <Image src='static/img/source_code.svg' alt='source code visual' />
             <div style={{ textAlign: 'right', marginLeft: 12 }}>
-              <Typography
-                variant='h5'
-                component='h3'
-                gutterBottom
-                className={classes.title}
-                style={{ fontWeight: 600 }}
-              >
-                Compilation Fixes
-              </Typography>
+              <TypeHeading>Compilation Fixes</TypeHeading>
               <Typography variant='h6' component='h3' gutterBottom>
                 With fixes applied at compile time we no longer need to rely on
                 javascript to load the solutions initially. This is a huge
@@ -184,15 +168,7 @@ function RoadMap() {
           </Circle>
           <Paper className={paperStyles}>
             <div style={{ textAlign: 'left', marginRight: 12 }}>
-              <Typography
-                variant='h5'
-                component='h3'
-                gutterBottom
-                className={classes.title}
-                style={{ fontWeight: 600 }}
-              >
-                Development Code Generation
-              </Typography>
+              <TypeHeading>Development Code Generation</TypeHeading>
               <Typography variant='h6' component='h3' gutterBottom>
                 The last step is to provide a way to hook into your development
                 process that runs in your own environment. With the dev time
@@ -203,11 +179,9 @@ function RoadMap() {
                 basic html support.
               </Typography>
             </div>
-            <img
+            <Image
               src='static/img/js_frameworks.svg'
               alt={'languages supported a variation'}
-              style={{ maxHeight: '30vh' }}
-              className='hide-print'
             />
           </Paper>
           <Spacer height={'20vh'} />

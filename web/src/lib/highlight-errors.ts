@@ -51,13 +51,7 @@ export const highlightErrors = (iframeDOM: Document, url: string) => {
       )
 
       if (parentBackgroundColor && elementColor) {
-        const {
-          background,
-          foreground,
-          l1,
-          l2,
-          contrastRatio,
-        } = getAccessibleColors({
+        const { contrastRatio } = getAccessibleColors({
           parentBackgroundColor,
           elementColor,
         })

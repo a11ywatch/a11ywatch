@@ -21,34 +21,37 @@ export const Badge = ({
   const height = size === 'small' ? 20 : 36
   const width = size === 'small' ? 20 : 36
 
-  if (inline) {
+  function Anchor({ children }: { children: any }) {
     return (
       <a
         href={href}
         style={!inline ? style : {}}
-        target='_blank'
+        target={'_blank'}
         aria-label={label}
       >
-        <div style={{ display: 'flex' }}>
-          <img src={src} style={{ height, width }} alt={title} />
-          <Typography variant={'subtitle2'} style={{ marginLeft: 12 }}>
-            {title}
-          </Typography>
-        </div>
+        {children}
       </a>
     )
   }
 
+  const img = <img src={src} style={{ height, width }} alt={title} />
+
+  if (inline) {
+    return (
+      <Anchor>
+        <div style={{ display: 'flex' }}>
+          {img}
+          <Typography variant={'subtitle2'} style={{ marginLeft: 12 }}>
+            {title}
+          </Typography>
+        </div>
+      </Anchor>
+    )
+  }
+
   return (
-    <Tooltip title={label}>
-      <a
-        href={href}
-        style={!inline ? style : {}}
-        target='_blank'
-        aria-label={label}
-      >
-        <img src={src} style={{ height, width }} alt={title} />
-      </a>
+    <Tooltip title={String(label)}>
+      <Anchor>{img}</Anchor>
     </Tooltip>
   )
 }

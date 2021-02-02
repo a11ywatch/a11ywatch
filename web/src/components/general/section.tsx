@@ -5,15 +5,14 @@
  **/
 
 import React from 'react'
+import type { SectionProps } from './section-types'
 
-type SectionProps = {
-  alignRight?: boolean
-  children?: any
-  className?: string
-}
-
-export function Section({ alignRight, children, className }: SectionProps) {
-  let textAlign = 'left'
+export function Section({
+  alignRight,
+  children,
+  className,
+  textAlign = 'left',
+}: SectionProps) {
   let margin = 'marginRight'
 
   if (alignRight) {

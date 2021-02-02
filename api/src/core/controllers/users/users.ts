@@ -220,38 +220,44 @@ export const UsersController: UserControllerType = (
       user: _user,
     }).getUser({ email }, true);
 
-    if (user?.salt || user?.googleId || (user && googleId)) {
-      const salthash = password && saltHashPassword(password, user.salt);
+    const googleAuthed = user && (user.googleId || googleId);
+    const salthash = (password && saltHashPassword(password, user?.salt)) || {};
+
+    if (user?.salt || googleAuthed) {
       if (user?.password === salthash?.passwordHash || googleId) {
         let keyid = user?.id;
-        let updateProps;
+        let updateCollectionProps = {};
 
         if (typeof user?.id === "undefined" || user?.id === null) {
           keyid = await CountersController().getNextSequenceValue("Users");
-          updateProps = { id: keyid };
+          updateCollectionProps = { id: keyid };
         }
 
         const jwt = signJwt({
           email: user?.email,
-          role: user.role || 0,
+          role: user?.role || 0,
           keyid,
         });
 
-        updateProps = { ...updateProps, jwt };
+        updateCollectionProps = { ...updateCollectionProps, jwt };
 
         if (googleId) {
-          updateProps = { ...updateProps, googleId };
+          updateCollectionProps = { ...updateCollectionProps, googleId };
         }
 
-        await collection.updateOne({ email }, { $set: updateProps });
+        await collection.updateOne(
+          { email },
+          {
+            $set: updateCollectionProps,
+          }
+        );
+
         return user;
       } else {
         throw new Error(EMAIL_ERROR);
       }
     } else {
-      const salthash = (password && saltHashPassword(password)) || {};
       const id = await CountersController().getNextSequenceValue("Users");
-
       const userObject = {
         email,
         password: salthash?.passwordHash,
@@ -265,7 +271,6 @@ export const UsersController: UserControllerType = (
       };
 
       await collection.insertOne(userObject);
-
       await UsersController({ user: _user }).confirmEmail({ keyid: id });
 
       return userObject;

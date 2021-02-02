@@ -1,5 +1,5 @@
 import { UsersController } from "@app/core/controllers";
-import { getUser } from "@app/core/utils";
+import { getUser, usageExceededThreshold } from "@app/core/utils";
 import { imageDetect } from "@app/core/external";
 import { TOKEN_EXPIRED_ERROR, RATE_EXCEEDED_ERROR } from "@app/core/strings";
 
@@ -35,12 +35,8 @@ const detectImage = async (req, res) => {
     user,
   }).updateApiUsage({ id: keyid }, true);
 
-  const usage = userData?.apiUsage?.usage;
-
   if (
-    (audience === 0 && usage >= 3) ||
-    (audience === 1 && usage >= 100) ||
-    (audience === 2 && usage >= 500)
+    usageExceededThreshold({ audience, usage: userData?.apiUsage?.usage || 0 })
   ) {
     res.json({
       data: null,
