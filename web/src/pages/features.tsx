@@ -55,6 +55,20 @@ function Features() {
     )
   }
 
+  function SectionText({ children }: { children: any }) {
+    return (
+      <Typography
+        variant='h5'
+        component='h3'
+        gutterBottom
+        className={classes.title}
+        style={{ fontWeight: 600 }}
+      >
+        {children}
+      </Typography>
+    )
+  }
+
   return (
     <MarketingDrawer title={Features.name}>
       <Container maxWidth='xl'>
@@ -68,15 +82,7 @@ function Features() {
           <div className={classes.row}>
             <Paper className={paper}>
               <Section>
-                <Typography
-                  variant='h5'
-                  component='h3'
-                  gutterBottom
-                  className={classes.title}
-                  style={{ fontWeight: 600 }}
-                >
-                  Issue Reporter
-                </Typography>
+                <SectionText>Issue Reporter</SectionText>
                 <Typography variant='h6' component='h3' gutterBottom>
                   Our issue reporter scans for problems with recommended
                   solutions. Get notified as they occur with detailed
@@ -92,15 +98,7 @@ function Features() {
             <Paper className={paper}>
               <Image src='static/img/cloud_files.svg' alt={'cloud stored'} />
               <Section alignRight>
-                <Typography
-                  variant='h5'
-                  component='h3'
-                  gutterBottom
-                  className={classes.title}
-                  style={{ fontWeight: 600 }}
-                >
-                  Auto CDN
-                </Typography>
+                <SectionText>Auto CDN</SectionText>
                 <Typography variant='h6' component='h3' gutterBottom>
                   Include a custom cdn that fixes most of your issues at
                   runtime. Our cdn uses a neural network that is composed of a
@@ -119,15 +117,7 @@ function Features() {
                 alt={'website playground to test fixes'}
               />
               <Section>
-                <Typography
-                  variant='h5'
-                  component='h3'
-                  gutterBottom
-                  className={classes.title}
-                  style={{ fontWeight: 600 }}
-                >
-                  Website View
-                </Typography>
+                <SectionText>Website View</SectionText>
                 <Typography variant='h6' component='h3' gutterBottom>
                   View your website with annotations of the issues on your page.
                   Experiment with recommended fixes before you add in our secure
@@ -137,15 +127,7 @@ function Features() {
             </Paper>
             <Paper className={paper}>
               <Section alignRight>
-                <Typography
-                  variant='h5'
-                  component='h3'
-                  gutterBottom
-                  className={classes.title}
-                  style={{ fontWeight: 600 }}
-                >
-                  Script View
-                </Typography>
+                <SectionText>Script View</SectionText>
                 <Typography variant='h6' component='h3' gutterBottom>
                   View your scripts that come from the scripts page. Verifiy
                   exactly what goes into production with notes on whats being
