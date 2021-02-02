@@ -33,11 +33,7 @@ export async function websiteWatch() {
         const role = item?.role || 0;
         if (url) {
           const { domain } = sourceBuild(url);
-          if (!realUser(userId) || TEMP_WATCHER_BLACKLIST.includes(domain)) {
-            !realUser(userId)
-              ? console.log("NO USER:", url)
-              : console.log("BLACKLISTED:", url);
-          } else {
+          if (realUser(userId) || !TEMP_WATCHER_BLACKLIST.includes(domain)) {
             if (role === 0) {
               console.log(`URL started: ${url}`);
               await SubDomainController().crawlWebsite({
@@ -75,7 +71,7 @@ export async function websiteWatch() {
         }
       }
     }
-  } catch (watch_error) {
-    console.log(watch_error);
+  } catch (e) {
+    console.error(e);
   }
 }

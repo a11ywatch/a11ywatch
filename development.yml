@@ -9,11 +9,6 @@ services:
     volumes:
       - ./api/src:/usr/src/app/src
       - ./api/__tests__:/usr/src/app/__tests__
-    depends_on:
-      - mongodb
-      - angelica
-      - watcher
-      - cdn-server
     networks:
       - back-net
       - front-net

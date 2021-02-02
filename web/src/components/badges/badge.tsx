@@ -6,7 +6,6 @@
 
 import React from 'react'
 import { Typography, Tooltip } from '@material-ui/core'
-import { strings } from '@app-strings'
 import { defaultProps } from './defaultProps'
 import type { BadgeProps } from './badge-types'
 

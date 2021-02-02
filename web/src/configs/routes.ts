@@ -90,6 +90,18 @@ export const Routes = [
     type: 'explore',
   },
   {
+    nav: false,
+    href: 'https://www.miniprograms.xyz',
+    name: 'Mini Programs',
+    type: 'resources',
+  },
+  {
+    nav: true,
+    href: 'https://a11ywatch.github.io/a11ywatch-docs/',
+    name: 'Docs',
+    type: 'resources',
+  },
+  {
     nav: true,
     href: 'login',
     name: 'Login',
@@ -98,12 +110,6 @@ export const Routes = [
     nav: true,
     href: 'register',
     name: 'Register',
-  },
-  {
-    nav: false,
-    href: 'https://www.miniprograms.xyz',
-    name: 'Mini Programs',
-    type: 'resources',
   },
 ]
 

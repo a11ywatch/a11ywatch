@@ -10,6 +10,7 @@ export type BadgeProps = {
   inline: boolean
   size?: 'small' | 'large' | ''
   className?: string
-  label?: string
-  title?: string
+  label: string
+  title: string
+  src?: string
 }

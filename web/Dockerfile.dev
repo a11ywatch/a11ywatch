@@ -2,8 +2,6 @@ FROM node:12.0.0-alpine
 
 WORKDIR /usr/src/app 
 
-ARG NODE_ENV
-
 COPY package*.json .env ./
 
 RUN npm install

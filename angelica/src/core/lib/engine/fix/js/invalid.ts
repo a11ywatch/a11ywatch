@@ -15,10 +15,21 @@ interface ExtraConfig {
   alt?: string;
 }
 
+type FixInvalidReturn = {
+  anchor_needs_props: string;
+  alt: string;
+  head: string;
+  textarea: string;
+  textinput: string;
+  button: string;
+  lang: string;
+  form_label: string;
+};
+
 export const fixInvalid = (
   { index, domSelector, selector }: InvalidType,
   extraConfig: ExtraConfig = { lang: "en", alt: "" }
-): any => {
+): FixInvalidReturn => {
   return {
     anchor_needs_props: `
       var emptyLinkContent${index} = document.${domSelector}("${selector}");
@@ -46,6 +57,12 @@ export const fixInvalid = (
         }
 			 	title${index}.innerHTML = longDescription${index};
       }
+`,
+    form_label: `
+            var emptySelectLabel${index} = document.${domSelector}("${selector}");
+            if (emptySelectLabel${index}) {
+              emptySelectLabel${index}.setAttribute("aria-label", emptyFormLabel${index}.placeholder || emptyFormLabel${index}.name);
+            }
 `,
     textarea: `
 	    var textarea${index} = document.${domSelector}("${selector}");

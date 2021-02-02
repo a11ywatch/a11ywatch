@@ -13,4 +13,6 @@ export const defaultProps = {
   size: 'small',
   className: '',
   title: '',
+  label: '',
+  src: '',
 }

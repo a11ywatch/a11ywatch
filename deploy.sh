@@ -6,6 +6,8 @@ if [ "$REMOTE" == "web" ]; then
 	git subtree push --prefix web web master
 elif [ "$REMOTE" == "api" ]; then
 	git subtree push --prefix api api master
+elif [ "$REMOTE" == "angelica" ]; then
+	git subtree push --prefix angelica angelica master
 elif [ "$REMOTE" == "mav" ]; then
 	git subtree push --prefix mav mav master
 elif [ "$REMOTE" == "cdn-server" ]; then

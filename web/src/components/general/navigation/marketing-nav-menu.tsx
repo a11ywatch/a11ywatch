@@ -43,6 +43,7 @@ const MobileRoutes = Routes.filter(
       'testout',
       'https://a11ywatch.blog',
       'https://www.miniprograms.xyz',
+      'https://a11ywatch.github.io/a11ywatch-docs/',
       'api-info',
     ].includes(href)
 )

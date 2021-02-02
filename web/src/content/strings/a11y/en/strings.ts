@@ -84,7 +84,8 @@ export const strings = {
     {
       id: 6,
       title: 'Secure',
-      detail: 'See your scripts with precision to see exactly whats going on',
+      detail:
+        'See your scripts with precision to see exactly whats going on anywhere',
       reason: 'Basic',
     },
     {

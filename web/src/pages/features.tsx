@@ -6,7 +6,13 @@
 import React from 'react'
 import { Container, Paper, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { Footer, Spacer, MarketingDrawer, Box } from '@app/components/general'
+import {
+  Footer,
+  Spacer,
+  MarketingDrawer,
+  Box,
+  Section,
+} from '@app/components/general'
 import { strings } from '@app-strings'
 import { metaSetter } from '@app/utils'
 
@@ -19,11 +25,6 @@ const useStyles = makeStyles(({ breakpoints, palette, spacing }) => ({
     border: `2px solid ${palette.secondary.main}`,
     [breakpoints.down(1100)]: {
       flexDirection: 'column',
-    },
-  },
-  bottomSpace: {
-    [breakpoints.down(1100)]: {
-      marginBottom: spacing(1),
     },
   },
   row: {
@@ -39,11 +40,20 @@ const useStyles = makeStyles(({ breakpoints, palette, spacing }) => ({
   },
 }))
 
-const imgStyles = { maxHeight: '30vh', maxWidth: '20vw' }
-
 function Features() {
   const classes = useStyles()
   const { paper } = classes
+
+  function Image({ src, alt }: { src: string; alt: string }) {
+    return (
+      <img
+        src={src}
+        style={{ maxHeight: '30vh', maxWidth: '20vw' }}
+        className='hide-print'
+        alt={alt}
+      />
+    )
+  }
 
   return (
     <MarketingDrawer title={Features.name}>
@@ -57,10 +67,7 @@ function Features() {
           </Typography>
           <div className={classes.row}>
             <Paper className={paper}>
-              <div
-                style={{ textAlign: 'left', marginRight: 12 }}
-                className={classes.bottomSpace}
-              >
+              <Section>
                 <Typography
                   variant='h5'
                   component='h3'
@@ -76,25 +83,15 @@ function Features() {
                   information on what happened. The reporter runs on all your
                   pages and you can run the test multiple times a day.
                 </Typography>
-              </div>
-              <img
+              </Section>
+              <Image
                 src='static/img/task_list.svg'
-                style={imgStyles}
-                className='hide-print'
                 alt={'women and accessible app'}
               />
             </Paper>
             <Paper className={paper}>
-              <img
-                src='static/img/cloud_files.svg'
-                style={imgStyles}
-                className='hide-print'
-                alt={'cloud stored'}
-              />
-              <div
-                style={{ textAlign: 'right', marginLeft: 12 }}
-                className={classes.bottomSpace}
-              >
+              <Image src='static/img/cloud_files.svg' alt={'cloud stored'} />
+              <Section alignRight>
                 <Typography
                   variant='h5'
                   component='h3'
@@ -112,21 +109,16 @@ function Features() {
                   model. The networks in layers allow us to learn and declare
                   images with extraordinary precision.
                 </Typography>
-              </div>
+              </Section>
             </Paper>
           </div>
           <div className={classes.row}>
             <Paper className={paper}>
-              <img
+              <Image
                 src='static/img/heatmap.svg'
-                style={imgStyles}
-                className='hide-print'
                 alt={'website playground to test fixes'}
               />
-              <div
-                style={{ textAlign: 'right', marginLeft: 12 }}
-                className={classes.bottomSpace}
-              >
+              <Section>
                 <Typography
                   variant='h5'
                   component='h3'
@@ -141,13 +133,10 @@ function Features() {
                   Experiment with recommended fixes before you add in our secure
                   CDN to validate the changes and more.
                 </Typography>
-              </div>
+              </Section>
             </Paper>
             <Paper className={paper}>
-              <div
-                style={{ textAlign: 'left', marginRight: 12 }}
-                className={classes.bottomSpace}
-              >
+              <Section alignRight>
                 <Typography
                   variant='h5'
                   component='h3'
@@ -162,13 +151,8 @@ function Features() {
                   exactly what goes into production with notes on whats being
                   changed. Editing scripts coming soon...
                 </Typography>
-              </div>
-              <img
-                src='static/img/code_snippets.svg'
-                style={imgStyles}
-                className='hide-print'
-                alt={'code snippets'}
-              />
+              </Section>
+              <Image src='static/img/code_snippets.svg' alt={'code snippets'} />
             </Paper>
           </div>
           <Spacer height={'20vh'} />

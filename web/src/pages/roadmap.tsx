@@ -6,7 +6,13 @@
 import React from 'react'
 import { Container, Paper, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { Footer, Spacer, MarketingDrawer, Box } from '@app/components/general'
+import {
+  Footer,
+  Spacer,
+  MarketingDrawer,
+  Box,
+  Circle,
+} from '@app/components/general'
 import { strings } from '@app-strings'
 import { theme } from '@app-theme'
 import { Shape } from 'ui'
@@ -77,12 +83,9 @@ function RoadMap() {
               </Typography>
             </div>
           </div>
-          <Shape
-            className={`${classes.circle} ${classes.circleRight}`}
-            type={'circle'}
-          >
+          <Circle className={`${classes.circle} ${classes.circleRight}`}>
             1
-          </Shape>
+          </Circle>
           <Paper className={paperStyles}>
             <img
               src='static/img/server.svg'
@@ -111,12 +114,9 @@ function RoadMap() {
               </Typography>
             </div>
           </Paper>
-          <Shape
-            className={`${classes.circle} ${classes.circleLeft}`}
-            type={'circle'}
-          >
+          <Circle className={`${classes.circle} ${classes.circleLeft}`}>
             2
-          </Shape>
+          </Circle>
           <Paper className={paperStyles}>
             <div style={{ textAlign: 'left', marginRight: 12 }}>
               <Typography
@@ -145,12 +145,9 @@ function RoadMap() {
               className='hide-print'
             />
           </Paper>
-          <Shape
-            className={`${classes.circle} ${classes.circleRight}`}
-            type={'circle'}
-          >
+          <Circle className={`${classes.circle} ${classes.circleRight}`}>
             3
-          </Shape>
+          </Circle>
           <Paper
             className={paperStyles}
             style={{
@@ -182,12 +179,9 @@ function RoadMap() {
               </Typography>
             </div>
           </Paper>
-          <Shape
-            className={`${classes.circle} ${classes.circleLeft}`}
-            type={'circle'}
-          >
+          <Circle className={`${classes.circle} ${classes.circleLeft}`}>
             4
-          </Shape>
+          </Circle>
           <Paper className={paperStyles}>
             <div style={{ textAlign: 'left', marginRight: 12 }}>
               <Typography

@@ -18,6 +18,7 @@ import {
   INVALID_HTML_NESTING,
 } from "./models/issue-type";
 import { fixInvalid } from "./fix/js";
+import { getSelectorType } from "./get-selector-type";
 
 type ExtraConfig = {
   alt?: string;
@@ -25,42 +26,43 @@ type ExtraConfig = {
 };
 
 function getIssueFixScript(
-  issue,
+  issue: any,
   index: number,
   extraConfig: ExtraConfig = {
     alt: "",
     lang: "en",
   }
-) {
+): string {
   const message = issue?.message;
-  const selector =
-    issue?.selector?.length &&
-    issue?.selector[0] === "#" &&
-    !(issue?.selector.indexOf(" ") >= 0)
-      ? "getElementById"
-      : "querySelector";
-  const fixProps = {
-    domSelector: selector,
-    selector: issue?.selector,
-    index,
-  };
-
-  const fix = () => fixInvalid(fixProps, extraConfig);
 
   if (!message) {
     return "";
   }
 
+  const selector = getSelectorType(issue);
+
+  const fix = () =>
+    fixInvalid(
+      {
+        domSelector: selector,
+        selector: issue?.selector,
+        index,
+      },
+      extraConfig
+    );
+
+  let reasonMessage = "";
+
   if (message.includes(EMPTY_HEAD_TITLE_TYPE)) {
-    return fix().head;
+    reasonMessage = fix().head;
   } else if (message.includes(INVALID_HTML_PROPS.textarea)) {
-    return fix().textarea;
+    reasonMessage = fix().textarea;
   } else if (message.includes(NO_SKIP_CONTENT)) {
-    return skipNavigationMethod;
+    reasonMessage = skipNavigationMethod;
   } else if (message.includes(INVALID_HTML_PROPS.button)) {
-    return fix().button;
+    reasonMessage = fix().button;
   } else if (message.includes(INVALID_HTML_PROPS.lang)) {
-    return fix().lang;
+    reasonMessage = fix().lang;
   } else if (
     [
       imgAltMissing,
@@ -69,9 +71,9 @@ function getIssueFixScript(
       INVALID_HTML_PROPS.ignored.img,
     ].includes(message)
   ) {
-    return fix().alt;
+    reasonMessage = fix().alt;
   } else if (message.includes(INVALID_HTML_PROPS.textinput)) {
-    return fix().textinput;
+    reasonMessage = fix().textinput;
   } else if (
     message.includes(
       "This element has insufficient contrast at this conformance level"
@@ -85,7 +87,7 @@ function getIssueFixScript(
       message.match(/Recommendation: change background to (.*)/);
 
     if (reccommendedBackground) {
-      return `
+      reasonMessage = `
 		var elementLowBackgroundContrast${index} = document.${selector}("${
         issue.selector
       }").parentElement;
@@ -99,7 +101,7 @@ function getIssueFixScript(
 	`;
     }
     if (reccommendedColor) {
-      return `
+      reasonMessage = `
 		var elementLowContrast${index} = document.${selector}("${issue.selector}");
       if (elementLowContrast${index}) {
 			elementLowContrast${index}.style.color = "${reccommendedColor[1].slice(0, -1)}";
@@ -107,32 +109,12 @@ function getIssueFixScript(
 			`;
     }
   } else if (message.includes(INVALID_HTML_PROPS.anchor_needs_props)) {
-    return fix().anchor_needs_props;
-  } else if (
-    message.includes(
-      `This form field should be labelled in some way. Use the label element (either with a "for" attribute or wrapped around the form field), or "title", "aria-label" or "aria-labelledby" attributes as appropriate.`
-    )
-  ) {
-    return `
-            var emptySelectLabel${index} = document.${selector}("${issue.selector}");
-            if (emptySelectLabel${index}) {
-              emptySelectLabel${index}.setAttribute("aria-label", emptyFormLabel${index}.name);
-            }
-	`;
-  } else if (
-    message.includes(
-      `This form field should be labelled in some way. Use the label element (either with a "for" attribute or wrapped around the form field), or "title", "aria-label" or "aria-labelledby" attributes as appropriate.`
-    )
-  ) {
-    return `
-            var emptyFormLabel${index} = document.${selector}("${issue.selector}");
-            if (emptyFormLabel${index}) {
-              emptyFormLabel${index}.setAttribute("aria-label", emptyFormLabel${index}.placeholder || emptyFormLabel${index}.name);
-            }
-	`;
+    reasonMessage = fix().anchor_needs_props;
+  } else if (message.includes(INVALID_HTML_PROPS.form_label)) {
+    reasonMessage = fix().form_label;
   } else if (message.includes(emptyIframeTitle)) {
     // getHostName USED:
-    return `
+    reasonMessage = `
 			var elementNonEmptyTitle${index} = document.${selector}("${issue.selector}");
       if (elementNonEmptyTitle${index}) {
 			  elementNonEmptyTitle${index}.title = getHostName(elementNonEmptyTitle${index}.src) || "embedded content";
@@ -143,7 +125,7 @@ function getIssueFixScript(
       `This element's role is "presentation" but contains child elements with semantic meaning.`
     )
   ) {
-    return `
+    reasonMessage = `
 			var elementNoPresentation${index} = document.${selector}("${issue.selector}");
       if (elementNoPresentation${index}) {
 			  elementNoPresentation${index}.role = "application";
@@ -155,14 +137,14 @@ function getIssueFixScript(
       `Anchor element found with link content, but no href, ID or name attribute has been supplied.`,
     ].includes(message)
   ) {
-    return `
+    reasonMessage = `
 			var emptyAnchor${index} = document.${selector}("${issue.selector}");
       if (emptyAnchor${index}) {
 			  emptyAnchor${index}.href = "JavaScript:void(0);";
       }
 			`;
   } else if (message.includes(INVALID_HTML_PROPS.button_needs_props)) {
-    return `
+    reasonMessage = `
 		var properButtonElement${index} = document.createElement("button");
 		var improperButtonElement${index} = document.${selector}("${issue.selector}");
 
@@ -174,7 +156,7 @@ function getIssueFixScript(
       }
 	`;
   } else if (message.includes(INVALID_HTML_NESTING.h5_h2)) {
-    return `
+    reasonMessage = `
 			var properH2Element${index} = document.createElement("h2");
 			var improperh5Element${index} = document.${selector}("${issue.selector}");
 
@@ -185,11 +167,11 @@ function getIssueFixScript(
 			  improperh5Element${index}.parentNode.replaceChild(properH2Element${index}, improperh5Element${index});
       }
 			`;
+  } else {
+    reasonMessage = "";
   }
-  // WARNINGS BELOW
-  else {
-    return "";
-  }
+
+  return reasonMessage;
 }
 
 export { getIssueFixScript };
