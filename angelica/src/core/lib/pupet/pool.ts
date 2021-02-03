@@ -29,9 +29,6 @@ const puppetPool = {
     try {
       await page?.close();
       if (browser) {
-        console.log(
-          `SHUTDOWN: browser: pool size:${puppeteerPool?.size}: unused: ${puppeteerPool?.available} spare: ${puppeteerPool.spareResourceCapacity}`
-        );
         await puppeteerPool.release(browser);
       }
     } catch (e) {

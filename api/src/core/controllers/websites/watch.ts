@@ -10,7 +10,7 @@ import { realUser, sourceBuild, initUrl } from "@app/core/utils";
 import { emailMessager } from "@app/core/messagers";
 
 import { WebsitesController } from "../websites";
-import { SubDomainController } from "../subdomains";
+import { crawlWebsite } from "@app/core/controllers/subdomains/update";
 
 export async function websiteWatch() {
   console.log("WATCHER SCANNING:");
@@ -44,7 +44,7 @@ export async function websiteWatch() {
         );
       } else {
         if (role === 0) {
-          await SubDomainController().crawlWebsite({
+          await crawlWebsite({
             url,
             userId,
           });

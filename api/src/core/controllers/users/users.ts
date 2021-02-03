@@ -27,55 +27,11 @@ import { pubsub } from "../../subscriptions";
 import { EMAIL_VERIFIED } from "../../static";
 import { CountersController } from "../counters";
 import { WebsitesController } from "../websites";
+import type { UserControllerType } from "./types";
 
 const { STRIPE_KEY, STRIPE_PREMIUM_PLAN, STRIPE_BASIC_PLAN, ROOT_URL } = config;
 
 const stripe = require("stripe")(STRIPE_KEY);
-
-interface AuthParams {
-  userId?: number;
-  googleId?: number;
-  password?: string;
-  email?: string;
-  newPassword?: string;
-  resetCode?: string;
-}
-interface Params extends AuthParams {
-  userId?: number;
-  id?: number;
-  emailConfirmCode?: string;
-  email?: string;
-  keyid?: number;
-  stripeToken?: string;
-  role?: number;
-  alertEnabled?: boolean;
-  code?: string;
-  domain?: string;
-}
-interface UserControllerMethodsType {
-  createUser(params: Params, chain: boolean): Promise<any>;
-  getUser(params: Params, chain: boolean): Promise<any>;
-  getUsers(chain: boolean): Promise<any>;
-  getAllUsers(chain: boolean): Promise<any>;
-  dataMigrateUsers(chain: boolean): Promise<any>;
-  updateApiUsage(params: Params, chain: boolean): Promise<any>;
-  verifyUser(params: AuthParams): Promise<any>;
-  confirmEmail(params: Params): Promise<any>;
-  addPaymentSubscription(params: Params): Promise<any>;
-  cancelSubscription(params: Params): Promise<any>;
-  updateUser(params: Params, chain: boolean): Promise<any>;
-  forgotPassword(params: Params, chain: boolean): Promise<any>;
-  toggleAlert(params: Params, chain: boolean): Promise<any>;
-  resetPassword(params: Params, chain: boolean): Promise<any>;
-  updateScanAttempt(params: Params, chain: boolean): Promise<any>;
-  validateEmail(params: Params, chain: boolean): Promise<any>;
-  unsubscribeEmails(params: Params): Promise<any>;
-  sendWebsiteOffline(params: Params): Promise<any>;
-}
-
-interface UserControllerType {
-  (user?: any): UserControllerMethodsType;
-}
 
 export const UsersController: UserControllerType = (
   { user: _user } = { user: null }
@@ -88,18 +44,6 @@ export const UsersController: UserControllerType = (
     } catch (e) {
       console.error(e);
     }
-  },
-  dataMigrateUsers: async (chain) => {
-    const [allUsers, collection] = await this.getAllUsers(chain);
-
-    allUsers?.forEach(async (item) => {
-      const id = await CountersController().getNextSequenceValue("Users");
-
-      if (item.id === null) {
-        // TODO EMAIL USER
-        collection.updateOne({ email: item.email }, { id });
-      }
-    });
   },
   getAllUsers: async function (chain) {
     try {

@@ -4,7 +4,12 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import { UsersController, SubDomainController } from "@app/core/controllers";
+import { UsersController } from "@app/core/controllers";
+import {
+  crawlWebsite as crawl,
+  scanWebsite as scan,
+} from "@app/core/controllers/subdomains/update";
+
 import { getUser, usageExceededThreshold } from "@app/core/utils";
 import { TOKEN_EXPIRED_ERROR, RATE_EXCEEDED_ERROR } from "@app/core/strings";
 
@@ -26,7 +31,7 @@ const websiteCrawl = async (req, res) => {
           websiteIterator < pages.length;
           websiteIterator++
         ) {
-          await SubDomainController().crawlWebsite({
+          await crawl({
             url: pages[websiteIterator],
             userId: user_id,
           });
@@ -45,7 +50,7 @@ const crawlWebsite = async (req, res) => {
   const userId = req.query?.userId;
 
   try {
-    await SubDomainController().crawlWebsite({
+    await crawl({
       url,
       userId,
     });
@@ -61,7 +66,7 @@ const scanWebsite = async (req, res) => {
   const userId = req.query?.userId || req.body?.userId;
 
   try {
-    const data = await SubDomainController().scanWebsite({
+    const data = await scan({
       url,
       userId,
     });
@@ -119,7 +124,7 @@ const websiteCrawlAuthed = async (req, res) => {
   let data = {};
 
   try {
-    data = await SubDomainController().crawlWebsite({
+    data = await crawl({
       url: url?.includes("http") ? url : `http://${url}`,
       userId: keyid,
       apiData: true,
