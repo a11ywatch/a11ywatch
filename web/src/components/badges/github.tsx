@@ -12,10 +12,9 @@ import type { BadgeProps } from './badge-types'
 
 export const GithubBadge = (props: BadgeProps) => <Badge {...props} />
 
-GithubBadge.defaultProps = {
-  ...defaultProps,
+GithubBadge.defaultProps = Object.assign({}, defaultProps, {
   title: 'GitHub',
   label: `${strings.appName} GitHub's organization`,
   src: `static/img/github.svg`,
   href: 'https://github.com/a11ywatch',
-}
+})

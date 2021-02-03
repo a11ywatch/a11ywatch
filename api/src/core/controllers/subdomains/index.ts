@@ -4,25 +4,17 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import { getDomain, getDomains } from "./find";
-import { addDomain } from "./set";
-import { removeDomain } from "./remove";
-import {
-  scanWebsite,
-  updateDomain,
-  generateWebsiteAverage,
-  crawlWebsite,
-} from "./update";
-
-const SubDomainController = ({ user } = { user: null }) => ({
-  getDomain,
-  getDomains,
-  addDomain,
-  removeDomain,
-  updateDomain,
-  generateWebsiteAverage,
-  crawlWebsite,
-  scanWebsite,
-});
+const SubDomainController = ({ user } = { user: null }) => {
+  return {
+    getDomain: require("./find").getDomain,
+    getDomains: require("./find").getDomains,
+    addDomain: require("./set").addDomain,
+    removeDomain: require("./remove").removeDomain,
+    updateDomain: require("./update").updateDomain,
+    generateWebsiteAverage: require("./update").generateWebsiteAverage,
+    crawlWebsite: require("./update").crawlWebsite,
+    scanWebsite: require("./update").scanWebsite,
+  };
+};
 
 export { SubDomainController };

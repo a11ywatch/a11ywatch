@@ -4,6 +4,6 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-export { updateDomain, generateWebsiteAverage } from "./domain";
 export { crawlWebsite } from "./crawl";
+export { updateDomain, generateWebsiteAverage } from "./domain";
 export { scanWebsite } from "./scan";

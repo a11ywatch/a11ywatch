@@ -21,7 +21,7 @@ export const Badge = ({
   const height = size === 'small' ? 20 : 36
   const width = size === 'small' ? 20 : 36
 
-  const Anchor = ({ children }: { children?: any }) => {
+  const Anchor = ({ children }: { children: any }) => {
     return (
       <a
         href={href}
@@ -51,9 +51,11 @@ export const Badge = ({
 
   return (
     <Tooltip title={String(label)}>
-      <Anchor>
-        <Img />
-      </Anchor>
+      <>
+        <Anchor>
+          <Img />
+        </Anchor>
+      </>
     </Tooltip>
   )
 }

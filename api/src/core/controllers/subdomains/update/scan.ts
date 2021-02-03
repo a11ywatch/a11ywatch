@@ -8,8 +8,7 @@ import validUrl from "valid-url";
 
 import { sourceBuild } from "@app/core/utils";
 import { ApiResponse, responseModel, makeWebsite } from "@app/core/models";
-
-import { WebsitesController } from "../../websites";
+import { WebsitesController } from "@app/core/controllers/websites";
 import { generateWebsiteAverage } from "./domain";
 import { fetchPuppet, extractPageData } from "./utils";
 

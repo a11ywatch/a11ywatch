@@ -32,9 +32,9 @@ export const WebsitesController = ({ user } = { user: null }) => ({
   insertOne: async (item) => {
     try {
       const [collection] = await connect("Websites");
-      collection.insertOne(item);
+      await collection.insertOne(item);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   },
   findWebsite: async ({ userId, domain }: Params, chain: boolean) => {

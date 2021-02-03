@@ -7,7 +7,7 @@
 import getPageSpeed from "get-page-speed";
 import { SUCCESS, WEBSITE_NOT_FOUND } from "@app/core/strings";
 import { arrayAverage } from "@app/core/utils";
-import { WebsitesController } from "../../websites";
+import { WebsitesController } from "@app/core/controllers/websites";
 import { getDomain, getDomains } from "../find";
 
 export const updateDomain = async ({ userId, url }) => {
@@ -17,8 +17,6 @@ export const updateDomain = async ({ userId, url }) => {
     throw new Error(WEBSITE_NOT_FOUND);
   }
 
-  // TODO: DO Something with the update
-  // await collection.updateOne({ url, userId }, { $set: {} });
   return { website, code: 200, success: true, message: SUCCESS };
 };
 

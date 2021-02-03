@@ -40,13 +40,12 @@ const websiteCrawl = async (req, res) => {
   }
 };
 
-// START WATCHER WEBSITE SCAN
-const crawlWebsite = (req, res) => {
+const crawlWebsite = async (req, res) => {
   const url = req.query?.websiteUrl;
   const userId = req.query?.userId;
 
   try {
-    SubDomainController().crawlWebsite({
+    await SubDomainController().crawlWebsite({
       url,
       userId,
     });

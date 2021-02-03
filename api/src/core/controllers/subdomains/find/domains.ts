@@ -25,7 +25,6 @@ export const getDomains = async (
   }
 };
 
-// TODO getDomain
 export const getDomain = async (
   { userId, url }: { userId?: number; url?: string },
   chain?: boolean
