@@ -306,7 +306,6 @@ export function FormDialog({ buttonTitle = 'Add Website', okPress }: any) {
           </DialogContent>
           <DialogActions style={{ padding: 0 }}>
             <Button
-              onClick={submit}
               disabled={!websitUrl}
               type='submit'
               style={{ width: '100%', borderRadius: 0 }}

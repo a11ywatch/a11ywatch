@@ -21,7 +21,7 @@ export const Badge = ({
   const height = size === 'small' ? 20 : 36
   const width = size === 'small' ? 20 : 36
 
-  function Anchor({ children }: { children: any }) {
+  const Anchor = ({ children }: { children?: any }) => {
     return (
       <a
         href={href}
@@ -34,13 +34,13 @@ export const Badge = ({
     )
   }
 
-  const img = <img src={src} style={{ height, width }} alt={title} />
+  const Img = () => <img src={src} style={{ height, width }} alt={title} />
 
   if (inline) {
     return (
       <Anchor>
         <div style={{ display: 'flex' }}>
-          {img}
+          <Img />
           <Typography variant={'subtitle2'} style={{ marginLeft: 12 }}>
             {title}
           </Typography>
@@ -51,7 +51,9 @@ export const Badge = ({
 
   return (
     <Tooltip title={String(label)}>
-      <Anchor>{img}</Anchor>
+      <Anchor>
+        <Img />
+      </Anchor>
     </Tooltip>
   )
 }

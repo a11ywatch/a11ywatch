@@ -21,8 +21,8 @@ function initUrl(url, filter) {
 }
 
 process.on("message", ({ urlMap, userId }) => {
+  console.log("REQUESTING SPIDER DOMAIN SCAN:", urlMap);
   const url = initUrl(urlMap, true) + "";
-  console.log("REQUESTING SPIDER DOMAIN SCAN:", url);
   const body = JSON.stringify({
     url,
     id: Number(userId),

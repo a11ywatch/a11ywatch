@@ -9,9 +9,12 @@ import { config } from "@app/config";
 
 const { EMAIL_SERVICE_URL, EMAIL_CLIENT_ID, EMAIL_CLIENT_KEY } = config;
 
-let transporter: any;
+let transporter: any = {
+  verify: () => {},
+  sendMail: () => {},
+};
 
-if (EMAIL_CLIENT_KEY && EMAIL_CLIENT_ID) {
+if (EMAIL_CLIENT_KEY && EMAIL_CLIENT_ID && EMAIL_SERVICE_URL) {
   try {
     transporter = createTransport({
       host: "smtp.gmail.com",

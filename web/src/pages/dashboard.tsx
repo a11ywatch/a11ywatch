@@ -72,36 +72,6 @@ const useStyles = makeStyles((theme) => ({
 
 const MiniPlayerMemo = memo(MiniPlayer)
 
-const removePress = (url?: string, deleteMany: boolean = false, cb?: any) => {
-  cb({
-    variables: {
-      url,
-      userId: UserManager?.getID,
-      deleteMany,
-    },
-  })?.catch((res: any) => {
-    const errors = res?.graphQLErrors?.map((error: any) => {
-      return error?.message
-    })
-    console.log(errors)
-  })
-}
-
-const addPress = (url: string, cb: any, headers?: any) => {
-  cb({
-    variables: {
-      url,
-      userId: UserManager?.getID,
-      customHeaders: headers,
-    },
-  })?.catch((res: any) => {
-    const errors = res?.graphQLErrors?.map((error: any) => {
-      return error?.message
-    })
-    console.log(errors)
-  })
-}
-
 function Dashboard() {
   const classes = useStyles()
   const {
@@ -121,6 +91,27 @@ function Dashboard() {
   const { setModal } = useDynamicModal()
   const { issueSubData } = subscriptionData
   const MAINDATASOURCE = filterSort(data, search)
+  const userId = UserManager?.getID
+
+  const removePress = (url?: string, deleteMany: boolean = false) => {
+    removeWebsite({
+      variables: {
+        url,
+        userId,
+        deleteMany,
+      },
+    }).catch((e) => console.error(e))
+  }
+
+  const addPress = (url: string, customHeaders?: any) => {
+    addWebsite({
+      variables: {
+        url,
+        userId,
+        customHeaders,
+      },
+    }).catch((e) => console.error(e))
+  }
 
   useEffect(() => {
     if (issueSubData && events && !events?.firstAdd) {
@@ -130,8 +121,7 @@ function Dashboard() {
     }
   }, [issueSubData])
 
-  const blocked =
-    typeof UserManager.getID === 'number' && isNaN(UserManager.getID)
+  const blocked = typeof userId === 'number' && isNaN(userId)
 
   return (
     <WithHydrate>
@@ -150,7 +140,7 @@ function Dashboard() {
                 <Fade in={!!data.length}>
                   <Button
                     className={classes.clear}
-                    onClick={() => removePress('', true, removeWebsite)}
+                    onClick={() => removePress('', true)}
                   >
                     Remove All
                   </Button>
@@ -163,11 +153,9 @@ function Dashboard() {
               loading={loading}
               mutatationLoading={mutatationLoading}
               removePress={(url: string, deleteMany?: boolean) =>
-                removePress(url, deleteMany, removeWebsite)
+                removePress(url, deleteMany)
               }
-              addPress={(url: string, headers: any) =>
-                addPress(url, addWebsite, headers)
-              }
+              addPress={(url: string, headers: any) => addPress(url, headers)}
               crawlWebsite={crawlWebsite}
               refetch={refetch}
               BottomButton={FormDialog}
