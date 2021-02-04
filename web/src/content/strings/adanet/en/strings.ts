@@ -5,6 +5,7 @@
  **/
 
 import { headers } from './headers'
+import { metaTitle } from '../../title'
 
 const appName = 'ADAFirm'
 
@@ -12,7 +13,7 @@ export const strings = {
   appName,
   headers,
   meta: {
-    title: `Build accessible websites - ${appName}`,
+    title: metaTitle('Build accessible websites', appName),
     description: `Better your product with web accessibility tools using ${appName}`,
   },
   title: 'Web Accessibility',
