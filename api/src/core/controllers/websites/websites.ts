@@ -16,7 +16,12 @@ import {
   SUCCESS_DELETED_ALL,
   WEBSITE_URL_ERROR,
 } from "@app/core/strings";
-import { getHostName, websiteSearchParams, initUrl } from "@app/core/utils";
+import {
+  getHostName,
+  websiteSearchParams,
+  initUrl,
+  getCollectionLength,
+} from "@app/core/utils";
 import { TEMP_WATCHER_BLACKLIST } from "@app/config/server";
 import { HistoryController } from "../history";
 
@@ -27,6 +32,26 @@ interface Params {
   url?: string;
   domain?: string;
 }
+
+export const getWebsite = async (
+  { userId, url, domain }: Params,
+  chain: boolean
+) => {
+  try {
+    const [collection] = await connect("Websites");
+    const searchProps = websiteSearchParams({
+      userId,
+      url,
+      domain,
+    });
+    const website = await collection.findOne(searchProps);
+    const collectionLength = await getCollectionLength(collection, url);
+
+    return chain ? [website, collection, collectionLength?.length] : website;
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 export const WebsitesController = ({ user } = { user: null }) => ({
   insertOne: async (item) => {
@@ -40,34 +65,16 @@ export const WebsitesController = ({ user } = { user: null }) => ({
   findWebsite: async ({ userId, domain }: Params, chain: boolean) => {
     try {
       const [collection] = await connect("Websites");
-      const searchProps = websiteSearchParams({ userId, domain });
-      const website = await collection.findOne(searchProps);
+      const website = await collection.findOne(
+        websiteSearchParams({ userId, domain })
+      );
 
       return chain ? [website, collection] : website;
     } catch (e) {
       console.log(e);
     }
   },
-  getWebsite: async ({ userId, url, domain }: Params, chain: boolean) => {
-    try {
-      const [collection] = await connect("Websites");
-      const searchProps = websiteSearchParams({
-        userId,
-        url,
-        domain,
-      });
-      const website = await collection.findOne(searchProps);
-      const collectionLength = await collection
-        .find({ url })
-        .sort({ _id: -1 })
-        .limit(1)
-        .toArray();
-
-      return chain ? [website, collection, collectionLength?.length] : website;
-    } catch (e) {
-      console.error(e);
-    }
-  },
+  getWebsite,
   getWebsites: async ({ userId }) => {
     try {
       if (typeof userId === "number") {

@@ -4,5 +4,5 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-export { WebsitesController } from "./websites";
+export { WebsitesController, getWebsite } from "./websites";
 export { websiteWatch } from "./watch";

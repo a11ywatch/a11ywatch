@@ -11,7 +11,7 @@ envConf();
 
 const DEV = process.env.NODE_ENV !== "production";
 const TEST_ENV = process.env.NODE_ENV === "test";
-console.log(process.env.ENGINE_API_KEY);
+
 const replaceDockerNetwork = (url: string): string => {
   const proxyDockerUrls = ["mav", "localhost", "angelica", "cdn-server", "api"];
   if (!DEV && process.env.DOCKER_ENV) {
