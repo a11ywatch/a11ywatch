@@ -24,10 +24,16 @@ import {
 } from "../../utils";
 import { pubsub } from "../../subscriptions";
 import { EMAIL_VERIFIED } from "../../static";
-import { CountersController } from "../counters";
+import { getNextSequenceValue } from "../counters";
 import { WebsitesController } from "../websites";
 import { getUsers, getUser, getAllUsers } from "./find";
-import { updateApiUsage, updateScanAttempt } from "./update";
+import {
+  updateApiUsage,
+  updateScanAttempt,
+  toggleAlert,
+  verifyUser,
+  forgotPassword,
+} from "./update";
 import type { UserControllerType } from "./types";
 
 const { STRIPE_KEY, STRIPE_PREMIUM_PLAN, STRIPE_BASIC_PLAN, ROOT_URL } = config;
@@ -41,44 +47,7 @@ export const UsersController: UserControllerType = (
   getAllUsers,
   getUser,
   updateApiUsage,
-  verifyUser: async ({ password, email, googleId }) => {
-    const [user, collection] = await getUser({ email }, true);
-
-    if (!user) {
-      throw new Error(EMAIL_ERROR);
-    }
-
-    const salthash =
-      user && !googleId && saltHashPassword(password, user?.salt);
-
-    if (user?.password === salthash?.passwordHash || googleId) {
-      let id = user?.id;
-      let updateCollectionProps = {};
-
-      if (user?.id === null) {
-        id = await CountersController().getNextSequenceValue("Users");
-        updateCollectionProps = { id };
-      }
-      const jwt = signJwt({
-        email: email || user?.email,
-        role: user?.role,
-        keyid: id,
-      });
-
-      updateCollectionProps = { ...updateCollectionProps, jwt };
-
-      if (googleId) {
-        updateCollectionProps = { ...updateCollectionProps, googleId };
-      }
-
-      await collection.updateOne({ email }, { $set: updateCollectionProps });
-      return {
-        ...user,
-        jwt,
-      };
-    }
-    throw new Error(EMAIL_ERROR);
-  },
+  verifyUser,
   createUser: async ({ email, password, googleId, role = 0 }) => {
     if (!email) {
       throw new Error(EMAIL_ERROR);
@@ -94,7 +63,7 @@ export const UsersController: UserControllerType = (
         let updateCollectionProps = {};
 
         if (typeof user?.id === "undefined" || user?.id === null) {
-          keyid = await CountersController().getNextSequenceValue("Users");
+          keyid = await getNextSequenceValue("Users");
           updateCollectionProps = { id: keyid };
         }
 
@@ -122,7 +91,7 @@ export const UsersController: UserControllerType = (
         throw new Error(EMAIL_ERROR);
       }
     } else {
-      const id = await CountersController().getNextSequenceValue("Users");
+      const id = await getNextSequenceValue("Users");
       const userObject = {
         email,
         password: salthash?.passwordHash,
@@ -313,45 +282,7 @@ export const UsersController: UserControllerType = (
 
     throw new Error(GENERAL_ERROR);
   },
-  forgotPassword: async ({ email }) => {
-    if (!email) {
-      throw new Error(EMAIL_ERROR);
-    }
-    const [user, collection] = await getUser({ email }, true);
-
-    if (user) {
-      try {
-        const resetCode = randomBytes(4).toString("hex");
-
-        await transporter.verify();
-        await transporter.sendMail(
-          {
-            ...mailOptions,
-            to: user.email,
-            subject: `A11yWatch - Password reset.`,
-            html: `${logoSvg}<br /><h1>${resetCode} is your password reset code.</h1>`,
-          },
-          async (error, info) => {
-            if (error) {
-              console.log(error);
-            } else {
-              console.log("Email sent: " + info.response);
-              await collection.findOneAndUpdate(
-                { id: user.id },
-                { $set: { resetCode } }
-              );
-            }
-          }
-        );
-
-        return { email: "true" };
-      } catch (e) {
-        console.error(e);
-      }
-    } else {
-      throw new Error(GENERAL_ERROR);
-    }
-  },
+  forgotPassword,
   resetPassword: async ({ email, resetCode }) => {
     if (!email) {
       throw new Error(EMAIL_ERROR);
@@ -405,24 +336,7 @@ export const UsersController: UserControllerType = (
       throw new Error(GENERAL_ERROR);
     }
   },
-  toggleAlert: async ({ keyid, alertEnabled }) => {
-    try {
-      const [user, collection] = await getUser({ id: keyid }, true);
-
-      if (user) {
-        await collection.updateOne({ id: keyid }, { $set: { alertEnabled } });
-        return {
-          alertEnabled,
-          code: 200,
-          success: true,
-          message: SUCCESS,
-        };
-      }
-    } catch (e) {
-      console.error(e);
-      throw new Error(GENERAL_ERROR);
-    }
-  },
+  toggleAlert,
   confirmEmail: async ({ keyid }) => {
     if (typeof keyid === "undefined") {
       throw new Error(EMAIL_ERROR);

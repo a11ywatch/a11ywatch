@@ -5,3 +5,6 @@
  **/
 export { updateApiUsage } from "./api-data";
 export { updateScanAttempt } from "./scan-attempt";
+export { toggleAlert } from "./alerts";
+export { verifyUser } from "./verify";
+export { forgotPassword } from "./forgot-password";

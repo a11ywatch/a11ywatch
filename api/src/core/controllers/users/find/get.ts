@@ -7,10 +7,10 @@
 import { userParams } from "@app/core/utils/controller-filter";
 import { connect } from "@app/database";
 
-export const getUsers = async (chain?: boolean) => {
+export const getUsers = async (chain?: boolean, count: number = 20) => {
   try {
     const [collection] = await connect("Users");
-    const users = await collection.find().limit(20).toArray();
+    const users = await collection.find().limit(count).toArray();
     return chain ? [users, collection] : users;
   } catch (e) {
     console.error(e);
@@ -19,9 +19,7 @@ export const getUsers = async (chain?: boolean) => {
 
 export const getAllUsers = async (chain?: boolean) => {
   try {
-    const [collection] = await connect("Users");
-    const users = await collection.find().limit(1000).toArray();
-    return chain ? [users, collection] : users;
+    return await getUsers(chain, 10000);
   } catch (e) {
     console.error(e);
   }
@@ -38,9 +36,10 @@ export const getUser = async (
   chain?: boolean
 ) => {
   try {
-    const searchProps = userParams({ email, id, emailConfirmCode });
     const [collection] = await connect("Users");
-    const user = await collection.findOne(searchProps);
+    const user = await collection.findOne(
+      userParams({ email, id, emailConfirmCode })
+    );
 
     return chain ? [user, collection] : user;
   } catch (e) {

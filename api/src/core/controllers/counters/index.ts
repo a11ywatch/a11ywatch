@@ -7,6 +7,47 @@
 import { connect } from "@app/database";
 import { websiteSearchParams } from "@app/core/utils";
 
+const getCounter = async ({ _id }, chain?: boolean) => {
+  try {
+    const [collection] = await connect("Counters");
+    const counter = await collection.findOne({ _id });
+
+    return chain ? [counter, collection] : counter;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const getNextSequenceValue = async (sequenceName) => {
+  try {
+    const [hascounter, collection] = await getCounter(
+      {
+        _id: sequenceName,
+      },
+      true
+    );
+
+    if (!hascounter) {
+      await collection.insertOne({ _id: sequenceName, sequence_value: 0 });
+      return 0;
+    }
+
+    const sequenceDocument = await collection.findOneAndUpdate(
+      {
+        _id: sequenceName,
+      },
+      { $inc: { sequence_value: 1 } },
+      {
+        returnNewDocument: true,
+        projection: { sequence_value: 1, _id: 1 },
+      }
+    );
+    return sequenceDocument?.value?.sequence_value;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 const CountersController = ({ user } = { user: null }) => ({
   fixCounters: async (_, chain) => {
     try {
@@ -18,54 +59,19 @@ const CountersController = ({ user } = { user: null }) => ({
       console.error(e);
     }
   },
-  getCounter: async ({ _id }, chain) => {
-    try {
-      const [collection] = await connect("Counters");
-      const counter = await collection.findOne({ _id });
-
-      return chain ? [counter, collection] : counter;
-    } catch (e) {
-      console.error(e);
-    }
-  },
-  getNextSequenceValue: async (sequenceName) => {
-    try {
-      const [hascounter, collection] = await CountersController().getCounter(
-        {
-          _id: sequenceName,
-        },
-        true
-      );
-
-      if (!hascounter) {
-        await collection.insertOne({ _id: sequenceName, sequence_value: 0 });
-        return 0;
-      }
-
-      const sequenceDocument = await collection.findOneAndUpdate(
-        {
-          _id: sequenceName,
-        },
-        { $inc: { sequence_value: 1 } },
-        {
-          returnNewDocument: true,
-          projection: { sequence_value: 1, _id: 1 },
-        }
-      );
-      return sequenceDocument?.value?.sequence_value;
-    } catch (e) {
-      console.error(e);
-    }
-  },
+  getCounter,
+  getNextSequenceValue,
   getCounters: async ({ userId, pageUrl, url }) => {
     try {
       const [collection] = await connect("Counters");
-      const searchProps = websiteSearchParams({ pageUrl, userId });
-      return await collection.find(searchProps).limit(20).toArray();
+      return await collection
+        .find(websiteSearchParams({ pageUrl, userId }))
+        .limit(20)
+        .toArray();
     } catch (e) {
       console.error(e);
     }
   },
 });
 
-export { CountersController };
+export { getCounter, getNextSequenceValue, CountersController };
