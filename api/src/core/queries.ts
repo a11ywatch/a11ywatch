@@ -4,89 +4,68 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-const defaultPayload = {
-  keyid: null,
-  audience: null,
-};
+import { getPayLoad } from "./utils/query-payload";
 
 export const Query = {
-  website: async (_, { id, url, password }, context) => {
-    const { keyid } = context.user?.payload || defaultPayload;
-    const page = await context.models.Website.getWebsite({
-      userId: typeof id !== "undefined" && password ? id : keyid,
+  website: async (_, { url }, context) => {
+    return await context.models.Website.getWebsite({
+      userId: context?.user?.payload?.keyid,
       url,
     });
-
-    return page;
   },
-  issue: async (_, { id, url, password }, context) => {
-    const { keyid } = context.user?.payload || defaultPayload;
-
-    const data = await context.models.Issue.getIssue({
-      userId: typeof id !== "undefined" && password ? id : keyid,
-      pageUrl: url,
+  issue: async (_, { url: pageUrl }, context) => {
+    return await context.models.Issue.getIssue({
+      userId: context?.user?.payload?.keyid,
+      pageUrl,
     });
-    return data;
   },
-  issues: async (_, { id, url, filter, password }, context) => {
-    const { keyid } = context.user?.payload || defaultPayload;
-
+  issues: async (_, { url: pageUrl }, context) => {
     return await context.models.Issue.getIssues({
-      userId: typeof id !== "undefined" && password ? id : keyid,
-      pageUrl: url,
+      userId: context?.user?.payload?.keyid,
+      pageUrl,
     });
   },
-  websites: async (_, { id, url, filter, password }, context) => {
-    const { keyid } = context.user?.payload || defaultPayload;
-    const data = await context.models.Website.getWebsites({
-      userId: typeof id !== "undefined" && password ? id : keyid,
+  websites: async (_, props, context) => {
+    return await context.models.Website.getWebsites({
+      userId: getPayLoad(context, props),
     });
-
-    return data;
   },
-  scripts: async (_, { id, url, filter, password }, context) => {
-    const { keyid } = context.user?.payload || defaultPayload;
+  scripts: async (_, { url: pageUrl }, context) => {
     return await context.models.Scripts.getScripts({
-      userId: typeof id !== "undefined" && password ? id : keyid,
-      pageUrl: url,
+      userId: context?.user?.payload?.keyid,
+      pageUrl,
     });
   },
-  subDomains: async (_, { id, domain, url, password }, context) => {
-    const { keyid } = context.user?.payload || defaultPayload;
-
+  subDomains: async (_, { domain, ...props }, context) => {
     return await context.models.SubDomain.getDomains({
-      userId: typeof id !== "undefined" && password ? id : keyid,
+      userId: getPayLoad(context, props),
       domain,
     });
   },
-  history: async (_, { id, url, password }, context) => {
-    const { keyid } = context.user?.payload || defaultPayload;
-
+  history: async (_, { url }, context) => {
     return await context.models.History.getHistory({
-      userId: typeof id !== "undefined" && password ? id : keyid,
+      userId: context?.user?.payload?.keyid,
       url,
     });
   },
-  features: async (_, { id, url, password }, context) => {
-    const { keyid } = context.user?.payload || defaultPayload;
-
+  features: async (_, { url }, context) => {
     return await context.models.Features.getFeatures({
-      userId: typeof id !== "undefined" && password ? id : keyid,
+      userId: context?.user?.payload?.keyid,
       url,
     });
   },
   user: async (_, { id, filter, password }, context) => {
-    const { keyid, audience } = context.user?.payload || defaultPayload;
-    const useID =
-      typeof password !== "undefined" && password === process.env.ADMIN_PASS;
-
+    const { userId, audience } = getPayLoad(context, {
+      id,
+      password,
+    });
     const user = await context.models.User.getUser({
-      id: typeof id !== "undefined" && useID ? id : keyid,
+      id: userId,
     });
 
     return {
       ...user,
-      keyid,
+      keyid: userId,
       activeSubscription: user?.paymentSubscription?.status === "active",
       loggedIn: !!context.user,
       accountType: audience || "",
