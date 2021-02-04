@@ -4,10 +4,9 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import { addMinutes, isBefore, isSameDay } from "date-fns";
+import { addMinutes, isBefore } from "date-fns";
 import { randomBytes } from "crypto";
 
-import { connect } from "@app/database";
 import { config } from "@app/config";
 import { footer, logoSvg } from "@app/html";
 
@@ -27,6 +26,8 @@ import { pubsub } from "../../subscriptions";
 import { EMAIL_VERIFIED } from "../../static";
 import { CountersController } from "../counters";
 import { WebsitesController } from "../websites";
+import { getUsers, getUser, getAllUsers } from "./find";
+import { updateApiUsage, updateScanAttempt } from "./update";
 import type { UserControllerType } from "./types";
 
 const { STRIPE_KEY, STRIPE_PREMIUM_PLAN, STRIPE_BASIC_PLAN, ROOT_URL } = config;
@@ -36,90 +37,12 @@ const stripe = require("stripe")(STRIPE_KEY);
 export const UsersController: UserControllerType = (
   { user: _user } = { user: null }
 ) => ({
-  getUsers: async (chain) => {
-    try {
-      const [collection] = await connect("Users");
-      const users = await collection.find().limit(20).toArray();
-      return chain ? [users, collection] : users;
-    } catch (e) {
-      console.error(e);
-    }
-  },
-  getAllUsers: async function (chain) {
-    try {
-      const [collection] = await connect("Users");
-      const users = await collection.find().limit(1000).toArray();
-      return chain ? [users, collection] : users;
-    } catch (e) {
-      console.error(e);
-    }
-  },
-  getUser: async ({ email, id, emailConfirmCode }, chain) => {
-    try {
-      let searchProps = {};
-
-      if (email) {
-        searchProps = { email };
-      }
-      if (typeof id !== "undefined") {
-        searchProps = { ...searchProps, id };
-      }
-      if (emailConfirmCode) {
-        searchProps = { ...searchProps, emailConfirmCode };
-      }
-
-      const [collection] = await connect("Users");
-      const user = await collection.findOne(searchProps);
-
-      return chain ? [user, collection] : user;
-    } catch (e) {
-      console.error(e);
-    }
-  },
-  updateApiUsage: async ({ email, id, emailConfirmCode }, chain) => {
-    try {
-      const [user, collection] = await UsersController({
-        user: _user,
-      }).getUser({ id }, true);
-      if (!user) {
-        return chain ? [user, collection] : user;
-      }
-
-      const maxLimit = user.role === 0 ? 3 : user.role === 1 ? 100 : 500;
-      const currentUsage = user?.apiUsage?.usage || 1;
-      const blockScan = currentUsage >= maxLimit;
-
-      let resetData = false;
-
-      const lastScanDate = new Date();
-
-      if (!isSameDay(user?.apiUsage?.lastScanDate, lastScanDate)) {
-        resetData = true;
-      }
-
-      if (blockScan && !resetData) {
-        return chain ? [user, collection] : user;
-      }
-
-      const updateCollectionProps = !resetData
-        ? {
-            apiUsage: { usage: user?.apiUsage?.usage + 1, lastScanDate },
-          }
-        : { apiUsage: { usage: 1, lastScanDate } };
-
-      await collection.updateOne({ id }, { $set: updateCollectionProps });
-
-      user.apiUsage = updateCollectionProps.apiUsage;
-
-      return chain ? [user, collection] : user;
-    } catch (e) {
-      console.error(e);
-    }
-  },
+  getUsers,
+  getAllUsers,
+  getUser,
+  updateApiUsage,
   verifyUser: async ({ password, email, googleId }) => {
-    const [user, collection] = await UsersController({
-      user: _user,
-    }).getUser({ email }, true);
+    const [user, collection] = await getUser({ email }, true);
 
     if (!user) {
       throw new Error(EMAIL_ERROR);
@@ -160,9 +83,7 @@ export const UsersController: UserControllerType = (
     if (!email) {
       throw new Error(EMAIL_ERROR);
     }
-    const [user, collection] = await UsersController({
-      user: _user,
-    }).getUser({ email }, true);
+    const [user, collection] = await getUser({ email }, true);
 
     const googleAuthed = user && (user.googleId || googleId);
     const salthash = (password && saltHashPassword(password, user?.salt)) || {};
@@ -221,9 +142,7 @@ export const UsersController: UserControllerType = (
     }
   },
   addPaymentSubscription: async ({ email, userId, stripeToken }) => {
-    const [user, collection] = await UsersController({
-      user: _user,
-    }).getUser({ email }, true);
+    const [user, collection] = await getUser({ email }, true);
 
     if (user && stripeToken) {
       const parsedToken = JSON.parse(stripeToken);
@@ -304,9 +223,7 @@ export const UsersController: UserControllerType = (
     return { code: 404, success: false, message: EMAIL_ERROR };
   },
   cancelSubscription: async ({ email }) => {
-    const [user, collection] = await UsersController({
-      user: _user,
-    }).getUser({ email }, true);
+    const [user, collection] = await getUser({ email }, true);
 
     if (!user) {
       throw new Error(EMAIL_ERROR);
@@ -357,9 +274,7 @@ export const UsersController: UserControllerType = (
     };
   },
   updateUser: async ({ password, email, newPassword, stripeToken }) => {
-    const [user, collection] = await UsersController({
-      user: _user,
-    }).getUser({ email }, true);
+    const [user, collection] = await getUser({ email }, true);
 
     const salthash = password && saltHashPassword(password, user.salt);
 
@@ -402,9 +317,7 @@ export const UsersController: UserControllerType = (
     if (!email) {
       throw new Error(EMAIL_ERROR);
     }
-    const [user, collection] = await UsersController({
-      user: _user,
-    }).getUser({ email }, true);
+    const [user, collection] = await getUser({ email }, true);
 
     if (user) {
       try {
@@ -443,9 +356,7 @@ export const UsersController: UserControllerType = (
     if (!email) {
       throw new Error(EMAIL_ERROR);
     }
-    const [user, collection] = await UsersController({
-      user: _user,
-    }).getUser({ email }, true);
+    const [user, collection] = await getUser({ email }, true);
 
     if (user && user.resetCode === resetCode) {
       try {
@@ -496,9 +407,7 @@ export const UsersController: UserControllerType = (
   },
   toggleAlert: async ({ keyid, alertEnabled }) => {
     try {
-      const [user, collection] = await UsersController({
-        user: _user,
-      }).getUser({ id: keyid }, true);
+      const [user, collection] = await getUser({ id: keyid }, true);
 
       if (user) {
         await collection.updateOne({ id: keyid }, { $set: { alertEnabled } });
@@ -518,9 +427,7 @@ export const UsersController: UserControllerType = (
     if (typeof keyid === "undefined") {
       throw new Error(EMAIL_ERROR);
     }
-    const [user, collection] = await UsersController({
-      user: _user,
-    }).getUser({ id: keyid }, true);
+    const [user, collection] = await getUser({ id: keyid }, true);
 
     if (user) {
       const emailConfirmCode = randomBytes(4).toString("hex");
@@ -563,49 +470,13 @@ export const UsersController: UserControllerType = (
     }
     return { code: 200, success: true, message: SUCCESS };
   },
-  updateScanAttempt: async ({ userId }) => {
-    const [user, collection] = await UsersController({
-      user: _user,
-    }).getUser({ userId }, true);
-
-    if (user) {
-      const lastScanDate = new Date();
-
-      let scanInfo = user?.scanInfo
-        ? user?.scanInfo
-        : {
-            lastScanDate,
-            scanAttempts: 0,
-          };
-
-      scanInfo.scanAttempts =
-        scanInfo?.lastScanDate && !isSameDay(scanInfo?.lastScanDate, new Date())
-          ? 1
-          : scanInfo.scanAttempts + 1;
-
-      if (
-        (scanInfo?.scanAttempts >= 3 && user?.role === 0) ||
-        (scanInfo?.scanAttempts > 10 && user?.role === 1)
-      ) {
-        return false;
-      }
-
-      scanInfo.lastScanDate = lastScanDate;
-
-      await collection.findOneAndUpdate(
-        { id: user.id },
-        { $set: { scanInfo } }
-      );
-
-      return true;
-    }
-    return false;
-  },
+  updateScanAttempt,
   validateEmail: async ({ code }) => {
     if (code) {
-      const [user, collection] = await UsersController({
-        user: _user,
-      }).getUser({ emailConfirmCode: code }, true);
+      const [user, collection] = await getUser(
+        { emailConfirmCode: code },
+        true
+      );
 
       if (user && isBefore(new Date(), new Date(user?.emailExpDate))) {
         collection.findOneAndUpdate(
@@ -630,9 +501,7 @@ export const UsersController: UserControllerType = (
   },
   unsubscribeEmails: async ({ id, email }) => {
     try {
-      const [user, collection] = await UsersController({
-        user: _user,
-      }).getUser({ id: id, email }, true);
+      const [user, collection] = await getUser({ id: id, email }, true);
 
       console.log(`unsubscribed emails`, user);
       // email alerts disabled
@@ -653,9 +522,7 @@ export const UsersController: UserControllerType = (
   },
   sendWebsiteOffline: async ({ id, domain }) => {
     try {
-      const [user, collection] = await UsersController({
-        user: _user,
-      }).getUser({ id }, true);
+      const [user, collection] = await getUser({ id }, true);
 
       // email alerts disabled
       if (user?.emailAlerts === false || !domain) {

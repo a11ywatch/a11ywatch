@@ -16,6 +16,7 @@ import {
   AnalyticsController,
   ScriptsController,
 } from "@app/core/controllers";
+
 import { ApiResponse, responseModel } from "@app/core/models";
 
 import { getDomain } from "../find";

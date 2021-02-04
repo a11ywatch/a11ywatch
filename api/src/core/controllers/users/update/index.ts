@@ -3,5 +3,5 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
-
-export { userParams, websiteSearchParams } from "./filters";
+export { updateApiUsage } from "./api-data";
+export { updateScanAttempt } from "./scan-attempt";

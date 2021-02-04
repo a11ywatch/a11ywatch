@@ -1,12 +1,12 @@
-/*
- * Copyright (c) A11yWatch, LLC. and its affiliates.
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- **/
+import { removeIssue } from "./remove";
+import { addIssue } from "./set";
+import { getIssue, getIssues } from "./find";
+import { updateIssues } from "./update";
 
 export const IssuesController = ({ user } = { user: null }) => ({
-  ...require("./find"),
-  ...require("./set"),
-  ...require("./remove"),
-  ...require("./update"),
+  getIssue,
+  getIssues,
+  addIssue,
+  removeIssue,
+  updateIssues,
 });

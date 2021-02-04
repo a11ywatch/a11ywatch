@@ -15,12 +15,12 @@ export const removeDomain = async ({ userId, url, deleteMany = false }) => {
   const [siteExist, collection] = await getDomain({ userId, url }, true);
 
   if (deleteMany) {
-    collection.deleteMany({ userId });
+    await collection.deleteMany({ userId });
     return { code: 200, success: true, message: SUCCESS_DELETED_ALL };
   }
 
   if (siteExist) {
-    collection.findOneAndDelete({ url });
+    await collection.findOneAndDelete({ url });
     return { website: siteExist, code: 200, success: true, message: SUCCESS };
   }
 
