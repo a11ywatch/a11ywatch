@@ -9,7 +9,7 @@ import { logoSvg } from "@app/html";
 
 import { EMAIL_ERROR, GENERAL_ERROR } from "../../../strings";
 import { transporter, mailOptions } from "../../../utils";
-import { getUsers, getUser, getAllUsers } from "../find";
+import { getUser } from "../find";
 
 export const forgotPassword = async ({ email }) => {
   if (!email) {
