@@ -45,7 +45,6 @@ const useStyles = makeStyles(() => ({
 
 const toggleItem = (item: any, source?: any, type: string = 'color') => {
   if (source) {
-    // TODO: ADJUST COLOR ADJUSTER
     source.style[type] = item
   }
 }
@@ -59,7 +58,6 @@ const ReccomendedItem = memo(
     autoFixType,
     autoFixSource,
     portalID,
-    // index,
     visible,
   }: any) => {
     const classes = useStyles()
@@ -69,41 +67,35 @@ const ReccomendedItem = memo(
     }
     const listRef = useRef<ButtonProps>(null)
     const mouseover = () => {
-      if (listRef?.current) {
-        // @ts-ignore
-        listRef?.current?.animate(
-          {
-            opacity: [0.9, 1],
-            transform: ['scale(1)', 'scale(1.2)'],
-          },
-          300
-        )
-        if (listRef.current?.style?.transform) {
-          listRef.current.style.transform = 'scale(1.2)'
-        }
+      // @ts-ignore
+      listRef?.current?.animate(
+        {
+          opacity: [0.9, 1],
+          transform: ['scale(1)', 'scale(1.2)'],
+        },
+        300
+      )
+      if (listRef?.current?.style?.transform) {
+        listRef.current.style.transform = 'scale(1.2)'
       }
     }
     const mouseout = () => {
-      if (listRef?.current) {
-        // @ts-ignore
-        listRef?.current?.animate(
-          {
-            opacity: [1, 0.9],
-            transform: ['scale(1.2)', 'scale(1)'],
-          },
-          300
-        )
-        if (listRef.current?.style?.transform) {
-          listRef.current.style.transform = ''
-        }
+      // @ts-ignore
+      listRef?.current?.animate(
+        {
+          opacity: [1, 0.9],
+          transform: ['scale(1.2)', 'scale(1)'],
+        },
+        300
+      )
+      if (listRef?.current?.style?.transform) {
+        listRef.current.style.transform = ''
       }
     }
 
     useEffect(() => {
       if (visible) {
-        setTimeout(() => {
-          mouseout()
-        }, Math.floor(Math.random() * 500) + 1)
+        setTimeout(mouseout, Math.floor(Math.random() * 500) + 1)
         animatOnce = true
       }
     }, [visible && !animatOnce])
@@ -154,7 +146,7 @@ export function ReccomendedFixes({
 
   return (
     <ul className={`${reccList} ${row}`}>
-      {dataSource?.map((item: any, index: number) => (
+      {dataSource.map((item: any, index: number) => (
         <ReccomendedItem
           item={primaryColorContrast[amp](item)}
           source={source}
