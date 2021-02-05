@@ -12,6 +12,7 @@ import {
   MarketingDrawer,
   Box,
   Section,
+  Heading,
 } from '@app/components/general'
 import { strings } from '@app-strings'
 import { metaSetter } from '@app/utils'
@@ -33,11 +34,6 @@ const useStyles = makeStyles(({ breakpoints, palette }) => ({
       display: 'block',
     },
   },
-  title: {
-    [breakpoints.down('sm')]: {
-      marginTop: 3,
-    },
-  },
 }))
 
 function Features() {
@@ -55,20 +51,6 @@ function Features() {
     )
   }
 
-  function SectionText({ children }: { children: any }) {
-    return (
-      <Typography
-        variant='h5'
-        component='h3'
-        gutterBottom
-        className={classes.title}
-        style={{ fontWeight: 600 }}
-      >
-        {children}
-      </Typography>
-    )
-  }
-
   return (
     <MarketingDrawer title={Features.name}>
       <Container maxWidth='xl'>
@@ -82,7 +64,7 @@ function Features() {
           <div className={classes.row}>
             <Paper className={paper}>
               <Section>
-                <SectionText>Issue Reporter</SectionText>
+                <Heading>Issue Reporter</Heading>
                 <Typography variant='h6' component='h3' gutterBottom>
                   Our issue reporter scans for problems with recommended
                   solutions. Get notified as they occur with detailed
@@ -98,7 +80,7 @@ function Features() {
             <Paper className={paper}>
               <Image src='static/img/cloud_files.svg' alt={'cloud stored'} />
               <Section alignRight>
-                <SectionText>Auto CDN</SectionText>
+                <Heading>Auto CDN</Heading>
                 <Typography variant='h6' component='h3' gutterBottom>
                   Include a custom cdn that fixes most of your issues at
                   runtime. Our cdn uses a neural network that is composed of a
@@ -117,7 +99,7 @@ function Features() {
                 alt={'website playground to test fixes'}
               />
               <Section>
-                <SectionText>Website View</SectionText>
+                <Heading>Website View</Heading>
                 <Typography variant='h6' component='h3' gutterBottom>
                   View your website with annotations of the issues on your page.
                   Experiment with recommended fixes before you add in our secure
@@ -127,7 +109,7 @@ function Features() {
             </Paper>
             <Paper className={paper}>
               <Section alignRight>
-                <SectionText>Script View</SectionText>
+                <Heading>Script View</Heading>
                 <Typography variant='h6' component='h3' gutterBottom>
                   View your scripts that come from the scripts page. Verifiy
                   exactly what goes into production with notes on whats being

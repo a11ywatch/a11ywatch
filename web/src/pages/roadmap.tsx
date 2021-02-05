@@ -12,24 +12,22 @@ import {
   MarketingDrawer,
   Box,
   Circle,
+  Heading,
 } from '@app/components/general'
 import { strings } from '@app-strings'
 import { theme } from '@app-theme'
 import { metaSetter } from '@app/utils'
 
-const paperStyles = { display: 'flex', flex: 1, padding: 12, marginTop: 12 }
-
 const useStyles = makeStyles((t) => ({
-  paper: Object.assign({}, paperStyles, {
-    [t.breakpoints.down('sm')]: {
-      flexDirection: 'column',
-    },
-  }),
-  title: {
-    [t.breakpoints.down('sm')]: {
-      marginTop: 3,
-    },
-  },
+  paper: Object.assign(
+    {},
+    { display: 'flex', flex: 1, padding: 12, marginTop: 12 },
+    {
+      [t.breakpoints.down('sm')]: {
+        flexDirection: 'column',
+      },
+    }
+  ),
   circleRight: {
     right: 20,
   },
@@ -58,20 +56,6 @@ function RoadMap() {
     )
   }
 
-  function TypeHeading({ children }: { children: any }) {
-    return (
-      <Typography
-        variant='h5'
-        component='h3'
-        gutterBottom
-        className={classes.title}
-        style={{ fontWeight: 600 }}
-      >
-        {children}
-      </Typography>
-    )
-  }
-
   return (
     <MarketingDrawer title={RoadMap.name}>
       <Container maxWidth='xl'>
@@ -87,7 +71,7 @@ function RoadMap() {
             style={{ paddingLeft: 0, paddingRight: 0 }}
           >
             <div style={{ textAlign: 'left', marginRight: 12 }}>
-              <TypeHeading>Web Accessibility Progression</TypeHeading>
+              <Heading>Web Accessibility Progression</Heading>
               <Typography variant='h6' component='h3' gutterBottom>
                 It is important to note the steps we are trying to take for the
                 ultimate level of compliance with minimal downsides along the
@@ -109,7 +93,7 @@ function RoadMap() {
               alt={'javascript fixes from a cdn'}
             />
             <div style={{ textAlign: 'right', marginLeft: 12 }}>
-              <TypeHeading>JS execution fixes</TypeHeading>
+              <Heading>JS execution fixes</Heading>
               <Typography variant='h6' component='h3' gutterBottom>
                 Our initial and simplest phase to get some level of fixes is to
                 provide a CDN to override the issues at runtime using
@@ -126,7 +110,7 @@ function RoadMap() {
           </Circle>
           <Paper className={paperStyles}>
             <div style={{ textAlign: 'left', marginRight: 12 }}>
-              <TypeHeading>Editable Scripts</TypeHeading>
+              <Heading>Editable Scripts</Heading>
               <Typography variant='h6' component='h3' gutterBottom>
                 AI and machine learning has a bit to go to have spot on labeling
                 for image recognition. This means we need to have a level of
@@ -153,7 +137,7 @@ function RoadMap() {
           >
             <Image src='static/img/source_code.svg' alt='source code visual' />
             <div style={{ textAlign: 'right', marginLeft: 12 }}>
-              <TypeHeading>Compilation Fixes</TypeHeading>
+              <Heading>Compilation Fixes</Heading>
               <Typography variant='h6' component='h3' gutterBottom>
                 With fixes applied at compile time we no longer need to rely on
                 javascript to load the solutions initially. This is a huge
@@ -168,7 +152,7 @@ function RoadMap() {
           </Circle>
           <Paper className={paperStyles}>
             <div style={{ textAlign: 'left', marginRight: 12 }}>
-              <TypeHeading>Development Code Generation</TypeHeading>
+              <Heading>Development Code Generation</Heading>
               <Typography variant='h6' component='h3' gutterBottom>
                 The last step is to provide a way to hook into your development
                 process that runs in your own environment. With the dev time
