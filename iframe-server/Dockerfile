@@ -1,4 +1,4 @@
-FROM node:12.0.0-alpine AS BUILD_IMAGE
+FROM node:12.10.0-alpine AS BUILD_IMAGE
 
 WORKDIR /usr/src/app
 
@@ -10,7 +10,7 @@ COPY . .
 
 RUN  npm run build
 
-FROM node:12.0.0-alpine
+FROM node:12.10.0-alpine
 
 WORKDIR /usr/src/app
 
