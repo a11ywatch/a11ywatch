@@ -15,16 +15,28 @@ const useStyles = makeStyles((t) => ({
   },
 }))
 
-export function Heading({ children }: { children: any }) {
+export function Heading({
+  children,
+  variant = 'h5',
+  component = 'h3',
+  bold = true,
+  gutterBottom = true,
+}: {
+  children: any
+  variant?: any
+  component?: any
+  bold?: boolean
+  gutterBottom?: boolean
+}) {
   const { title } = useStyles()
 
   return (
     <Typography
-      variant='h5'
-      component='h3'
-      gutterBottom
+      variant={variant}
+      component={component}
+      gutterBottom={gutterBottom}
       className={title}
-      style={{ fontWeight: 600 }}
+      style={{ fontWeight: bold ? 600 : 400 }}
     >
       {children}
     </Typography>

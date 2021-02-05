@@ -4,7 +4,15 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-export const generateStrings = ({ appName, headers, meta }) => {
+export const generateStrings = ({
+  appName,
+  headers,
+  meta,
+}: {
+  appName: string
+  headers?: any
+  meta: { title?: string; description?: string }
+}) => {
   return {
     appName,
     headers,

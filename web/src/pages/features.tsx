@@ -65,12 +65,12 @@ function Features() {
             <Paper className={paper}>
               <Section>
                 <Heading>Issue Reporter</Heading>
-                <Typography variant='h6' component='h3' gutterBottom>
+                <Heading variant='h6' component='h4'>
                   Our issue reporter scans for problems with recommended
                   solutions. Get notified as they occur with detailed
                   information on what happened. The reporter runs on all your
                   pages and you can run the test multiple times a day.
-                </Typography>
+                </Heading>
               </Section>
               <Image
                 src='static/img/task_list.svg'
@@ -81,14 +81,14 @@ function Features() {
               <Image src='static/img/cloud_files.svg' alt={'cloud stored'} />
               <Section alignRight>
                 <Heading>Auto CDN</Heading>
-                <Typography variant='h6' component='h3' gutterBottom>
+                <Heading variant='h6' component='h4'>
                   Include a custom cdn that fixes most of your issues at
                   runtime. Our cdn uses a neural network that is composed of a
                   couple of open nets like GoogleNet, ImageNet, and MobileNet.
                   We also use common learning into the mixture to have a generic
                   model. The networks in layers allow us to learn and declare
                   images with extraordinary precision.
-                </Typography>
+                </Heading>
               </Section>
             </Paper>
           </div>
@@ -100,21 +100,21 @@ function Features() {
               />
               <Section>
                 <Heading>Website View</Heading>
-                <Typography variant='h6' component='h3' gutterBottom>
+                <Heading variant='h6' component='h4'>
                   View your website with annotations of the issues on your page.
                   Experiment with recommended fixes before you add in our secure
                   CDN to validate the changes and more.
-                </Typography>
+                </Heading>
               </Section>
             </Paper>
             <Paper className={paper}>
               <Section alignRight>
                 <Heading>Script View</Heading>
-                <Typography variant='h6' component='h3' gutterBottom>
+                <Heading variant='h6' component='h4'>
                   View your scripts that come from the scripts page. Verifiy
                   exactly what goes into production with notes on whats being
                   changed. Editing scripts coming soon...
-                </Typography>
+                </Heading>
               </Section>
               <Image src='static/img/code_snippets.svg' alt={'code snippets'} />
             </Paper>
