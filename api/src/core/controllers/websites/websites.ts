@@ -39,12 +39,13 @@ export const getWebsite = async (
 ) => {
   try {
     const [collection] = await connect("Websites");
-    const searchProps = websiteSearchParams({
-      userId,
-      url,
-      domain,
-    });
-    const website = await collection.findOne(searchProps);
+    const website = await collection.findOne(
+      websiteSearchParams({
+        userId,
+        url,
+        domain,
+      })
+    );
     const collectionLength = await getCollectionLength(collection, url);
 
     return chain ? [website, collection, collectionLength?.length] : website;
@@ -54,26 +55,6 @@ export const getWebsite = async (
 };
 
 export const WebsitesController = ({ user } = { user: null }) => ({
-  insertOne: async (item) => {
-    try {
-      const [collection] = await connect("Websites");
-      await collection.insertOne(item);
-    } catch (e) {
-      console.error(e);
-    }
-  },
-  findWebsite: async ({ userId, domain }: Params, chain: boolean) => {
-    try {
-      const [collection] = await connect("Websites");
-      const website = await collection.findOne(
-        websiteSearchParams({ userId, domain })
-      );
-
-      return chain ? [website, collection] : website;
-    } catch (e) {
-      console.log(e);
-    }
-  },
   getWebsite,
   getWebsites: async ({ userId }) => {
     try {

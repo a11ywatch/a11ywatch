@@ -41,7 +41,7 @@ export const crawlWebsite = async ({
 
   let { domain, pageUrl } = sourceBuild(urlMap);
 
-  let [website, websiteCollection] = await WebsitesController().findWebsite(
+  let [website, websiteCollection] = await WebsitesController().getWebsite(
     {
       domain,
       userId,

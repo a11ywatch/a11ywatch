@@ -35,7 +35,7 @@ export const scanWebsite = async ({
     throw new Error("Cannot use localhost, please use a valid web url.");
   }
 
-  let [website, websiteCollection] = await WebsitesController().findWebsite(
+  let [website, websiteCollection] = await WebsitesController().getWebsite(
     {
       domain,
       userId,
