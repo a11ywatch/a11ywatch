@@ -4,7 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 import React from 'react'
-import { Container, Paper, Typography } from '@material-ui/core'
+import { Container, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   Footer,
@@ -13,21 +13,13 @@ import {
   Box,
   Circle,
   Heading,
+  PaperSection,
 } from '@app/components/general'
 import { strings } from '@app-strings'
 import { theme } from '@app-theme'
 import { metaSetter } from '@app/utils'
 
 const useStyles = makeStyles((t) => ({
-  paper: Object.assign(
-    {},
-    { display: 'flex', flex: 1, padding: 12, marginTop: 12 },
-    {
-      [t.breakpoints.down('sm')]: {
-        flexDirection: 'column',
-      },
-    }
-  ),
   circleRight: {
     right: 20,
   },
@@ -43,7 +35,6 @@ const useStyles = makeStyles((t) => ({
 
 function RoadMap() {
   const classes = useStyles()
-  const paperStyles = classes.paper
 
   function Image({ src, alt }: { src: string; alt: string }) {
     return (
@@ -66,35 +57,31 @@ function RoadMap() {
           <Typography variant='subtitle1' component='h2' gutterBottom>
             Outline
           </Typography>
-          <div
-            className={paperStyles}
-            style={{ paddingLeft: 0, paddingRight: 0 }}
-          >
-            <div style={{ textAlign: 'left', marginRight: 12 }}>
-              <Heading>Web Accessibility Progression</Heading>
-              <Typography variant='h6' component='h3' gutterBottom>
-                It is important to note the steps we are trying to take for the
-                ultimate level of compliance with minimal downsides along the
-                way. This means we acknowledge that things arent perfect but, we
-                are trying our best to provide the best experience to our
-                capabilities. The phases we have set are according to difficulty
-                and time it will take for the solution. We have rough estimates
-                to better our judgement on when we can provide the features to
-                come. We are currently on Phase 3
-              </Typography>
-            </div>
-          </div>
+          <PaperSection rightMargin={false}>
+            <Heading>Web Accessibility Progression</Heading>
+            <Heading variant='h6' component='h4' bold={false}>
+              It is important to note the steps we are trying to take for the
+              ultimate level of compliance with minimal downsides along the way.
+              This means we acknowledge that things arent perfect but, we are
+              trying our best to provide the best experience to our
+              capabilities. The phases we have set are according to difficulty
+              and time it will take for the solution. We have rough estimates to
+              better our judgement on when we can provide the features to come.
+              We are currently on Phase 3
+            </Heading>
+          </PaperSection>
+          <Spacer height={10} />
           <Circle className={`${classes.circle} ${classes.circleRight}`}>
             1
           </Circle>
-          <Paper className={paperStyles}>
+          <PaperSection row>
             <Image
               src='static/img/server.svg'
               alt={'javascript fixes from a cdn'}
             />
-            <div style={{ textAlign: 'right', marginLeft: 12 }}>
+            <div>
               <Heading>JS execution fixes</Heading>
-              <Typography variant='h6' component='h3' gutterBottom>
+              <Heading variant='h6' component='h4' bold={false}>
                 Our initial and simplest phase to get some level of fixes is to
                 provide a CDN to override the issues at runtime using
                 javascript. We can manipulate the dom to apply the fixes as soon
@@ -102,16 +89,16 @@ function RoadMap() {
                 can be very minimal and fast since everything is synchronous.
                 This means that content can adjust quick enough to prevent
                 elements from shifting and flickering.
-              </Typography>
+              </Heading>
             </div>
-          </Paper>
+          </PaperSection>
           <Circle className={`${classes.circle} ${classes.circleLeft}`}>
             2
           </Circle>
-          <Paper className={paperStyles}>
-            <div style={{ textAlign: 'left', marginRight: 12 }}>
+          <PaperSection rightMargin={false} row>
+            <div>
               <Heading>Editable Scripts</Heading>
-              <Typography variant='h6' component='h3' gutterBottom>
+              <Heading variant='h6' component='h4' bold={false}>
                 AI and machine learning has a bit to go to have spot on labeling
                 for image recognition. This means we need to have a level of
                 accuracy for certainty on our fix being correct. If the
@@ -119,41 +106,41 @@ function RoadMap() {
                 the scripts to the proper label. From our script dashboard panel
                 you should be able to live edit the script so that the changes
                 can be applied on your custom CDN.
-              </Typography>
+              </Heading>
             </div>
             <Image
               src='static/img/type_code.svg'
               alt={'edit your code with accuracy'}
             />
-          </Paper>
+          </PaperSection>
           <Circle className={`${classes.circle} ${classes.circleRight}`}>
             3
           </Circle>
-          <Paper
-            className={paperStyles}
+          <PaperSection
             style={{
               border: `2px solid ${theme.palette.secondary.main}`,
             }}
+            row
           >
             <Image src='static/img/source_code.svg' alt='source code visual' />
-            <div style={{ textAlign: 'right', marginLeft: 12 }}>
+            <div>
               <Heading>Compilation Fixes</Heading>
-              <Typography variant='h6' component='h3' gutterBottom>
+              <Heading variant='h6' component='h4' bold={false}>
                 With fixes applied at compile time we no longer need to rely on
                 javascript to load the solutions initially. This is a huge
                 benefit since the speed of scripts varies greatly on the users
                 device. This process would be hooked into your deployment or
                 build steps so that way it can run seamless.
-              </Typography>
+              </Heading>
             </div>
-          </Paper>
+          </PaperSection>
           <Circle className={`${classes.circle} ${classes.circleLeft}`}>
             4
           </Circle>
-          <Paper className={paperStyles}>
-            <div style={{ textAlign: 'left', marginRight: 12 }}>
+          <PaperSection rightMargin={false} row>
+            <div>
               <Heading>Development Code Generation</Heading>
-              <Typography variant='h6' component='h3' gutterBottom>
+              <Heading variant='h6' component='h4' bold={false}>
                 The last step is to provide a way to hook into your development
                 process that runs in your own environment. With the dev time
                 support we can provide helpful features like injecting visual
@@ -161,13 +148,13 @@ function RoadMap() {
                 the remedies automatically to code. At this level we will
                 support the most popular front-end frameworks first besides
                 basic html support.
-              </Typography>
+              </Heading>
             </div>
             <Image
               src='static/img/js_frameworks.svg'
               alt={'languages supported a variation'}
             />
-          </Paper>
+          </PaperSection>
           <Spacer height={'20vh'} />
         </Box>
       </Container>
