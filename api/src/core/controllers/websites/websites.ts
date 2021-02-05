@@ -56,18 +56,15 @@ export const getWebsite = async (
 
 export const WebsitesController = ({ user } = { user: null }) => ({
   getWebsite,
-  getWebsites: async ({ userId }) => {
+  getWebsites: async ({ userId }, chain?: boolean) => {
     try {
-      if (typeof userId === "number") {
-        const [collection] = await connect("Websites");
-        const websites = await collection
-          .find({ userId: Number(userId) })
-          .limit(20)
-          .toArray();
-        return websites;
-      } else {
-        return [];
-      }
+      const [collection] = await connect("Websites");
+      const websites = await collection
+        .find({ userId: Number(userId) })
+        .limit(20)
+        .toArray();
+
+      return chain ? [websites, collection] : websites;
     } catch (e) {
       console.error(e);
     }
@@ -194,14 +191,12 @@ export const WebsitesController = ({ user } = { user: null }) => ({
 
     if (deleteMany) {
       const [webcollection] = await connect("Websites");
-      // TODO: Get all items and add to history & fire api to delete file from cdn
-      webcollection.deleteMany({ userId });
-      scriptsCollection.deleteMany({ userId });
-      analyticsCollection.deleteMany({ userId });
-      subdomainsCollection.deleteMany({ userId });
-      issuesCollection.deleteMany({ userId });
-      //   const [historyCollection] = await connect("History");
-      //   historyCollection.deleteMany({ userId });
+      await webcollection.deleteMany({ userId });
+      await scriptsCollection.deleteMany({ userId });
+      await analyticsCollection.deleteMany({ userId });
+      await subdomainsCollection.deleteMany({ userId });
+      await issuesCollection.deleteMany({ userId });
+
       return { code: 200, success: true, message: SUCCESS_DELETED_ALL };
     }
 
@@ -221,11 +216,11 @@ export const WebsitesController = ({ user } = { user: null }) => ({
         historyCollection,
       ] = await HistoryController().getHistoryItem(deleteQuery, true);
 
-      scriptsCollection.deleteMany(deleteQuery);
-      analyticsCollection.deleteMany(deleteQuery);
-      subdomainsCollection.deleteMany(deleteQuery);
-      issuesCollection.deleteMany(deleteQuery);
-      collection.findOneAndDelete(deleteQuery);
+      await scriptsCollection.deleteMany(deleteQuery);
+      await analyticsCollection.deleteMany(deleteQuery);
+      await subdomainsCollection.deleteMany(deleteQuery);
+      await issuesCollection.deleteMany(deleteQuery);
+      await collection.findOneAndDelete(deleteQuery);
 
       if (!history) {
         historyCollection.insertOne({
