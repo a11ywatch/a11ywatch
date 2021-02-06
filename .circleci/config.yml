@@ -16,8 +16,17 @@ jobs:
       - image: jeffmendez19/puppateer-node-light
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - node-v1-{{ .Branch }}-{{ checksum "angelica/package-lock.json" }}
+            - node-v1-{{ .Branch }}-
+            - node-v1-
       - run:
           command: cd angelica && npm install && npm test
+      - save_cache:
+          paths:
+            - ~/usr/local/lib/node_modules
+          key: node-v1-{{ .Branch }}-{{ checksum "angelica/package-lock.json" }}
   mav:
     docker:
       - image: circleci/node:14.3.0
