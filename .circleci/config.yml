@@ -50,8 +50,17 @@ jobs:
       - image: circleci/node:12.0.0
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - node-v1-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
+            - node-v1-{{ .Branch }}-
+            - node-v1-
       - run:
           command: cd web && npm install && npm test
+      - save_cache:
+          paths:
+            - ~/usr/local/lib/node_modules
+          key: node-v1-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
   iframe-server:
     docker:
       - image: circleci/node:current

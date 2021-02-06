@@ -9,4 +9,6 @@ module.exports = {
     "^@app/(.*)$": "<rootDir>/src/$1",
   },
   verbose: true,
+  coverageDirectory: "./coverage/",
+  collectCoverage: true,
 };

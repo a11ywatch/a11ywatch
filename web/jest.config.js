@@ -16,4 +16,6 @@ module.exports = {
     '@web-config': '<rootDir>/web-config.js',
   },
   verbose: true,
+  coverageDirectory: './coverage/',
+  collectCoverage: true,
 }
