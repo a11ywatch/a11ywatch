@@ -7,10 +7,19 @@ jobs:
       - image: circleci/node:12.0.0
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - node-v1-{{ .Branch }}-{{ checksum "api/package-lock.json" }}
+            - node-v1-{{ .Branch }}-
+            - node-v1-
       - run:
           command: cd api && npm install && npm test
+      - save_cache:
+          paths:
+            - ~/usr/local/lib/node_modules
+          key: node-v1-{{ .Branch }}-{{ checksum "api/package-lock.json" }}
       - codecov/upload:
-          file: "./codecov.yml"
+          file: "./api/coverage/clover.xml"
   angelica:
     docker:
       - image: jeffmendez19/puppateer-node-light
@@ -66,15 +75,33 @@ jobs:
       - image: circleci/node:current
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - node-v1-{{ .Branch }}-{{ checksum "iframe-server/package-lock.json" }}
+            - node-v1-{{ .Branch }}-
+            - node-v1-
       - run:
           command: cd iframe-server && npm install && npm test
+      - save_cache:
+          paths:
+            - ~/usr/local/lib/node_modules
+          key: node-v1-{{ .Branch }}-{{ checksum "iframe-server/package-lock.json" }}
   cdn-server:
     docker:
       - image: circleci/node:current
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - node-v1-{{ .Branch }}-{{ checksum "cdn-server/package-lock.json" }}
+            - node-v1-{{ .Branch }}-
+            - node-v1-
       - run:
           command: cd cdn-server && npm install && npm test
+      - save_cache:
+          paths:
+            - ~/usr/local/lib/node_modules
+          key: node-v1-{{ .Branch }}-{{ checksum "cdn-server/package-lock.json" }}
       - codecov/upload:
           file: "./codecov.yml"
 workflows:
