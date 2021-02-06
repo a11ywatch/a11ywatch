@@ -70,7 +70,7 @@ function RoadMap() {
               We are currently on Phase 3
             </Heading>
           </PaperSection>
-          <Spacer />
+          <Spacer height={10} />
           <Circle className={`${classes.circle} ${classes.circleRight}`}>
             1
           </Circle>
