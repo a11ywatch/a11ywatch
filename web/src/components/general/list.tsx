@@ -50,6 +50,7 @@ function WebSites({
         loading={loading}
         mutatationLoading={mutatationLoading}
         pageHeaders={pageHeaders}
+        index={index}
         {...domainProps}
       />
     )

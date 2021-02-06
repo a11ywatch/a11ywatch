@@ -189,11 +189,11 @@ export const crawlWebsite = async ({
           }
         }
 
-        const main_website = Object.assign({}, website, updateWebsiteProps);
+        const websiteAdded = Object.assign({}, website, updateWebsiteProps);
 
-        pubsub.publish(WEBSITE_ADDED, { websiteAdded: main_website });
+        pubsub.publish(WEBSITE_ADDED, { websiteAdded });
 
-        resolve(responseModel({ data: apiData ? dataSource : main_website }));
+        resolve(responseModel({ data: apiData ? dataSource : websiteAdded }));
       } else {
         resolve(responseModel());
       }

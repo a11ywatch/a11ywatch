@@ -12,12 +12,9 @@ const withPWA = require('next-pwa')
 
 const { domainMap } = require('./domain-map')
 const { generateSiteMap } = require('./generate-sitemap')
-const { getDynamicPaths } = require('./dynamic-paths')
+const { getDynamicPaths, proxyDockerUrls } = require('./dynamic-paths')
 
 const dev = process.env.NODE_ENV !== 'production'
-
-// DOCKER URL SERVICES
-const proxyDockerUrls = ['mav', 'localhost', 'angelica', 'cdn-server', 'api']
 
 const replaceDockerNetwork = (url) => {
   if (!dev && process.env.DOCKER_ENV) {
@@ -31,8 +28,7 @@ const replaceDockerNetwork = (url) => {
   return url
 }
 
-const env = {
-  ...parsed,
+const env = Object.assign({}, parsed, {
   dev,
   APP_TYPE: process.env.APP_TYPE || 'main',
   API: replaceDockerNetwork(process.env.API),
@@ -46,13 +42,10 @@ const env = {
     process.env.SCRIPTS_CDN_URL_HOST_PROD && !dev
       ? process.env.SCRIPTS_CDN_URL_HOST_PROD
       : process.env.SCRIPTS_CDN_URL_HOST,
-  INTERCOM_APPID: process.env.INTERCOM_APPID,
-  GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-  GOOGLE_ANALYTIC_ID: process.env.GOOGLE_ANALYTIC_ID,
   // PREVENT SETTING ENVS
   NODE_ENV: undefined,
   NODE_MODULES_CACHE: undefined,
-}
+})
 
 module.exports = withPWA({
   pwa: {
@@ -64,7 +57,6 @@ module.exports = withPWA({
     process.env.SOURCE_VERSION
       ? `cust-next-build-${process.env.SOURCE_VERSION}`
       : null,
-  dev,
   env,
   cssModules: true,
   typescriptLoaderOptions: {

@@ -74,6 +74,7 @@ services:
       - ./web/domain-map.js:/usr/src/app/domain-map.js
       - ./web/dynamic-paths.js:/usr/src/app/dynamic-paths.js
       - ./web/web-config.js:/usr/src/app/web-config.js
+      - ./web/.next:/usr/src/app/.next
     networks:
       - front-net
     ports:

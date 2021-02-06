@@ -18,6 +18,8 @@ import {
 import { Folder as FolderIcon, MoreVert as MoreIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 import { Link } from '../link'
+import { TopMenu } from '../'
+import type { IssueCellProps } from './types'
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -29,19 +31,13 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-type Props = {
-  url: string
-  handleClickOpen: any
-  handleClickOpenPlayer: any
-  issues: []
-}
-
 export function IssuesCell({
   url,
   handleClickOpen,
   handleClickOpenPlayer,
   issues,
-}: Props) {
+  index,
+}: IssueCellProps) {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null)
   const handleMenu = (event: any) => {
@@ -59,29 +55,22 @@ export function IssuesCell({
   }
   const href = `/website-details?websiteUrl=${url}`
 
+  const menuId = `issues-appbar${index}`
+
   const authForm = (
     <div>
       <IconButton
         aria-label={`websites ${url || 'url'} more actions`}
-        aria-controls='issues-appbar'
+        aria-controls={menuId}
         aria-haspopup='true'
         onClick={handleMenu}
         color={'inherit'}
       >
         <MoreIcon />
       </IconButton>
-      <Menu
-        id='issues-appbar'
+      <TopMenu
+        id={menuId}
         anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
         open={!!anchorEl}
         onClose={handleClose}
       >
@@ -96,7 +85,7 @@ export function IssuesCell({
         <MenuItem onClick={handleMainClick(url, 'Mini Player', true)}>
           View Website (Mini Player)
         </MenuItem>
-      </Menu>
+      </TopMenu>
     </div>
   )
 

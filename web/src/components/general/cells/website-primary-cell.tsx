@@ -3,21 +3,17 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
-
 import React, { useState } from 'react'
-
 import {
   Fade,
   List,
   ListItem,
-  ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
   IconButton,
   Typography,
   Container,
   Menu,
-  Checkbox,
   MenuItem,
 } from '@material-ui/core'
 import {
@@ -28,8 +24,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import { WithHighlight } from '@app/components/adhoc'
 
-import { issueSort } from '@app/lib'
-import { RenderAvatar, RenderSecondary } from './render'
+import { RenderAvatar, RenderSecondary, RenderIssuesList } from './render'
 
 import { Link } from '../link'
 
@@ -46,9 +41,6 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     fontSize: '1.1em',
     fontWeight: 600,
-  },
-  mainItemContainer: {
-    overflow: 'hidden',
   },
   flex: {
     flex: 1,
@@ -81,42 +73,11 @@ const useStyles = makeStyles((theme) => ({
     overflowX: 'hidden',
     padding: 0,
   },
-  mainTitle: {
-    fontSize: '16px',
-    maxWidth: '88vw',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    fontWeight: 500,
-    display: 'block',
-    [theme.breakpoints.down('sm')]: {
-      maxWidth: '75vw',
-    },
-  },
-  mainSubtitle: {
-    fontSize: '13px',
-    marginBottom: '2px',
-    maxWidth: '88vw',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    fontWeight: 400,
-  },
   normalContentColor: {
     color: 'rgb(209,156,102)',
   },
   blockColor: {
     color: 'rgb(202,109,102)',
-  },
-  error: {
-    background: 'rgba(239,83,80, 0.1)',
-  },
-  notice: {
-    background: 'rgba(189,189,189, 0.1)',
-  },
-  warning: {
-    background: 'rgba(255,238,88, 0.1)',
-  },
-  spacer: {
-    marginBottom: 1,
   },
   noText: {
     textDecoration: 'none',
@@ -124,84 +85,8 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: 'none',
     },
   },
-  adaScore: {
-    fontSize: '13px',
-    fontWeight: 600,
-    textAlign: 'center',
-    left: '1.5px',
-    position: 'relative',
-  },
 }))
 
-function RenderIssue({
-  message,
-  code,
-  context,
-  type,
-  selector,
-  pageIssues = [],
-  error,
-  checkList,
-  checked,
-  handleToggle,
-  listIndex,
-}: any) {
-  const classes = useStyles()
-  const labelId = `checkbox-list-label-${listIndex}`
-  const checkListProps = checkList
-    ? {
-        role: undefined,
-        dense: true,
-        component: 'button',
-        onClick: () => handleToggle(listIndex),
-      }
-    : {}
-
-  return (
-    <ListItem
-      divider={pageIssues?.length > 1}
-      // @ts-ignore
-      className={`${classes[type] ? classes[type] : ''} ${
-        !error ? classes.spacer : ''
-      }`}
-      {...checkListProps}
-    >
-      {checkList ? (
-        <ListItemIcon>
-          <Checkbox
-            edge='start'
-            checked={checked.indexOf(listIndex) !== -1}
-            tabIndex={-1}
-            disableRipple
-            inputProps={{ 'aria-labelledby': labelId }}
-          />
-        </ListItemIcon>
-      ) : null}
-      <div className={classes.mainItemContainer}>
-        <Typography
-          variant='subtitle1'
-          component={'span'}
-          className={`${classes.mainTitle} ${classes.normalContentColor}`}
-        >
-          {selector}
-        </Typography>
-        <Typography
-          variant='subtitle2'
-          className={classes.mainSubtitle}
-          component={'span'}
-        >
-          {code}
-        </Typography>
-        <WithHighlight>{String(context)}</WithHighlight>
-        <Typography variant='subtitle1' component={'span'}>
-          {message}
-        </Typography>
-      </div>
-    </ListItem>
-  )
-}
-
-// TODO SPLIT CELLS OUT
 export function WebsitePrimaryCell({
   handleClickOpen,
   item,
@@ -230,9 +115,7 @@ export function WebsitePrimaryCell({
     if (e?.preventDefault) {
       e.preventDefault()
     }
-    if (anchorEl) {
-      handleMenuClose()
-    }
+    handleMenuClose()
     setIssueView(!issueView)
   }
 
@@ -246,10 +129,8 @@ export function WebsitePrimaryCell({
       : handleClickOpen(eventData, title, url)
     setAnchorEl(null)
   }
-
-  const pageIssues = Array.isArray(item?.issues)
-    ? item.issues
-    : item?.issues?.issues
+  const pageIssues =
+    (Array.isArray(item?.issues) ? item.issues : item?.issues?.issues) || []
   const secondaryText = pageIssues?.length
     ? `${pageIssues.length} issue${pageIssues?.length === 1 ? '' : 's'} found!`
     : null
@@ -297,33 +178,16 @@ export function WebsitePrimaryCell({
     </div>
   )
 
-  const renderIssues = error ? (
-    <RenderIssue
-      {...item}
-      error={error}
-      checkList={checkList}
-      handleToggle={handleToggle}
-      checked={checked}
-      listIndex={listIndex}
-      openError={openError}
-    />
-  ) : (
-    pageIssues?.length &&
-    pageIssues.sort(issueSort).map((webpages: any, webpageIndex: number) => {
-      return (
-        <RenderIssue
-          {...webpages}
-          error={error}
-          checkList={checkList}
-          handleToggle={handleToggle}
-          checked={checked}
-          listIndex={listIndex}
-          openError={openError}
-          key={`${webpageIndex} ${webpages?.selector} ${webpages?.code}`}
-        />
-      )
-    })
-  )
+  const issueProps = {
+    error,
+    checkList,
+    handleToggle,
+    checked,
+    listIndex,
+    openError,
+    pageIssues,
+    item,
+  }
 
   const linkType = openError && !issuesModal
 
@@ -367,7 +231,7 @@ export function WebsitePrimaryCell({
                   : classes.list
               } ${classes.overScroll}`}
             >
-              {renderIssues}
+              <RenderIssuesList {...issueProps} />
             </List>
           </Container>
         </Fade>

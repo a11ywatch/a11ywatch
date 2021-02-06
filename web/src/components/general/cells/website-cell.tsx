@@ -18,6 +18,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { AppManager } from '@app/managers'
 import { Link } from '../link'
 import { RenderAvatar, RenderSecondary } from './render'
+import { TopMenu } from '../'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -53,6 +54,7 @@ export function WebsiteCell({
   mutatationLoading,
   lastScanDate,
   pageHeaders,
+  index,
 }: any) {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState<any>(null)
@@ -81,29 +83,22 @@ export function WebsiteCell({
     setAnchorEl(null)
   }
 
+  const menuId = `menu-appbar${index}`
+
   const authForm = (
     <div>
       <IconButton
         aria-label='account of current user'
-        aria-controls='menu-appbar'
+        aria-controls={menuId}
         aria-haspopup='true'
         onClick={handleMenu}
         color='inherit'
       >
         <MoreIcon />
       </IconButton>
-      <Menu
-        id='menu-appbar'
+      <TopMenu
+        id={menuId}
         anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
         open={!!anchorEl}
         onClose={handleClose}
       >
@@ -162,7 +157,7 @@ export function WebsiteCell({
             Delete
           </MenuItem>
         ) : null}
-      </Menu>
+      </TopMenu>
     </div>
   )
 

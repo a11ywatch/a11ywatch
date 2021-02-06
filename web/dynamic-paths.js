@@ -5,17 +5,18 @@
  **/
 const { resolve } = require('path')
 
-const A11Y_WATCH_PATH = './node_modules/@a11ywatch'
+const A11YWATCH_PATH = './node_modules/@a11ywatch'
 
 const getDynamicPaths = ({ themeType }) => ({
   uiIncludes: [
-    resolve(__dirname, `${A11Y_WATCH_PATH}/ui/common`),
-    resolve(__dirname, `${A11Y_WATCH_PATH}/ui/${themeType}`),
+    resolve(__dirname, `${A11YWATCH_PATH}/ui/common`),
+    resolve(__dirname, `${A11YWATCH_PATH}/ui/${themeType}`),
   ],
-  uiStylePath: resolve(__dirname, `${A11Y_WATCH_PATH}/ui/css/tailwind.css`),
-  uiComponentPath: resolve(__dirname, `${A11Y_WATCH_PATH}/ui/${themeType}`),
+  uiStylePath: resolve(__dirname, `${A11YWATCH_PATH}/ui/css/tailwind.css`),
+  uiComponentPath: resolve(__dirname, `${A11YWATCH_PATH}/ui/${themeType}`),
 })
 
 module.exports = {
   getDynamicPaths,
+  proxyDockerUrls: ['mav', 'localhost', 'angelica', 'cdn-server', 'api'],
 }

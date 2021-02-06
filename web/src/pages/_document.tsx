@@ -11,14 +11,12 @@ import Document, {
   DocumentContext,
 } from 'next/document'
 import { ServerStyleSheets } from '@material-ui/core/styles'
-import { ServerStyleSheet } from 'styled-components'
 import parser from 'ua-parser-js'
 import { userModel, initAppModel } from '@app/data'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const sheets = new ServerStyleSheets()
-    const sheet = new ServerStyleSheet()
     const originalRenderPage = ctx.renderPage
 
     try {
@@ -36,22 +34,21 @@ class MyDocument extends Document {
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App: any) => (props: any) =>
-            sheet.collectStyles(sheets.collect(<App {...props} />)),
+            sheets.collect(<App {...props} />),
         })
 
-      const initialProps = await Document.getInitialProps(ctx)
+      const { styles, ...initialProps } = await Document.getInitialProps(ctx)
 
       return Object.assign({}, initialProps, {
         styles: (
           <>
-            {initialProps.styles}
-            {sheet.getStyleElement()}
+            {styles}
             {sheets.getStyleElement()}
           </>
         ),
       })
-    } finally {
-      sheet.seal()
+    } catch (e) {
+      console.error(e)
     }
   }
 
