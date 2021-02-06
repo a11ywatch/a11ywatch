@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.2
 jobs:
   api:
     docker:
@@ -7,6 +9,8 @@ jobs:
       - checkout
       - run:
           command: cd api && npm install && npm test
+      - codecov/upload:
+          file: "./codecov.yml"
   angelica:
     docker:
       - image: jeffmendez19/puppateer-node-light
@@ -21,6 +25,8 @@ jobs:
       - checkout
       - run:
           command: cd mav && npm install && npm test
+      - codecov/upload:
+          file: "./codecov.yml"
   web:
     docker:
       - image: circleci/node:12.0.0
@@ -42,6 +48,8 @@ jobs:
       - checkout
       - run:
           command: cd cdn-server && npm install && npm test
+      - codecov/upload:
+          file: "./codecov.yml"
 workflows:
   build_and_test:
     jobs:
