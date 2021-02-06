@@ -45,6 +45,8 @@
     "typescript-eslint": "0.0.1-alpha.0"
   },
   "jest": {
-    "preset": "ts-jest"
+    "preset": "ts-jest",
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
   }
 }

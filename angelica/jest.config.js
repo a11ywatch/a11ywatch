@@ -8,4 +8,6 @@ module.exports = {
   },
   verbose: true,
   preset: "ts-jest",
+  coverageDirectory: "./coverage/",
+  collectCoverage: true,
 };

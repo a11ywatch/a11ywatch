@@ -36,9 +36,11 @@ jobs:
           paths:
             - ~/usr/local/lib/node_modules
           key: node-v1-{{ .Branch }}-{{ checksum "angelica/package-lock.json" }}
+      - codecov/upload:
+          file: "./angelica/coverage/clover.xml"
   mav:
     docker:
-      - image: circleci/node:14.3.0
+      - image: jeffmendez19/tensorflow-node-gpu
     steps:
       - checkout
       - restore_cache:
@@ -54,9 +56,11 @@ jobs:
           key: node-v1-{{ .Branch }}-{{ checksum "mav/package-lock.json" }}
       - codecov/upload:
           file: "./codecov.yml"
+      - codecov/upload:
+          file: "./mav/coverage/clover.xml"
   web:
     docker:
-      - image: circleci/node:12.0.0
+      - image: circleci/node:14.3.0
     steps:
       - checkout
       - restore_cache:
@@ -70,9 +74,11 @@ jobs:
           paths:
             - ~/usr/local/lib/node_modules
           key: node-v1-{{ .Branch }}-{{ checksum "web/package-lock.json" }}
+      - codecov/upload:
+          file: "./web/coverage/clover.xml"
   iframe-server:
     docker:
-      - image: circleci/node:current
+      - image: circleci/node:14.3.0
     steps:
       - checkout
       - restore_cache:
@@ -86,9 +92,11 @@ jobs:
           paths:
             - ~/usr/local/lib/node_modules
           key: node-v1-{{ .Branch }}-{{ checksum "iframe-server/package-lock.json" }}
+      - codecov/upload:
+          file: "./iframe-server/coverage/clover.xml"
   cdn-server:
     docker:
-      - image: circleci/node:current
+      - image: circleci/node:14.3.0
     steps:
       - checkout
       - restore_cache:
@@ -103,7 +111,7 @@ jobs:
             - ~/usr/local/lib/node_modules
           key: node-v1-{{ .Branch }}-{{ checksum "cdn-server/package-lock.json" }}
       - codecov/upload:
-          file: "./codecov.yml"
+          file: "./cdn-server/coverage/clover.xml"
 workflows:
   build_and_test:
     jobs:
