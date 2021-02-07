@@ -9,17 +9,18 @@ import { TEMP_WATCHER_BLACKLIST } from "@app/config/server";
 import { realUser, sourceBuild, initUrl } from "@app/core/utils";
 import { emailMessager } from "@app/core/messagers";
 
-import { WebsitesController } from "../websites";
+import { getWebsitesWithUsers } from "../websites";
 import { crawlWebsite } from "@app/core/controllers/subdomains/update";
 
 export async function websiteWatch() {
   console.log("WATCHER SCANNING:");
   try {
-    const allWebPages = await WebsitesController().getAllWebsites();
     await fetch(`${process.env.MAV_CLIENT_URL}/api/init`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     });
+
+    const allWebPages = await getWebsitesWithUsers();
 
     for (
       let websiteIterator = 0;

@@ -4,9 +4,8 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-export {
-  getWebsitesCrawler,
-  getWebsitesWithUsers,
-  getWebsite,
-  getWebsites,
-} from "./get";
+export interface Params {
+  userId: number;
+  url?: string;
+  domain?: string;
+}

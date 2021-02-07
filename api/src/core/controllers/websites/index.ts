@@ -4,5 +4,13 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-export { WebsitesController, getWebsite } from "./websites";
+export { WebsitesController } from "./websites";
+export {
+  getWebsitesWithUsers,
+  getWebsitesCrawler,
+  getWebsite,
+  getWebsites,
+} from "./find";
 export { websiteWatch } from "./watch";
+export { addWebsite } from "./set";
+export { removeWebsite } from "./remove";
