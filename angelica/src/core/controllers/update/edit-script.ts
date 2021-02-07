@@ -6,7 +6,8 @@
 
 import { fork } from "child_process";
 import { format } from "prettier";
-import { sourceBuild, scriptBuild } from "@app/core/lib";
+import { scriptBuild } from "@app/core/lib";
+import { sourceBuild } from "@a11ywatch/website-source-builder";
 
 const forked = fork("./src/workers/cdn_worker.js", [], { detached: true });
 

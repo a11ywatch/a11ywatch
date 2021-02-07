@@ -5,7 +5,7 @@
  **/
 
 import validUrl from "valid-url";
-import { sourceBuild } from "@app/core/utils";
+import { sourceBuild } from "@a11ywatch/website-source-builder";
 import { ApiResponse, responseModel, makeWebsite } from "@app/core/models";
 import { getWebsite } from "../../websites";
 import { generateWebsiteAverage } from "./domain";

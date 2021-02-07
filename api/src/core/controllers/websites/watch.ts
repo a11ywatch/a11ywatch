@@ -5,10 +5,10 @@
  **/
 
 import fetch from "node-fetch";
+import { sourceBuild, initUrl } from "@a11ywatch/website-source-builder";
 import { TEMP_WATCHER_BLACKLIST } from "@app/config/server";
-import { realUser, sourceBuild, initUrl } from "@app/core/utils";
+import { realUser } from "@app/core/utils";
 import { emailMessager } from "@app/core/messagers";
-
 import { getWebsitesWithUsers } from "../websites";
 import { crawlWebsite } from "@app/core/controllers/subdomains/update";
 

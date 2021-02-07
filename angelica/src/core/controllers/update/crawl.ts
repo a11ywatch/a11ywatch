@@ -13,10 +13,9 @@ import {
   puppetPool,
   checkCdn,
   grabHtmlSource,
-  initUrl,
   scriptBuild,
-  sourceBuild,
 } from "@app/core/lib";
+import { sourceBuild } from "@a11ywatch/website-source-builder";
 
 import { loopIssues, getPageIssues, goToPage } from "./utils";
 
@@ -60,7 +59,7 @@ export const crawlWebsite = async ({
     cdnJsPath,
     cdnMinJsPath,
   } = sourceBuild(urlMap);
-  const urlPage = initUrl(pageUrl, true);
+
   let resolver = {
     webPage: null,
     issues: null,
@@ -68,14 +67,14 @@ export const crawlWebsite = async ({
   };
 
   try {
-    const [validPage] = await goToPage(page, urlPage, browser);
+    const [validPage] = await goToPage(page, pageUrl, browser);
 
     if (!validPage) {
       return EMPTY_RESPONSE;
     }
 
     const [issues, issueMeta] = await getPageIssues({
-      urlPage,
+      urlPage: pageUrl,
       page,
       browser,
       pageHeaders,
@@ -166,6 +165,5 @@ export const crawlWebsite = async ({
       puppetPool.clean(browser, page);
     }
   }
-
   return resolver;
 };

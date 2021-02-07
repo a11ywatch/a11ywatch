@@ -5,7 +5,8 @@
  **/
 
 import { connect } from "@app/database";
-import { getHostName, websiteSearchParams } from "@app/core/utils";
+import { websiteSearchParams } from "@app/core/utils";
+import { getHostName } from "@a11ywatch/website-source-builder";
 
 export const getDomains = async (
   { domain, userId, url }: { domain?: string; userId?: number; url?: string },

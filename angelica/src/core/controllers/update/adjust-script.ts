@@ -6,7 +6,8 @@
 
 import { fork } from "child_process";
 import { format } from "prettier";
-import { skipNavigationMethod, sourceBuild, scriptBuild } from "@app/core/lib";
+import { skipNavigationMethod, scriptBuild } from "@app/core/lib";
+import { sourceBuild } from "@a11ywatch/website-source-builder";
 
 const forked = fork("./src/workers/cdn_worker.js", [], { detached: true });
 
@@ -21,7 +22,6 @@ export const adjustScript = async ({
   try {
     let scriptBody = resolver?.script;
 
-    // NO SKIP BUTTON FOUND, INSERT CUSTOM BTN
     if (!resolver?.issueMeta?.skipContentIncluded) {
       const startOfReplaceScript = scriptBody.indexOf("// SO: SKIP NAVIGATION");
       const endOfReplaceScript = scriptBody.indexOf("// EO: SKIP NAVIGATION");
@@ -44,21 +44,22 @@ export const adjustScript = async ({
       parser: "html",
     });
 
-    const scriptProps = {
-      scriptChildren: scriptBody
-        .replace("<script defer>", "")
-        .replace("</script>", ""),
-      domain,
-      cdnSrc: cdnSourceStripped,
-    };
-
     forked.send({
       cdnSourceStripped,
-      scriptBody: scriptBuild(scriptProps, true),
+      scriptBody: scriptBuild(
+        {
+          scriptChildren: scriptBody
+            .replace("<script defer>", "")
+            .replace("</script>", ""),
+          domain,
+          cdnSrc: cdnSourceStripped,
+        },
+        true
+      ),
       domain: domain || resolver?.domain,
     });
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 
   return resolver;

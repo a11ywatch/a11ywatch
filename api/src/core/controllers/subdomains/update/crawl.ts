@@ -6,7 +6,7 @@
 
 import validUrl from "valid-url";
 import { emailMessager } from "@app/core/messagers";
-import { sourceBuild } from "@app/core/utils";
+import { sourceBuild } from "@a11ywatch/website-source-builder";
 import { pubsub } from "@app/core/subscriptions";
 import { SUBDOMAIN_ADDED, ISSUE_ADDED, WEBSITE_ADDED } from "@app/core/static";
 import { ApiResponse, responseModel } from "@app/core/models";

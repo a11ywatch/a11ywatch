@@ -4,7 +4,9 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import { getIssueFixScript, getHostAsString } from "@app/core/lib";
+import { getIssueFixScript } from "@app/core/lib";
+import { getHostAsString } from "@a11ywatch/website-source-builder";
+
 import {
   needsLongTextAlt,
   missingAltText,

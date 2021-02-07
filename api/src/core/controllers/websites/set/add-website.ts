@@ -13,7 +13,8 @@ import {
   SUCCESS,
   WEBSITE_URL_ERROR,
 } from "@app/core/strings";
-import { getHostName, initUrl } from "@app/core/utils";
+import { getHostName, initUrl } from "@a11ywatch/website-source-builder";
+
 import { TEMP_WATCHER_BLACKLIST } from "@app/config/server";
 import { getWebsite } from "../find";
 
@@ -29,6 +30,7 @@ export const addWebsite = async ({
     throw new Error(WEBSITE_URL_ERROR);
   }
   const url = initUrl(urlMap);
+
   const [siteExist, collection, collectionLength] = await getWebsite(
     { userId, url },
     true
