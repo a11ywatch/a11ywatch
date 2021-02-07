@@ -12,6 +12,7 @@ import {
   mailOptions,
   saltHashPassword,
   signJwt,
+  sendMailCallback,
 } from "../../../utils";
 import { getUser } from "../find";
 
@@ -51,13 +52,7 @@ export const resetPassword = async ({ email, resetCode }) => {
           subject: `A11yWatch - Temporary Password.`,
           html: `<h1>${resetCode} is your temp password. Login and go to profile to reset now.</h1>`,
         },
-        (em_error, info) => {
-          if (em_error) {
-            console.log(em_error);
-          } else {
-            console.log("Email sent: " + info.response);
-          }
-        }
+        sendMailCallback
       );
 
       return { jwt: signedToken };

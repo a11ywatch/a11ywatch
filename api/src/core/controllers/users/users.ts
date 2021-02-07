@@ -14,6 +14,7 @@ import {
   mailOptions,
   saltHashPassword,
   signJwt,
+  sendMailCallback,
 } from "../../utils";
 import { getWebsite } from "../websites";
 import { getUsers, getUser, getAllUsers } from "./find";
@@ -161,13 +162,7 @@ export const UsersController: UserControllerType = (
               { userId: id, domain }
             )}`,
           },
-          (er, info) => {
-            if (er) {
-              console.error(er);
-            } else {
-              console.log("Email sent: " + info.response);
-            }
-          }
+          sendMailCallback
         );
       }
     } catch (e) {

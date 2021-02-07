@@ -8,7 +8,7 @@ import { isSameDay } from "date-fns";
 import { connect } from "@app/database";
 import { logoSvg, footer } from "@app/html";
 
-import { transporter, mailOptions, realUser } from "../utils";
+import { transporter, mailOptions, realUser, sendMailCallback } from "../utils";
 import { issuesFoundTemplate } from "../email-templates";
 
 export const emailMessager = {
@@ -21,15 +21,15 @@ export const emailMessager = {
   }: any) => {
     if (emailConfirmed && email && subject && html) {
       try {
-        const mailconfig = Object.assign({}, mailOptions, {
-          to: email,
-          subject: subject,
-          html: `${logoSvg}<br />${html}`,
-        });
-
         await transporter.verify();
-        const info = await transporter.sendMail(mailconfig);
-        console.log("Email sent: " + info?.response);
+        await transporter.sendMail(
+          Object.assign({}, mailOptions, {
+            to: email,
+            subject: subject,
+            html: `${logoSvg}<br />${html}`,
+          }),
+          sendMailCallback
+        );
       } catch (e) {
         console.error(e);
       }
@@ -68,22 +68,22 @@ export const emailMessager = {
             { $set: { lastAlertDateStamp: currentDate } }
           );
 
-          const mailconfig = Object.assign({}, mailOptions, {
-            to: findUser.email,
-            subject: `${data.issues.length} issues found with ${
-              data?.pageUrl || data?.domain
-            }.`,
-            html: `${logoSvg}<br /><h1>${issuesFoundTemplate(
-              data
-            )}<br />${footer.marketing({
-              userId,
-              domain: data?.domain || data?.pageUrl,
-            })}`,
-          });
-
           await transporter.verify();
-          const info = await transporter.sendMail(mailconfig);
-          console.log("Email sent: " + info?.response);
+          await transporter.sendMail(
+            Object.assign({}, mailOptions, {
+              to: findUser.email,
+              subject: `${data.issues.length} issues found with ${
+                data?.pageUrl || data?.domain
+              }.`,
+              html: `${logoSvg}<br /><h1>${issuesFoundTemplate(
+                data
+              )}<br />${footer.marketing({
+                userId,
+                domain: data?.domain || data?.pageUrl,
+              })}`,
+            }),
+            sendMailCallback
+          );
         } catch (e) {
           console.error(e);
         }

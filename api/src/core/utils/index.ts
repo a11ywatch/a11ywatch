@@ -6,7 +6,7 @@
 
 export { saltHashPassword } from "./salt-hash";
 export { signJwt, decodeJwt, verifyJwt } from "./auth";
-export { transporter, mailOptions } from "./emailer";
+export { transporter, mailOptions, sendMailCallback } from "./emailer";
 export { getHostName } from "./get-host-name";
 export { websiteSearchParams } from "./controller-filter";
 export { getPageUrl } from "./get-page-url";

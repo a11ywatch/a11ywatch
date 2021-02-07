@@ -8,7 +8,7 @@ import { randomBytes } from "crypto";
 import { logoSvg } from "@app/html";
 
 import { EMAIL_ERROR, GENERAL_ERROR } from "../../../strings";
-import { transporter, mailOptions } from "../../../utils";
+import { transporter, mailOptions, sendMailCallback } from "../../../utils";
 import { getUser } from "../find";
 
 export const forgotPassword = async ({ email }) => {
@@ -20,7 +20,10 @@ export const forgotPassword = async ({ email }) => {
   if (user) {
     try {
       const resetCode = randomBytes(4).toString("hex");
-
+      await collection.findOneAndUpdate(
+        { id: user.id },
+        { $set: { resetCode } }
+      );
       await transporter.verify();
       await transporter.sendMail(
         {
@@ -29,17 +32,7 @@ export const forgotPassword = async ({ email }) => {
           subject: `A11yWatch - Password reset.`,
           html: `${logoSvg}<br /><h1>${resetCode} is your password reset code.</h1>`,
         },
-        async (error, info) => {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log("Email sent: " + info.response);
-            await collection.findOneAndUpdate(
-              { id: user.id },
-              { $set: { resetCode } }
-            );
-          }
-        }
+        sendMailCallback
       );
 
       return { email: "true" };

@@ -9,22 +9,26 @@ import { randomBytes } from "crypto";
 import { config } from "@app/config";
 import { logoSvg } from "@app/html";
 import { EMAIL_ERROR, GENERAL_ERROR, SUCCESS } from "../../../strings";
-import { transporter, mailOptions } from "../../../utils";
+import { transporter, mailOptions, sendMailCallback } from "../../../utils";
 import { getUser } from "../find";
 
 const { ROOT_URL } = config;
 
-export const confirmEmail = async ({ keyid }) => {
-  if (typeof keyid === "undefined") {
+export const confirmEmail = async ({ keyid: id }) => {
+  if (typeof id === "undefined") {
     throw new Error(EMAIL_ERROR);
   }
-  const [user, collection] = await getUser({ id: keyid }, true);
+  const [user, collection] = await getUser({ id }, true);
 
   if (user) {
     const emailConfirmCode = randomBytes(4).toString("hex");
     const resetLink = `${ROOT_URL}/api/confirmEmail?code=${emailConfirmCode}`;
     const emailExpDate = addMinutes(Date.now(), 30);
     try {
+      await collection.findOneAndUpdate(
+        { id },
+        { $set: { emailConfirmCode, emailExpDate } }
+      );
       await transporter.verify();
       await transporter.sendMail(
         {
@@ -40,17 +44,7 @@ export const confirmEmail = async ({ keyid }) => {
             <p>Please do not reply back to this email, it will not be read</p>
             `,
         },
-        async (error, info) => {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log("Email sent: " + info.response);
-            await collection.findOneAndUpdate(
-              { id: user.id },
-              { $set: { emailConfirmCode, emailExpDate } }
-            );
-          }
-        }
+        sendMailCallback
       );
     } catch (e) {
       console.error(e);
