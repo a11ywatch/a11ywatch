@@ -6,6 +6,12 @@
 
 import { fork } from "child_process";
 import { EMAIL_ERROR, CRAWLER_FINISHED } from "./strings";
+import {
+  updateUser,
+  addWebsite,
+  addPaymentSubscription,
+  cancelSubscription,
+} from "./graph/mutations";
 
 const defaultPayload = {
   keyid: null,
@@ -15,33 +21,7 @@ const defaultPayload = {
 const forked = fork("./src/workers/worker.js", [], { detached: true });
 
 export const Mutation = {
-  updateUser: async (
-    _,
-    { email, password, newPassword, stripeToken },
-    context
-  ) => {
-    const { subject } = context.user?.payload;
-    const loginUser = await context.models.User.updateUser({
-      email: subject || email,
-      password,
-      newPassword,
-      stripeToken,
-    });
-
-    if (!loginUser) {
-      throw new Error(EMAIL_ERROR);
-    }
-
-    return loginUser;
-  },
-  register: async (_, { email, password, googleId }, context) => {
-    const userExist = await context.models.User.createUser({
-      email,
-      password,
-      googleId,
-    });
-    return userExist;
-  },
+  updateUser,
   login: async (_, { email, password, googleId }, context) => {
     const loginUser = await context.models.User.verifyUser({
       email,
@@ -55,20 +35,7 @@ export const Mutation = {
 
     return loginUser;
   },
-  addWebsite: async (_, { userId, url, customHeaders, password }, context) => {
-    const { keyid, audience } = context.user?.payload || defaultPayload;
-    const useID =
-      typeof password !== "undefined" && password === process.env.ADMIN_PASS;
-
-    const websiteAdded = await context.models.Website.addWebsite({
-      userId: useID ? userId : keyid,
-      url,
-      audience,
-      customHeaders,
-    });
-
-    return websiteAdded;
-  },
+  addWebsite,
   // TODO: RENAME CRAWLWEBSITE TO CRAWL_ALL_PAGES
   crawlWebsite: async (_, { userId, url, password }, context) => {
     const { keyid } = context.user?.payload || defaultPayload;
@@ -98,12 +65,11 @@ export const Mutation = {
     const useID =
       typeof password !== "undefined" && password === process.env.ADMIN_PASS;
 
-    const websiteAdded = await context.models.SubDomain.scanWebsite({
+    return await context.models.SubDomain.scanWebsite({
       userId: useID ? userId : keyid,
       url,
       audience,
     });
-    return websiteAdded;
   },
   removeWebsite: async (
     _,
@@ -128,7 +94,6 @@ export const Mutation = {
           id: 0,
         };
       }
-
       // pubsub.publish(WEBSITE_REMOVED, {
       //   websiteRemoved
       // });
@@ -139,48 +104,39 @@ export const Mutation = {
   updateWebsite: async (_, { userId, url, customHeaders }, context) => {
     const { keyid } = context.user?.payload || defaultPayload;
 
-    const website = await context.models.Website.updateWebsite({
+    return await context.models.Website.updateWebsite({
       userId: userId || keyid,
       url,
       pageHeaders: customHeaders,
     });
-
-    return website;
   },
   forgotPassword: async (_, { email }, context) => {
-    const response = await context.models.User.forgotPassword({
+    return await context.models.User.forgotPassword({
       email,
     });
-
-    return response;
   },
   confirmEmail: async (_, { email }, context) => {
     const { keyid } = context.user?.payload || defaultPayload;
 
-    const response = await context.models.User.confirmEmail({
+    return await context.models.User.confirmEmail({
       email,
       keyid,
     });
-
-    return response;
   },
   resetPassword: async (_, { email, resetCode }, context) => {
-    const response = await context.models.User.resetPassword({
+    return await context.models.User.resetPassword({
       email,
       resetCode,
     });
-
-    return response;
   },
   toggleAlert: async (_, { alertEnabled }, context) => {
     const { keyid, audience } = context.user?.payload || defaultPayload;
-    const user = await context.models.User.toggleAlert({
+
+    return await context.models.User.toggleAlert({
       keyid,
       audience,
       alertEnabled,
     });
-
-    return user;
   },
   updateScript: async (
     _,
@@ -189,7 +145,7 @@ export const Mutation = {
   ) => {
     const { keyid, audience } = context.user?.payload || defaultPayload;
 
-    const script = await context.models.Scripts.updateScript({
+    return await context.models.Scripts.updateScript({
       userId: Number(keyid),
       audience,
       scriptMeta,
@@ -197,28 +153,7 @@ export const Mutation = {
       editScript,
       newScript,
     });
-
-    return script;
   },
-  addPaymentSubscription: async (_, { email, stripeToken }, context) => {
-    const { keyid, audience } = context.user?.payload || defaultPayload;
-    const user = await context.models.User.addPaymentSubscription({
-      keyid,
-      audience,
-      email,
-      stripeToken,
-    });
-
-    return user;
-  },
-  cancelSubscription: async (_, { email }, context) => {
-    const { keyid, audience } = context.user?.payload || defaultPayload;
-    const user = await context.models.User.cancelSubscription({
-      keyid,
-      audience,
-      email,
-    });
-
-    return user;
-  },
+  addPaymentSubscription,
+  cancelSubscription,
 };
