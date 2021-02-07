@@ -23,6 +23,7 @@ import {
   getCollectionLength,
 } from "@app/core/utils";
 import { TEMP_WATCHER_BLACKLIST } from "@app/config/server";
+import { getWebsitesCrawler } from "./find";
 import { HistoryController } from "../history";
 
 const forked = fork("./src/workers/worker.js", [], { detached: true });
@@ -69,21 +70,7 @@ export const WebsitesController = ({ user } = { user: null }) => ({
       console.error(e);
     }
   },
-  getWebsitesCrawler: async ({ userId, domain }, chain) => {
-    try {
-      const [collection] = await connect("Websites");
-      const searchProps = {
-        domain,
-        userId: typeof userId !== "undefined" ? userId : { $gt: 0 },
-      };
-
-      const websites = await collection.find(searchProps).limit(100).toArray();
-
-      return chain ? [websites, collection] : websites;
-    } catch (e) {
-      console.error(e);
-    }
-  },
+  getWebsitesCrawler,
   getWebsitesScan: async ({ userId, url, domain }, chain) => {
     try {
       const [collection] = await connect("Websites");

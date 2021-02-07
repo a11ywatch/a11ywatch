@@ -7,7 +7,7 @@
 import getPageSpeed from "get-page-speed";
 import { SUCCESS, WEBSITE_NOT_FOUND } from "@app/core/strings";
 import { arrayAverage } from "@app/core/utils";
-import { WebsitesController } from "@app/core/controllers/websites";
+import { getWebsitesCrawler } from "../../websites/find";
 import { getDomain, getDomains } from "../find";
 
 export const updateDomain = async ({ userId, url }) => {
@@ -31,10 +31,7 @@ export const generateWebsiteAverage = async (
 ) => {
   try {
     if (typeof allWebSites === "undefined") {
-      [
-        allWebSites,
-        websiteCollection,
-      ] = await WebsitesController().getWebsitesCrawler(
+      [allWebSites, websiteCollection] = await getWebsitesCrawler(
         {
           domain,
           userId,

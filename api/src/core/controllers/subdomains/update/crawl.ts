@@ -9,16 +9,11 @@ import { emailMessager } from "@app/core/messagers";
 import { sourceBuild } from "@app/core/utils";
 import { pubsub } from "@app/core/subscriptions";
 import { SUBDOMAIN_ADDED, ISSUE_ADDED, WEBSITE_ADDED } from "@app/core/static";
-
-import {
-  IssuesController,
-  WebsitesController,
-  AnalyticsController,
-  ScriptsController,
-} from "@app/core/controllers";
-
 import { ApiResponse, responseModel } from "@app/core/models";
-
+import { IssuesController } from "../../issues";
+import { ScriptsController } from "../../scripts";
+import { getWebsite } from "../../websites";
+import { AnalyticsController } from "../../analytics";
 import { getDomain } from "../find";
 import { generateWebsiteAverage } from "./domain";
 import { collectionUpdate, fetchPuppet, extractPageData } from "./utils";
@@ -41,7 +36,7 @@ export const crawlWebsite = async ({
 
   let { domain, pageUrl } = sourceBuild(urlMap);
 
-  let [website, websiteCollection] = await WebsitesController().getWebsite(
+  let [website, websiteCollection] = await getWebsite(
     {
       domain,
       userId,
@@ -103,7 +98,7 @@ export const crawlWebsite = async ({
 
         if (issues?.issues?.length) {
           pubsub.publish(ISSUE_ADDED, { issueAdded: newIssue });
-          emailMessager.sendMail({
+          await emailMessager.sendMail({
             userId,
             data: issues,
             confirmedOnly: true,

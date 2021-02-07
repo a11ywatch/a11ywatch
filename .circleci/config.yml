@@ -22,7 +22,7 @@ jobs:
           file: "./api/coverage/clover.xml"
   angelica:
     docker:
-      - image: jeffmendez19/puppateer-node-light
+      - image: circleci/node:12.0.0
     steps:
       - checkout
       - restore_cache:
@@ -40,7 +40,7 @@ jobs:
           file: "./angelica/coverage/clover.xml"
   mav:
     docker:
-      - image: jeffmendez19/tensorflow-node-gpu
+      - image: circleci/node:12.0.0
     steps:
       - checkout
       - restore_cache:
@@ -60,7 +60,7 @@ jobs:
           file: "./mav/coverage/clover.xml"
   web:
     docker:
-      - image: circleci/node:14.3.0
+      - image: circleci/node:12.0.0
     steps:
       - checkout
       - restore_cache:
@@ -78,7 +78,7 @@ jobs:
           file: "./web/coverage/clover.xml"
   iframe-server:
     docker:
-      - image: circleci/node:14.3.0
+      - image: circleci/node:12.0.0
     steps:
       - checkout
       - restore_cache:
@@ -96,7 +96,7 @@ jobs:
           file: "./iframe-server/coverage/clover.xml"
   cdn-server:
     docker:
-      - image: circleci/node:14.3.0
+      - image: circleci/node:12.0.0
     steps:
       - checkout
       - restore_cache:

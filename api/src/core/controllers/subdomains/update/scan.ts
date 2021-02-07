@@ -5,10 +5,9 @@
  **/
 
 import validUrl from "valid-url";
-
 import { sourceBuild } from "@app/core/utils";
 import { ApiResponse, responseModel, makeWebsite } from "@app/core/models";
-import { WebsitesController } from "@app/core/controllers/websites";
+import { getWebsite } from "../../websites";
 import { generateWebsiteAverage } from "./domain";
 import { fetchPuppet, extractPageData } from "./utils";
 
@@ -35,7 +34,7 @@ export const scanWebsite = async ({
     throw new Error("Cannot use localhost, please use a valid web url.");
   }
 
-  let [website, websiteCollection] = await WebsitesController().getWebsite(
+  let [website, websiteCollection] = await getWebsite(
     {
       domain,
       userId,
