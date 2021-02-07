@@ -4,11 +4,15 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
+import * as find from "./find";
+import * as set from "./set";
+import * as remove from "./remove";
+
 const SubDomainController = ({ user } = { user: null }) => {
   return {
-    ...require("./find"),
-    ...require("./set"),
-    ...require("./remove"),
+    ...find,
+    ...set,
+    ...remove,
     ...require("./update"),
   };
 };
