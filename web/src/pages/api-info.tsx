@@ -91,15 +91,53 @@ function ApiInfo() {
     setKey(!keyVisible)
   }, [keyVisible])
 
+  const CopyRow = ({ copy = false, text = '' }: any) => {
+    return (
+      <div className={classes.row}>
+        <IconButton style={{ marginRight: 12 }} onClick={copyText(copy)}>
+          <CopyIcon />
+        </IconButton>
+        <Typography variant='subtitle1' component='p'>
+          {text}
+        </Typography>
+      </div>
+    )
+  }
+
+  const BoldText = ({ children }: any) => {
+    return (
+      <Typography
+        variant='body2'
+        component='p'
+        gutterBottom
+        className={classes.bold}
+      >
+        {children}
+      </Typography>
+    )
+  }
+
+  const SectionTitle = ({
+    children,
+    className,
+    variant = 'subtitle2',
+  }: any) => {
+    return (
+      <Typography variant={variant} component='p' className={className}>
+        {children}
+      </Typography>
+    )
+  }
+
   return (
     <>
       <NavBar backButton title={'API'} notitle />
       <Container maxWidth='xl' className={classes.root}>
         <Box>
           <PageTitle title={`API`} />
-          <Typography variant='subtitle1' component='p'>
+          <SectionTitle variant='subtitle1'>
             Add authorization header with the jwt format <i>Bearer TOKEN</i>
-          </Typography>
+          </SectionTitle>
           {!data?.user && loading ? (
             <TextSkeleton className={classes.email} />
           ) : (
@@ -110,7 +148,7 @@ function ApiInfo() {
                 onClick={toggleKey}
                 variant='outlined'
               >
-                {keyVisible ? 'HIDE TOKEN' : 'VIEW TOKEN'}
+                {`${keyVisible ? 'HIDE' : 'VIEW'} TOKEN`}
               </Button>
               {keyVisible ? (
                 <div className={`${classes.container} ${classes.apiContainer}`}>
@@ -121,73 +159,31 @@ function ApiInfo() {
               ) : null}
             </>
           )}
-          <Typography variant='subtitle1' component='p'>
-            Daily Allowed Usage
-          </Typography>
+          <SectionTitle variant='subtitle1'>Daily Allowed Usage</SectionTitle>
           {!data?.user && loading ? (
             <TextSkeleton className={classes.email} />
           ) : (
-            <Typography
-              variant='subtitle2'
-              component='p'
-              className={classes.email}
-            >
+            <SectionTitle className={classes.email}>
               {user.apiUsage?.usage || 0}/
               {user.role === 0 ? 3 : user.role === 1 ? 25 : 100}
-            </Typography>
+            </SectionTitle>
           )}
-          <Typography variant='subtitle1' component='p'>
-            Endpoints
-          </Typography>
+          <SectionTitle variant='subtitle1'>Endpoints</SectionTitle>
           {!data?.user && loading ? (
             <TextSkeleton className={classes.email} />
           ) : (
             <>
-              <Typography variant='subtitle2' component='p'>
-                Page Issues : GET/POST
-              </Typography>
-              <div className={classes.row}>
-                <IconButton
-                  style={{ marginRight: 12 }}
-                  onClick={copyText(false)}
-                >
-                  <CopyIcon />
-                </IconButton>
-                <Typography variant='subtitle1' component='p'>
-                  {`${API_ENDPOINT}/website-check?url=http://example.com`}
-                </Typography>
-              </div>
-              <Typography
-                variant='body2'
-                component='p'
-                gutterBottom
-                className={classes.bold}
-              >
+              <SectionTitle>Page Issues : GET/POST</SectionTitle>
+              <CopyRow
+                text={`${API_ENDPOINT}/website-check?url=http://example.com`}
+              />
+              <BoldText>
                 {`Params: { url: String }`}
                 {` Body: { url: String }`}
-              </Typography>
-              <Typography variant='subtitle2' component='p'>
-                Image Name : POST
-              </Typography>
-              <div className={classes.row}>
-                <IconButton
-                  style={{ marginRight: 12 }}
-                  onClick={copyText(true)}
-                >
-                  <CopyIcon />
-                </IconButton>
-                <Typography variant='subtitle1' component='p'>
-                  {`${API_ENDPOINT}/getImage`}
-                </Typography>
-              </div>
-              <Typography
-                variant='body2'
-                component='p'
-                gutterBottom
-                className={classes.bold}
-              >
-                {`Body: { imageBase64: Base64 }`}
-              </Typography>
+              </BoldText>
+              <SectionTitle>Image Name : POST</SectionTitle>
+              <CopyRow text={`${API_ENDPOINT}/getImage`} copy={true} />
+              <BoldText>{`Body: { imageBase64: Base64 }`}</BoldText>
             </>
           )}
         </Box>
