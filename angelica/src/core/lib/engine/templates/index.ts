@@ -6,4 +6,3 @@
 
 export { scriptBody } from "./body";
 export { scriptDetect } from "./detect";
-export { skipNavigationMethod } from "./skip-navigation";

@@ -3,31 +3,12 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
-
-interface InvalidType {
-  index: number;
-  domSelector: string;
-  selector?: string;
-}
-
-interface ExtraConfig {
-  lang?: string;
-  alt?: string;
-}
-
-type FixInvalidReturn = {
-  anchor_needs_props: string;
-  alt: string;
-  head: string;
-  textarea: string;
-  textinput: string;
-  button: string;
-  lang: string;
-  form_label: string;
-};
+import type { FixInvalidReturn, InvalidType, ExtraConfig } from "./types";
+import { fixContrast } from "./fix-contrast";
+import { fixNesting } from "./fix-nesting";
 
 export const fixInvalid = (
-  { index, domSelector, selector }: InvalidType,
+  { index, domSelector, selector, message }: InvalidType,
   extraConfig: ExtraConfig = { lang: "en", alt: "" }
 ): FixInvalidReturn => {
   return {
@@ -76,6 +57,12 @@ export const fixInvalid = (
 			  textinput${index}.name = "label";
       }
 `,
+    semantic_presentation_role: `
+			var elementNoPresentation${index} = document.${domSelector}("${selector}");
+      if (elementNoPresentation${index}) {
+			  elementNoPresentation${index}.role = "application";
+      }
+`,
     button: `
 	    var buttonElement${index} = document.${domSelector}("${selector}");
       if (buttonElement${index}) {
@@ -83,11 +70,36 @@ export const fixInvalid = (
         buttonElement${index}.setAttribute("aria-label",undefined);
       }
 `,
+    button_needs_props: `
+		var properButtonElement${index} = document.createElement("button");
+		var improperButtonElement${index} = document.${domSelector}("${selector}");
+
+      if (properButtonElement${index}) {
+			  properButtonElement${index}.innerHTML = improperButtonElement${index}.innerHTML;
+      }
+      if (improperButtonElement${index}) {
+			  improperButtonElement${index}.parentNode.replaceChild(properButtonElement${index}, improperButtonElement${index});
+      }
+	`,
     lang: `
 	    var htmlElement${index} = document.${domSelector}("${selector}");
       if (htmlElement${index}) {
 		    htmlElement${index}.lang = "${extraConfig.lang}";
       }
 `,
+    iframe_title: `
+			var elementNonEmptyTitle${index} = document.${domSelector}("${selector}");
+      if (elementNonEmptyTitle${index}) {
+			  elementNonEmptyTitle${index}.title = getHostName(elementNonEmptyTitle${index}.src) || "embedded content";
+      }
+	`,
+    missing_link: `
+			var emptyAnchor${index} = document.${domSelector}("${selector}");
+      if (emptyAnchor${index}) {
+			  emptyAnchor${index}.href = "JavaScript:void(0);";
+      }
+			`,
+    contrast: fixContrast({ domSelector, index, selector, message }),
+    nesting: fixNesting({ domSelector, index, selector, message }),
   };
 };

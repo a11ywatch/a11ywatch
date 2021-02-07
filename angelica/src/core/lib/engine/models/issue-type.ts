@@ -22,6 +22,8 @@ const INVALID_HTML_PROPS = {
   textinput: "This textinput element does not have a name available",
   textarea:
     "This textarea element does not have a name available to an accessibility API. Valid names are: label element, title undefined, aria-label undefined, aria-labelledby undefined.",
+  contrast: "This element has insufficient contrast at this conformance level",
+  semantic_presentation_role: `This element's role is "presentation" but contains child elements with semantic meaning.`,
 };
 
 const INVALID_HTML_NESTING = {
