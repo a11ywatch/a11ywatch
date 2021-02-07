@@ -8,7 +8,7 @@ import { Container, Typography, Button, IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import CopyIcon from '@material-ui/icons/FileCopy'
 import { API_ENDPOINT } from '@app/configs'
-import { NavBar, PageTitle, Box } from '@app/components/general'
+import { NavBar, PageTitle, Box, Link } from '@app/components/general'
 import { TextSkeleton } from '@app/components/placeholders'
 import { AppManager, UserManager } from '@app/managers'
 import { userData } from '@app/data'
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function ApiInfo() {
+function Api() {
   const classes = useStyles()
   const { data = {}, loading } = userData()
   const [keyVisible, setKey] = useState<boolean>(false)
@@ -75,11 +75,8 @@ function ApiInfo() {
     (mav: boolean) => (
       e: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ): void => {
-      e.preventDefault()
       const textString = `${API_ENDPOINT}/${
-        !mav
-          ? `website-check?url=www.example.com&jwt=${UserManager?.token}`
-          : 'getImage'
+        !mav ? `website-check` : 'getImage'
       }`
       navigator.clipboard.writeText(textString)
       AppManager.toggleSnack(true, `Copied: ${textString}`, 'success')
@@ -104,26 +101,21 @@ function ApiInfo() {
     )
   }
 
-  const BoldText = ({ children }: any) => {
-    return (
-      <Typography
-        variant='body2'
-        component='p'
-        gutterBottom
-        className={classes.bold}
-      >
-        {children}
-      </Typography>
-    )
-  }
-
   const SectionTitle = ({
     children,
     className,
     variant = 'subtitle2',
+    component = 'p',
+    bold,
   }: any) => {
     return (
-      <Typography variant={variant} component='p' className={className}>
+      <Typography
+        variant={variant}
+        component={component}
+        className={`${bold ? classes.bold : ''}${
+          className ? ' ' + className : ''
+        }`}
+      >
         {children}
       </Typography>
     )
@@ -136,7 +128,11 @@ function ApiInfo() {
         <Box>
           <PageTitle title={`API`} />
           <SectionTitle variant='subtitle1'>
-            Add authorization header with the jwt format <i>Bearer TOKEN</i>
+            Add authorization header with the jwt format <i>Bearer TOKEN</i> for
+            more information check{' '}
+            <Link href={'https://a11ywatch.github.io/a11ywatch-docs/docs/api'}>
+              Docs
+            </Link>
           </SectionTitle>
           {!data?.user && loading ? (
             <TextSkeleton className={classes.email} />
@@ -159,7 +155,9 @@ function ApiInfo() {
               ) : null}
             </>
           )}
-          <SectionTitle variant='subtitle1'>Daily Allowed Usage</SectionTitle>
+          <SectionTitle variant='subtitle1' bold>
+            Daily Allowed Usage
+          </SectionTitle>
           {!data?.user && loading ? (
             <TextSkeleton className={classes.email} />
           ) : (
@@ -168,22 +166,31 @@ function ApiInfo() {
               {user.role === 0 ? 3 : user.role === 1 ? 25 : 100}
             </SectionTitle>
           )}
-          <SectionTitle variant='subtitle1'>Endpoints</SectionTitle>
+          <SectionTitle variant='h4' component={'h2'} bold>
+            Endpoints
+          </SectionTitle>
           {!data?.user && loading ? (
             <TextSkeleton className={classes.email} />
           ) : (
             <>
-              <SectionTitle>Page Issues : GET/POST</SectionTitle>
-              <CopyRow
-                text={`${API_ENDPOINT}/website-check?url=http://example.com`}
-              />
-              <BoldText>
-                {`Params: { url: String }`}
-                {` Body: { url: String }`}
-              </BoldText>
-              <SectionTitle>Image Name : POST</SectionTitle>
-              <CopyRow text={`${API_ENDPOINT}/getImage`} copy={true} />
-              <BoldText>{`Body: { imageBase64: Base64 }`}</BoldText>
+              <Box>
+                <SectionTitle variant={'h6'} component={'h3'}>
+                  Page Issues : GET/POST
+                </SectionTitle>
+                <SectionTitle
+                  bold
+                >{`Params|Body: { url: String }`}</SectionTitle>
+                <CopyRow text={`${API_ENDPOINT}/website-check`} />
+              </Box>
+              <Box>
+                <SectionTitle variant={'h6'} component={'h3'}>
+                  Image Name : POST
+                </SectionTitle>
+                <SectionTitle bold>
+                  {'Body: { imageBase64: Base64 }'}
+                </SectionTitle>
+                <CopyRow text={`${API_ENDPOINT}/getImage`} copy={true} />
+              </Box>
             </>
           )}
         </Box>
@@ -192,6 +199,6 @@ function ApiInfo() {
   )
 }
 
-metaSetter(ApiInfo)
+metaSetter(Api)
 
-export default withApollo(ApiInfo)
+export default withApollo(Api)
