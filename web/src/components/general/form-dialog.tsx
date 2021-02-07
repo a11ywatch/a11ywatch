@@ -24,12 +24,10 @@ import { domainList as dmList } from '@app/utils'
 import { Close as CloseIcon } from '@material-ui/icons'
 import { InputHeaders } from './input-headers'
 import { useInputHeader } from './hooks'
+import type { MergedTheme } from '@app/theme'
 
 const domainList = [...dmList, 'none']
 
-interface MergedTheme extends Theme {
-  color: any
-}
 const useStyles = makeStyles((theme: MergedTheme) => ({
   row: {
     flexDirection: 'row',
