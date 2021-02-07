@@ -7,7 +7,6 @@
 import { fork } from "child_process";
 import validUrl from "valid-url";
 
-import { connect } from "@app/database";
 import {
   WEBSITE_EXIST_ERROR,
   ADD_FREE_MAX_ERROR,

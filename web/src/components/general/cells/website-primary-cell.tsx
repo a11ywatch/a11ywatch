@@ -22,8 +22,6 @@ import {
 } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 
-import { WithHighlight } from '@app/components/adhoc'
-
 import { RenderAvatar, RenderSecondary, RenderIssuesList } from './render'
 
 import { Link } from '../link'

@@ -75,6 +75,7 @@ function Api() {
     (mav: boolean) => (
       e: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ): void => {
+      e?.preventDefault()
       const textString = `${API_ENDPOINT}/${
         !mav ? `website-check` : 'getImage'
       }`

@@ -19,104 +19,13 @@ import {
   MenuItem,
   IconButton,
 } from '@material-ui/core'
-import { makeStyles, Theme } from '@material-ui/core/styles'
 import { domainList as dmList } from '@app/utils'
 import { Close as CloseIcon } from '@material-ui/icons'
 import { InputHeaders } from './input-headers'
 import { useInputHeader } from './hooks'
-import type { MergedTheme } from '@app/theme'
+import { formDialogStyles as useStyles } from './styles'
 
 const domainList = [...dmList, 'none']
-
-const useStyles = makeStyles((theme: MergedTheme) => ({
-  row: {
-    flexDirection: 'row',
-    flex: 1,
-    display: 'flex',
-    alignItems: 'center',
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1) - 4.2,
-  },
-  addButton: {
-    marginLeft: theme.spacing(1),
-  },
-  dialogPadding: {
-    paddingTop: `${theme.spacing(1)}px !important`,
-  },
-  input: {
-    marginLeft: 2,
-    flex: 1,
-    width: '100%',
-    [theme.breakpoints.down('md')]: {
-      minWidth: 60,
-      marginLeft: 'auto',
-    },
-  },
-  inputAdjust: {
-    marginLeft: 4,
-  },
-  formLabel: {
-    marginLeft: 10,
-    [theme.breakpoints.down('md')]: {
-      marginLeft: 'auto',
-      marginRight: 14,
-    },
-  },
-  inputSelect: {
-    [theme.breakpoints.down('md')]: {
-      fontSize: 13,
-      paddingRight: 0,
-    },
-    maxHeight: '50vh',
-  },
-  formLabelText: {
-    [theme.breakpoints.down('md')]: {
-      fontSize: 13,
-    },
-  },
-  textInput: {
-    [theme.breakpoints.down('md')]: {
-      fontSize: 15,
-    },
-  },
-  buttonAdjust: {
-    marginTop: 12,
-    minWidth: 300,
-    paddingTop: 6,
-    paddingBottom: 6,
-    '&:hover': {
-      background: '#fff',
-      color: theme.color.primary,
-    },
-    [theme.breakpoints.down('md')]: {
-      minWidth: 380,
-    },
-    [theme.breakpoints.down('sm')]: {
-      minWidth: '96.5%',
-    },
-  },
-  formControl: {
-    marginLeft: 4,
-    marginRight: 10,
-    width: 'auto',
-    minWidth: 70,
-    [theme.breakpoints.down('md')]: {
-      marginLeft: 'auto',
-      minWidth: 60,
-    },
-  },
-  topRow: {
-    display: 'flex',
-    alignItems: 'center',
-    paddingRight: theme.spacing(3),
-  },
-  topTitle: {
-    flex: 1,
-    ['& > h2']: {
-      fontWeight: 600,
-    },
-  },
-}))
 
 export function FormDialog({ buttonTitle = 'Add Website', okPress }: any) {
   const classes = useStyles()

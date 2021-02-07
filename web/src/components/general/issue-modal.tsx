@@ -13,16 +13,14 @@ import {
   Grow,
   List,
 } from '@material-ui/core'
-import { makeStyles, Theme } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import CloseIcon from '@material-ui/icons/Close'
 import { DragHandler, issueSort } from '@app/lib'
 import { useMiniPlayer } from '@app/data'
 import { NavBarTitle } from './navigation'
 import { WebsitePrimaryCell } from './cells'
+import type { MergedTheme } from '@app/theme'
 
-interface MergedTheme extends Theme {
-  color: any
-}
 const useStyles = makeStyles((theme: MergedTheme) => ({
   root: {
     overflowX: 'hidden',

@@ -12,14 +12,10 @@ import {
   Healing as HealingIcon,
   Policy as PolicyIcon,
 } from '@material-ui/icons'
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
+import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { format } from 'date-fns'
-
 import { PageLoad } from './page-load'
-
-interface MergedTheme extends Theme {
-  color: any
-}
+import type { MergedTheme } from '@app/theme'
 
 const useStyles = makeStyles(({ palette, color, breakpoints }: MergedTheme) =>
   createStyles({

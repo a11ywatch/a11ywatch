@@ -6,17 +6,9 @@
 
 import React from 'react'
 
-import {
-  List,
-  ListItem,
-  ListItemIcon,
-  Typography,
-  Container,
-  Checkbox,
-} from '@material-ui/core'
+import { ListItem, ListItemIcon, Typography, Checkbox } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { WithHighlight } from '@app/components/adhoc'
-import { Spacer } from '@app/components/general'
 
 const useStyles = makeStyles((theme) => ({
   mainItemContainer: {
@@ -70,8 +62,6 @@ export function RenderIssue({
   context,
   type,
   selector,
-  pageIssues = [],
-  error,
   checkList,
   checked,
   handleToggle,

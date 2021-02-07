@@ -12,13 +12,12 @@ import {
   ListItemText,
   Avatar,
   IconButton,
-  Menu,
   MenuItem,
 } from '@material-ui/core'
 import { Folder as FolderIcon, MoreVert as MoreIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 import { Link } from '../link'
-import { TopMenu } from '../'
+import { TopMenu } from '../top-menu'
 import type { IssueCellProps } from './types'
 
 const useStyles = makeStyles(() => ({

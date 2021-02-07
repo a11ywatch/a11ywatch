@@ -10,7 +10,6 @@ import {
   ListItemSecondaryAction,
   ListItemText,
   IconButton,
-  Menu,
   MenuItem,
 } from '@material-ui/core'
 import { MoreVert as MoreIcon } from '@material-ui/icons'
@@ -18,7 +17,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { AppManager } from '@app/managers'
 import { Link } from '../link'
 import { RenderAvatar, RenderSecondary } from './render'
-import { TopMenu } from '../'
+import { TopMenu } from '../top-menu'
 
 const useStyles = makeStyles(() => ({
   root: {

@@ -19,37 +19,33 @@ class MyDocument extends Document {
     const sheets = new ServerStyleSheets()
     const originalRenderPage = ctx.renderPage
 
-    try {
-      if (ctx.req) {
-        userModel.initModel({
-          cookie: ctx.req.headers?.cookie,
-          deviceType:
-            // @ts-ignore
-            parser(ctx.req.headers['user-agent'])?.device?.type || 'desktop',
-          originalUrl: ctx.req?.url || '',
-        })
-        initAppModel()
-      }
-
-      ctx.renderPage = () =>
-        originalRenderPage({
-          enhanceApp: (App: any) => (props: any) =>
-            sheets.collect(<App {...props} />),
-        })
-
-      const { styles, ...initialProps } = await Document.getInitialProps(ctx)
-
-      return Object.assign({}, initialProps, {
-        styles: (
-          <>
-            {styles}
-            {sheets.getStyleElement()}
-          </>
-        ),
+    if (ctx.req) {
+      userModel.initModel({
+        cookie: ctx.req.headers?.cookie,
+        deviceType:
+          // @ts-ignore
+          parser(ctx.req.headers['user-agent'])?.device?.type || 'desktop',
+        originalUrl: ctx.req?.url || '',
       })
-    } catch (e) {
-      console.error(e)
+      initAppModel()
     }
+
+    ctx.renderPage = () =>
+      originalRenderPage({
+        enhanceApp: (App: any) => (props: any) =>
+          sheets.collect(<App {...props} />),
+      })
+
+    const { styles, ...initialProps } = await Document.getInitialProps(ctx)
+
+    return Object.assign({}, initialProps, {
+      styles: (
+        <>
+          {styles}
+          {sheets.getStyleElement()}
+        </>
+      ),
+    })
   }
 
   render() {

@@ -12,17 +12,14 @@ import {
   Typography,
   Grow,
 } from '@material-ui/core'
-import { makeStyles, Theme } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import CloseIcon from '@material-ui/icons/Close'
 import { DragHandler } from '@app/lib'
 import { useMiniPlayer } from '@app/data'
 import { Fab } from './fab'
 import { AdaIframe } from '../ada/ada-iframe'
 import { Link } from './link'
-
-interface MergedTheme extends Theme {
-  color: any
-}
+import type { MergedTheme } from '@app/theme'
 
 const useStyles = makeStyles((theme: MergedTheme) => ({
   root: {

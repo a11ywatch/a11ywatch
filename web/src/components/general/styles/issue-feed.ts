@@ -4,12 +4,11 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import { makeStyles, Theme } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
+import type { MergedTheme } from '@app/theme'
 
 const containerPadding = { paddingLeft: 12, paddingRight: 10 }
-interface MergedTheme extends Theme {
-  color: any
-}
+
 export const issueFeedStyles = makeStyles((theme: MergedTheme) => ({
   root: {
     position: 'fixed',

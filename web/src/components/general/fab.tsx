@@ -16,12 +16,9 @@ import {
 } from '@material-ui/icons'
 import { Button, Tooltip } from '@material-ui/core'
 import { useAutoFix, useMiniPlayer, useIframe, useHtmlView } from '@app/data'
-import { makeStyles, Theme } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import { Box } from '@app/components/general'
-
-interface MergedTheme extends Theme {
-  color: any
-}
+import type { MergedTheme } from '@app/theme'
 
 const useStyles = makeStyles((theme: MergedTheme) => ({
   bar: {

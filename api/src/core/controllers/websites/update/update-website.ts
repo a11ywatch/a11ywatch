@@ -4,7 +4,6 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import { connect } from "@app/database";
 import { WEBSITE_NOT_FOUND, SUCCESS } from "@app/core/strings";
 import { getWebsite } from "../find";
 

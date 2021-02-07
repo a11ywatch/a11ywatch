@@ -14,63 +14,13 @@ import {
 import { Button } from 'ui'
 import { scriptData } from '@app/data'
 import { UserManager, AppManager } from '@app/managers'
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { a11yDark } from '@app/styles'
 import Collapse from '@material-ui/core/Collapse'
 import WebIcon from '@material-ui/icons/Web'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 import { EditableMixture } from '@app/components/mixtures/editable-mixture'
-
-interface MergedTheme extends Theme {
-  color: any
-}
-
-const useStyles = makeStyles(({ palette, spacing, color }: MergedTheme) =>
-  createStyles({
-    root: {
-      width: '100%',
-      backgroundColor: palette.background.paper,
-      marginTop: '60px',
-    },
-    nested: {
-      paddingLeft: spacing(4),
-      paddingRight: spacing(4),
-    },
-    info: {
-      borderTop: `1px solid ${color.border}`,
-      paddingLeft: spacing(2),
-      paddingRight: spacing(2),
-      paddingBottom: spacing(1),
-      paddingTop: spacing(1),
-    },
-    text: {
-      fontSize: '1em',
-    },
-    textHeader: {
-      fontSize: '1.2em',
-      fontWeight: 'bold',
-    },
-    code: {
-      maxHeight: '60vh',
-      '&::-webkit-scrollbar': {
-        width: '8px',
-      },
-      '&::-webkit-scrollbar-thumb': {
-        borderRadius: 0,
-        border: 0,
-      },
-    },
-    title: {
-      flex: 1,
-      fontWeight: 500,
-    },
-    row: {
-      display: 'inline-flex',
-      alignItems: 'center',
-    },
-  })
-)
+import { collaspeListStyles as useStyles } from './styles'
 
 const handleClick = (item: any, open: boolean, cb?: any) => {
   cb(item === open ? '' : item)
