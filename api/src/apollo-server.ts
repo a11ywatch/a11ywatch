@@ -3,15 +3,11 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
-
 import { ApolloServer } from "apollo-server-express";
-
 import { config, BYPASS_AUTH } from "./config";
-
 import { getUser } from "./core/utils";
 import { schema } from "./core/schema";
 import { AUTH_ERROR, TOKEN_EXPIRED_ERROR } from "./core/strings";
-
 import { SubDomainController } from "./core/controllers/subdomains";
 import { ScriptsController } from "./core/controllers/scripts";
 import { HistoryController } from "./core/controllers/history";
