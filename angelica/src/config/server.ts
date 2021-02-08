@@ -4,14 +4,8 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import { DEV, MAIN_API_URL } from "./config";
+import { MAIN_API_URL } from "./config";
 
 export const corsOptions = {
   origin: [MAIN_API_URL + ""],
-};
-
-export const logServerInit = (port: number): void => {
-  console.log([
-    `🚀 Server ready at ${DEV ? "localhost" : "a11ywatch"}:${port}`,
-  ]);
 };

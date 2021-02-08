@@ -13,4 +13,4 @@ export {
   SCRIPTS_CDN_URL_HOST,
 } from "./config";
 export { pa11yConfig } from "./pa11y-config";
-export { corsOptions, logServerInit } from "./server";
+export { corsOptions } from "./server";
