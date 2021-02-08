@@ -93,8 +93,6 @@ export const UsersController: UserControllerType = (
   validateEmail,
   unsubscribeEmails,
   sendWebsiteOffline: async ({ id, domain }) => {
-    console.log("Offline: ", domain);
-
     try {
       const [user, collection] = await getUser({ id }, true);
 
