@@ -4,9 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 import React from 'react'
-
 import { Container } from '@material-ui/core'
-
 import {
   PageTitle,
   Drawer,
@@ -15,7 +13,6 @@ import {
 } from '@app/components/general'
 import { ScriptsPageSkeleton } from '@app/components/placeholders'
 import { groupBy } from '@app/utils'
-
 import { scriptsData, useSearchFilter } from '@app/data'
 import { filterSort } from '@app/lib'
 import { withApollo } from '@app/apollo'

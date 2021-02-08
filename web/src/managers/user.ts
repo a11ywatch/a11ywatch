@@ -3,12 +3,10 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
-
 import { computed, observable, action } from 'mobx'
 import { create, persist } from 'mobx-persist'
 import { isSameDay } from 'date-fns'
 import Router from 'next/router'
-
 import { userModel } from '@app/data'
 import { parseJwt } from '@app/lib/auth'
 import { SUPER_MODE } from '@app/configs'
@@ -68,7 +66,10 @@ class UserManager {
   }
 
   @computed get freeAccount() {
-    return SUPER_MODE === true ? false : this.jwtParsed?.audience === 0
+    if (SUPER_MODE) {
+      return false
+    }
+    return this.jwtParsed?.audience === 0
   }
 
   @computed get getID() {

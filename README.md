@@ -6,30 +6,17 @@
 
 system for accessibility, software productivity, and performance
 
-## Getting started with A11yWatch
+## Getting Started
 
 See our documentation on [a11ywatch.com](https://a11ywatch.github.io/a11ywatch-docs)
 
-## To start developing A11yWatch
+## Develop
 
 This repo hosts all information about
 building A11yWatch from source, how to contribute code
-and documentation, who to contact about what, etc.
+and documentation, who to contact about what, and etc.
 
-If you want to build A11yWatch right away there are two options:
-
-##### You have a working [Rust environment].
-
-Don't worry we take care of this upon project bootstrap if you do not.
-
-```
-mkdir -p a11y_core/a11ywatch
-cd a11y_core/a11ywatch
-git clone https://github.com/a11ywatch/a11ywatch
-cd a11ywatch
-./bootstrap.sh
-# now you can start each service in each sub dir with `npm start` or `npm run dev`
-```
+If you want to build A11yWatch right away there are multiple options, the easiest way is to use docker:
 
 ##### You have a working [Docker environment].
 
@@ -40,7 +27,7 @@ cd a11ywatch
 docker-compose -f development.yml up
 ```
 
-For the full story, head over to the [developer's documentation](https://a11ywatch.github.io/a11ywatch-docs/docs/getting-started).
+By default the ui application opens on port 3000. For the full story, head over to the [developer's documentation](https://a11ywatch.github.io/a11ywatch-docs/docs/getting-started).
 
 ## Backers
 

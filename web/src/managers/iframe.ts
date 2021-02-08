@@ -3,7 +3,6 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
-
 import { styleInject, highlightErrors, createAnnotations } from '@app/lib'
 import { observable, action, computed } from 'mobx'
 import { AppManager } from './app'
