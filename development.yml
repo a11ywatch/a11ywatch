@@ -9,12 +9,12 @@ services:
     volumes:
       - ./api/src:/usr/src/app/src
       - ./api/__tests__:/usr/src/app/__tests__
+      - ./api/.env:/usr/src/app/.env
     networks:
       - back-net
       - front-net
     ports:
       - "8080:8080"
-
   angelica:
     container_name: angelica
     env_file: ./angelica/.env
@@ -31,7 +31,6 @@ services:
       - back-net
     ports:
       - "8040:8040"
-
   mav:
     container_name: mav
     env_file: ./mav/.env
@@ -40,11 +39,11 @@ services:
       dockerfile: ./Dockerfile.dev
     volumes:
       - ./mav/src:/usr/src/app/src
+      - ./mav/.env:/usr/src/app/.env
     networks:
       - back-net
     ports:
       - "8020:8020"
-
   logger:
     container_name: logger
     env_file: ./logger/.env
@@ -53,11 +52,11 @@ services:
       dockerfile: ./Dockerfile.dev
     volumes:
       - ./logger/src:/usr/src/app/src
+      - ./logger/.env:/usr/src/app/.env
     networks:
       - back-net
     ports:
       - "8022:8022"
-
   web:
     container_name: web
     build:
@@ -75,6 +74,7 @@ services:
       - ./web/dynamic-paths.js:/usr/src/app/dynamic-paths.js
       - ./web/web-config.js:/usr/src/app/web-config.js
       - ./web/.next:/usr/src/app/.next
+      - ./web/.env:/usr/src/app/.env
     networks:
       - front-net
     ports:
@@ -92,7 +92,6 @@ services:
       - front-net
     ports:
       - "8050:8050"
-
   cdn-server:
     env_file: ./cdn-server/.env
     container_name: cdn-server
@@ -101,13 +100,12 @@ services:
       dockerfile: ./Dockerfile.dev
     volumes:
       - ./cdn-server/src:/usr/src/app/src
-      - ./cdn-server/package.json:/usr/src/app/package.json
+      - ./cdn-server/.env:/usr/src/app/.env
     networks:
       - back-net
       - front-net
     ports:
       - "8090:8090"
-
   iframe-server:
     env_file: ./iframe-server/.env
     container_name: iframe-server
@@ -116,11 +114,11 @@ services:
       dockerfile: ./Dockerfile.dev
     volumes:
       - ./iframe-server/src:/usr/src/app/src
+      - ./iframe-server/.env:/usr/src/app/.env
     networks:
       - front-net
     ports:
       - "8010:8010"
-
   watcher:
     container_name: watcher
     env_file: ./watcher/.env
@@ -132,11 +130,11 @@ services:
       - ./watcher/scripts:/usr/src/app/scripts
       - ./watcher/tests:/usr/src/app/tests
       - ./watcher/target:/usr/src/app/target
+      - ./watcher/.env:/usr/src/app/.env
     networks:
       - back-net
     ports:
       - "8000:8000"
-
   mongodb:
     container_name: mongodb
     networks:
@@ -148,11 +146,9 @@ services:
       - mongodb:/data/db
     environment:
       - MONGO_INITDB_DATABASE=${DB_NAME:-a11ywatch}
-
 networks:
   front-net:
   back-net:
-
 volumes:
   mongodb:
   api:

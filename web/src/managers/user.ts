@@ -11,6 +11,7 @@ import Router from 'next/router'
 
 import { userModel } from '@app/data'
 import { parseJwt } from '@app/lib/auth'
+import { SUPER_MODE } from '@app/configs'
 
 const USER_DEFAULTS = {
   id: undefined,
@@ -59,7 +60,6 @@ class UserManager {
   }
 
   @computed get token() {
-    // cookie -> local
     return userModel?.jwt || this?.user?.jwt
   }
 
@@ -68,7 +68,7 @@ class UserManager {
   }
 
   @computed get freeAccount() {
-    return this.jwtParsed?.audience === 0
+    return SUPER_MODE === true ? false : this.jwtParsed?.audience === 0
   }
 
   @computed get getID() {
@@ -80,7 +80,6 @@ class UserManager {
   }
 
   @computed get loggedIn() {
-    // TODO: check token exp for refresh token usage
     return userModel.loggedIn || this.token
   }
 

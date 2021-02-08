@@ -9,7 +9,6 @@ import { Typography } from '@material-ui/core'
 import { UserManager } from '@app/managers'
 import { Link } from './link'
 
-// !UserManager.firstDay
 const useStyles = makeStyles((theme) => ({
   container: {
     alignItems: 'center',
