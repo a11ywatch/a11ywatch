@@ -59,7 +59,6 @@ export const crawlWebsite = async ({
     cdnJsPath,
     cdnMinJsPath,
   } = sourceBuild(urlMap);
-
   let resolver = {
     webPage: null,
     issues: null,

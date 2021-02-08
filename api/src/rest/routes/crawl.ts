@@ -13,7 +13,6 @@ import {
 import { getUser, usageExceededThreshold } from "@app/core/utils";
 import { TOKEN_EXPIRED_ERROR, RATE_EXCEEDED_ERROR } from "@app/core/strings";
 
-// RESPONSE FROM WATCHER SERVICE
 const websiteCrawl = async (req, res) => {
   try {
     const { data } = req.body;
@@ -22,9 +21,15 @@ const websiteCrawl = async (req, res) => {
       const { user_id, pages, domain } = JSON.parse(data);
 
       if (pages?.length === 0) {
-        console.log("Offline: ", domain);
-        await UsersController().sendWebsiteOffline({ id: user_id, domain });
-        res.send(false);
+        if (domain) {
+          await crawl({
+            url: domain,
+            userId: user_id,
+          });
+        } else {
+          await UsersController().sendWebsiteOffline({ id: user_id, domain });
+          res.send(false);
+        }
       } else {
         for (
           let websiteIterator = 0;

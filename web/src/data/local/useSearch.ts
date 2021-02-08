@@ -8,7 +8,7 @@ import { useEffect } from 'react'
 import { useApolloClient, useQuery, useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import isUrl from 'is-url'
-
+import { logGraphErrors } from '@app/lib/log'
 import { SCAN_WEBSITE } from '@app/mutations'
 import { AppManager } from '@app/managers'
 
@@ -56,19 +56,10 @@ export function useSearch() {
       event?.preventDefault()
     }
     let tpt = ''
-    // let www = ''
-    // let blockExt = false
-    let squery = text || search
+    let squery = String(text || search)
 
     if (!squery.includes('http')) {
       tpt = 'http://'
-    }
-
-    if (squery?.includes('localhost:')) {
-      if (!squery.includes('http')) {
-        tpt = 'http'
-      }
-      // blockExt = true
     }
 
     const hasExt = squery.split('.').pop()
@@ -79,12 +70,7 @@ export function useSearch() {
       variables: {
         url: querySearch,
       },
-    }).catch((res: any) => {
-      const errors = res?.graphQLErrors?.map((error: any) => {
-        return error?.message
-      })
-      console.log(errors)
-    })
+    }).catch(logGraphErrors)
   }
 
   const closeFeed = () => {

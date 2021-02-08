@@ -8,7 +8,7 @@ const detectImage = async (req, res, next) => {
 
     res.json(data);
   } catch (e) {
-    console.log(`Error: `, e);
+    console.error(e);
     next();
   }
 };

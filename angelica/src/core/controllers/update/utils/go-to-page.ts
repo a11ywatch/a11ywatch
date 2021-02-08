@@ -74,7 +74,7 @@ const goToPage = async (
       waitUntil: "networkidle2",
     });
   } catch (e) {
-    console.log(`ISSUE LOADING: ${url}:`, e);
+    console.error(e);
     hasPage = false;
   }
 

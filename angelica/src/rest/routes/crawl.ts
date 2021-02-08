@@ -11,7 +11,7 @@ const crawl = async (req, res, next) => {
 
     res.send(JSON.stringify(data));
   } catch (e) {
-    console.log(`Error: `, e);
+    console.error(e);
     next();
   }
 };

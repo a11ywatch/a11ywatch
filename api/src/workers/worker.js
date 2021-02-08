@@ -8,16 +8,16 @@ const fetch = require("node-fetch");
 const { initUrl } = require("@a11ywatch/website-source-builder");
 
 process.on("message", ({ urlMap, userId }) => {
-  console.log("REQUESTING SPIDER DOMAIN SCAN:", urlMap);
   const url = String(initUrl(urlMap, true));
-  const body = JSON.stringify({
-    url,
-    id: Number(userId),
-  });
+  console.log("REQUESTING SPIDER DOMAIN SCAN:", url);
+
   try {
     fetch(`${process.env.WATCHER_CLIENT_URL}/crawl`, {
       method: "POST",
-      body,
+      body: JSON.stringify({
+        url,
+        id: Number(userId),
+      }),
       headers: { "Content-Type": "application/json" },
     });
   } catch (e) {
