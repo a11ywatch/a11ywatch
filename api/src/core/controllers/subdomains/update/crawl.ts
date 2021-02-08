@@ -7,7 +7,7 @@
 import validUrl from "valid-url";
 import { emailMessager } from "@app/core/messagers";
 import { sourceBuild } from "@a11ywatch/website-source-builder";
-import { pubsub } from "@app/core/subscriptions";
+import { pubsub } from "@app/core/graph/subscriptions";
 import { SUBDOMAIN_ADDED, ISSUE_ADDED, WEBSITE_ADDED } from "@app/core/static";
 import { ApiResponse, responseModel } from "@app/core/models";
 import { IssuesController } from "../../issues";

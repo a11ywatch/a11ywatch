@@ -3,10 +3,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
-
 import { isBefore } from "date-fns";
-
-import { pubsub } from "../../../subscriptions";
+import { pubsub } from "@app/core/graph/subscriptions";
 import { EMAIL_VERIFIED } from "../../../static";
 import { getUser } from "../find";
 
