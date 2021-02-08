@@ -7,15 +7,8 @@ import React from 'react'
 
 import { Typography, Grid, Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import {
-  Mood as PaidIcon,
-  WhatshotOutlined as WhatsHot,
-  SentimentSatisfied as FreeIcon,
-} from '@material-ui/icons'
 import { Ribbon } from '@app/components/general'
-
-const TRUSTED_CDN = 'Secure custom autofix CDN'
-const VISUAL_PLAYGROUND = 'Visual website playground'
+import { priceConfig } from '@app/configs'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -68,101 +61,58 @@ export function Price({
       ? highLightStyles
       : ''
 
-  const PLANS = [
-    {
-      title: 'Free',
-      details: [
-        'Monitor 1 website',
-        '2 daily manual page scans',
-        'Root domain scanned daily',
-        TRUSTED_CDN,
-        VISUAL_PLAYGROUND,
-        'Custom scripts',
-        '3 Private API request per day',
-      ],
-      Icon: FreeIcon,
-      cost: '0$',
-    },
-    {
-      title: 'Basic',
-      details: [
-        'Monitor up to 4 websites',
-        '10 daily manual page scans',
-        'All pages scanned daily',
-        TRUSTED_CDN,
-        VISUAL_PLAYGROUND,
-        'Custom editable scripts',
-        '100 Private API request per day',
-      ],
-      Icon: PaidIcon,
-      cost: '10$/month',
-    },
-    {
-      title: 'Premium',
-      details: [
-        'Monitor up to 10 websites',
-        'Unlimited daily manual page scans',
-        'All pages scanned multiple times daily',
-        TRUSTED_CDN,
-        VISUAL_PLAYGROUND,
-        'Custom editable scripts',
-        '500 Private API request per day',
-      ],
-      Icon: WhatsHot,
-      cost: '20$/month',
-    },
-  ]
-
   return (
     <>
       <Grid container spacing={1} className={!onClick ? classes.root : ''}>
-        {PLANS.filter((item: any) => {
-          if (!blockFree) {
-            return item.title !== 'Free'
-          }
-          return true
-        }).map(({ title, details, cost, Icon }: any) => (
-          <Paper
-            key={title}
-            className={`${classes.paper} ${highLight(
-              title,
-              classes?.highLight,
-              {
-                premium,
-                basic,
-              }
-            )}`}
-            onClick={onClick ? onClick(title) : undefined}
-            component={onClick ? 'button' : 'div'}
-          >
-            {title === 'Premium' ? <Ribbon /> : null}
-            <Icon fontSize='large' />
-            <Typography
-              variant='h4'
-              component='span'
-              gutterBottom
-              style={{ fontWeight: 'bold' }}
+        {priceConfig.plans
+          .filter((item: any) => {
+            if (!blockFree) {
+              return item.title !== 'Free'
+            }
+            return true
+          })
+          .map(({ title, details, cost, Icon }: any) => (
+            <Paper
+              key={title}
+              className={`${classes.paper} ${highLight(
+                title,
+                classes?.highLight,
+                {
+                  premium,
+                  basic,
+                }
+              )}`}
+              onClick={onClick ? onClick(title) : undefined}
+              component={onClick ? 'button' : 'div'}
             >
-              {title}
-            </Typography>
-            <ol>
-              {details?.map((item: any) => (
-                <Typography variant='subtitle1' component='li' key={item}>
-                  - {item}
-                </Typography>
-              ))}
-            </ol>
-            {cost ? (
+              {title === 'Premium' ? <Ribbon /> : null}
+              <Icon fontSize='large' />
               <Typography
-                variant='h5'
+                variant='h4'
                 component='span'
-                style={{ fontWeight: 600, marginTop: 12 }}
+                gutterBottom
+                style={{ fontWeight: 'bold' }}
               >
-                {cost}
+                {title}
               </Typography>
-            ) : null}
-          </Paper>
-        ))}
+              <ol>
+                {details?.map((item: any) => (
+                  <Typography variant='subtitle1' component='li' key={item}>
+                    - {item}
+                  </Typography>
+                ))}
+              </ol>
+              {cost ? (
+                <Typography
+                  variant='h5'
+                  component='span'
+                  style={{ fontWeight: 600, marginTop: 12 }}
+                >
+                  {cost}
+                </Typography>
+              ) : null}
+            </Paper>
+          ))}
       </Grid>
       <div className={classes.center}>
         <Typography
