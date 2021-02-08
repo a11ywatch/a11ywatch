@@ -6,7 +6,6 @@
 
 import { getIssueFixScript } from "@app/core/lib";
 import { getHostAsString } from "@a11ywatch/website-source-builder";
-
 import {
   needsLongTextAlt,
   missingAltText,
@@ -35,9 +34,7 @@ export const loopIssues = ({ issues, page }): Promise<IssueInfo> => {
   let possibleIssuesFixedByCdn = 0;
   let includeDomainCheck = false;
 
-  // TODO: add error occurance count
   return new Promise(async (resolve) => {
-    // TODO ATOMIC BATCH PROCESS FOR NOW KILL LOOP
     if (!issues?.issues?.length) {
       resolve({
         errorCount,
@@ -78,14 +75,6 @@ export const loopIssues = ({ issues, page }): Promise<IssueInfo> => {
         pageUrl: issues?.pageUrl,
       });
 
-      // console.log(
-      //   `ISSUE INDEX`,
-      //   issueIndex,
-      //   `ISSUE LENGTH ${issues.issues.length}`,
-      //   `URL: ${issues?.pageUrl}`
-      // );
-
-      // TODO move this to one method
       if (element.type === "error") {
         errorCount++;
         adaScore -= 2;

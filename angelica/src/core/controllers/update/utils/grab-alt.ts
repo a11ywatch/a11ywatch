@@ -34,7 +34,7 @@ export const grabAlt = async ({ element, page, pageUrl }): Promise<Alt> => {
 
       alt = extractAlt(img);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   }
 
