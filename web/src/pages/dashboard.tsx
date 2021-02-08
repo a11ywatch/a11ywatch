@@ -152,10 +152,8 @@ function Dashboard() {
               error={error}
               loading={loading}
               mutatationLoading={mutatationLoading}
-              removePress={(url: string, deleteMany?: boolean) =>
-                removePress(url, deleteMany)
-              }
-              addPress={(url: string, headers: any) => addPress(url, headers)}
+              removePress={removePress}
+              addPress={addPress}
               crawlWebsite={crawlWebsite}
               refetch={refetch}
               BottomButton={FormDialog}

@@ -28,9 +28,12 @@ import { formDialogStyles as useStyles } from './styles'
 const domainList = [...dmList, 'none']
 
 export function FormDialog({ buttonTitle = 'Add Website', okPress }: any) {
-  const classes = useStyles()
   const [open, setOpen] = useState<boolean>(false)
   const [websitUrl, setUrl] = useState<string>('')
+  const [https, setTransportType] = useState<boolean>(true)
+  const [extension, setExtension] = useState<string>('.com')
+  const inputRef = useRef(null)
+  const classes = useStyles()
 
   const {
     customHeader,
@@ -41,16 +44,14 @@ export function FormDialog({ buttonTitle = 'Add Website', okPress }: any) {
     setCustomHeader,
   } = useInputHeader()
 
-  const [https, setTransportType] = useState<boolean>(true)
-  const [extension, setExtension] = useState<string>('.com')
-  const inputRef = useRef(null)
-
   const handleClickOpen = () => {
     setOpen(true)
   }
+
   const onChangeText = (event: any) => {
     setUrl(event.target.value)
   }
+
   const handleClose = () => {
     setOpen(false)
     setUrl('')
@@ -76,14 +77,10 @@ export function FormDialog({ buttonTitle = 'Add Website', okPress }: any) {
       if (websitUrl.includes('http://') || !https) {
         tpt = 'http'
       }
-      // build url
       let urlBase = cleanUrl.includes('://') ? '' : `://`
       let blockExt = extension === 'none'
 
-      if (cleanUrl?.includes('localhost:')) {
-        if (!cleanUrl.includes('http')) {
-          tpt = 'http'
-        }
+      if (cleanUrl.includes('localhost:')) {
         blockExt = true
       }
 

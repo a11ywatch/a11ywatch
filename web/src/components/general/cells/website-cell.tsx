@@ -12,6 +12,7 @@ import {
   IconButton,
   MenuItem,
 } from '@material-ui/core'
+import { logGraphErrors } from '@app/lib/log'
 import { MoreVert as MoreIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 import { AppManager } from '@app/managers'
@@ -64,6 +65,11 @@ export function WebsiteCell({
   const handleClose = () => {
     setAnchorEl(null)
   }
+  const removeWebsite = (e: any) => {
+    e?.preventDefault()
+    removePress(url)
+  }
+
   const href = `/website-details?websiteUrl=${encodeURIComponent(url)}`
 
   const handleMainClick = (
@@ -134,12 +140,7 @@ export function WebsiteCell({
                 variables: {
                   url,
                 },
-              }).catch((res: any) => {
-                const errors = res?.graphQLErrors.map((error: any) => {
-                  return error.message
-                })
-                console.log(errors)
-              })
+              }).catch(logGraphErrors)
               handleClose()
               AppManager.toggleSnack(
                 true,
@@ -152,7 +153,7 @@ export function WebsiteCell({
           </MenuItem>
         ) : null}
         {removePress && !history ? (
-          <MenuItem onClick={() => removePress(url)} style={{ color: 'red' }}>
+          <MenuItem onClick={removeWebsite} style={{ color: 'red' }}>
             Delete
           </MenuItem>
         ) : null}
