@@ -96,6 +96,27 @@ const NavLinks: any = ({ className, filterType }: any) => {
 const Footer = ({ sticky }: { sticky?: boolean }) => {
   const classes = useStyles()
 
+  const SectionLinks = ({
+    title,
+    filterType,
+  }: {
+    title: string
+    filterType: string
+  }) => {
+    return (
+      <div className={classes.blockContainer}>
+        <Typography>{title}</Typography>
+        <ul className={classes.linkContainer}>
+          {
+            React.createElement(NavLinks, {
+              filterType,
+            }) as any
+          }
+        </ul>
+      </div>
+    )
+  }
+
   return (
     <footer className={`${classes.root} ${sticky ? classes.sticky : ''}`}>
       <Container maxWidth='lg'>
@@ -117,26 +138,8 @@ const Footer = ({ sticky }: { sticky?: boolean }) => {
                 ))}
               </ul>
             </div>
-            <div className={classes.blockContainer}>
-              <Typography>Explore</Typography>
-              <ul className={classes.linkContainer}>
-                {
-                  React.createElement(NavLinks, {
-                    filterType: 'explore',
-                  }) as any
-                }
-              </ul>
-            </div>
-            <div className={classes.blockContainer}>
-              <Typography>Resources</Typography>
-              <ul className={classes.linkContainer}>
-                {
-                  React.createElement(NavLinks, {
-                    filterType: 'resources',
-                  }) as any
-                }
-              </ul>
-            </div>
+            <SectionLinks title={'Explore'} filterType={'explore'} />
+            <SectionLinks title={'Resources'} filterType={'resources'} />
           </div>
           {APP_TYPE !== 'main' ? (
             <div className={classes.linkContainer}>

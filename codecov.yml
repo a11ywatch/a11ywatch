@@ -5,7 +5,7 @@ coverage:
   round: down
   range: "70...100"
 status:
-  project: yes
+  project: false
   patch: yes
   changes: yes
 parsers:
