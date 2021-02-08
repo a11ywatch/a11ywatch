@@ -37,12 +37,10 @@ function getIssueFixScript(
     return "";
   }
 
-  const selector = getSelectorType(issue);
-
   const fix = () =>
     fixInvalid(
       {
-        domSelector: selector,
+        domSelector: getSelectorType(issue),
         selector: issue?.selector,
         index,
         message,

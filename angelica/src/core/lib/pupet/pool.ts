@@ -6,7 +6,6 @@
 
 import { createPuppeteerPool } from "./create-puppeteer-pool";
 
-// ONLY POOL ONCE PER MACHINE ATM
 const puppeteerPool = createPuppeteerPool();
 
 const puppetPool = {

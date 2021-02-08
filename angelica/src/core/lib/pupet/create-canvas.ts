@@ -29,7 +29,7 @@ function createCanvasPupet(selector: any) {
       canvas.getContext("2d").drawImage(img, 0, 0, width, height);
       return { imageToBase64: canvas.toDataURL("image/png"), width, height };
     } catch (e) {
-      console.log(e);
+      console.error(e);
       return { imageToBase64: "", width: 0, height: 0 };
     }
   }

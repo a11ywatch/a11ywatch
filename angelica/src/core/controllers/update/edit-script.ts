@@ -25,17 +25,18 @@ export const editScript = async ({
       parser: "html",
     });
 
-    const scriptProps = {
-      scriptChildren: newScript
-        .replace("<script defer>", "")
-        .replace("</script>", ""),
-      domain,
-      cdnSrc: cdnSourceStripped,
-    };
-
     forked.send({
       cdnSourceStripped,
-      scriptBody: scriptBuild(scriptProps, true),
+      scriptBody: scriptBuild(
+        {
+          scriptChildren: newScript
+            .replace("<script defer>", "")
+            .replace("</script>", ""),
+          domain,
+          cdnSrc: cdnSourceStripped,
+        },
+        true
+      ),
       domain: domain || resolver?.domain,
     });
   } catch (e) {

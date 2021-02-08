@@ -6,6 +6,7 @@
 
 import genericPool from "generic-pool";
 import puppeteer from "puppeteer";
+import { DEV } from "@app/config";
 
 const puppeteerConfig = {
   executablePath: process.env.CHROME_BIN || null,
@@ -19,8 +20,7 @@ const puppeteerConfig = {
     "--proxy-bypass-list=*",
   ],
   headless: true,
-  dumpio: process.env.NODE_ENV !== "production",
-  // TODO: CHANGE TIMEOUT TO ENV VAR OR OS ALGRYTHM
+  dumpio: DEV,
   timeout: 15000,
 };
 
@@ -53,8 +53,8 @@ const createPuppeteerFactory = ({ puppeteerArgs, validate }) => ({
 export async function launchPuppeter() {
   try {
     return await puppeteer.launch(puppeteerConfig);
-  } catch (err) {
-    console.error(err);
+  } catch (e) {
+    console.error(e);
     return null;
   }
 }

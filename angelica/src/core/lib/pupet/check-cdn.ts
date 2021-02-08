@@ -3,26 +3,29 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
-
-const dev = process.env.NODE_ENV !== "production";
+import { DEV } from "@app/config";
 
 export const checkCdn = async ({ page, cdnMinJsPath, cdnJsPath }) => {
   let hasCdn = false;
   try {
     const srcMin =
-      dev && cdnMinJsPath.includes("localhost")
+      DEV && cdnMinJsPath.includes("localhost")
         ? decodeURIComponent(cdnMinJsPath)
         : cdnMinJsPath;
     hasCdn = await page.$eval(`script[src$="${srcMin}"]`, (sources) => true);
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
   if (!hasCdn) {
     try {
       const src =
-        dev && cdnJsPath.includes("localhost")
+        DEV && cdnJsPath.includes("localhost")
           ? decodeURIComponent(cdnJsPath)
           : cdnJsPath;
       hasCdn = await page.$eval(`script[src$="${src}"]`, (sources) => true);
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   }
   return hasCdn;
 };
