@@ -53,6 +53,7 @@ const env = Object.assign({}, parsed, {
 module.exports = withPWA({
   pwa: {
     dest: 'public',
+    mode: process.env.WORKBOX_MODE || 'production',
   },
   compress: true,
   generateBuildId: async () =>
