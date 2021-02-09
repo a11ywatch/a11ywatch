@@ -19,19 +19,22 @@ function MNLink({
   innerRef,
   className,
   naked,
-  as,
+  as: asValue,
+  href,
   ...props
 }: any) {
   const router = useRouter()
-  const component = props?.href?.includes('http') ? 'a' : NextComposed
+  const component = String(href).includes('http') ? 'a' : NextComposed
+  const as = asValue ? asValue : href
 
   if (naked) {
     return (
       <NextComposed
         className={`${className} ${
-          router?.pathname === props?.href ? activeClassName : ''
+          router?.pathname === href ? activeClassName : ''
         }`}
         as={as}
+        href={href}
         ref={innerRef}
         {...props}
       />
@@ -44,7 +47,7 @@ function MNLink({
       className={className}
       ref={innerRef}
       as={as}
-      href={props?.href}
+      href={href}
       {...props}
     />
   )
