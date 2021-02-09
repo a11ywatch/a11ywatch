@@ -108,7 +108,7 @@ const SignOnForm: FunctionComponent<SignOnProps> = ({ loginView, home }) => {
     }
   }, [error])
 
-  const submit = useCallback((e: any) => {
+  const submit = useCallback(async (e: any) => {
     e?.preventDefault()
     // @ts-ignore
     if (!passwordRef?.current?.value || !emailRef?.current?.value) {
@@ -120,12 +120,16 @@ const SignOnForm: FunctionComponent<SignOnProps> = ({ loginView, home }) => {
         'error'
       )
     } else {
-      signOnMutation({
-        variables: {
-          email: emailRef?.current?.value,
-          password: passwordRef?.current?.value,
-        },
-      })
+      try {
+        await signOnMutation({
+          variables: {
+            email: emailRef?.current?.value,
+            password: passwordRef?.current?.value,
+          },
+        })
+      } catch (e) {
+        console.error(e)
+      }
 
       // @ts-ignore
       if (passwordRef.current) {
@@ -153,14 +157,18 @@ const SignOnForm: FunctionComponent<SignOnProps> = ({ loginView, home }) => {
           <GoogleLogin
             clientId={GOOGLE_CLIENT_ID + ''}
             buttonText={loginView ? 'Login' : 'Sign up with google'}
-            onSuccess={(response: any) => {
-              signOnMutation({
-                variables: {
-                  email: response?.profileObj?.email,
-                  password: '',
-                  googleId: response?.googleId,
-                },
-              })
+            onSuccess={async (response: any) => {
+              try {
+                await signOnMutation({
+                  variables: {
+                    email: response?.profileObj?.email,
+                    password: '',
+                    googleId: response?.googleId,
+                  },
+                })
+              } catch (e) {
+                console.error(e)
+              }
             }}
             onFailure={(err) => {
               console.error(err)
