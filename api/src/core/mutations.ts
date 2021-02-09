@@ -35,8 +35,14 @@ export const Mutation = {
 
     return loginUser;
   },
+  register: async (_, { email, password, googleId }, context) => {
+    return await context.models.User.createUser({
+      email,
+      password,
+      googleId,
+    });
+  },
   addWebsite,
-  // TODO: RENAME CRAWLWEBSITE TO CRAWL_ALL_PAGES
   crawlWebsite: async (_, { userId, url, password }, context) => {
     const { keyid } = context.user?.payload || defaultPayload;
     const useID =
