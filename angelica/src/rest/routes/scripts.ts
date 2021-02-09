@@ -12,8 +12,7 @@ const setScripts = async (req, res, next) => {
           userId,
           script,
           newScript,
-        },
-        edit ? {} : { newScript }
+        }
       )
     );
 

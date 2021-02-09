@@ -35,7 +35,7 @@ function MainCell({
 }: any) {
   const [source, setSource] = useState<any>(sourceData)
   const [newScript, setScript] = useState<any>(sourceData)
-  const [checked, setChecked] = useState<any>(
+  const [skipContentEnabled, setChecked] = useState<any>(
     !source?.issueMeta?.skipContentIncluded &&
       source?.scriptMeta?.skipContentEnabled
   )
@@ -48,7 +48,9 @@ function MainCell({
     }
   }, [newItemUpdate])
 
-  const handleChange = () => {
+  const handleChange = async (e: any) => {
+    e?.preventDefault()
+
     if (freeAccount) {
       AppManager.toggleSnack(
         true,
@@ -56,12 +58,12 @@ function MainCell({
         'warning'
       )
     } else {
-      setChecked(!checked)
-      updateScript({
+      setChecked(!skipContentEnabled)
+      await updateScript({
         variables: {
           url: source?.pageUrl,
           scriptMeta: {
-            skipContentEnabled: !checked,
+            skipContentEnabled,
           },
           editScript: false,
         },
@@ -71,12 +73,13 @@ function MainCell({
     }
   }
 
-  const submitEdit = () => {
-    updateScript({
+  const submitEdit = async (e: any) => {
+    e?.preventDefault()
+    await updateScript({
       variables: {
         url: source?.pageUrl,
         scriptMeta: {
-          skipContentEnabled: !checked,
+          skipContentEnabled,
         },
         editScript: true,
         newScript,
@@ -105,7 +108,7 @@ function MainCell({
             </ListItemText>
             {!source?.issueMeta?.skipContentIncluded ? (
               <Checkbox
-                checked={checked}
+                checked={skipContentEnabled}
                 onChange={handleChange}
                 inputProps={{
                   'aria-label': 'Skip content enabled',
@@ -120,7 +123,8 @@ function MainCell({
           <div style={{ flex: 1 }} />
           <div style={{ flex: 1, display: 'flex', paddingBottom: 4 }}>
             <Button
-              onClick={() => {
+              onClick={(e: any) => {
+                e?.preventDefault()
                 if (freeAccount) {
                   AppManager.toggleSnack(
                     true,
@@ -137,13 +141,8 @@ function MainCell({
             </Button>
             <div style={{ flex: 1 }} />
             {editMode ? (
-              <Button
-                onClick={() => {
-                  submitEdit()
-                }}
-                className={'hover:text-green-600'}
-              >
-                Submit
+              <Button onClick={submitEdit} className={'hover:text-green-600'}>
+                SAVE
               </Button>
             ) : null}
           </div>

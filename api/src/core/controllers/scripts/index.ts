@@ -8,7 +8,7 @@ import fetch from "node-fetch";
 import { connect } from "@app/database";
 import { websiteSearchParams } from "@app/core/utils";
 
-const EMPTY_RESPONSE = {
+const DEFAULT_RESPONSE = {
   script: null,
   code: 200,
   success: true,
@@ -61,22 +61,21 @@ export const ScriptsController = ({ user } = { user: null }) => ({
     editScript,
     newScript,
   }) {
+    const params = {
+      userId,
+      pageUrl,
+    };
     try {
-      const params = {
-        userId,
-        pageUrl,
-      };
-      const [script, collection] = await this.getScript(params, true);
-      let scriptUpdate = script;
-
+      let [script, collection] = await this.getScript(params, true);
+      if (typeof scriptMeta !== "undefined") {
+        script.scriptMeta = scriptMeta;
+      }
       const data = await fetch(
         `${process.env.PUPPET_SERVICE}/api/updateScript`,
         {
           method: "POST",
           body: JSON.stringify({
-            script: Object.assign({}, script, {
-              scriptMeta,
-            }),
+            script,
             editScript: !!editScript,
             newScript: newScript,
             url: String(encodeURIComponent(pageUrl)),
@@ -86,18 +85,16 @@ export const ScriptsController = ({ user } = { user: null }) => ({
         }
       );
 
-      if (data.status === 200) {
-        scriptUpdate = await data.json();
-
-        delete scriptUpdate._id;
-
+      if (data?.status === 200) {
+        script = await data.json();
+        delete script._id;
         await collection.updateOne(params, {
-          $set: scriptUpdate,
+          $set: script,
         });
       }
 
-      return Object.assign({}, EMPTY_RESPONSE, {
-        script: scriptUpdate,
+      return Object.assign({}, DEFAULT_RESPONSE, {
+        script,
       });
     } catch (e) {
       console.error(e);
