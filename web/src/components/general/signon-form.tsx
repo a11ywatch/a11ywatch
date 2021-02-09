@@ -4,13 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import React, {
-  useRef,
-  useCallback,
-  useMemo,
-  useEffect,
-  FunctionComponent,
-} from 'react'
+import React, { useRef, useCallback, useMemo, FunctionComponent } from 'react'
 import { GoogleLogin } from 'react-google-login'
 import { useRouter } from 'next/router'
 

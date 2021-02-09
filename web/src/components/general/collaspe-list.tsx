@@ -58,18 +58,23 @@ function MainCell({
         'warning'
       )
     } else {
-      setChecked(!skipContentEnabled)
-      await updateScript({
-        variables: {
-          url: source?.pageUrl,
-          scriptMeta: {
-            skipContentEnabled,
+      try {
+        const skipEnabled = !skipContentEnabled
+        setChecked(skipEnabled)
+
+        await updateScript({
+          variables: {
+            url: source?.pageUrl,
+            scriptMeta: {
+              skipContentEnabled: skipEnabled,
+            },
+            editScript: false,
           },
-          editScript: false,
-        },
-      }).catch((e: any) => {
+        })
+        setChecked(!skipContentEnabled)
+      } catch (e) {
         console.error(e)
-      })
+      }
     }
   }
 

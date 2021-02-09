@@ -22,7 +22,7 @@ export const adjustScript = async ({
   try {
     let scriptBody = resolver?.script;
 
-    if (!resolver?.issueMeta?.skipContentIncluded) {
+    if (scriptBody) {
       const startOfReplaceScript = scriptBody.indexOf("// SO: SKIP NAVIGATION");
       const endOfReplaceScript = scriptBody.indexOf("// EO: SKIP NAVIGATION");
       if (!enabledSkip) {
