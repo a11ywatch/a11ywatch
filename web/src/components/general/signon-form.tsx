@@ -89,7 +89,6 @@ const SignOnForm: FunctionComponent<SignOnProps> = ({ loginView, home }) => {
   )
   const emailRef = useRef<any>(null)
   const passwordRef = useRef<any>(null)
-  const DASHBOARD_URL = '/dashboard'
 
   useMemo(() => {
     if (data) {
@@ -97,7 +96,7 @@ const SignOnForm: FunctionComponent<SignOnProps> = ({ loginView, home }) => {
       if (user) {
         userModel.logIn(user)
         UserManager.setUser(user)
-        router.push(DASHBOARD_URL)
+        router.push('/dashboard')
       }
     }
   }, [data])
@@ -136,10 +135,6 @@ const SignOnForm: FunctionComponent<SignOnProps> = ({ loginView, home }) => {
         passwordRef.current.value = ''
       }
     }
-  }, [])
-
-  useEffect(() => {
-    router.prefetch(DASHBOARD_URL)
   }, [])
 
   return (
