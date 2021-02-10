@@ -69,25 +69,21 @@ const NavLinks: any = ({ className, filterType }: any) => {
     .map(({ href, name, as }: any) => (
       <li key={href + name}>
         {
-          React.createElement(
-            href === BLOG_URL || href === 'https://www.miniprograms.xyz'
-              ? 'a'
-              : Link,
-            {
-              color: (href !== BLOG_URL && 'inherit') || undefined,
-              className,
-              style: { lineHeight: 2 },
-              as,
-              children: name,
-              variant: 'subtitle2',
-              target:
-                href === `https://${strings.appName.toLowerCase()}.blog` ||
-                href === 'https://www.miniprograms.xyz'
-                  ? '_blank'
-                  : null,
-              href,
-            }
-          ) as any
+          React.createElement(Link, {
+            color: 'inherit',
+            className,
+            style: { lineHeight: 2 },
+            as,
+            children: name,
+            variant: 'subtitle2',
+            target: [
+              'https://www.miniprograms.xyz',
+              `https://${strings.appName.toLowerCase()}.blog`,
+            ].includes(href)
+              ? '_blank'
+              : null,
+            href,
+          }) as any
         }
       </li>
     ))
