@@ -61,8 +61,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const BLOG_URL = `https://${strings.appName.toLowerCase()}.blog`
-
 const NavLinks: any = ({ className, filterType }: any) => {
   return Routes.reverse()
     .filter(({ type }: any) => type === filterType)

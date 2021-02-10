@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
   flex: {
     flex: 1,
   },
+  flexDisplay: {
+    display: 'flex',
+  },
 }))
 
 function NavBarTitle({
@@ -38,12 +41,12 @@ function NavBarTitle({
 
   if (marketing && !notitle) {
     return (
-      <>
+      <div className={classes.flexDisplay}>
         <Link href='/' className={classes.logo}>
           <Logo />
         </Link>
         <div className={flexStyle} />
-      </>
+      </div>
     )
   }
 
