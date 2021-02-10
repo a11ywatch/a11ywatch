@@ -5,7 +5,7 @@
  **/
 
 import React, { useState, useRef } from 'react'
-import { InputBase, Button } from '@material-ui/core'
+import { FormControl, InputLabel, InputBase, Button } from '@material-ui/core'
 import { fade, makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Search as SearchIcon } from '@material-ui/icons'
 import { useSearch } from '@app/data'
@@ -35,6 +35,16 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flex: 1,
       overflow: 'hidden',
+    },
+    hiddenLabel: {
+      border: 0,
+      clip: 'rect(0 0 0 0)',
+      height: 1,
+      margin: -1,
+      overflow: 'hidden',
+      padding: 0,
+      position: 'absolute',
+      width: 1,
     },
     searchIcon: {
       width: '10%',
@@ -163,17 +173,6 @@ function CtaSearchBar({ children, checker }: any) {
     setSearchFocused(!!open)
   }
 
-  // const hasWebsite = website?.issues?.length
-  // const pageTitle =
-  //   title ||
-  //   (hasWebsite
-  //     ? website?.issues?.issues?.length
-  //       ? `Issues found with `
-  //       : `Scan complete`
-  //     : strings.trySearch)
-
-  // const cdnPath = `${SCRIPTS_CDN_URL_HOST}/${website?.cdn}`
-
   const submitForm = (e: any) => {
     e?.preventDefault()
     if (!search) {
@@ -192,28 +191,36 @@ function CtaSearchBar({ children, checker }: any) {
         <div className={classes.searchIcon}>
           <SearchIcon className={classes.searchIconFont} />
         </div>
-        <InputBase
-          placeholder={
-            searchFocused || !children ? 'Enter a web page url' : undefined
-          }
-          classes={{
-            root: children ? classes.inputRoot : '',
-            input: `${classes.inputInput} ${classes.innerInput} ${
-              !children && !checker ? classes.relative : ''
-            }`,
-            inputTypeSearch: classes.inputTypeSearch,
-          }}
-          inputRef={ref}
-          type='url'
-          onBlur={toggleSearch(false)}
-          onFocus={toggleSearch(true)}
-          onChange={(event: any) => setSearch({ search: event?.target?.value })}
-          inputProps={{
-            'aria-label': 'Search for website issues',
-            minLength: 6,
-          }}
-          fullWidth
-        />
+        <FormControl fullWidth>
+          <InputLabel htmlFor='search-input' className={classes.hiddenLabel}>
+            Search your website for issues
+          </InputLabel>
+          <InputBase
+            placeholder={
+              searchFocused || !children ? 'Enter a web page url' : undefined
+            }
+            id='search-input'
+            classes={{
+              root: children ? classes.inputRoot : '',
+              input: `${classes.inputInput} ${classes.innerInput} ${
+                !children && !checker ? classes.relative : ''
+              }`,
+              inputTypeSearch: classes.inputTypeSearch,
+            }}
+            inputRef={ref}
+            type='url'
+            onBlur={toggleSearch(false)}
+            onFocus={toggleSearch(true)}
+            onChange={(event: any) =>
+              setSearch({ search: event?.target?.value })
+            }
+            inputProps={{
+              minLength: 6,
+              name: 'search',
+            }}
+            fullWidth
+          />
+        </FormControl>
         {children && !search && !searchFocused ? (
           <div
             className={classes.innerInput}
