@@ -143,42 +143,50 @@ const SignOnForm: FunctionComponent<SignOnProps> = ({ loginView, home }) => {
           {(loginView && 'Login') || (home && 'Try for Free') || 'Register'}
         </Typography>
         <div className={classes.paper}>
-          <GoogleLogin
-            clientId={GOOGLE_CLIENT_ID + ''}
-            buttonText={loginView ? 'Login' : 'Sign up with google'}
-            onSuccess={async (response: any) => {
-              try {
-                await signOnMutation({
-                  variables: {
-                    email: response?.profileObj?.email,
-                    password: '',
-                    googleId: response?.googleId,
-                  },
-                })
-              } catch (e) {
-                console.error(e)
-              }
-            }}
-            onFailure={(err) => {
-              console.error(err)
-            }}
-            cookiePolicy={'single_host_origin'}
-            render={(renderProps: any) => (
-              <Button
-                onClick={renderProps.onClick}
-                className={classes.google}
-                disabled={renderProps.disabled}
-                variant='text'
-                size='small'
-                startIcon={<GoogleIcon className={classes.iconColor} />}
+          {GOOGLE_CLIENT_ID ? (
+            <>
+              <GoogleLogin
+                clientId={String(GOOGLE_CLIENT_ID)}
+                buttonText={loginView ? 'Login' : 'Sign up with google'}
+                onSuccess={async (response: any) => {
+                  try {
+                    await signOnMutation({
+                      variables: {
+                        email: response?.profileObj?.email,
+                        password: '',
+                        googleId: response?.googleId,
+                      },
+                    })
+                  } catch (e) {
+                    console.error(e)
+                  }
+                }}
+                onFailure={(err) => {
+                  console.error(err)
+                }}
+                cookiePolicy={'single_host_origin'}
+                render={(renderProps: any) => (
+                  <Button
+                    onClick={renderProps.onClick}
+                    className={classes.google}
+                    disabled={renderProps.disabled}
+                    variant='text'
+                    size='small'
+                    startIcon={<GoogleIcon className={classes.iconColor} />}
+                  >
+                    {loginView ? 'Login' : 'Sign up with google'}
+                  </Button>
+                )}
+              />
+              <Typography
+                variant='overline'
+                component='p'
+                className={classes.or}
               >
-                {loginView ? 'Login' : 'Sign up with google'}
-              </Button>
-            )}
-          />
-          <Typography variant='overline' component='p' className={classes.or}>
-            Or
-          </Typography>
+                Or
+              </Typography>
+            </>
+          ) : null}
           <form autoComplete={loginView ? 'on' : 'off'} onSubmit={submit}>
             <div>
               <FormControl>

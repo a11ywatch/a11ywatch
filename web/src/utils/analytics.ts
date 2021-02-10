@@ -6,28 +6,32 @@
 
 import ReactGA from 'react-ga'
 import { GOOGLE_ANALYTIC_ID, AppConfig } from '@app/configs'
+import { UserManager } from '@app/managers'
 
 const prod = !AppConfig.dev
 
 let initedGA = false
 
 export const initGA = () => {
-  if (prod) {
-    ReactGA.initialize(GOOGLE_ANALYTIC_ID as string)
-    initedGA = true
-  }
+  ReactGA.initialize(GOOGLE_ANALYTIC_ID as string)
+  initedGA = true
 }
 
 export const logPageView = (route?: string) => {
-  if (!initedGA) {
-    initGA()
-  }
-  const url =
-    route || (typeof window !== 'undefined' && window.location.pathname)
+  if (prod) {
+    if (!initedGA) {
+      initGA()
+    }
+    const page = String(
+      route || (typeof window !== 'undefined' && window.location.pathname)
+    )
 
-  if (prod && url) {
-    ReactGA.set({ page: url })
-    ReactGA.pageview(url)
+    ReactGA.set({
+      page,
+      userId: UserManager.getID,
+    })
+
+    ReactGA.pageview(page)
   }
 }
 
