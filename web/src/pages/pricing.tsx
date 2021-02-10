@@ -15,6 +15,7 @@ import {
   Ribbon,
   Spacer,
   Price,
+  SignOnForm,
 } from '@app/components/general'
 
 import { priceConfig } from '@app/configs'
@@ -68,7 +69,7 @@ function Pricing({
       />
     )
   }
-  // TODO: ADD LOGIN BUTTON
+
   return (
     <MarketingDrawer title={Pricing.name}>
       <Container maxWidth='xl'>
@@ -114,9 +115,9 @@ function Pricing({
               )
             )}
           </Grid>
+          <SignOnForm home />
         </Box>
       </Container>
-      <Spacer height={'20vh'} />
       <Footer />
     </MarketingDrawer>
   )

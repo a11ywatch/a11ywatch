@@ -67,28 +67,17 @@ const useStyles = makeStyles((theme) => ({
 const NavLinks: any = ({ className, filterType }: any) => {
   return Routes.reverse()
     .filter(({ type }: any) => type === filterType)
-    .map(({ href, name, as }: any) => {
-      const externalLink = [
-        'https://www.miniprograms.xyz',
-        `https://${strings.appName.toLowerCase()}.blog`,
-      ].includes(href)
-
-      const hrefProps = {
-        color: 'inherit',
-        className,
-        children: name,
-        variant: 'subtitle2',
-        target: null,
-        href,
-      }
-
-      if (externalLink) {
-        hrefProps.target = '_blank'
-        hrefProps.external = true
-      }
-
+    .map(({ href, name }: any) => {
       return (
-        <li key={href + name}>{React.createElement(Link, hrefProps) as any}</li>
+        <li key={href + name}>
+          <Link
+            color={'inherit'}
+            className={className}
+            children={name}
+            variant={'subtitle2'}
+            href={href}
+          />
+        </li>
       )
     })
 }
