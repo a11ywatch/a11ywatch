@@ -100,20 +100,15 @@ export function RenderIssue({
         <div>
           <Typography
             variant='subtitle1'
-            component={'span'}
             className={`${classes.mainTitle} ${classes.normalContentColor}`}
           >
             {selector}
           </Typography>
-          <Typography
-            variant='subtitle2'
-            className={classes.mainSubtitle}
-            component={'span'}
-          >
+          <Typography variant='subtitle2' className={classes.mainSubtitle}>
             {code}
           </Typography>
         </div>
-        <Typography variant='subtitle1' component={'span'} gutterBottom>
+        <Typography variant='body1' gutterBottom>
           {message}
         </Typography>
         <WithHighlight>{String(context)}</WithHighlight>
