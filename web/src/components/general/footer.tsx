@@ -59,32 +59,38 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
     right: 0,
   },
+  linkSpace: {
+    lineHeight: 2,
+  },
 }))
 
 const NavLinks: any = ({ className, filterType }: any) => {
   return Routes.reverse()
     .filter(({ type }: any) => type === filterType)
-    .map(({ href, name, as }: any) => (
-      <li key={href + name}>
-        {
-          React.createElement(Link, {
-            color: 'inherit',
-            className,
-            style: { lineHeight: 2 },
-            as,
-            children: name,
-            variant: 'subtitle2',
-            target: [
-              'https://www.miniprograms.xyz',
-              `https://${strings.appName.toLowerCase()}.blog`,
-            ].includes(href)
-              ? '_blank'
-              : null,
-            href,
-          }) as any
-        }
-      </li>
-    ))
+    .map(({ href, name, as }: any) => {
+      const externalLink = [
+        'https://www.miniprograms.xyz',
+        `https://${strings.appName.toLowerCase()}.blog`,
+      ].includes(href)
+
+      const hrefProps = {
+        color: 'inherit',
+        className,
+        children: name,
+        variant: 'subtitle2',
+        target: null,
+        href,
+      }
+
+      if (externalLink) {
+        hrefProps.target = '_blank'
+        hrefProps.external = true
+      }
+
+      return (
+        <li key={href + name}>{React.createElement(Link, hrefProps) as any}</li>
+      )
+    })
 }
 
 const Footer = ({ sticky }: { sticky?: boolean }) => {
@@ -104,6 +110,7 @@ const Footer = ({ sticky }: { sticky?: boolean }) => {
           {
             React.createElement(NavLinks, {
               filterType,
+              className: classes.linkSpace,
             }) as any
           }
         </ul>

@@ -21,11 +21,12 @@ function MNLink({
   naked,
   as: asValue,
   href,
+  external,
   ...props
 }: any) {
   const router = useRouter()
   const component = String(href).includes('http') ? 'a' : NextComposed
-  const as = asValue ? asValue : href
+  const as = asValue ?? external ? undefined : href
 
   if (naked) {
     return (

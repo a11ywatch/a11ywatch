@@ -83,6 +83,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  row: {
+    display: 'flex',
+  },
 }))
 
 const NavBar = ({
@@ -111,7 +114,7 @@ const NavBar = ({
           {toolbar || children ? (
             toolbar || children
           ) : (
-            <>
+            <div className={classes.row}>
               <IconButton
                 href='/'
                 onClick={(e: any) => {
@@ -133,7 +136,7 @@ const NavBar = ({
                 marketing={marketing}
                 notitle={notitle}
               />
-            </>
+            </div>
           )}
           {marketingLinks}
           {marketingLinks ? null : (
