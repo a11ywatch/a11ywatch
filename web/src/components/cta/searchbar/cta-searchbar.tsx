@@ -193,7 +193,9 @@ function CtaSearchBar({ children, checker }: any) {
           <SearchIcon className={classes.searchIconFont} />
         </div>
         <InputBase
-          placeholder={searchFocused || !children ? 'Enter a web page url' : ''}
+          placeholder={
+            searchFocused || !children ? 'Enter a web page url' : undefined
+          }
           classes={{
             root: children ? classes.inputRoot : '',
             input: `${classes.inputInput} ${classes.innerInput} ${

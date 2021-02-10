@@ -113,7 +113,7 @@ export function RenderIssue({
             {code}
           </Typography>
         </div>
-        <Typography variant='subtitle1' component={'span'}>
+        <Typography variant='subtitle1' component={'span'} gutterBottom>
           {message}
         </Typography>
         <WithHighlight>{String(context)}</WithHighlight>

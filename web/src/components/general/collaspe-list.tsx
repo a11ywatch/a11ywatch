@@ -105,10 +105,7 @@ function MainCell({
         </ListItemText>
         {!source?.issueMeta?.skipContentIncluded ? (
           <div className={classes.row}>
-            <ListItemText
-              primaryTypographyProps={{ className: classes.text }}
-              gutterBottom
-            >
+            <ListItemText primaryTypographyProps={{ className: classes.text }}>
               Skip Content Button
             </ListItemText>
             {!source?.issueMeta?.skipContentIncluded ? (
