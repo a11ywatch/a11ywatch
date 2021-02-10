@@ -26,6 +26,14 @@ const handleClick = (item: any, open: boolean, cb?: any) => {
   cb(item === open ? '' : item)
 }
 
+const upgradeAccountError = (): void => {
+  AppManager.toggleSnack(
+    true,
+    'You need to upgrade your account to edit scripts',
+    'warning'
+  )
+}
+
 function MainCell({
   source: sourceData,
   classes,
@@ -35,12 +43,9 @@ function MainCell({
 }: any) {
   const [source, setSource] = useState<any>(sourceData)
   const [newScript, setScript] = useState<any>(sourceData)
-  const [skipContentEnabled, setChecked] = useState<any>(
-    !source?.issueMeta?.skipContentIncluded &&
-      source?.scriptMeta?.skipContentEnabled
-  )
   const [editMode, setEdit] = useState<boolean>(false)
   const freeAccount = UserManager.freeAccount && !UserManager.firstDay
+  const skipContentEnabled = source?.scriptMeta?.skipContentEnabled
 
   useEffect(() => {
     if (newItemUpdate) {
@@ -52,26 +57,18 @@ function MainCell({
     e?.preventDefault()
 
     if (freeAccount) {
-      AppManager.toggleSnack(
-        true,
-        'You need to upgrade your account to edit scripts',
-        'warning'
-      )
+      upgradeAccountError()
     } else {
       try {
-        const skipEnabled = !skipContentEnabled
-        setChecked(skipEnabled)
-
         await updateScript({
           variables: {
             url: source?.pageUrl,
             scriptMeta: {
-              skipContentEnabled: skipEnabled,
+              skipContentEnabled: !skipContentEnabled,
             },
             editScript: false,
           },
         })
-        setChecked(!skipContentEnabled)
       } catch (e) {
         console.error(e)
       }
@@ -108,15 +105,25 @@ function MainCell({
         </ListItemText>
         {!source?.issueMeta?.skipContentIncluded ? (
           <div className={classes.row}>
-            <ListItemText primaryTypographyProps={{ className: classes.text }}>
-              Skip Content Button Inserted
+            <ListItemText
+              primaryTypographyProps={{ className: classes.text }}
+              gutterBottom
+            >
+              Skip Content Button
             </ListItemText>
             {!source?.issueMeta?.skipContentIncluded ? (
               <Checkbox
-                checked={skipContentEnabled}
+                checked={
+                  !!(
+                    !source?.issueMeta?.skipContentIncluded &&
+                    source?.scriptMeta?.skipContentEnabled
+                  )
+                }
                 onChange={handleChange}
                 inputProps={{
-                  'aria-label': 'Skip content enabled',
+                  'aria-label': `Skip content ${skipContentEnabled}`,
+                  title:
+                    'Inject a skip content button at the top of your page that shows on tab focus.',
                 }}
                 disabled={scriptLoading}
                 size='small'
@@ -131,11 +138,7 @@ function MainCell({
               onClick={(e: any) => {
                 e?.preventDefault()
                 if (freeAccount) {
-                  AppManager.toggleSnack(
-                    true,
-                    'You need to upgrade your account to edit scripts',
-                    'warning'
-                  )
+                  upgradeAccountError()
                 } else {
                   setEdit(!editMode)
                 }
@@ -178,8 +181,7 @@ function CollaspeListEntry({
   setOpen,
   updateScriptData,
 }: any) {
-  const sectionTitle = item[0]
-  const sectionData = item[1]
+  const [sectionTitle, sectionData] = item
   const [newItemUpdate, setUpdate] = useState<any>({ key: null, script: null })
 
   useEffect(() => {
