@@ -12,7 +12,8 @@ import { PORT, corsOptions } from "./config";
 const app = express();
 
 app.use(cors(corsOptions));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 function initApp() {
   const server = app.listen(PORT, function () {

@@ -15,6 +15,7 @@ const GET_WEBSITE = gql`
       adaScore
       cdnConnected
       htmlIncluded
+      screenshot
       pageLoadTime {
         duration
         durationFormated

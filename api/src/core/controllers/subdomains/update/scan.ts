@@ -68,21 +68,11 @@ export const scanWebsite = async ({
               "Website timeout exceeded threshhold for free scan, website rendered to slow under 15000 ms",
           });
         }
-        let {
-          issues,
-          webPage,
-          // issuesInfo,
-          pageHasCdn,
-          // errorCount,
-          // noticeCount,
-          // warningCount,
-          // adaScore,
-        } = extractPageData(dataSource);
+        let { issues, webPage, pageHasCdn } = extractPageData(dataSource);
 
         const avgScore = await generateWebsiteAverage(
           {
             domain,
-            // cdnConnected: pageHasCdn,
             userId,
             url: null,
           },
@@ -134,7 +124,7 @@ export const scanWebsite = async ({
       }
     } catch (e) {
       console.error(e);
-      // reject(e);
+      reject(e);
     }
   });
 };

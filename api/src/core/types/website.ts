@@ -17,6 +17,7 @@ export const website = `
 		userId: Int
 		domain: String
 		adaScore: Float
+		screenshot: String
 		html: String
 		htmlIncluded: Boolean
 		cdnConnected: Boolean

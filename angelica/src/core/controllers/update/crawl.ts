@@ -78,6 +78,9 @@ export const crawlWebsite = async ({
       browser,
       pageHeaders,
     });
+
+    const screenshot = await page?.screenshot();
+
     const pageHasCdn = await checkCdn({ page, cdnMinJsPath, cdnJsPath });
     const [html, duration] = await grabHtmlSource({
       page,
@@ -106,6 +109,12 @@ export const crawlWebsite = async ({
         domain,
       });
     }
+    console.log(screenshot);
+    forked.send({
+      cdnSourceStripped,
+      domain,
+      screenshot: screenshot?.toString(),
+    });
 
     resolver = {
       webPage: {
@@ -113,6 +122,7 @@ export const crawlWebsite = async ({
         url: pageUrl,
         adaScore,
         cdnConnected: pageHasCdn,
+        screenshot: "screenshots/" + cdnMinJsPath.replace(".js", ""),
         pageLoadTime: {
           duration,
           durationFormated: getPageSpeed(duration),

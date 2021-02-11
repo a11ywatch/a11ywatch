@@ -21,25 +21,35 @@ const replaceDockerNetwork = (url) => {
   return url;
 };
 
-process.on("message", async ({ scriptBody, cdnSourceStripped, domain }) => {
-  if (scriptBody) {
+process.on(
+  "message",
+  async ({
+    scriptBody: scriptBuffer,
+    cdnSourceStripped,
+    domain,
+    screenshot,
+  }) => {
     const body = JSON.stringify({
-      scriptBuffer: scriptBody,
+      scriptBuffer,
       cdnSourceStripped,
       domain,
+      screenshot,
     });
+
+    const apiEndpoint =
+      typeof screenshot !== "undefined" ? "add-screenshot" : "add-script";
 
     try {
       await fetch(
-        `${replaceDockerNetwork(process.env.SCRIPTS_CDN_URL)}/add-script`,
+        `${replaceDockerNetwork(process.env.SCRIPTS_CDN_URL)}/${apiEndpoint}`,
         {
           method: "POST",
           body,
           headers: { "Content-Type": "application/json" },
         }
       );
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      console.error(e);
     }
   }
-});
+);
