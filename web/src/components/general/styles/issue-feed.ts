@@ -38,7 +38,7 @@ export const issueFeedStyles = makeStyles((theme: MergedTheme) => ({
     overflowY: 'scroll',
     paddingBottom: 0,
     display: 'block',
-    maxHeight: '60vh',
+    maxHeight: '68vh',
     [theme.breakpoints.down('sm')]: {
       maxHeight: '25vh',
     },

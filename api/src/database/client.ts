@@ -31,13 +31,19 @@ const [DB_URI, DB_NAME, DB_CONFIG] = TEST_ENV
       },
     ];
 
-const client = new MongoClient(DB_URI, DB_CONFIG);
+let client;
+
+try {
+  client = new MongoClient(DB_URI, DB_CONFIG);
+} catch (e) {
+  console.error(e);
+}
 
 const initDbConnection = async (cb?: () => void) => {
   try {
     await client.connect();
   } catch (e) {
-    console.error("database connection establishment failed:", e);
+    console.error(e);
   } finally {
     if (typeof cb === "function") {
       cb();

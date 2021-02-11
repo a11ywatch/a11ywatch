@@ -21,6 +21,7 @@ export function IssueFeed({
   printable,
   website,
   checkList,
+  className = '',
 }: any) {
   const classes = useStyles()
   const { issueFeed, setIssueFeedContent } = useIssueFeed()
@@ -61,7 +62,7 @@ export function IssueFeed({
       <>
         <List
           className={`${classes.searchList} ${
-            checkList ? classes.checklist : ''
+            checkList ? classes.checklist : className ?? ''
           }`}
           id={CTA_LIST_ID}
         >

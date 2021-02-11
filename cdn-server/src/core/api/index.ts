@@ -8,9 +8,11 @@ export { getRoot } from "./get-root";
 export { downloadScript } from "./download-script";
 export { addScript } from "./add-script";
 export { addScreenshot } from "./add-screenshot";
-// STATIC API ROUTES
+export { getScreenshot } from "./get-screenshot";
+
 export {
   ROOT,
+  GET_SCREENSHOT,
   GET_SCRIPT,
   DOWNLOAD_SCRIPT,
   ADD_SCRIPT,

@@ -39,7 +39,12 @@ export function getFile(Key?: string, res?: Response, download?: boolean) {
   }
 }
 
-export function uploadToS3(Body: any, Key: string, fsPath: string) {
+export function uploadToS3(
+  Body: any,
+  Key: string,
+  fsPath: string,
+  ContentType?: string
+): void {
   try {
     s3bucket.upload(
       {
@@ -47,8 +52,9 @@ export function uploadToS3(Body: any, Key: string, fsPath: string) {
         Key,
         Body,
         ACL: "public-read",
-        ContentType: "text/javascript",
-        ContentDisposition: "inline",
+        ContentType,
+        ContentDisposition:
+          ContentType === "text/javascript" ? "inline" : undefined,
       },
       (err, data) => {
         if (err) {

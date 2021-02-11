@@ -8,19 +8,19 @@ import { DEV } from "@app/config";
 
 export const checkCdn = async ({ page, cdnMinJsPath, cdnJsPath }) => {
   let hasCdn = false;
+  const srcMin =
+    DEV && String(cdnMinJsPath).includes("localhost")
+      ? decodeURIComponent(cdnMinJsPath)
+      : cdnMinJsPath;
   try {
-    const srcMin =
-      DEV && cdnMinJsPath.includes("localhost")
-        ? decodeURIComponent(cdnMinJsPath)
-        : cdnMinJsPath;
     hasCdn = await page.$eval(`script[src$="${srcMin}"]`, (sources) => true);
   } catch (e) {}
   if (!hasCdn) {
+    const src =
+      DEV && String(cdnJsPath).includes("localhost")
+        ? decodeURIComponent(cdnJsPath)
+        : cdnJsPath;
     try {
-      const src =
-        DEV && cdnJsPath.includes("localhost")
-          ? decodeURIComponent(cdnJsPath)
-          : cdnJsPath;
       hasCdn = await page.$eval(`script[src$="${src}"]`, (sources) => true);
     } catch (e) {}
   }

@@ -8,6 +8,7 @@ import { app, initApp } from "./app";
 import {
   addScript,
   addScreenshot,
+  getScreenshot,
   getRoot,
   getScript,
   downloadScript,
@@ -16,11 +17,13 @@ import {
   ADD_SCREENSHOT,
   DOWNLOAD_SCRIPT,
   GET_SCRIPT,
+  GET_SCREENSHOT,
 } from "./core/api";
 
 app
   .get(ROOT, getRoot)
   .get(GET_SCRIPT, getScript)
+  .get(GET_SCREENSHOT, getScreenshot)
   .get(DOWNLOAD_SCRIPT, downloadScript)
   .post(ADD_SCRIPT, addScript)
   .post(ADD_SCREENSHOT, addScreenshot);

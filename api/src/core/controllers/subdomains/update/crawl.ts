@@ -17,6 +17,7 @@ import { AnalyticsController } from "../../analytics";
 import { getDomain } from "../find";
 import { generateWebsiteAverage } from "./domain";
 import { collectionUpdate, fetchPuppet, extractPageData } from "./utils";
+import { SCRIPTS_CDN } from "@app/config";
 
 export const crawlWebsite = async ({
   userId: userIdMap,
@@ -118,8 +119,8 @@ export const crawlWebsite = async ({
           {},
           {
             issuesInfo: webPage?.issuesInfo || {},
+            screenshot: `${SCRIPTS_CDN}${webPage.screenshot}`,
             lastScanDate: webPage?.lastScanDate,
-            avgScore,
             adaScore: avgScore,
             cdnConnected: website?.cdnConnected,
             pageLoadTime: null,

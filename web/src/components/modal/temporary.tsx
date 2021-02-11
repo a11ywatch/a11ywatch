@@ -40,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     marginBottom: 6,
   },
+  rowBlock: {
+    display: 'flex',
+  },
   title: {
     flex: 1,
     fontWeight: 600,
@@ -48,6 +51,10 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     paddingRight: 6,
+  },
+  block: {
+    flex: 1,
+    width: '50%',
   },
 }))
 
@@ -85,7 +92,18 @@ export function SwipeableTemporaryDrawer() {
               <Spacer height={6} />
             </div>
             <Divider />
-            <IssueFeed website={website} renderListOnly />
+            <div className={classes.rowBlock}>
+              <IssueFeed
+                website={website}
+                renderListOnly
+                className={classes.block}
+              />
+              <img
+                src={website?.screenshot}
+                className={classes.block}
+                alt={`${website?.url} screenshot`}
+              />
+            </div>
           </>
         ) : (
           <div className={classes.loading}>

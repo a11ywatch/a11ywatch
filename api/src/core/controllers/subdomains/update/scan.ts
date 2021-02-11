@@ -10,6 +10,7 @@ import { ApiResponse, responseModel, makeWebsite } from "@app/core/models";
 import { getWebsite } from "../../websites";
 import { generateWebsiteAverage } from "./domain";
 import { fetchPuppet, extractPageData } from "./utils";
+import { SCRIPTS_CDN } from "@app/config";
 
 export const scanWebsite = async ({
   userId: userIdMap,
@@ -82,9 +83,9 @@ export const scanWebsite = async ({
         const updateWebsiteProps = Object.assign(
           {},
           {
+            screenshot: `${SCRIPTS_CDN}${webPage.screenshot}`,
             issuesInfo: webPage?.issuesInfo || {},
             lastScanDate: webPage?.lastScanDate,
-            avgScore,
             adaScore: avgScore,
             cdnConnected: !!website?.cdnConnected,
             pageLoadTime: null,

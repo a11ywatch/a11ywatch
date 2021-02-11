@@ -35,7 +35,8 @@ export const addScript = (req, res) => {
             uploadToS3(
               createReadStream(cdnFileName),
               `${awsPath}.js`,
-              cdnFileName
+              cdnFileName,
+              "text/javascript"
             );
           }
         });
@@ -46,7 +47,8 @@ export const addScript = (req, res) => {
             uploadToS3(
               createReadStream(cdnFileNameMin),
               `${awsPath}.min.js`,
-              cdnFileNameMin
+              cdnFileNameMin,
+              "text/javascript"
             );
           }
         });

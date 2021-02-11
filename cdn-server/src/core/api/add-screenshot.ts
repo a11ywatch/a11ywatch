@@ -4,35 +4,34 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import { createReadStream, createWriteStream } from "fs";
+import { readFileSync, createWriteStream } from "fs";
 import { directoryExist, uploadToS3, AWS_S3_ENABLED } from "../../";
 
 export const addScreenshot = (req, res) => {
+  const { cdnSourceStripped, domain, screenshot } = req.body;
   try {
-    const { cdnSourceStripped, domain, screenshot } = req.body;
+    const srcPath = `src/screenshots/${domain}/${cdnSourceStripped}`;
+    const awsPath = srcPath.substring(4);
+    const cdnFileName = srcPath + ".png";
+    const dirExist = directoryExist(srcPath);
 
-    if (cdnSourceStripped) {
-      const srcPath = `src/screenshots/${domain}/${cdnSourceStripped}`;
-      const awsPath = srcPath.substring(4);
-      const cdnFileName = srcPath + ".png";
-      const dirExist = directoryExist(srcPath);
+    if (dirExist) {
+      const awsSSPath = "screenshots/" + awsPath;
+      const screenshotStream = createWriteStream(cdnFileName);
 
-      if (dirExist) {
-        const awsSSPath = "screenshots/" + awsPath;
-        const screenshotStream = createWriteStream(cdnFileName);
-        const ssBuffer = Buffer.from(screenshot);
-
-        screenshotStream.write(ssBuffer);
-        screenshotStream.on("finish", () => {
-          console.log(`COMPLETED WRITE: SS FILE: ${cdnFileName}`);
-          if (AWS_S3_ENABLED) {
-            uploadToS3(createReadStream(cdnFileName), awsSSPath, cdnFileName);
-          }
-        });
-        screenshotStream.end();
-      }
+      screenshotStream.write(Buffer.from(screenshot));
+      screenshotStream.on("finish", () => {
+        console.log(`COMPLETED WRITE: SS FILE: ${cdnFileName}`);
+        if (AWS_S3_ENABLED) {
+          uploadToS3(
+            readFileSync(cdnFileName),
+            `${awsSSPath}.png`,
+            cdnFileName
+          );
+        }
+      });
+      screenshotStream.end();
     }
-
     res.send(true);
   } catch (e) {
     console.error(e);

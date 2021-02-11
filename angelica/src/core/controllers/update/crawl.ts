@@ -109,11 +109,10 @@ export const crawlWebsite = async ({
         domain,
       });
     }
-    console.log(screenshot);
     forked.send({
       cdnSourceStripped,
       domain,
-      screenshot: screenshot?.toString(),
+      screenshot,
     });
 
     resolver = {
@@ -122,7 +121,7 @@ export const crawlWebsite = async ({
         url: pageUrl,
         adaScore,
         cdnConnected: pageHasCdn,
-        screenshot: "screenshots/" + cdnMinJsPath.replace(".js", ""),
+        screenshot: "screenshots/" + cdnJsPath.replace(".js", ".png"),
         pageLoadTime: {
           duration,
           durationFormated: getPageSpeed(duration),

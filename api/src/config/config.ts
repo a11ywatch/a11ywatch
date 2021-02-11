@@ -14,11 +14,11 @@ const TEST_ENV = process.env.NODE_ENV === "test";
 
 const replaceDockerNetwork = (url: string): string => {
   const proxyDockerUrls = ["mav", "localhost", "angelica", "cdn-server", "api"];
-  if (!DEV && process.env.DOCKER_ENV) {
+  if (!DEV && process.env.DOCKER_ENV == "true") {
     const hasIndex = proxyDockerUrls.findIndex((urls) => url.includes(urls));
 
     if (hasIndex !== -1) {
-      return url.replace(proxyDockerUrls[hasIndex], process.env.DOCKER_SERVICE);
+      url = url.replace(proxyDockerUrls[hasIndex], proxyDockerUrls[hasIndex]);
     }
   }
   return url;
@@ -51,6 +51,11 @@ if (!EMAIL_CLIENT_KEY && PRIVATE_KEY) {
   EMAIL_CLIENT_KEY = PRIVATE_KEY;
 }
 
+const SCRIPTS_CDN_URL = replaceDockerNetwork(process.env.SCRIPTS_CDN_URL);
+const SCRIPTS_CDN = !DEV
+  ? SCRIPTS_CDN_URL.replace("api", "screenshot/")
+  : String(SCRIPTS_CDN_URL).replace("api", "");
+
 export const config = {
   DEV,
   DB_URL: process.env.DB_URL,
@@ -58,7 +63,7 @@ export const config = {
   CLIENT_URL: replaceDockerNetwork(process.env.CLIENT_URL),
   WATCHER_CLIENT_URL: replaceDockerNetwork(process.env.WATCHER_CLIENT_URL),
   CRAWL_URL: replaceDockerNetwork(process.env.CRAWL_URL),
-  SCRIPTS_CDN_URL: replaceDockerNetwork(process.env.SCRIPTS_CDN_URL),
+  SCRIPTS_CDN_URL,
   GRAPHQL_PORT: Number(process.env.PORT || process.env.GRAPHQL_PORT || 0),
   EMAIL_SERVICE_PASSWORD: process.env.EMAIL_SERVICE_PASSWORD,
   STRIPE_KEY: process.env.STRIPE_KEY,
@@ -74,4 +79,4 @@ export const config = {
   PRIVATE_KEY,
 };
 
-export { DEV, TEST_ENV, PRIVATE_KEY, PUBLIC_KEY };
+export { DEV, TEST_ENV, PRIVATE_KEY, SCRIPTS_CDN_URL, SCRIPTS_CDN, PUBLIC_KEY };
