@@ -42,7 +42,7 @@ function NavBarTitle({
         <Link href='/' className={classes.logo}>
           <Logo />
         </Link>
-        <div className={flexStyle} />
+        <span className={flexStyle} />
       </>
     )
   }
