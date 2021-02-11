@@ -28,5 +28,6 @@ export type FixInvalidReturn = {
   lang: string;
   form_label: string;
   contrast: string;
+  no_skip_content: string;
   nesting: InvalidNesting;
 };

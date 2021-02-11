@@ -6,6 +6,7 @@
 import type { FixInvalidReturn, InvalidType, ExtraConfig } from "./types";
 import { fixContrast } from "./fix-contrast";
 import { fixNesting } from "./fix-nesting";
+import { skipNavigationMethod } from "./skip-navigation";
 
 export const fixInvalid = (
   { index, domSelector, selector, message }: InvalidType,
@@ -101,5 +102,6 @@ export const fixInvalid = (
 			`,
     contrast: fixContrast({ domSelector, index, selector, message }),
     nesting: fixNesting({ domSelector, index, selector, message }),
+    no_skip_content: skipNavigationMethod,
   };
 };

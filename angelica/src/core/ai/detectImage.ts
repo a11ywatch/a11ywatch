@@ -33,7 +33,7 @@ export const detectImageModel = async (
       }),
       headers: { "Content-Type": "application/json" },
     });
-    if (data.status === 200) {
+    if (data?.status === 200) {
       const result = await data?.text();
       return (
         (result != "null" &&
@@ -43,9 +43,8 @@ export const detectImageModel = async (
         null
       );
     }
-    return null;
   } catch (e) {
     console.error(e);
-    return null;
   }
+  return null;
 };
