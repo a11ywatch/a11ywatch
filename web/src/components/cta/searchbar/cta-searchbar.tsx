@@ -83,11 +83,13 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down(920)]: {
         fontSize: '1.2rem',
       },
+      [theme.breakpoints.down('sm')]: {
+        paddingLeft: '25%',
+      },
       flex: 1,
       display: 'flex',
     },
     innerInput: {
-      // position: 'relative',
       width: '125%',
       minHeight: '8rem',
       backgroundColor: 'transparent',
@@ -96,13 +98,10 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
+      overflow: 'hidden',
       ['&:focus']: {
         outline: 0,
         border: 0,
-      },
-      [theme.breakpoints.down(920)]: {
-        left: 0,
-        position: 'relative',
       },
     },
     hiddenClass: {

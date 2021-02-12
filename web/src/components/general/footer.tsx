@@ -17,6 +17,7 @@ import { GithubBadge, TwitterBadge, SpectrumBadge } from '../badges'
 const useStyles = makeStyles((theme) => ({
   root: {
     paddingTop: 24,
+    overflow: 'hidden',
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -61,6 +62,14 @@ const useStyles = makeStyles((theme) => ({
   },
   linkSpace: {
     lineHeight: 2,
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '0.95em',
+    },
+  },
+  linkHeading: {
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.5em',
+    },
   },
 }))
 
@@ -94,14 +103,11 @@ const Footer = ({ sticky }: { sticky?: boolean }) => {
   }) => {
     return (
       <div className={classes.blockContainer}>
-        <Typography variant={'h4'}>{title}</Typography>
+        <Typography variant={'h4'} className={classes.linkHeading}>
+          {title}
+        </Typography>
         <ul className={classes.linkContainer}>
-          {
-            React.createElement(NavLinks, {
-              filterType,
-              className: classes.linkSpace,
-            }) as any
-          }
+          <NavLinks filterType={filterType} className={classes.linkSpace} />
         </ul>
       </div>
     )
