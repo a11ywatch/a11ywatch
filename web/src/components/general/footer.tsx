@@ -74,7 +74,7 @@ const NavLinks: any = ({ className, filterType }: any) => {
             color={'inherit'}
             className={className}
             children={name}
-            variant={'subtitle2'}
+            variant={'subtitle1'}
             href={href}
           />
         </li>
@@ -94,7 +94,7 @@ const Footer = ({ sticky }: { sticky?: boolean }) => {
   }) => {
     return (
       <div className={classes.blockContainer}>
-        <Typography>{title}</Typography>
+        <Typography variant={'h4'}>{title}</Typography>
         <ul className={classes.linkContainer}>
           {
             React.createElement(NavLinks, {

@@ -12,7 +12,7 @@ export const skipContentCheck = async ({
   let hasSkipContent = false;
   try {
     hasSkipContent = await page.evaluate(() => {
-      const baseNameList = [
+      const skipNameList = [
         "skip to main content",
         "skip to content",
         "skip navigation",
@@ -20,10 +20,8 @@ export const skipContentCheck = async ({
         "skip navigation links",
         "skip to bottom nav",
         "skip main navigation",
+        "SKIP NAVIGATION",
       ];
-
-      const nameListCaps = baseNameList.map((names) => names.toUpperCase());
-      const skipNameList = [...baseNameList, ...nameListCaps];
 
       var matchFound: Node | boolean = false;
       var type = "button";
