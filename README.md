@@ -6,6 +6,8 @@
 
 system for accessibility, software productivity, and performance
 
+[![caption](https://i.gyazo.com/ca0b19ec573ef323d44b62944f60a1bd.gif)](https://i.gyazo.com/ca0b19ec573ef323d44b62944f60a1bd.mp4)
+
 ## Getting Started
 
 See our documentation on [a11ywatch.com](https://a11ywatch.github.io/a11ywatch-docs)
