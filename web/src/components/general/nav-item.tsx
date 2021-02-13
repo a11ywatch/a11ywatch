@@ -8,7 +8,6 @@ import React from 'react'
 import { Button } from '@material-ui/core'
 import { Link } from './link'
 
-// TODO REFACTOR TO ONE CLASSNAME BINDING
 export const NavItem = ({
   href,
   name,

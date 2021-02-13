@@ -111,7 +111,7 @@ module.exports = withPWA({
     }
     config.plugins.push(
       new MonacoWebpackPlugin({
-        languages: ['javascript'],
+        languages: ['javascript', 'html'],
         filename: 'static/[name].worker.js',
       })
     )

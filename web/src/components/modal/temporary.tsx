@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core'
 import { Close as CloseIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
+import { a11yDark } from '@app/styles'
 
 import { useSearch } from '@app/data'
 import {
@@ -21,13 +22,19 @@ import {
   IssueFeed,
   RenderSecondary,
   Spacer,
+  WebsiteTabs,
 } from '@app/components/general'
 import { CtaCdn } from '@app/components/cta'
 import { strings } from '@app-strings'
+import { EditableMixture } from '@app/components/mixtures/editable-mixture'
 
 const useStyles = makeStyles((theme) => ({
   container: {
     padding: theme.spacing(1),
+  },
+  root: {
+    maxHeight: '100vh',
+    overflow: 'hidden',
   },
   loading: {
     padding: 12,
@@ -40,9 +47,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     marginBottom: 6,
   },
-  rowBlock: {
-    display: 'flex',
-  },
   title: {
     flex: 1,
     fontWeight: 600,
@@ -52,9 +56,25 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     paddingRight: 6,
   },
+  centerAlign: {
+    display: 'flex',
+    justifyContent: 'center',
+    height: '100%',
+    ['& > img']: {
+      objectFit: 'contain',
+      textAlign: 'center',
+      display: 'block',
+      maxHeight: '63vh',
+    },
+  },
   block: {
     flex: 1,
-    width: '50%',
+    display: 'block',
+    maxHeight: '65vh',
+    ['& > pre']: {
+      overflowY: 'scroll',
+      maxHeight: '65vh',
+    },
   },
 }))
 
@@ -68,47 +88,51 @@ export function SwipeableTemporaryDrawer() {
 
   return (
     <Drawer anchor='bottom' open={bottomModal} onClose={toggleDrawer(false)}>
-      <div role='presentation' style={{ overflow: 'hidden' }}>
-        {website ? (
-          <>
-            <div className={classes.container}>
-              <Grid className={classes.row}>
-                <Typography
-                  variant='h4'
-                  component='p'
-                  className={classes.title}
-                >
-                  {website?.url || strings.trySearch}
-                </Typography>
-                <IconButton
-                  aria-label='close modal'
-                  onClick={toggleDrawer(false)}
-                >
-                  <CloseIcon />
-                </IconButton>
-              </Grid>
-              <RenderSecondary {...website} />
-              <CtaCdn website={website} block />
-              <Spacer height={6} />
-            </div>
-            <Divider />
-            <div className={classes.rowBlock}>
-              <IssueFeed
-                website={website}
-                renderListOnly
-                className={classes.block}
-              />
-              <img
-                src={website?.screenshot}
-                className={classes.block}
-                alt={`${website?.url} screenshot`}
-              />
-            </div>
-          </>
-        ) : (
-          <div className={classes.loading}>
+      <div className={classes.root}>
+        <div className={classes.container}>
+          <Grid className={classes.row}>
+            <Typography variant='h4' component='p' className={classes.title}>
+              {website?.url || strings.trySearch}
+            </Typography>
+            <IconButton aria-label='close modal' onClick={toggleDrawer(false)}>
+              <CloseIcon />
+            </IconButton>
+          </Grid>
+          <RenderSecondary {...website} />
+          <CtaCdn website={website} block />
+          <Spacer height={6} />
+        </div>
+        <Divider />
+        {Object.keys(website).length <= 1 ? (
+          <div className={classes.loading} role='presentation'>
             <Pulse visible size={30} aria-label='Loading issues' />
           </div>
+        ) : (
+          <WebsiteTabs
+            issues={<IssueFeed website={website} renderListOnly />}
+            html={
+              <div className={classes.block}>
+                <EditableMixture
+                  language='html'
+                  style={a11yDark}
+                  lineProps={() => ({
+                    style: { display: 'block', cursor: 'pointer' },
+                  })}
+                  editMode={false}
+                >
+                  {website?.html || ''}
+                </EditableMixture>
+              </div>
+            }
+            screenshot={
+              <div className={classes.centerAlign}>
+                <img
+                  src={website?.screenshot}
+                  alt={`${website?.url} screenshot`}
+                />
+              </div>
+            }
+          />
         )}
       </div>
     </Drawer>

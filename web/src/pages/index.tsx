@@ -17,6 +17,7 @@ import {
   CtaIntro,
   CtaVideo,
   CtaCustomers,
+  CtaProfessionalSupportButton,
 } from '@app/components/cta'
 import { WithSwipeModal as SwipeableTemporaryDrawer } from '@app/components/adhoc'
 import { withApollo } from '@app/apollo'
@@ -26,6 +27,7 @@ function Index() {
     <>
       <MarketingDrawer navPosition={'relative'}>
         <Container>
+          <CtaProfessionalSupportButton />
           <CtaIntro />
           <CtaVideo />
           <CtaFeatures />

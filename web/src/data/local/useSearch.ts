@@ -51,10 +51,9 @@ export function useSearch() {
     })
   }
 
-  const scanPage = (event: any, text: string) => {
-    if (event?.preventDefault) {
-      event?.preventDefault()
-    }
+  const scanPage = async (event: any, text: string) => {
+    event?.preventDefault()
+
     let tpt = ''
     let squery = String(text || search)
 
@@ -107,7 +106,7 @@ export function useSearch() {
         data: {
           ctaSearch: {
             hideWebsite: true,
-            search: '',
+            search: !bottom ? '' : search,
             bottomModal: bottom,
             website: null,
             __typename: 'SearchWebsites',
@@ -140,12 +139,14 @@ export function useSearch() {
   }, [crawlData])
 
   return {
-    search: search?.toLowerCase(),
+    search,
     setSearch,
     scanPage,
     loading,
-    website:
-      crawlData?.scanWebsite?.website || (website && JSON.parse(website)),
+    website: crawlData?.scanWebsite?.website ||
+      (website && JSON.parse(website)) || {
+        url: search,
+      },
     hideWebsite,
     crawlData,
     closeFeed,

@@ -119,7 +119,7 @@ export const crawlWebsite = async ({
           {},
           {
             issuesInfo: webPage?.issuesInfo || {},
-            screenshot: `${SCRIPTS_CDN}${webPage.screenshot}`,
+            screenshot: `${SCRIPTS_CDN}${webPage?.screenshot}`,
             lastScanDate: webPage?.lastScanDate,
             adaScore: avgScore,
             cdnConnected: website?.cdnConnected,

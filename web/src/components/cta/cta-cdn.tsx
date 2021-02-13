@@ -43,12 +43,15 @@ function CtaCdn({ website, block }: any) {
   const hasWebsite = website?.issues?.length
   // const cdnPath = `${SCRIPTS_CDN_URL_HOST}/${website?.cdn}`
 
-  const possibleIssuesFixedByCdn = website?.issuesInfo?.possibleIssuesFixedByCdn
-  const totalIssuesOnPage = website?.issuesInfo?.totalIssues
+  const possibleIssuesFixedByCdn =
+    website?.issuesInfo?.possibleIssuesFixedByCdn ?? '_'
+  const totalIssuesOnPage = website?.issuesInfo?.totalIssues ?? '_'
   // const issuesFixedByCdn = website?.issuesInfo?.issuesFixedByCdn
   const shouldBlock = block && !userModel?.jwt
 
-  const limitedResonse = `This is a limited API response showing ${website?.issuesInfo?.limitedCount}/${totalIssuesOnPage} issues for the current page`
+  const limitedResonse = website?.issuesInfo?.limitedCount
+    ? `This is a limited API response showing ${website.issuesInfo.limitedCount}/${totalIssuesOnPage} issues for the current page`
+    : 'Gathering details'
 
   const cdnTitle = shouldBlock
     ? `Login to fix ${possibleIssuesFixedByCdn} out of ${totalIssuesOnPage} issues instantly with a custom secure cdn for the current page for free`
@@ -56,7 +59,7 @@ function CtaCdn({ website, block }: any) {
 
   const moreInfo = shouldBlock
     ? `Get all your pages issues at once and more after signing in. `
-    : ``
+    : ''
 
   return (
     <>

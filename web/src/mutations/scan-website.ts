@@ -15,6 +15,7 @@ const SCAN_WEBSITE = gql`
         cdn
         lastScanDate
         screenshot
+        html
         pageLoadTime {
           duration
           durationFormated

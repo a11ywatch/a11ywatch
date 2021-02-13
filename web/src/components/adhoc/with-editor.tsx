@@ -14,12 +14,18 @@ const ReactSizeDetector = dynamic(import('react-resize-detector'), {
   ssr: false,
 })
 
-const WithEditor = ({ setScript, children = '' }: any) => {
+const WithEditor = ({
+  setScript,
+  children = '',
+  language = 'javascript',
+}: any) => {
   const [value, setValue] = useState<any>(children || '')
 
   useEffect(() => {
-    setScript(value)
-  }, [value])
+    if (setScript) {
+      setScript(value)
+    }
+  }, [setScript, value])
 
   return (
     <ReactSizeDetector handleWidth handleHeight>
@@ -27,20 +33,21 @@ const WithEditor = ({ setScript, children = '' }: any) => {
         <MonacoEditor
           onChange={(e: string) => setValue(e)}
           value={value}
-          language='javascript'
+          language={language}
+          defaultValue={children}
           editorDidMount={(editor: any) => {
             editor?.focus()
             // @ts-ignore
             if (typeof window !== 'undefined' && window.MonacoEnvironment) {
               // @ts-ignore
               window.MonacoEnvironment.getWorkerUrl = (_: any, label: any) => {
-                if (label === 'javascript')
+                if (['javascript', 'html'].includes(label))
                   return '_next/static/editor.worker.js'
               }
             }
           }}
           theme='vs-dark'
-          height={height || '345px'}
+          height={height || !setScript ? '65vh' : '345px'}
           width={width || '100%'}
         />
       )}

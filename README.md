@@ -6,7 +6,7 @@
 
 system for accessibility, software productivity, and performance
 
-[![caption](https://i.gyazo.com/ca0b19ec573ef323d44b62944f60a1bd.gif)](https://i.gyazo.com/ca0b19ec573ef323d44b62944f60a1bd.mp4)
+[![caption](https://i.gyazo.com/c2e4edeb2ed172c2b3e6948f1134a056.gif)](https://i.gyazo.com/c2e4edeb2ed172c2b3e6948f1134a056.mp4)
 
 ## Getting Started
 

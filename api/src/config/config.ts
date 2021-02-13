@@ -51,10 +51,10 @@ if (!EMAIL_CLIENT_KEY && PRIVATE_KEY) {
   EMAIL_CLIENT_KEY = PRIVATE_KEY;
 }
 
-const SCRIPTS_CDN_URL = replaceDockerNetwork(process.env.SCRIPTS_CDN_URL);
-const SCRIPTS_CDN = !DEV
-  ? SCRIPTS_CDN_URL.replace("api", "screenshot/")
-  : String(SCRIPTS_CDN_URL).replace("api", "");
+const SCRIPTS_CDN_URL = String(
+  replaceDockerNetwork(process.env.SCRIPTS_CDN_URL)
+);
+const SCRIPTS_CDN = SCRIPTS_CDN_URL.replace("api", "");
 
 export const config = {
   DEV,

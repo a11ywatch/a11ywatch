@@ -56,6 +56,26 @@ function CtaIntro({ checker }: any) {
   const classes = useStyles()
   const roll = rollStyles()
 
+  const Head = ({ children }: any) => {
+    return (
+      <Typography className={classes.title} component={'h1'}>
+        {children}
+      </Typography>
+    )
+  }
+
+  const Heading = ({ className, children }: any) => {
+    return (
+      <Typography
+        component={'span'}
+        variant={'h2'}
+        className={className ?? classes.smallFont}
+      >
+        {children}
+      </Typography>
+    )
+  }
+
   return (
     <section
       className={`${classes.root}${
@@ -64,7 +84,7 @@ function CtaIntro({ checker }: any) {
     >
       {checker ? (
         <>
-          <Typography variant='h2' component={'h1'}>
+          <Typography variant='h1' component={'h1'}>
             Web Accessibility Checker
           </Typography>
           <Typography variant='h5' component={'span'}>
@@ -73,14 +93,14 @@ function CtaIntro({ checker }: any) {
         </>
       ) : null}
       <CtaSearchBar checker={checker}>
-        {checker ? null : (
-          <Typography className={classes.title} component={'h1'}>
-            <Typography
-              component={'span'}
-              variant={'h2'}
-              className={classes.smallFont}
-            >{`${strings.title} `}</Typography>
-            <Typography className={roll.g} component={'span'} variant={'h2'}>
+        {checker ? (
+          <Head>
+            <Heading>Check website for issues</Heading>
+          </Head>
+        ) : (
+          <Head>
+            <Heading>{`${strings.title} `}</Heading>
+            <Heading className={roll.g}>
               {useMemo(
                 () => [
                   strings.monitoring,
@@ -91,20 +111,18 @@ function CtaIntro({ checker }: any) {
                 ],
                 [strings]
               ).map((item: string, itemIndex: number): any => (
-                <Typography
+                <Heading
                   // @ts-ignore
                   className={`${roll.roll} ${roll[`d${itemIndex}`]} ${
                     roll.gi
                   } ${classes.smallFont}`}
                   key={item}
-                  component={'span'}
-                  variant={'h2'}
                 >
                   {item}
-                </Typography>
+                </Heading>
               ))}
-            </Typography>
-          </Typography>
+            </Heading>
+          </Head>
         )}
       </CtaSearchBar>
     </section>

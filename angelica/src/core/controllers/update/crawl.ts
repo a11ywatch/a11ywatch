@@ -47,11 +47,13 @@ export const crawlWebsite = async ({
   pageHeaders,
   authed,
 }) => {
-  if (!urlMap || !validUrl.isUri(urlMap)) {
+  if (!validUrl.isUri(urlMap)) {
     return EMPTY_RESPONSE;
   }
+
   const browser = await puppetPool.acquire();
   const page = await browser?.newPage();
+
   const {
     domain,
     pageUrl,
@@ -84,7 +86,6 @@ export const crawlWebsite = async ({
     const pageHasCdn = await checkCdn({ page, cdnMinJsPath, cdnJsPath });
     const [html, duration] = await grabHtmlSource({
       page,
-      grabHtml: false,
     });
 
     let {
@@ -109,6 +110,7 @@ export const crawlWebsite = async ({
         domain,
       });
     }
+
     forked.send({
       cdnSourceStripped,
       domain,

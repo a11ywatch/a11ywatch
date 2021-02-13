@@ -80,18 +80,14 @@ export const scanWebsite = async ({
           [website, websiteCollection]
         );
 
-        const updateWebsiteProps = Object.assign(
-          {},
-          {
-            screenshot: `${SCRIPTS_CDN}${webPage.screenshot}`,
-            issuesInfo: webPage?.issuesInfo || {},
-            lastScanDate: webPage?.lastScanDate,
-            adaScore: avgScore,
-            cdnConnected: !!website?.cdnConnected,
-            pageLoadTime: null,
-            online: !!website?.online || null,
-          }
-        );
+        const updateWebsiteProps = {
+          ...webPage,
+          screenshot: `${SCRIPTS_CDN}${webPage?.screenshot}`,
+          adaScore: avgScore,
+          cdnConnected: !!website?.cdnConnected,
+          pageLoadTime: webPage?.pageLoadTime ?? null,
+          online: !!website?.online || null,
+        };
 
         // BIND ALL PROPS FROM WEBPAGE
         if (website?.url === pageUrl) {

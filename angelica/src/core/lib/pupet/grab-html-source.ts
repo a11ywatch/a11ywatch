@@ -6,18 +6,15 @@
 
 export const grabHtmlSource = async ({
   page,
-  grabHtml,
 }: {
   page: any;
-  grabHtml: boolean;
 }): Promise<[string, number]> => {
   try {
     return await page?.$eval(
-      `html`,
+      "html",
       (sources) =>
         [
-          // sources?.outerHTML,
-          "",
+          sources.outerHTML,
           window.performance.timing.domContentLoadedEventEnd -
             window.performance.timing.navigationStart,
         ] as const

@@ -83,9 +83,6 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down(920)]: {
         fontSize: '1.2rem',
       },
-      [theme.breakpoints.down('sm')]: {
-        paddingLeft: '25%',
-      },
       flex: 1,
       display: 'flex',
     },
@@ -98,10 +95,13 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      overflow: 'hidden',
       ['&:focus']: {
         outline: 0,
         border: 0,
+      },
+      [theme.breakpoints.down(920)]: {
+        left: 0,
+        position: 'relative',
       },
     },
     hiddenClass: {
@@ -195,14 +195,12 @@ function CtaSearchBar({ children, checker }: any) {
             Search your website for issues
           </InputLabel>
           <InputBase
-            placeholder={
-              searchFocused || !children ? 'Enter a web page url' : undefined
-            }
+            placeholder={'Enter a website url'}
             id='search-input'
             classes={{
-              root: children ? classes.inputRoot : '',
+              root: !checker ? classes.inputRoot : '',
               input: `${classes.inputInput} ${classes.innerInput} ${
-                !children && !checker ? classes.relative : ''
+                (!children && !checker) || checker ? classes.relative : ''
               }`,
               inputTypeSearch: classes.inputTypeSearch,
             }}

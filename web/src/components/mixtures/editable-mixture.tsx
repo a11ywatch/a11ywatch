@@ -14,7 +14,7 @@ type Props = {
   language?: string
   lineProps?: any
   style?: any
-  className: any
+  className?: any
   editMode?: boolean
   setScript?(e?: any): any
 }
