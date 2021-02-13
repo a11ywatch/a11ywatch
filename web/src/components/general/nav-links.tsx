@@ -5,10 +5,8 @@
  **/
 
 import React from 'react'
-// import { Routes, LoggedInRoutes } from '@app/configs'
 import { NavItem } from './nav-item'
 
-// todo add mutliple links
 const NavLinks = ({
   route,
   as,

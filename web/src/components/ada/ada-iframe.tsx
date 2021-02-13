@@ -101,7 +101,7 @@ const MainFrame = observer(
     }
     return (
       <div className={mainFixed}>
-        {ResetCss}
+        <ResetCss />
         <IFrameComponent {...frameProps} />
       </div>
     )

@@ -11,9 +11,7 @@ import cors from 'cors'
 import fetch from 'isomorphic-unfetch'
 
 const dev = process.env.NODE_ENV !== 'production'
-const URL_ENDPOINT = String(
-  process.env.IFRAME_URL || 'http://iframe-server:8010'
-)
+const URL_ENDPOINT = String(process.env.IFRAME_URL || 'http://localhost:8010')
 const app = next({ dev })
 const handle = app.getRequestHandler()
 const port = process.env.PORT || 3000
@@ -24,14 +22,14 @@ app.prepare().then(() => {
 
   server.get('/iframe', async (req: Request, res: Response) => {
     try {
-      let url = req.query.url as string
+      let url = String(req.query.url)
 
       if (/^((http|https|ftp):\/\/)/.test(url) === false) {
         url = `http://${url}`
       }
 
       const data = await fetch(
-        `${URL_ENDPOINT}/iframe?url=${encodeURI(String(url))}&baseHref=${
+        `${URL_ENDPOINT}/iframe?url=${encodeURI(url)}&baseHref=${
           req.query.baseHref || true
         }`
       )

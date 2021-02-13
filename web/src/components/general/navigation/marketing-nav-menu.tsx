@@ -6,47 +6,8 @@
 
 import React, { useMemo } from 'react'
 import { List, ListItem } from '@material-ui/core'
-import { Routes } from '@app/configs'
 import { Link } from '../link'
-
-const MainRoutes = Routes.filter(
-  ({ href }: any) =>
-    ![
-      'contact',
-      'terms-of-service',
-      'privacy',
-      'web-accessibility',
-      'website-accessibility-checker',
-      'careers',
-      'consulting',
-      'about',
-      'https://www.miniprograms.xyz',
-      'roadmap',
-      'api-info',
-    ].includes(href)
-)
-
-const MobileRoutes = Routes.filter(
-  ({ href }: any) =>
-    ![
-      'register',
-      'login',
-      'contact',
-      'terms-of-service',
-      'privacy',
-      'web-accessibility',
-      'website-accessibility-checker',
-      'careers',
-      'consulting',
-      'roadmap',
-      'about',
-      'testout',
-      'https://a11ywatch.blog',
-      'https://www.miniprograms.xyz',
-      'https://a11ywatch.github.io/a11ywatch-docs/',
-      'api-info',
-    ].includes(href)
-)
+import { MainRoutes, MobileRoutes } from './routes'
 
 interface Props {
   home?: string

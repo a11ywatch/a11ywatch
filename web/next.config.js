@@ -7,9 +7,7 @@
 const { resolve } = require('path')
 const { parsed } = require('dotenv').config()
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 const withPWA = require('next-pwa')
-
 const { domainMap } = require('./domain-map')
 const { generateSiteMap } = require('./generate-sitemap')
 const { getDynamicPaths, proxyDockerUrls } = require('./dynamic-paths')
@@ -45,7 +43,7 @@ const env = Object.assign({}, parsed, {
   INTERCOM_APPID: process.env.INTERCOM_APPID,
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_ANALYTIC_ID: process.env.GOOGLE_ANALYTIC_ID,
-  // PREVENT SETTING ENVS
+  // # NEXT.JS REQUIRED EXCLUDES
   NODE_ENV: undefined,
   NODE_MODULES_CACHE: undefined,
 })
@@ -94,29 +92,7 @@ module.exports = withPWA({
       }
     )
 
-    const rule = config.module.rules
-      .find((rl) => rl.oneOf)
-      .oneOf.find(
-        (r) => r.issuer && r.issuer.include && r.issuer.include.includes('_app')
-      )
-
-    if (rule) {
-      rule.issuer.include = [
-        rule.issuer.include,
-        /[\\/]node_modules[\\/]monaco-editor[\\/]/,
-      ]
-    }
-    if (!Array.isArray(config.plugins)) {
-      config.plugins = []
-    }
-    config.plugins.push(
-      new MonacoWebpackPlugin({
-        languages: ['javascript', 'html'],
-        filename: 'static/[name].worker.js',
-      })
-    )
-    config.resolve.alias = {
-      ...config.resolve.alias,
+    config.resolve.alias = Object.assign({}, config.resolve.alias, {
       ['@app-theme']: resolve(__dirname, `./src/theme/${themeType}`),
       ['@app-strings']: resolve(
         __dirname,
@@ -126,7 +102,7 @@ module.exports = withPWA({
       ['@app']: resolve(__dirname, './src'),
       ['@web-config']: resolve(__dirname, './web-config.js'),
       ['ui']: uiComponentPath,
-    }
+    })
 
     if (!development) {
       if (!Array.isArray(config.optimization.minimizer)) {
@@ -134,8 +110,6 @@ module.exports = withPWA({
       }
       config.optimization.minimize = true
       config.optimization.minimizer.push(new OptimizeCSSAssetsPlugin())
-    } else {
-      config.devtool = 'cheap-module-source-map'
     }
 
     return config

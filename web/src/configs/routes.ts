@@ -7,55 +7,55 @@
 export const Routes = [
   {
     nav: false,
-    href: 'terms-of-service',
+    href: '/terms-of-service',
     name: 'Terms of Service',
     type: 'resources',
   },
   {
     nav: false,
-    href: 'privacy',
+    href: '/privacy',
     name: 'Privacy Policy',
     type: 'resources',
   },
   {
     nav: false,
-    href: 'careers',
+    href: '/careers',
     name: 'Careers',
     type: 'resources',
   },
   {
     nav: false,
-    href: 'contact',
+    href: '/contact',
     name: 'Contact',
     type: 'explore',
   },
   {
     nav: false,
-    href: 'about',
+    href: '/about',
     name: 'About',
     type: 'resources',
   },
   {
     nav: false,
-    href: 'features',
+    href: '/features',
     name: 'Features',
     type: 'resources',
   },
   {
     nav: false,
-    href: 'roadmap',
+    href: '/roadmap',
     name: 'Roadmap',
     type: 'explore',
   },
   {
     nav: false,
-    href: 'api-info',
+    href: '/api-info',
     name: 'API',
     type: 'explore',
   },
   {
     nav: false,
-    href: 'consulting',
+    href: '/consulting',
     name: 'Consulting',
     type: 'resources',
   },
@@ -67,25 +67,25 @@ export const Routes = [
   },
   {
     nav: false,
-    href: 'website-accessibility-checker',
+    href: '/website-accessibility-checker',
     name: 'Web Accessibility Checker',
     type: 'explore',
   },
   {
     nav: false,
-    href: 'web-accessibility',
+    href: '/web-accessibility',
     name: 'Web Accessibility',
     type: 'resources',
   },
   {
     nav: false,
-    href: 'pricing',
+    href: '/pricing',
     name: 'Pricing',
     type: 'explore',
   },
   {
     nav: false,
-    href: 'testout',
+    href: '/testout',
     name: 'Try Out',
     type: 'explore',
   },
@@ -103,12 +103,12 @@ export const Routes = [
   },
   {
     nav: true,
-    href: 'login',
+    href: '/login',
     name: 'Login',
   },
   {
     nav: true,
-    href: 'register',
+    href: '/register',
     name: 'Register',
   },
 ]
@@ -116,32 +116,32 @@ export const Routes = [
 export const LoggedInRoutes = [
   {
     nav: true,
-    href: 'dashboard',
+    href: '/dashboard',
     name: 'Dashboard',
   },
   {
     nav: true,
-    href: 'profile',
+    href: '/profile',
     name: 'Profile',
   },
   {
     nav: true,
-    href: 'api-info',
+    href: '/api-info',
     name: 'API',
   },
   {
     nav: false,
-    href: 'pricing',
+    href: '/pricing',
     name: 'Pricing',
   },
   {
     nav: false,
-    href: 'register',
+    href: '/register',
     name: 'Register',
   },
   {
     nav: false,
-    href: 'login',
+    href: '/login',
     name: 'Login',
   },
 ]

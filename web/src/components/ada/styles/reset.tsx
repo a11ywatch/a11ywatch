@@ -3,11 +3,15 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
-export const ResetCss = (
-  <style>
-    {`body {
-      background : transparent;
+import React from 'react'
+
+export function ResetCss() {
+  return (
+    <style>
+      {String(`body {
+      background: transparent;
     }
-  `}
-  </style>
-)
+  `)}
+    </style>
+  )
+}

@@ -7,7 +7,7 @@
 import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 
-const MonacoEditor = dynamic(import('react-monaco-editor'), {
+const MonacoEditor = dynamic(import('@monaco-editor/react'), {
   ssr: false,
 })
 const ReactSizeDetector = dynamic(import('react-resize-detector'), {
@@ -31,21 +31,10 @@ const WithEditor = ({
     <ReactSizeDetector handleWidth handleHeight>
       {({ height, width }: any) => (
         <MonacoEditor
-          onChange={(e: string) => setValue(e)}
+          onChange={setValue}
           value={value}
           language={language}
           defaultValue={children}
-          editorDidMount={(editor: any) => {
-            editor?.focus()
-            // @ts-ignore
-            if (typeof window !== 'undefined' && window.MonacoEnvironment) {
-              // @ts-ignore
-              window.MonacoEnvironment.getWorkerUrl = (_: any, label: any) => {
-                if (['javascript', 'html'].includes(label))
-                  return '_next/static/editor.worker.js'
-              }
-            }
-          }}
           theme='vs-dark'
           height={height || !setScript ? '65vh' : '345px'}
           width={width || '100%'}

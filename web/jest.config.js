@@ -1,7 +1,10 @@
 const { defaults } = require('jest-config')
 
 module.exports = {
-  testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
+  testPathIgnorePatterns: [
+    '<rootDir>/.next/',
+    '<rootDir>/node_modules/(?!(monaco-editor)/)',
+  ],
   setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/node_modules/babel-jest',
@@ -14,6 +17,7 @@ module.exports = {
     '@app-strings': '<rootDir>/src/content/strings/a11y/',
     '@app-theme': '<rootDir>/src/theme/main/',
     '@web-config': '<rootDir>/web-config.js',
+    // ui: '<rootDir>/node_modules/@a11ywatch/ui/main/$1',
   },
   verbose: true,
   coverageDirectory: './coverage/',

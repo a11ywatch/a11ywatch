@@ -31,25 +31,25 @@ function MNLink({
   if (naked) {
     return (
       <NextComposed
+        {...props}
         className={`${className} ${
           router?.pathname === href ? activeClassName : ''
         }`}
         as={as}
         href={href}
         ref={innerRef}
-        {...props}
       />
     )
   }
 
   return (
     <MuiLink
+      {...props}
       component={component}
       className={className}
       ref={innerRef}
       as={as}
       href={href}
-      {...props}
     />
   )
 }

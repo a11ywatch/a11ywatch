@@ -41,7 +41,7 @@ const MainFrame = observer(({ homeStore, iframeStore, url, issue }: any) => {
 
   return (
     <div className={mainFixed}>
-      {ResetCss}
+      <ResetCss />
       <iframe
         src={homeStore.getIframeSource(url)}
         id='ada-frame'
