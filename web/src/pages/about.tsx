@@ -9,11 +9,12 @@ import { Typography } from '@material-ui/core'
 import { MarketingDrawer } from '@app/components/general'
 import { strings } from '@app-strings'
 import { metaSetter } from '@app/utils'
+import type { PageProps } from '@app/types'
 
-function About() {
+function About({ name }: PageProps) {
   const bold = { fontWeight: 600 }
   return (
-    <MarketingDrawer title={About.name} footerSpacing>
+    <MarketingDrawer title={name} footerSpacing>
       <Typography variant='h2' component='h1' gutterBottom>
         {`About ${strings.appName}`}
       </Typography>

@@ -6,14 +6,15 @@
 import React from 'react'
 import { MarketingDrawer } from '@app/components/general'
 import { TestView } from '@app/components/general/test-view'
-import { strings } from '@app-strings'
 import { WithSwipeModal as SwipeableTemporaryDrawer } from '@app/components/adhoc'
 import { withApollo } from '@app/apollo'
+import type { PageProps } from '@app/types'
+import { metaSetter } from '@app/utils'
 
-function TestOut() {
+function Test({ name }: PageProps) {
   return (
     <>
-      <MarketingDrawer initClosed={true} renderCtaSearch title={TestOut.name}>
+      <MarketingDrawer initClosed={true} renderCtaSearch title={name}>
         <TestView marketing />
       </MarketingDrawer>
       <SwipeableTemporaryDrawer />
@@ -21,8 +22,4 @@ function TestOut() {
   )
 }
 
-TestOut.meta = {
-  title: `Try out free accessibility fixer - ${strings.appName}`,
-}
-
-export default withApollo(TestOut)
+export default withApollo(metaSetter({ Test }))

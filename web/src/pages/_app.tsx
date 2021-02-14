@@ -81,7 +81,7 @@ export default function MyApp({ Component, pageProps }: MergedApp) {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <WithSkipContent />
-        <Component {...pageProps} />
+        <Component {...pageProps} name={Component?.meta?.name} />
         <WithSnackBar />
       </ThemeProvider>
     </Fragment>

@@ -19,6 +19,7 @@ import { MarketingDrawer } from '@app/components/general'
 import { withApollo } from '@app/apollo'
 import { useRouter } from 'next/router'
 import { metaSetter } from '@app/utils'
+import type { PageProps } from '@app/types'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function ResetPassword() {
+function ResetPassword({ name }: PageProps) {
   const router = useRouter()
   const classes = useStyles()
   const {
@@ -121,7 +122,7 @@ function ResetPassword() {
   }
 
   return (
-    <MarketingDrawer title={ResetPassword.name} footerSpacing>
+    <MarketingDrawer title={name} footerSpacing>
       <Typography variant='h2' component={resetSent ? 'h3' : 'h1'} gutterBottom>
         {title}
       </Typography>

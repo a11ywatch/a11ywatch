@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { MarketingDrawer, Section, Heading } from '@app/components/general'
 import { strings } from '@app-strings'
 import { metaSetter } from '@app/utils'
+import type { PageProps } from '@app/types'
 
 const useStyles = makeStyles(({ breakpoints, palette }) => ({
   paper: {
@@ -29,7 +30,7 @@ const useStyles = makeStyles(({ breakpoints, palette }) => ({
   },
 }))
 
-function Features() {
+function Features({ name }: PageProps) {
   const classes = useStyles()
   const { paper } = classes
 
@@ -45,7 +46,7 @@ function Features() {
   }
 
   return (
-    <MarketingDrawer title={Features.name} maxWidth='xl' footerSpacing>
+    <MarketingDrawer title={name} maxWidth='xl' footerSpacing>
       <Typography variant='h2' component='h1'>
         {`${strings.appName} Features`}
       </Typography>

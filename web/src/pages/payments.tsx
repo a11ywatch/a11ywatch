@@ -6,7 +6,6 @@
 import React, { useState } from 'react'
 import StripeCheckout from 'react-stripe-checkout'
 import { getDate } from 'date-fns'
-
 import {
   Container,
   Typography,
@@ -18,7 +17,6 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@material-ui/core'
-
 import { makeStyles } from '@material-ui/core/styles'
 import { WithHydrate } from '@app/components/adhoc'
 import { NavBar, PageTitle, Box } from '@app/components/general'
@@ -27,8 +25,8 @@ import { STRIPE_KEY } from '@app/configs'
 import { withApollo } from '@app/apollo'
 import { paymentsData } from '@app/data'
 import { getOrdinalSuffix, metaSetter } from '@app/utils'
-
 import Pricing from './pricing'
+import type { PageProps } from '@app/types'
 
 const useStyles = makeStyles(() => ({
   row: {
@@ -54,7 +52,11 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-function Payments({ hideTitle = false }) {
+interface PaymentProps extends PageProps {
+  hideTitle?: boolean
+}
+
+function Payments({ hideTitle = false, name }: PaymentProps) {
   const defaultState = {
     basic: true,
     premium: false,
@@ -105,10 +107,10 @@ function Payments({ hideTitle = false }) {
 
   return (
     <WithHydrate>
-      <NavBar title={Payments.name} backButton notitle />
+      <NavBar title={name} backButton notitle />
       <Container maxWidth='xl'>
         <Box>
-          {hideTitle ? null : <PageTitle>{Payments.name}</PageTitle>}
+          {hideTitle ? null : <PageTitle>{name}</PageTitle>}
           {loading && !data ? (
             <>
               <Typography variant='subtitle1' component='p'>
@@ -135,7 +137,7 @@ function Payments({ hideTitle = false }) {
                 <>
                   {nextPaymentDay ? (
                     <Typography variant='subtitle1' component='p'>
-                      {`Payments will occur on the ${getOrdinalSuffix(
+                      {`${name} will occur on the ${getOrdinalSuffix(
                         nextPaymentDay
                       )} of every month`}
                     </Typography>

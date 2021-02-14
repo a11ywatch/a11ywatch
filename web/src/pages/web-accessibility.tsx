@@ -8,8 +8,9 @@ import { Typography, List, ListItem } from '@material-ui/core'
 import { MarketingDrawer, Box } from '@app/components/general'
 import { theme } from '@app-theme'
 import { metaSetter } from '@app/utils'
+import type { PageProps } from '@app/types'
 
-function WebAccessibility() {
+function WebAccessibility({ name }: PageProps) {
   const checklistLinks = [
     { href: 'https://a11yproject.com/checklist/' },
     {
@@ -30,7 +31,7 @@ function WebAccessibility() {
 
   const bold = { fontWeight: 600 }
   return (
-    <MarketingDrawer title={WebAccessibility.name}>
+    <MarketingDrawer title={name}>
       <Box>
         <Typography variant='h2' component='h1'>
           Web Accessibility

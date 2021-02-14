@@ -4,11 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 import { strings } from '@app-strings'
-
-interface MetaData {
-  title?: string
-  description?: string
-}
+import type { MetaData } from '@app/types'
 
 interface MetaFunction extends Function {
   meta?: MetaData
@@ -21,13 +17,16 @@ interface Meta {
 export const metaSetter = (
   Component: Meta,
   { title, description }: MetaData = {}
-): Function => {
-  const name = String(Object.keys(Component)[0])
-  const value = Component[name]
+): MetaFunction => {
+  const keyName = String(Object.keys(Component)[0])
+  const value = Component[keyName]
+  const nameStripped = keyName.replace(/([A-Z])/g, ' $1')
+  const name = nameStripped.replace(' ', '')
 
   value.meta = {
-    title: title ?? `${strings.appName} - ${name.replace(/([A-Z])/g, ' $1')}`,
+    title: title ?? `${strings.appName} - ${name}`,
     description,
+    name,
   }
 
   return value

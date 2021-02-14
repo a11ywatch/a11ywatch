@@ -7,10 +7,11 @@ import React from 'react'
 import { Typography } from '@material-ui/core'
 import { MarketingDrawer } from '@app/components/general'
 import { metaSetter } from '@app/utils'
+import type { PageProps } from '@app/types'
 
-function PageNotFound() {
+const PageNotFound = ({ name }: PageProps) => {
   return (
-    <MarketingDrawer title={PageNotFound.name} footerSpacing>
+    <MarketingDrawer title={name} footerSpacing>
       <Typography variant='h1' component='h1' gutterBottom>
         404
       </Typography>

@@ -52,6 +52,7 @@ function Pricing({
   basic = false,
   premium = false,
   handleChange,
+  name,
 }: any) {
   const classes = useStyles()
 
@@ -67,7 +68,7 @@ function Pricing({
   }
 
   return (
-    <MarketingDrawer title={Pricing.name}>
+    <MarketingDrawer title={name}>
       <Box>
         <Typography variant='h2' component='h1' gutterBottom>
           Plans

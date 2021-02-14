@@ -7,10 +7,11 @@ import React from 'react'
 import { SignOnForm, MarketingDrawer } from '@app/components/general'
 import { withApollo } from '@app/apollo'
 import { metaSetter } from '@app/utils'
+import type { PageProps } from '@app/types'
 
-function Register() {
+function Register({ name }: PageProps) {
   return (
-    <MarketingDrawer title={Register.name} maxWidth='sm' footerSpacing>
+    <MarketingDrawer title={name} maxWidth='sm' footerSpacing>
       <SignOnForm />
     </MarketingDrawer>
   )

@@ -19,18 +19,19 @@ import { filterSort } from '@app/lib'
 import { withApollo } from '@app/apollo'
 import { WithHydrate } from '@app/components/adhoc'
 import { metaSetter } from '@app/utils'
+import type { PageProps } from '@app/types'
 
-function WebsiteIssues() {
+function Issues({ name }: PageProps) {
   const { data, loading, refetch } = websitesData()
   const { search } = useSearchFilter()
   const MAINDATASOURCE = filterSort(data, search)
 
   return (
     <WithHydrate>
-      <Drawer title={'Issues'}>
+      <Drawer title={name}>
         <Container maxWidth='xl'>
           <Box>
-            <PageTitle title={'All Issues'} />
+            <PageTitle title={`All ${name}`} />
             <List
               data={MAINDATASOURCE}
               loading={loading}
@@ -49,4 +50,4 @@ function WebsiteIssues() {
   )
 }
 
-export default withApollo(metaSetter({ WebsiteIssues }))
+export default withApollo(metaSetter({ Issues }))

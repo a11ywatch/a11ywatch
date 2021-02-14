@@ -20,6 +20,7 @@ import { AppManager } from '@app/managers'
 import { userData } from '@app/data'
 import { withApollo } from '@app/apollo'
 import { metaSetter } from '@app/utils'
+import type { PageProps } from '@app/types'
 
 const useStyles = makeStyles(() => ({
   row: {
@@ -60,7 +61,7 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-function Profile() {
+function Profile({ name }: PageProps) {
   const classes = useStyles()
   const { data = {}, loading, updateUser, updateUserData } = userData()
   const [changePassword, setChangePassword] = useState<boolean>(false)
@@ -107,10 +108,10 @@ function Profile() {
 
   return (
     <>
-      <NavBar backButton title={'Profile'} notitle />
+      <NavBar backButton title={name} notitle />
       <Container maxWidth='xl'>
         <Box>
-          <PageTitle title={`Profile`} />
+          <PageTitle title={name} />
           <Typography variant='subtitle1' component='p'>
             Email
           </Typography>

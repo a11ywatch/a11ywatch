@@ -18,6 +18,7 @@ import { theme } from '@app-theme'
 import { withApollo } from '@app/apollo'
 import { WithHydrate } from '@app/components/adhoc'
 import { metaSetter } from '@app/utils'
+import type { PageProps } from '@app/types'
 
 const useStyles = makeStyles(() => ({
   alignCenter: {
@@ -42,7 +43,7 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-function Analytics() {
+function Analytics({ name }: PageProps) {
   const classes = useStyles()
   const { data, loading } = analyticsData(true)
   const { search } = useSearchFilter()
@@ -50,7 +51,7 @@ function Analytics() {
 
   return (
     <WithHydrate>
-      <Drawer title={Analytics.name}>
+      <Drawer title={name}>
         <Container maxWidth={'xl'}>
           <Box my={4}>
             <PageTitle title={'All Analytics'} />

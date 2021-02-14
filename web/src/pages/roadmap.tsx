@@ -17,6 +17,7 @@ import {
 import { strings } from '@app-strings'
 import { theme } from '@app-theme'
 import { metaSetter } from '@app/utils'
+import type { PageProps } from '@app/types'
 
 const useStyles = makeStyles((t) => ({
   circleRight: {
@@ -32,7 +33,7 @@ const useStyles = makeStyles((t) => ({
   },
 }))
 
-function RoadMap() {
+function RoadMap({ name }: PageProps) {
   const classes = useStyles()
 
   function Image({ src, alt }: { src: string; alt: string }) {
@@ -47,7 +48,7 @@ function RoadMap() {
   }
 
   return (
-    <MarketingDrawer title={RoadMap.name} footerSpacing maxWidth='xl'>
+    <MarketingDrawer title={name} footerSpacing maxWidth='xl'>
       <Box>
         <Typography variant='h2' component='h1'>
           {`${strings.appName} Technical Roadmap`}

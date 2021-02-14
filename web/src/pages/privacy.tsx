@@ -7,10 +7,11 @@ import React from 'react'
 import { Typography } from '@material-ui/core'
 import { MarketingDrawer, Spacer } from '@app/components/general'
 import { metaSetter } from '@app/utils'
+import type { PageProps } from '@app/types'
 
-function Privacy() {
+function Privacy({ name }: PageProps) {
   return (
-    <MarketingDrawer title={Privacy.name} footerSpacing>
+    <MarketingDrawer title={name} footerSpacing>
       <Typography variant='h2' component='h1' gutterBottom>
         Privacy Policy
       </Typography>

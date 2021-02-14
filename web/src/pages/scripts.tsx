@@ -14,6 +14,7 @@ import { filterSort } from '@app/lib'
 import { groupBy, metaSetter } from '@app/utils'
 import { withApollo } from '@app/apollo'
 import { WithHydrate } from '@app/components/adhoc'
+import type { PageProps } from '@app/types'
 
 const UpgradeBanner = dynamic(
   () =>
@@ -25,11 +26,10 @@ const UpgradeBanner = dynamic(
   }
 )
 
-function Scripts() {
+function Scripts({ name }: PageProps) {
   const { data, loading } = scriptsData(true)
   const { search } = useSearchFilter()
   const dataSource = groupBy('domain')(filterSort(data, search))
-  const { name } = Scripts
 
   return (
     <WithHydrate>

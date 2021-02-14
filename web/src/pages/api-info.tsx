@@ -14,6 +14,7 @@ import { AppManager, UserManager } from '@app/managers'
 import { userData } from '@app/data'
 import { withApollo } from '@app/apollo'
 import { metaSetter } from '@app/utils'
+import type { PageProps } from '@app/types'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function Api() {
+function Api({ name }: PageProps) {
   const classes = useStyles()
   const { data = {}, loading } = userData()
   const [keyVisible, setKey] = useState<boolean>(false)
@@ -124,10 +125,10 @@ function Api() {
 
   return (
     <>
-      <NavBar backButton title={'API'} notitle />
+      <NavBar backButton title={name} notitle />
       <Container maxWidth='xl' className={classes.root}>
         <Box>
-          <PageTitle title={`API`} />
+          <PageTitle title={name} />
           <SectionTitle variant='subtitle1'>
             Add authorization header with the jwt format <i>Bearer TOKEN</i> for
             more information check{' '}

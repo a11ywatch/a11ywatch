@@ -10,11 +10,12 @@ import { WithSwipeModal as SwipeableTemporaryDrawer } from '@app/components/adho
 import { withApollo } from '@app/apollo'
 import { strings } from '@app-strings'
 import { metaSetter } from '@app/utils'
+import type { PageProps } from '@app/types'
 
-function WebsiteAccessibilityChecker() {
+function WebsiteAccessibilityChecker({ name }: PageProps) {
   return (
     <>
-      <MarketingDrawer title={WebsiteAccessibilityChecker.name}>
+      <MarketingDrawer title={name}>
         <CtaIntro checker />
         <SignOnForm home />
       </MarketingDrawer>

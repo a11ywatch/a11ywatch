@@ -19,15 +19,16 @@ import { filterSort } from '@app/lib'
 import { withApollo } from '@app/apollo'
 import { WithHydrate } from '@app/components/adhoc'
 import { metaSetter } from '@app/utils'
+import type { PageProps } from '@app/types'
 
-const History = () => {
+const History = ({ name }: PageProps) => {
   const { data, loading, refetch, crawlWebsite } = historyData(true)
   const { search } = useSearchFilter()
   const listData = filterSort(data, search)
 
   return (
     <WithHydrate>
-      <Drawer title={History.name}>
+      <Drawer title={name}>
         <Container maxWidth='xl'>
           <Box>
             <PageTitle title={'All Past Websites'} />

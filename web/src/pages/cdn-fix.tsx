@@ -17,19 +17,20 @@ import { scriptsData, useSearchFilter } from '@app/data'
 import { filterSort } from '@app/lib'
 import { withApollo } from '@app/apollo'
 import { WithHydrate } from '@app/components/adhoc'
+import type { PageProps } from '@app/types'
 
-function CDNFix() {
-  const route_title = 'CDN'
+function Cdn({ name }: PageProps) {
   const { data, loading } = scriptsData(true)
   const { search } = useSearchFilter()
   const dataSource = groupBy('domain')(filterSort(data, search))
+  const capsName = name.toUpperCase()
 
   return (
     <WithHydrate>
-      <Drawer title={route_title}>
+      <Drawer title={capsName}>
         <Container maxWidth={'xl'}>
           <Box>
-            <PageTitle title={`All ${route_title} Scripts`} />
+            <PageTitle title={`All ${capsName} Scripts`} />
             <ScriptsPageSkeleton
               dataLength={Object.keys(dataSource)?.length}
               loading={loading}
@@ -44,4 +45,4 @@ function CDNFix() {
   )
 }
 
-export default withApollo(metaSetter({ CDNFix }))
+export default withApollo(metaSetter({ Cdn }))

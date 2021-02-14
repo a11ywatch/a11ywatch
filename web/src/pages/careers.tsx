@@ -7,8 +7,9 @@ import React from 'react'
 import { Button, Typography, List, ListItem } from '@material-ui/core'
 import { MarketingDrawer, Box } from '@app/components/general'
 import { metaSetter } from '@app/utils'
+import type { PageProps } from '@app/types'
 
-function Careers() {
+function Careers({ name }: PageProps) {
   const Reqs = [
     'Javascript',
     'React',
@@ -20,7 +21,7 @@ function Careers() {
     'BS in Technology or Related Field - nice to have but not needed',
   ]
   return (
-    <MarketingDrawer title={Careers.name}>
+    <MarketingDrawer title={name}>
       <Box>
         <Typography variant='h2' component='h1' gutterBottom>
           Careers

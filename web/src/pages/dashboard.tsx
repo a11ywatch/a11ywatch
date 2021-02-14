@@ -31,6 +31,7 @@ import { filterSort } from '@app/lib'
 import { withApollo } from '@app/apollo'
 import { WithHydrate } from '@app/components/adhoc'
 import { metaSetter } from '@app/utils'
+import type { PageProps } from '@app/types'
 
 const noSSR = {
   ssr: false,
@@ -72,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MiniPlayerMemo = memo(MiniPlayer)
 
-function Dashboard() {
+function Dashboard({ name }: PageProps) {
   const classes = useStyles()
   const {
     data,
@@ -125,7 +126,7 @@ function Dashboard() {
 
   return (
     <WithHydrate>
-      <Drawer title={'Dashboard'}>
+      <Drawer title={name}>
         <Container maxWidth={'xl'}>
           <Box
             className={

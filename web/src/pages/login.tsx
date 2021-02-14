@@ -7,10 +7,11 @@ import React from 'react'
 import { Spacer, MarketingDrawer, SignOnForm } from '@app/components/general'
 import { withApollo } from '@app/apollo'
 import { metaSetter } from '@app/utils'
+import type { PageProps } from '@app/types'
 
-function Login() {
+function Login({ name }: PageProps) {
   return (
-    <MarketingDrawer title={Login.name} maxWidth='sm'>
+    <MarketingDrawer title={name} maxWidth='sm'>
       <SignOnForm loginView />
       <Spacer height={'20vh'} />
     </MarketingDrawer>

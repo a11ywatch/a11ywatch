@@ -18,18 +18,19 @@ import { websitesData, useSearchFilter } from '@app/data'
 import { filterSort } from '@app/lib'
 import { withApollo } from '@app/apollo'
 import { metaSetter } from '@app/utils'
+import type { PageProps } from '@app/types'
 
-function UrgentIssues() {
+function Urgent({ name }: PageProps) {
   const { data, loading, refetch } = websitesData(true, 'error')
   const { search } = useSearchFilter()
   const MAINDATASOURCE = filterSort(data, search)
 
   return (
     <>
-      <Drawer title={'Urgent'}>
+      <Drawer title={name}>
         <Container maxWidth='xl'>
           <Box>
-            <PageTitle title={'All Urgent Issues'} />
+            <PageTitle title={name} />
             <List
               data={MAINDATASOURCE}
               loading={loading}
@@ -48,4 +49,4 @@ function UrgentIssues() {
   )
 }
 
-export default withApollo(metaSetter({ UrgentIssues }))
+export default withApollo(metaSetter({ Urgent }))

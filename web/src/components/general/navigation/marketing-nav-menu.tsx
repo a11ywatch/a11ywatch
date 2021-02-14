@@ -45,16 +45,18 @@ function MarketingNavMenu({
             ? `${firstClassName}${itemClassName}`
             : undefined
 
+        const homeRoute = href.indexOf(home) !== -1
+
         return (
           <li key={name} className={classMinor}>
             <ListItem
               button
               component={Link}
-              href={home === `${href}` ? '/' : href}
+              href={homeRoute ? '/' : href}
               color={'inherit'}
               variant={'h6'}
             >
-              {home === `${href}` ? 'Home' : name}
+              {homeRoute ? 'Home' : name}
             </ListItem>
           </li>
         )
