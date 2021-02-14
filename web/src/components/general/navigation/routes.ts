@@ -6,25 +6,11 @@
 
 import { Routes } from '@app/configs'
 
-const baseRoutes = [
-  '/contact',
-  '/terms-of-service',
-  '/privacy',
-  '/web-accessibility',
-  '/website-accessibility-checker',
-  '/careers',
-  '/consulting',
-  '/about',
-  '/roadmap',
-  '/api-info',
-  '/reset-password',
-  'https://www.miniprograms.xyz',
-]
-const MainRoutes = Routes.filter(({ href }: any) => !baseRoutes.includes(href))
+const MainRoutes = Routes.filter(({ nav }: any) => nav)
 const MobileRoutes = Routes.filter(
   ({ href }: any) =>
     ![
-      ...baseRoutes,
+      ...MainRoutes,
       '/register',
       '/login',
       '/testout',

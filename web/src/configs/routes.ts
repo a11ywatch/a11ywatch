@@ -36,7 +36,7 @@ export const Routes = [
     type: 'resources',
   },
   {
-    nav: false,
+    nav: true,
     href: '/features',
     name: 'Features',
     type: 'resources',
@@ -84,13 +84,13 @@ export const Routes = [
     type: 'resources',
   },
   {
-    nav: false,
+    nav: true,
     href: '/pricing',
     name: 'Pricing',
     type: 'explore',
   },
   {
-    nav: false,
+    nav: true,
     href: '/testout',
     name: 'Try Out',
     type: 'explore',
