@@ -68,8 +68,14 @@ export const Routes = [
   {
     nav: false,
     href: '/website-accessibility-checker',
-    name: 'Web Accessibility Checker',
+    name: 'Accessibility Scan',
     type: 'explore',
+  },
+  {
+    nav: false,
+    href: '/reset-password',
+    name: 'Reset Password',
+    type: 'resources',
   },
   {
     nav: false,

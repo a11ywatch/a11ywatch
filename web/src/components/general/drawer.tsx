@@ -22,8 +22,9 @@ function MainDrawerContainer({ route, dataSourceMap, classes }: any) {
   )
 }
 
-export function DrawerWrapper({ route, title = '', classes }: any) {
+export function DrawerWrapper({ route: routePath, title = '', classes }: any) {
   const { data: dataSourceMap } = userData()
+  const route = routePath ?? title
 
   return (
     <>

@@ -20,8 +20,6 @@ import { withApollo } from '@app/apollo'
 import { WithHydrate } from '@app/components/adhoc'
 import { metaSetter } from '@app/utils'
 
-const TITLE = 'History'
-
 const History = () => {
   const { data, loading, refetch, crawlWebsite } = historyData(true)
   const { search } = useSearchFilter()
@@ -29,7 +27,7 @@ const History = () => {
 
   return (
     <WithHydrate>
-      <Drawer route={TITLE} title={TITLE}>
+      <Drawer title={History.name}>
         <Container maxWidth='xl'>
           <Box>
             <PageTitle title={'All Past Websites'} />

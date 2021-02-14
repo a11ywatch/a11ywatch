@@ -50,7 +50,7 @@ function Analytics() {
 
   return (
     <WithHydrate>
-      <Drawer route={'Analytics'} title={'Analytics'}>
+      <Drawer title={Analytics.name}>
         <Container maxWidth={'xl'}>
           <Box my={4}>
             <PageTitle title={'All Analytics'} />

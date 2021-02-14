@@ -15,8 +15,6 @@ import { groupBy, metaSetter } from '@app/utils'
 import { withApollo } from '@app/apollo'
 import { WithHydrate } from '@app/components/adhoc'
 
-const TITLE = 'Scripts'
-
 const UpgradeBanner = dynamic(
   () =>
     import('@app/components/general/upgrade-banner').then(
@@ -31,13 +29,14 @@ function Scripts() {
   const { data, loading } = scriptsData(true)
   const { search } = useSearchFilter()
   const dataSource = groupBy('domain')(filterSort(data, search))
+  const { name } = Scripts
 
   return (
     <WithHydrate>
-      <Drawer route={TITLE} title={TITLE}>
+      <Drawer title={name}>
         <Container maxWidth={'xl'}>
           <Box>
-            <PageTitle title={`All ${TITLE}`} />
+            <PageTitle title={`All ${name}`} />
             <ScriptsPageSkeleton
               dataLength={Object.keys(dataSource)?.length}
               loading={loading}

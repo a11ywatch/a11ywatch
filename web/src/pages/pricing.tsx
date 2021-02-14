@@ -4,11 +4,10 @@
  * LICENSE file in the root directory of this source tree.
  **/
 import React from 'react'
-import { Container, Typography, Grid, Paper } from '@material-ui/core'
+import { Typography, Grid, Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   Box,
-  Footer,
   MarketingDrawer,
   Ribbon,
   Spacer,
@@ -69,53 +68,50 @@ function Pricing({
 
   return (
     <MarketingDrawer title={Pricing.name}>
-      <Container maxWidth='xl'>
-        <Box>
-          <Typography variant='h2' component='h1' gutterBottom>
-            Plans
-          </Typography>
-          <Typography variant='h3' component='h2'>
-            Choose a plan that fits your needs
-          </Typography>
-          <Spacer height={'8vh'} />
-          <Grid container>
-            {priceConfig.plans.map(
-              ({ title, details, cost, Icon }: any, i: number) => (
-                <Paper className={`${classes.paper} ${classes.large}`} key={i}>
-                  {title === 'Premium' ? <Ribbon /> : null}
-                  <Icon fontSize='large' />
-                  <Typography
-                    variant='h4'
-                    component='h3'
-                    gutterBottom
-                    style={{ fontWeight: 600 }}
-                  >
-                    {title}
-                  </Typography>
-                  <ol>
-                    {details.map((item: any) => (
-                      <Typography variant='subtitle1' component='li' key={item}>
-                        - {item}
-                      </Typography>
-                    ))}
-                  </ol>
-                  {cost ? (
-                    <Typography
-                      variant='h6'
-                      component='p'
-                      style={{ fontWeight: 600, marginTop: 12 }}
-                    >
-                      {cost}
+      <Box>
+        <Typography variant='h2' component='h1' gutterBottom>
+          Plans
+        </Typography>
+        <Typography variant='h3' component='h2'>
+          Choose a plan that fits your needs
+        </Typography>
+        <Spacer height={'8vh'} />
+        <Grid container>
+          {priceConfig.plans.map(
+            ({ title, details, cost, Icon }: any, i: number) => (
+              <Paper className={`${classes.paper} ${classes.large}`} key={i}>
+                {title === 'Premium' ? <Ribbon /> : null}
+                <Icon fontSize='large' />
+                <Typography
+                  variant='h4'
+                  component='h3'
+                  gutterBottom
+                  style={{ fontWeight: 600 }}
+                >
+                  {title}
+                </Typography>
+                <ol>
+                  {details.map((item: any) => (
+                    <Typography variant='subtitle1' component='li' key={item}>
+                      - {item}
                     </Typography>
-                  ) : null}
-                </Paper>
-              )
-            )}
-          </Grid>
-          <SignOnForm home />
-        </Box>
-      </Container>
-      <Footer />
+                  ))}
+                </ol>
+                {cost ? (
+                  <Typography
+                    variant='h6'
+                    component='p'
+                    style={{ fontWeight: 600, marginTop: 12 }}
+                  >
+                    {cost}
+                  </Typography>
+                ) : null}
+              </Paper>
+            )
+          )}
+        </Grid>
+        <SignOnForm home />
+      </Box>
     </MarketingDrawer>
   )
 }

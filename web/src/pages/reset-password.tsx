@@ -6,7 +6,6 @@
 import React, { useRef, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import {
-  Container,
   Paper,
   Typography,
   TextField,
@@ -16,7 +15,7 @@ import {
 } from '@material-ui/core'
 import { AppManager, UserManager } from '@app/managers'
 import { userData } from '@app/data'
-import { Spacer, Footer, MarketingDrawer } from '@app/components/general'
+import { MarketingDrawer } from '@app/components/general'
 import { withApollo } from '@app/apollo'
 import { useRouter } from 'next/router'
 import { metaSetter } from '@app/utils'
@@ -30,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
     textAlign: 'center',
   },
-  container: {},
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
@@ -123,61 +121,49 @@ function ResetPassword() {
   }
 
   return (
-    <MarketingDrawer title={ResetPassword.name}>
-      <Container maxWidth='xl' className={classes.root}>
-        <Typography
-          variant='h2'
-          component={resetSent ? 'h3' : 'h1'}
-          gutterBottom
-        >
-          {title}
-        </Typography>
-        <Paper className={classes.paper}>
-          <form
-            className={classes.container}
-            autoComplete={resetSent ? 'on' : 'off'}
-            onSubmit={submit}
-          >
-            <div>
-              <FormControl>
-                {resetSent ? (
-                  <TextField
-                    id='resetCode'
-                    aria-describedby='my-reset-text'
-                    className={classes.textField}
-                    label='Reset Code'
-                    type='text'
-                    autoFocus
-                    margin='normal'
-                    variant='outlined'
-                    required
-                    inputRef={resetRef}
-                  />
-                ) : (
-                  <TextField
-                    id='email'
-                    aria-describedby='my-email-text'
-                    className={classes.textField}
-                    label='Email'
-                    type='email'
-                    autoFocus
-                    autoComplete='email'
-                    margin='normal'
-                    variant='outlined'
-                    required
-                    inputRef={emailRef}
-                  />
-                )}
-              </FormControl>
-            </div>
-            <Button className={classes.submit} type='submit'>
-              {resetSent ? 'Submit' : 'Send Email'}
-            </Button>
-          </form>
-        </Paper>
-      </Container>
-      <Spacer height={`20vh`} />
-      <Footer />
+    <MarketingDrawer title={ResetPassword.name} footerSpacing>
+      <Typography variant='h2' component={resetSent ? 'h3' : 'h1'} gutterBottom>
+        {title}
+      </Typography>
+      <Paper className={classes.paper}>
+        <form autoComplete={resetSent ? 'on' : 'off'} onSubmit={submit}>
+          <div>
+            <FormControl>
+              {resetSent ? (
+                <TextField
+                  id='resetCode'
+                  aria-describedby='my-reset-text'
+                  className={classes.textField}
+                  label='Reset Code'
+                  type='text'
+                  autoFocus
+                  margin='normal'
+                  variant='outlined'
+                  required
+                  inputRef={resetRef}
+                />
+              ) : (
+                <TextField
+                  id='email'
+                  aria-describedby='my-email-text'
+                  className={classes.textField}
+                  label='Email'
+                  type='email'
+                  autoFocus
+                  autoComplete='email'
+                  margin='normal'
+                  variant='outlined'
+                  required
+                  inputRef={emailRef}
+                />
+              )}
+            </FormControl>
+          </div>
+          <Button className={classes.submit} type='submit'>
+            {resetSent ? 'Submit' : 'Send Email'}
+          </Button>
+        </form>
+      </Paper>
       {loading ? (
         <LinearProgress className={classes.absolute} color='secondary' />
       ) : null}

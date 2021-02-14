@@ -5,12 +5,15 @@
  **/
 
 import React from 'react'
+import { Container } from '@material-ui/core'
 import { navigationStyles } from '@app/styles/navigation'
 import { strings } from '@app-strings'
 import { NavBarTitle, MarketingNavMenu } from './navigation'
 import { SearchBar } from './searchbar'
 import { Link } from './link'
 import { NavBar } from './navbar'
+import { Footer } from './footer'
+import { CtaProfessionalSupportButton } from '../cta'
 
 export function MarketingDrawer({
   children,
@@ -18,6 +21,8 @@ export function MarketingDrawer({
   renderCtaSearch,
   title,
   navPosition,
+  maxWidth,
+  footerSpacing,
 }: any) {
   const classes = navigationStyles()
 
@@ -29,7 +34,7 @@ export function MarketingDrawer({
         className={classes.appBar}
         marketingLinks={
           <MarketingNavMenu
-            home={String(title).toLowerCase()}
+            home={`/${String(title).toLowerCase()}`}
             className={classes.horizontal}
             registerClassName={classes.register}
             classHiddenMobile={classes.classHiddenMobile}
@@ -52,7 +57,15 @@ export function MarketingDrawer({
         </span>
       </NavBar>
       <main className={initClosed ? classes.contentSmall : classes.content}>
-        {children}
+        {initClosed ? (
+          children
+        ) : (
+          <Container maxWidth={maxWidth}>
+            <CtaProfessionalSupportButton />
+            {children}
+          </Container>
+        )}
+        {initClosed ? null : <Footer footerSpacing={footerSpacing} />}
       </main>
     </>
   )

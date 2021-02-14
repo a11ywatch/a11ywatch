@@ -71,6 +71,9 @@ const useStyles = makeStyles((theme) => ({
       fontSize: '1.5em',
     },
   },
+  spacing: {
+    paddingTop: '20vh',
+  },
 }))
 
 const NavLinks: any = ({ className, filterType }: any) => {
@@ -91,7 +94,13 @@ const NavLinks: any = ({ className, filterType }: any) => {
     })
 }
 
-const Footer = ({ sticky }: { sticky?: boolean }) => {
+const Footer = ({
+  sticky,
+  footerSpacing,
+}: {
+  sticky?: boolean
+  footerSpacing?: boolean
+}) => {
   const classes = useStyles()
 
   const SectionLinks = ({
@@ -114,7 +123,11 @@ const Footer = ({ sticky }: { sticky?: boolean }) => {
   }
 
   return (
-    <footer className={`${classes.root} ${sticky ? classes.sticky : ''}`}>
+    <footer
+      className={`${classes.root}${sticky ? ` ${classes.sticky}` : ''}${
+        footerSpacing ? ` ${classes.spacing}` : ''
+      }`}
+    >
       <Container maxWidth='lg'>
         <div className={classes.block}>
           <div className={classes.link}>

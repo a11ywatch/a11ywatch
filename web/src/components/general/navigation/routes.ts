@@ -17,6 +17,7 @@ const baseRoutes = [
   '/about',
   '/roadmap',
   '/api-info',
+  '/reset-password',
   'https://www.miniprograms.xyz',
 ]
 const MainRoutes = Routes.filter(({ href }: any) => !baseRoutes.includes(href))

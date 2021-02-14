@@ -26,7 +26,7 @@ function CDNFix() {
 
   return (
     <WithHydrate>
-      <Drawer route={route_title} title={route_title}>
+      <Drawer title={route_title}>
         <Container maxWidth={'xl'}>
           <Box>
             <PageTitle title={`All ${route_title} Scripts`} />

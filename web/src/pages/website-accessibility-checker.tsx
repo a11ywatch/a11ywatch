@@ -4,14 +4,8 @@
  * LICENSE file in the root directory of this source tree.
  **/
 import React from 'react'
-import { Container } from '@material-ui/core'
-import {
-  Footer,
-  MarketingDrawer,
-  Spacer,
-  SignOnForm,
-} from '@app/components/general'
-import { CtaIntro, CtaProfessionalSupportButton } from '@app/components/cta'
+import { MarketingDrawer, SignOnForm } from '@app/components/general'
+import { CtaIntro } from '@app/components/cta'
 import { WithSwipeModal as SwipeableTemporaryDrawer } from '@app/components/adhoc'
 import { withApollo } from '@app/apollo'
 import { strings } from '@app-strings'
@@ -21,13 +15,8 @@ function WebsiteAccessibilityChecker() {
   return (
     <>
       <MarketingDrawer title={WebsiteAccessibilityChecker.name}>
-        <Container maxWidth='xl'>
-          <CtaProfessionalSupportButton />
-          <CtaIntro checker />
-          <SignOnForm home />
-        </Container>
-        <Spacer height={'13vh'} />
-        <Footer />
+        <CtaIntro checker />
+        <SignOnForm home />
       </MarketingDrawer>
       <SwipeableTemporaryDrawer />
     </>

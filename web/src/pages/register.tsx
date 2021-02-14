@@ -4,27 +4,14 @@
  * LICENSE file in the root directory of this source tree.
  **/
 import React from 'react'
-import { Container } from '@material-ui/core'
-import {
-  Footer,
-  Box,
-  Spacer,
-  SignOnForm,
-  MarketingDrawer,
-} from '@app/components/general'
+import { SignOnForm, MarketingDrawer } from '@app/components/general'
 import { withApollo } from '@app/apollo'
 import { metaSetter } from '@app/utils'
 
 function Register() {
   return (
-    <MarketingDrawer title={Register.name}>
-      <Container maxWidth='sm'>
-        <Box>
-          <SignOnForm />
-        </Box>
-        <Spacer height={'20vh'} />
-      </Container>
-      <Footer />
+    <MarketingDrawer title={Register.name} maxWidth='sm' footerSpacing>
+      <SignOnForm />
     </MarketingDrawer>
   )
 }

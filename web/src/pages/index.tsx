@@ -5,19 +5,12 @@
  **/
 
 import React from 'react'
-import { Container } from '@material-ui/core'
-import {
-  Footer,
-  MarketingDrawer,
-  SignOnForm,
-  Price,
-} from '@app/components/general'
+import { MarketingDrawer, SignOnForm, Price } from '@app/components/general'
 import {
   CtaFeatures,
   CtaIntro,
   CtaVideo,
   CtaCustomers,
-  CtaProfessionalSupportButton,
 } from '@app/components/cta'
 import { WithSwipeModal as SwipeableTemporaryDrawer } from '@app/components/adhoc'
 import { withApollo } from '@app/apollo'
@@ -26,16 +19,12 @@ function Index() {
   return (
     <>
       <MarketingDrawer navPosition={'relative'}>
-        <Container>
-          <CtaProfessionalSupportButton />
-          <CtaIntro />
-          <CtaVideo />
-          <CtaFeatures />
-          <CtaCustomers />
-          <Price blockFree />
-          <SignOnForm home />
-        </Container>
-        <Footer />
+        <CtaIntro />
+        <CtaVideo />
+        <CtaFeatures />
+        <CtaCustomers />
+        <Price blockFree />
+        <SignOnForm home />
       </MarketingDrawer>
       <SwipeableTemporaryDrawer />
     </>

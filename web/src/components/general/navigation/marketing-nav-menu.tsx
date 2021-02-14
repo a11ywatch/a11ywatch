@@ -35,9 +35,9 @@ function MarketingNavMenu({
       {useMemo(() => (mobileRender ? MobileRoutes : MainRoutes), [
         mobileRender,
       ]).map(({ name, href }: { name: string; href: string }) => {
-        const firstClassName = href === 'register' ? registerClassName : ''
+        const firstClassName = href === '/register' ? registerClassName : ''
         const itemClassName =
-          !mobileRender && href !== 'register' && href !== 'login'
+          !mobileRender && href !== '/register' && href !== '/login'
             ? `${firstClassName ? ' ' : ''}${classHiddenMobile}`
             : ''
         const classMinor =

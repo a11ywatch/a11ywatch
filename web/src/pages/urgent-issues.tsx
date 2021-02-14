@@ -26,7 +26,7 @@ function UrgentIssues() {
 
   return (
     <>
-      <Drawer route={'Urgent'} title={'Urgent'}>
+      <Drawer title={'Urgent'}>
         <Container maxWidth='xl'>
           <Box>
             <PageTitle title={'All Urgent Issues'} />

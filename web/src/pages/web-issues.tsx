@@ -27,7 +27,7 @@ function WebsiteIssues() {
 
   return (
     <WithHydrate>
-      <Drawer route={'Issues'} title={'Issues'}>
+      <Drawer title={'Issues'}>
         <Container maxWidth='xl'>
           <Box>
             <PageTitle title={'All Issues'} />

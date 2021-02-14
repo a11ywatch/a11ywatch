@@ -16,7 +16,7 @@ const NavLinks = ({
 }: any) => {
   return (
     <NavItem
-      href={'register'}
+      href={'/register'}
       key={'register'}
       as={as}
       route={route}
