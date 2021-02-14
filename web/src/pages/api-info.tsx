@@ -200,6 +200,4 @@ function Api() {
   )
 }
 
-metaSetter(Api)
-
-export default withApollo(Api)
+export default withApollo(metaSetter({ Api }))

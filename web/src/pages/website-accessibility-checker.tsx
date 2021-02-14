@@ -13,8 +13,9 @@ import {
 } from '@app/components/general'
 import { CtaIntro, CtaProfessionalSupportButton } from '@app/components/cta'
 import { WithSwipeModal as SwipeableTemporaryDrawer } from '@app/components/adhoc'
-import { strings } from '@app-strings'
 import { withApollo } from '@app/apollo'
+import { strings } from '@app-strings'
+import { metaSetter } from '@app/utils'
 
 function WebsiteAccessibilityChecker() {
   return (
@@ -33,9 +34,11 @@ function WebsiteAccessibilityChecker() {
   )
 }
 
-WebsiteAccessibilityChecker.meta = {
-  title: `${strings.appName} Web Accessibility Checker: Web Accessibility Checker`,
-  description: `Increase user experience and brand reputation with ${strings.appName}. Check the accessibility of your webpage today. Key Features: Providing Automated Testing, Providing The Accessibility Tools, And Almost Instant Accessibility Fixes.`,
-}
-
-export default withApollo(WebsiteAccessibilityChecker)
+export default withApollo(
+  metaSetter(
+    { WebsiteAccessibilityChecker },
+    {
+      description: `Increase user experience and brand reputation with ${strings.appName}. Check the accessibility of your webpage today. Key Features: Providing Automated Testing, Providing The Accessibility Tools, And Almost Instant Accessibility Fixes.`,
+    }
+  )
+)

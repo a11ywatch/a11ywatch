@@ -5,16 +5,30 @@
  **/
 import { strings } from '@app-strings'
 
-type MetaData = {
+interface MetaData {
   title?: string
+  description?: string
 }
 
 interface MetaFunction extends Function {
   meta?: MetaData
 }
 
-export const metaSetter = (Component: MetaFunction) => {
-  Component.meta = {
-    title: `${strings.appName} - ${Component.name}`,
+interface Meta {
+  [name: string]: MetaFunction
+}
+
+export const metaSetter = (
+  Component: Meta,
+  { title, description }: MetaData = {}
+): Function => {
+  const name = String(Object.keys(Component)[0])
+  const value = Component[name]
+
+  value.meta = {
+    title: title ?? `${strings.appName} - ${name.replace(/([A-Z])/g, ' $1')}`,
+    description,
   }
+
+  return value
 }

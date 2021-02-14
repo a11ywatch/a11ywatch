@@ -8,9 +8,9 @@ import { NavBar, Fab, IssueModal, Pulse } from '@app/components/general'
 import { AdaIframe } from '@app/components/ada'
 import { useRouter } from 'next/router'
 import { issueData, scriptData } from '@app/data'
-import { strings } from '@app-strings'
 import { withApollo } from '@app/apollo'
 import { WithHydrate } from '@app/components/adhoc'
+import { metaSetter } from '@app/utils'
 
 function WebsiteDetails() {
   const router = useRouter()
@@ -41,8 +41,4 @@ function WebsiteDetails() {
   )
 }
 
-WebsiteDetails.meta = {
-  title: `${strings.appName} - Website Details`,
-}
-
-export default withApollo(WebsiteDetails)
+export default withApollo(metaSetter({ WebsiteDetails }))

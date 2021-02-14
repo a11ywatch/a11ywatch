@@ -29,6 +29,4 @@ function Login() {
   )
 }
 
-metaSetter(Login)
-
-export default withApollo(Login)
+export default withApollo(metaSetter({ Login }))

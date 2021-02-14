@@ -180,6 +180,4 @@ function Dashboard() {
   )
 }
 
-metaSetter(Dashboard)
-
-export default withApollo(Dashboard)
+export default withApollo(metaSetter({ Dashboard }))

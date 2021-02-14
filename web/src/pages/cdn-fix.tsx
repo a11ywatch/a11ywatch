@@ -12,11 +12,10 @@ import {
   CollaspeListCdn,
 } from '@app/components/general'
 import { ScriptsPageSkeleton } from '@app/components/placeholders'
-import { groupBy } from '@app/utils'
+import { groupBy, metaSetter } from '@app/utils'
 import { scriptsData, useSearchFilter } from '@app/data'
 import { filterSort } from '@app/lib'
 import { withApollo } from '@app/apollo'
-import { strings } from '@app-strings'
 import { WithHydrate } from '@app/components/adhoc'
 
 function CDNFix() {
@@ -45,8 +44,4 @@ function CDNFix() {
   )
 }
 
-CDNFix.meta = {
-  title: `${strings.appName} - All website CDNS`,
-}
-
-export default withApollo(CDNFix)
+export default withApollo(metaSetter({ CDNFix }))

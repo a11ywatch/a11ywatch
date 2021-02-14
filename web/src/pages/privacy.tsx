@@ -38,6 +38,4 @@ function Privacy() {
   )
 }
 
-metaSetter(Privacy)
-
-export default Privacy
+export default metaSetter({ Privacy })

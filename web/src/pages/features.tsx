@@ -127,6 +127,4 @@ function Features() {
   )
 }
 
-metaSetter(Features)
-
-export default Features
+export default metaSetter({ Features })

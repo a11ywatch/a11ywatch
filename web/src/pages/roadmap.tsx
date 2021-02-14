@@ -163,6 +163,4 @@ function RoadMap() {
   )
 }
 
-metaSetter(RoadMap)
-
-export default RoadMap
+export default metaSetter({ RoadMap })

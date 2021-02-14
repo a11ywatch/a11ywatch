@@ -4,10 +4,8 @@
  * LICENSE file in the root directory of this source tree.
  **/
 import React from 'react'
-
 import { Container, Typography, Grid, Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-
 import {
   Box,
   Footer,
@@ -17,7 +15,6 @@ import {
   Price,
   SignOnForm,
 } from '@app/components/general'
-
 import { priceConfig } from '@app/configs'
 import { withApollo } from '@app/apollo'
 import { metaSetter } from '@app/utils'
@@ -123,6 +120,4 @@ function Pricing({
   )
 }
 
-metaSetter(Pricing)
-
-export default withApollo(Pricing)
+export default withApollo(metaSetter({ Pricing }))

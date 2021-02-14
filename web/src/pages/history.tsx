@@ -4,9 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 import React from 'react'
-
 import { Container } from '@material-ui/core'
-
 import {
   Box,
   List,
@@ -18,13 +16,13 @@ import {
 } from '@app/components/general'
 import { historyData, useSearchFilter } from '@app/data'
 import { filterSort } from '@app/lib'
-import { strings } from '@app-strings'
 import { withApollo } from '@app/apollo'
 import { WithHydrate } from '@app/components/adhoc'
+import { metaSetter } from '@app/utils'
 
 const TITLE = 'History'
 
-const HistoryPage = () => {
+const History = () => {
   const { data, loading, refetch, crawlWebsite } = historyData(true)
   const { search } = useSearchFilter()
   const listData = filterSort(data, search)
@@ -54,8 +52,4 @@ const HistoryPage = () => {
   )
 }
 
-HistoryPage.meta = {
-  title: `${strings.appName} - History`,
-}
-
-export default withApollo(HistoryPage)
+export default withApollo(metaSetter({ History }))

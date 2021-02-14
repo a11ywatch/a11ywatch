@@ -17,9 +17,9 @@ import {
 import { AppManager, UserManager } from '@app/managers'
 import { userData } from '@app/data'
 import { Spacer, Footer, MarketingDrawer } from '@app/components/general'
-import { strings } from '@app-strings'
 import { withApollo } from '@app/apollo'
 import { useRouter } from 'next/router'
+import { metaSetter } from '@app/utils'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -185,8 +185,4 @@ function ResetPassword() {
   )
 }
 
-ResetPassword.meta = {
-  title: `${strings.appName} - Reset Password`,
-}
-
-export default withApollo(ResetPassword)
+export default withApollo(metaSetter({ ResetPassword }))

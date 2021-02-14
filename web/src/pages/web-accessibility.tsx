@@ -7,7 +7,7 @@ import React from 'react'
 import { Container, Typography, List, ListItem } from '@material-ui/core'
 import { Footer, MarketingDrawer, Box } from '@app/components/general'
 import { theme } from '@app-theme'
-import { strings } from '@app-strings'
+import { metaSetter } from '@app/utils'
 
 function WebAccessibility() {
   const checklistLinks = [
@@ -133,6 +133,16 @@ function WebAccessibility() {
             >
               https://chakra-ui.com/
             </ListItem>
+            <ListItem
+              href={
+                'https://a11ywatch.github.io/a11ywatch-ui/?path=/story/businessbutton--accessible'
+              }
+              component={'a'}
+              target='_blank'
+              style={linkStyle}
+            >
+              @a11ywatch/ui
+            </ListItem>
           </List>
           <Typography variant='h4' component='h3' gutterBottom style={bold}>
             Avoid intense animations
@@ -175,6 +185,14 @@ function WebAccessibility() {
           </Typography>
           <List>
             <ListItem
+              href={'https://a11yresources.webflow.io'}
+              component={'a'}
+              target='_blank'
+              style={linkStyle}
+            >
+              https://a11yresources.webflow.io
+            </ListItem>
+            <ListItem
               href={'https://www.a11ytips.dev'}
               component={'a'}
               target='_blank'
@@ -200,8 +218,4 @@ function WebAccessibility() {
   )
 }
 
-WebAccessibility.meta = {
-  title: `Web accessibility - ${strings.appName}`,
-}
-
-export default WebAccessibility
+export default metaSetter({ WebAccessibility })

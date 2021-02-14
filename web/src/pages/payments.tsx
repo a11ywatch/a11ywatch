@@ -217,6 +217,4 @@ function Payments({ hideTitle = false }) {
   )
 }
 
-metaSetter(Payments)
-
-export default withApollo(Payments)
+export default withApollo(metaSetter({ Payments }))

@@ -4,7 +4,6 @@
  * LICENSE file in the root directory of this source tree.
  **/
 import React from 'react'
-
 import { Container } from '@material-ui/core'
 import {
   Box,
@@ -17,8 +16,8 @@ import {
 } from '@app/components/general'
 import { websitesData, useSearchFilter } from '@app/data'
 import { filterSort } from '@app/lib'
-import { strings } from '@app-strings'
 import { withApollo } from '@app/apollo'
+import { metaSetter } from '@app/utils'
 
 function UrgentIssues() {
   const { data, loading, refetch } = websitesData(true, 'error')
@@ -49,8 +48,4 @@ function UrgentIssues() {
   )
 }
 
-UrgentIssues.meta = {
-  title: `${strings.appName} - Urgent Issues`,
-}
-
-export default withApollo(UrgentIssues)
+export default withApollo(metaSetter({ UrgentIssues }))

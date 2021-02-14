@@ -17,6 +17,7 @@ import { filterSort } from '@app/lib'
 import { theme } from '@app-theme'
 import { withApollo } from '@app/apollo'
 import { WithHydrate } from '@app/components/adhoc'
+import { metaSetter } from '@app/utils'
 
 const useStyles = makeStyles(() => ({
   alignCenter: {
@@ -181,8 +182,4 @@ function Analytics() {
   )
 }
 
-Analytics.meta = {
-  title: 'Analytics',
-}
-
-export default withApollo(Analytics)
+export default withApollo(metaSetter({ Analytics }))

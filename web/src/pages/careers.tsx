@@ -90,6 +90,4 @@ function Careers() {
   )
 }
 
-metaSetter(Careers)
-
-export default Careers
+export default metaSetter({ Careers })

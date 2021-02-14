@@ -7,6 +7,7 @@ import React from 'react'
 import { Container, Typography } from '@material-ui/core'
 import { Mailto, Footer, MarketingDrawer, Box } from '@app/components/general'
 import { strings } from '@app-strings'
+import { metaSetter } from '@app/utils'
 
 function TermsOfService() {
   const bold = { fontWeight: 600 }
@@ -158,8 +159,4 @@ function TermsOfService() {
   )
 }
 
-TermsOfService.meta = {
-  title: `${strings.appName} - Terms of Service`,
-}
-
-export default TermsOfService
+export default metaSetter({ TermsOfService })

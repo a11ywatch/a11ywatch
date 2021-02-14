@@ -29,6 +29,4 @@ function Register() {
   )
 }
 
-metaSetter(Register)
-
-export default withApollo(Register)
+export default withApollo(metaSetter({ Register }))

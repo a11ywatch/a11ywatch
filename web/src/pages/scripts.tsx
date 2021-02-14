@@ -11,8 +11,7 @@ import { PageTitle, Drawer, CollaspeList, Box } from '@app/components/general'
 import { ScriptsPageSkeleton } from '@app/components/placeholders'
 import { scriptsData, useSearchFilter } from '@app/data'
 import { filterSort } from '@app/lib'
-import { groupBy } from '@app/utils'
-import { strings } from '@app-strings'
+import { groupBy, metaSetter } from '@app/utils'
 import { withApollo } from '@app/apollo'
 import { WithHydrate } from '@app/components/adhoc'
 
@@ -53,7 +52,4 @@ function Scripts() {
   )
 }
 
-Scripts.meta = {
-  title: `${strings.appName} - ${TITLE}`,
-}
-export default withApollo(Scripts)
+export default withApollo(metaSetter({ Scripts }))

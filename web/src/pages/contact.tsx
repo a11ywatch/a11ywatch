@@ -97,6 +97,4 @@ function Contact() {
   )
 }
 
-metaSetter(Contact)
-
-export default Contact
+export default metaSetter({ Contact })
