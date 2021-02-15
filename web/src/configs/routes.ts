@@ -19,12 +19,6 @@ export const Routes = [
   },
   {
     nav: false,
-    href: '/careers',
-    name: 'Careers',
-    type: 'resources',
-  },
-  {
-    nav: false,
     href: '/contact',
     name: 'Contact',
     type: 'explore',
@@ -39,12 +33,6 @@ export const Routes = [
     nav: false,
     href: '/about',
     name: 'About',
-    type: 'resources',
-  },
-  {
-    nav: true,
-    href: '/features',
-    name: 'Features',
     type: 'resources',
   },
   {
@@ -66,9 +54,15 @@ export const Routes = [
     type: 'resources',
   },
   {
-    nav: true,
+    nav: false,
     href: 'https://a11ywatch.blog',
     name: 'Blog',
+    type: 'resources',
+  },
+  {
+    nav: false,
+    href: 'https://a11ywatch.github.io/a11ywatch-docs/',
+    name: 'Docs',
     type: 'resources',
   },
   {
@@ -91,6 +85,12 @@ export const Routes = [
   },
   {
     nav: true,
+    href: '/features',
+    name: 'Features',
+    type: 'resources',
+  },
+  {
+    nav: true,
     href: '/pricing',
     name: 'Pricing',
     type: 'explore',
@@ -102,18 +102,6 @@ export const Routes = [
     type: 'explore',
   },
   {
-    nav: false,
-    href: 'https://www.miniprograms.xyz',
-    name: 'Mini Programs',
-    type: 'resources',
-  },
-  {
-    nav: true,
-    href: 'https://a11ywatch.github.io/a11ywatch-docs/',
-    name: 'Docs',
-    type: 'resources',
-  },
-  {
     nav: true,
     href: '/login',
     name: 'Login',
@@ -122,6 +110,18 @@ export const Routes = [
     nav: true,
     href: '/register',
     name: 'Register',
+  },
+  {
+    nav: false,
+    href: '/careers',
+    name: 'Careers',
+    type: 'resources',
+  },
+  {
+    nav: false,
+    href: 'https://www.miniprograms.xyz',
+    name: 'Mini Programs',
+    type: 'resources',
   },
 ]
 

@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: '40px',
     background: theme.palette.secondary.main,
     top: '100px',
+    minWidth: '196.406px',
     position: 'absolute',
     borderTopLeftRadius: '18px',
     borderBottomLeftRadius: '18px',
@@ -30,12 +31,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function CtaProfessionalSupportButton() {
+function CtaProfessionalSupportButton({ home }: { home?: boolean }) {
   const classes = useStyles()
 
   return (
-    <Button className={classes.root} component={Link} href={'/consulting'}>
-      {strings.getSupport}
+    <Button
+      className={classes.root}
+      component={Link}
+      href={home ? '/' : '/consulting'}
+    >
+      {home ? 'Home' : strings.getSupport}
     </Button>
   )
 }

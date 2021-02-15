@@ -78,6 +78,7 @@ services:
       - front-net
     ports:
       - "3000:3000"
+    restart: on-failure
 
   example-site:
     container_name: example-site
