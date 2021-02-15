@@ -5,3 +5,4 @@ Dockerfile
 Dockerfile.dev
 sample.env
 README.md
+dist
