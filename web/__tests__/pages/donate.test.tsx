@@ -4,8 +4,9 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import { strings } from '@app/content/strings/a11y/en'
+const name = 'Donate'
 
-const name = 'About'
-
-describePage({ folder: name.toLowerCase(), name: `${name} ${strings.appName}` })
+describePage({
+  folder: name.toLowerCase(),
+  name,
+})

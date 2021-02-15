@@ -51,6 +51,7 @@ function NavBarTitle({
     <Typography
       variant='h6'
       noWrap
+      component={'span'}
       className={`${classes.title} ${flexStyle}`}
       {...props}
     >

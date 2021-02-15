@@ -5,7 +5,7 @@
  **/
 import React from 'react'
 import { Button, Typography, List, ListItem } from '@material-ui/core'
-import { MarketingDrawer, Box } from '@app/components/general'
+import { MarketingDrawer, Box, PageTitle } from '@app/components/general'
 import { metaSetter } from '@app/utils'
 import type { PageProps } from '@app/types'
 
@@ -23,9 +23,7 @@ function Careers({ name }: PageProps) {
   return (
     <MarketingDrawer title={name}>
       <Box>
-        <Typography variant='h2' component='h1' gutterBottom>
-          Careers
-        </Typography>
+        <PageTitle>Careers</PageTitle>
         <Typography
           variant='h4'
           component='h2'

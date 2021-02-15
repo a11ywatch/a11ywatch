@@ -5,16 +5,14 @@
  **/
 import React from 'react'
 import { Typography } from '@material-ui/core'
-import { MarketingDrawer } from '@app/components/general'
+import { MarketingDrawer, PageTitle } from '@app/components/general'
 import { metaSetter } from '@app/utils'
 import type { PageProps } from '@app/types'
 
 const PageNotFound = ({ name }: PageProps) => {
   return (
     <MarketingDrawer title={name} footerSpacing>
-      <Typography variant='h1' component='h1' gutterBottom>
-        404
-      </Typography>
+      <PageTitle>404</PageTitle>
       <Typography variant='body1' component='p' gutterBottom>
         Page not found.
       </Typography>

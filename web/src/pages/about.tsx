@@ -6,7 +6,7 @@
 
 import React from 'react'
 import { Typography } from '@material-ui/core'
-import { MarketingDrawer } from '@app/components/general'
+import { MarketingDrawer, PageTitle } from '@app/components/general'
 import { strings } from '@app-strings'
 import { metaSetter } from '@app/utils'
 import type { PageProps } from '@app/types'
@@ -15,9 +15,7 @@ function About({ name }: PageProps) {
   const bold = { fontWeight: 600 }
   return (
     <MarketingDrawer title={name} footerSpacing>
-      <Typography variant='h2' component='h1' gutterBottom>
-        {`About ${strings.appName}`}
-      </Typography>
+      <PageTitle>{`About ${strings.appName}`}</PageTitle>
       <Typography variant='body1' component='p' gutterBottom>
         Our goal is to make the web easily accessible for everyone.
       </Typography>

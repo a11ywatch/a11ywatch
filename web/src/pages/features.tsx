@@ -6,7 +6,12 @@
 import React from 'react'
 import { Paper, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { MarketingDrawer, Section, Heading } from '@app/components/general'
+import {
+  MarketingDrawer,
+  Section,
+  PageTitle,
+  Heading,
+} from '@app/components/general'
 import { strings } from '@app-strings'
 import { metaSetter } from '@app/utils'
 import type { PageProps } from '@app/types'
@@ -47,9 +52,7 @@ function Features({ name }: PageProps) {
 
   return (
     <MarketingDrawer title={name} maxWidth='xl' footerSpacing>
-      <Typography variant='h2' component='h1'>
-        {`${strings.appName} Features`}
-      </Typography>
+      <PageTitle>{`${strings.appName} Features`}</PageTitle>
       <Typography variant='subtitle1' component='h2' gutterBottom>
         Main Features
       </Typography>

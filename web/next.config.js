@@ -67,7 +67,7 @@ module.exports = withPWA({
   webpack: (config, { buildId, dev: development, defaultLoaders, webpack }) => {
     generateSiteMap(process.env.DOMAIN_NAME)
     const { themeType, stringType } = domainMap(process.env.APP_TYPE)
-    const { uiIncludes, uiStylePath, uiComponentPath } = getDynamicPaths({
+    const { uiStylePath, uiComponentPath } = getDynamicPaths({
       themeType,
       dev,
     })
@@ -80,9 +80,9 @@ module.exports = withPWA({
         __dirname,
         `./src/content/strings/${stringType}`
       ),
-      ['@app-ui-stylesheet']: uiStylePath,
       ['@app']: resolve(__dirname, './src'),
       ['@app-config']: resolve(__dirname, './web-config.js'),
+      ['@app-ui-stylesheet']: uiStylePath,
       ['ui']: uiComponentPath,
     })
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Typography, List, ListItem } from '@material-ui/core'
-import { MarketingDrawer } from '@app/components/general'
+import { MarketingDrawer, PageTitle } from '@app/components/general'
 import { strings } from '@app-strings'
 import { metaSetter } from '@app/utils'
 import type { PageProps } from '@app/types'
@@ -32,9 +32,7 @@ function Consulting({ name }: PageProps) {
 
   return (
     <MarketingDrawer title={name} footerSpacing>
-      <Typography variant='h2' component='h1' style={bold}>
-        Web Accessibility Consultants
-      </Typography>
+      <PageTitle>Web Accessibility Consultants</PageTitle>
       <Typography variant='body1' component='p' gutterBottom>
         {strings.appName} has experts when it comes to accessibility who can
         provide a hands on or off consulting. We provide services amongst web,

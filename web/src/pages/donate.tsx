@@ -4,7 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 import React from 'react'
-import { MarketingDrawer } from '@app/components/general'
+import { MarketingDrawer, PageTitle } from '@app/components/general'
 import { withApollo } from '@app/apollo'
 import { metaSetter } from '@app/utils'
 import type { PageProps } from '@app/types'
@@ -13,6 +13,7 @@ import { DONORBOX_URL } from '@app/configs'
 function Donate({ name }: PageProps) {
   return (
     <MarketingDrawer title={name} maxWidth='lg' footerSpacing>
+      <PageTitle>{name}</PageTitle>
       <script src='https://donorbox.org/widget.js'></script>
       <iframe
         frameBorder='0'

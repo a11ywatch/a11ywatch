@@ -5,7 +5,7 @@
  **/
 import React from 'react'
 import { Typography, Box } from '@material-ui/core'
-import { MarketingDrawer, Spacer } from '@app/components/general'
+import { MarketingDrawer, Spacer, PageTitle } from '@app/components/general'
 import { strings } from '@app-strings'
 import { metaSetter } from '@app/utils'
 import type { PageProps } from '@app/types'
@@ -30,9 +30,7 @@ const circleStyle = Object.assign(
 function Contact({ name }: PageProps) {
   return (
     <MarketingDrawer title={name} footerSpacing>
-      <Typography variant='h2' component='h1' gutterBottom>
-        Lets have a Talk
-      </Typography>
+      <PageTitle>Lets have a Talk</PageTitle>
       <Typography
         variant='subtitle1'
         component='p'

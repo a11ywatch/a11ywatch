@@ -13,6 +13,7 @@ import {
   Spacer,
   Price,
   SignOnForm,
+  PageTitle,
 } from '@app/components/general'
 import { priceConfig } from '@app/configs'
 import { withApollo } from '@app/apollo'
@@ -70,9 +71,7 @@ function Pricing({
   return (
     <MarketingDrawer title={name}>
       <Box>
-        <Typography variant='h2' component='h1' gutterBottom>
-          Plans
-        </Typography>
+        <PageTitle>Plans</PageTitle>
         <Typography variant='body1' component='h2'>
           Choose a plan that fits your needs
         </Typography>

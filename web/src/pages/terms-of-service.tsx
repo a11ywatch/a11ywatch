@@ -5,7 +5,7 @@
  **/
 import React from 'react'
 import { Typography } from '@material-ui/core'
-import { Mailto, MarketingDrawer } from '@app/components/general'
+import { PageTitle, Mailto, MarketingDrawer } from '@app/components/general'
 import { strings } from '@app-strings'
 import { metaSetter } from '@app/utils'
 import type { PageProps } from '@app/types'
@@ -14,9 +14,7 @@ function TermsOfService({ name }: PageProps) {
   const bold = { fontWeight: 600 }
   return (
     <MarketingDrawer title={name} footerSpacing>
-      <Typography variant='h2' component='h1' gutterBottom>
-        Terms of Service ("Terms")
-      </Typography>
+      <PageTitle>Terms of Service ("Terms")</PageTitle>
       <Typography variant='body1' component='p' gutterBottom>
         Last updated: November 15, 2019
       </Typography>

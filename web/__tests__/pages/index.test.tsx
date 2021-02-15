@@ -3,24 +3,15 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
-import { render, screen } from '@testing-library/react'
-import 'jest-next-dynamic'
-import { useRouter } from 'next/router'
-import App from '@app/pages/index'
 
-jest.mock('next/router', () => ({
-  useRouter() {
-    return {
-      prefetch: () => null,
-    }
+describePage(
+  {
+    folder: 'index',
+    name: 'Web Accessibility Monitoring Fixer Helper AI Productivity',
   },
-}))
-
-describe('IndexPage', () => {
-  it('renders without crashing', () => {
-    render(<App />)
+  () => {
     expect(
       screen.getByRole('button', { name: 'Create Account' })
     ).toBeInTheDocument()
-  })
-})
+  }
+)

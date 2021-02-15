@@ -5,16 +5,14 @@
  **/
 import React from 'react'
 import { Typography } from '@material-ui/core'
-import { MarketingDrawer, Spacer } from '@app/components/general'
+import { MarketingDrawer, PageTitle, Spacer } from '@app/components/general'
 import { metaSetter } from '@app/utils'
 import type { PageProps } from '@app/types'
 
 function Privacy({ name }: PageProps) {
   return (
     <MarketingDrawer title={name} footerSpacing>
-      <Typography variant='h2' component='h1' gutterBottom>
-        Privacy Policy
-      </Typography>
+      <PageTitle>Privacy Policy</PageTitle>
       <Typography variant='body1' component='p' gutterBottom>
         The data that is collected is used within our service to improve your
         experience. All data is secure and safe coming from our service. None of
