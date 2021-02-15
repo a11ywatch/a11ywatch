@@ -4,16 +4,15 @@
  * LICENSE file in the root directory of this source tree.
  **/
 import React from 'react'
-import { Spacer, MarketingDrawer, SignOnForm } from '@app/components/general'
+import { MarketingDrawer, SignOnForm } from '@app/components/general'
 import { withApollo } from '@app/apollo'
 import { metaSetter } from '@app/utils'
 import type { PageProps } from '@app/types'
 
 function Login({ name }: PageProps) {
   return (
-    <MarketingDrawer title={name} maxWidth='sm'>
+    <MarketingDrawer title={name} maxWidth='sm' footerSpacing>
       <SignOnForm loginView />
-      <Spacer height={'20vh'} />
     </MarketingDrawer>
   )
 }

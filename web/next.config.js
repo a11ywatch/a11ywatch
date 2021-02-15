@@ -43,6 +43,7 @@ const env = Object.assign({}, parsed, {
   INTERCOM_APPID: process.env.INTERCOM_APPID,
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_ANALYTIC_ID: process.env.GOOGLE_ANALYTIC_ID,
+  DONORBOX_URL: process.env.DONORBOX_URL,
   // # NEXT.JS REQUIRED EXCLUDES
   NODE_ENV: undefined,
   NODE_MODULES_CACHE: undefined,

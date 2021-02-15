@@ -19,6 +19,7 @@ const API_ENDPOINT =
   'http://localhost:8080/api'
 const STRIPE_KEY = process.env.STRIPE_KEY
 const SUPER_MODE = process.env.SUPER_MODE
+const DONORBOX_URL = process.env.DONORBOX_URL
 
 export {
   AppConfig,
@@ -30,4 +31,5 @@ export {
   API_ENDPOINT,
   STRIPE_KEY,
   SUPER_MODE,
+  DONORBOX_URL,
 }

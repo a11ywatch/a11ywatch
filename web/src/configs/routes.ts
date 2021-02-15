@@ -31,6 +31,12 @@ export const Routes = [
   },
   {
     nav: false,
+    href: '/donate',
+    name: 'Donate',
+    type: 'resources',
+  },
+  {
+    nav: false,
     href: '/about',
     name: 'About',
     type: 'resources',
