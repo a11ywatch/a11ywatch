@@ -16,7 +16,7 @@ module.exports = {
     '^@app/(.*)$': '<rootDir>/src/$1',
     '@app-strings': '<rootDir>/src/content/strings/a11y/',
     '@app-theme': '<rootDir>/src/theme/main/',
-    '@web-config': '<rootDir>/web-config.js',
+    '@app-config': '<rootDir>/web-config.js',
     // ui: '<rootDir>/node_modules/@a11ywatch/ui/main/$1',
   },
   verbose: true,

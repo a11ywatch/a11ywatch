@@ -6,11 +6,11 @@
 
 const { resolve } = require('path')
 const { parsed } = require('dotenv').config()
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const withPWA = require('next-pwa')
 const { domainMap } = require('./domain-map')
 const { generateSiteMap } = require('./generate-sitemap')
 const { getDynamicPaths, proxyDockerUrls } = require('./dynamic-paths')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const withPWA = require('next-pwa')
 
 const dev = process.env.NODE_ENV !== 'production'
 
@@ -64,7 +64,7 @@ module.exports = withPWA({
   typescriptLoaderOptions: {
     transpileOnly: false,
   },
-  webpack: (config, { buildId, dev: development, defaultLoaders }) => {
+  webpack: (config, { buildId, dev: development, defaultLoaders, webpack }) => {
     generateSiteMap(process.env.DOMAIN_NAME)
     const { themeType, stringType } = domainMap(process.env.APP_TYPE)
     const { uiIncludes, uiStylePath, uiComponentPath } = getDynamicPaths({
@@ -72,26 +72,7 @@ module.exports = withPWA({
       dev,
     })
 
-    const nodeExclude = [resolve(__dirname, 'node_modules')]
-
-    config.module.rules.push(
-      {
-        test: /\.+(js|jsx)$/,
-        use: defaultLoaders.babel,
-        include: uiIncludes,
-        exclude: nodeExclude,
-      },
-      {
-        test: /\.(ts|tsx)?$/,
-        include: uiIncludes,
-        exclude: nodeExclude,
-        use: [
-          {
-            loader: 'ts-loader',
-          },
-        ],
-      }
-    )
+    config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//))
 
     config.resolve.alias = Object.assign({}, config.resolve.alias, {
       ['@app-theme']: resolve(__dirname, `./src/theme/${themeType}`),
@@ -101,7 +82,7 @@ module.exports = withPWA({
       ),
       ['@app-ui-stylesheet']: uiStylePath,
       ['@app']: resolve(__dirname, './src'),
-      ['@web-config']: resolve(__dirname, './web-config.js'),
+      ['@app-config']: resolve(__dirname, './web-config.js'),
       ['ui']: uiComponentPath,
     })
 

@@ -24,7 +24,7 @@ app.prepare().then(() => {
     try {
       let url = String(req.query.url)
 
-      if (/^((http|https|ftp):\/\/)/.test(url) === false) {
+      if (/^((http|https):\/\/)/.test(url) === false) {
         url = `http://${url}`
       }
 

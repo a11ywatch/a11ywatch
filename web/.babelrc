@@ -11,10 +11,6 @@
       ],
  "@zeit/next-typescript/babel"],
   "plugins": [
-    [
-      "styled-components",
-      { "ssr": true, "displayName": true, "preprocess": false }
-    ],
     "@babel/plugin-proposal-export-default-from",
     "@babel/plugin-proposal-optional-chaining",
     "@babel/plugin-syntax-dynamic-import",

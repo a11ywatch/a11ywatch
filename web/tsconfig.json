@@ -24,7 +24,7 @@
       "@app-strings": ["./src/content/strings/a11y"],
       "@app-theme": ["./src/theme/main/index.ts"],
       "ui": ["./node_modules/@a11ywatch/ui/main"],
-      "@web-config": ["./web-config.js"]
+      "@app-config": ["./web-config.js"]
     }
   },
   "exclude": ["node_modules"],
