@@ -137,5 +137,6 @@
   },
   "cacheDirectories": [
     ".next/cache"
-  ]
+  ],
+  "license": "MIT"
 }

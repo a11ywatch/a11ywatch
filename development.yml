@@ -15,6 +15,8 @@ services:
       - front-net
     ports:
       - "8080:8080"
+    restart: on-failure
+
   angelica:
     container_name: angelica
     env_file: ./angelica/.env
@@ -23,6 +25,7 @@ services:
       dockerfile: ./Dockerfile.dev
     volumes:
       - ./angelica/src:/usr/src/app/src
+      - ./angelica/__tests__:/usr/src/app/__tests__
       - ./angelica/.env:/usr/src/app/.env
     depends_on:
       - mav
@@ -31,6 +34,8 @@ services:
       - back-net
     ports:
       - "8040:8040"
+    restart: on-failure
+
   mav:
     container_name: mav
     env_file: ./mav/.env
@@ -39,11 +44,14 @@ services:
       dockerfile: ./Dockerfile.dev
     volumes:
       - ./mav/src:/usr/src/app/src
+      - ./mav/__tests__:/usr/src/app/__tests__
       - ./mav/.env:/usr/src/app/.env
     networks:
       - back-net
     ports:
       - "8020:8020"
+    restart: on-failure
+
   logger:
     container_name: logger
     env_file: ./logger/.env
@@ -57,6 +65,15 @@ services:
       - back-net
     ports:
       - "8022:8022"
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          cpus: 0.25
+          memory: 256M
+        reservations:
+          memory: 128M
+
   web:
     container_name: web
     build:
@@ -92,6 +109,15 @@ services:
       - front-net
     ports:
       - "8050:8050"
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          cpus: 0.25
+          memory: 256M
+        reservations:
+          memory: 128M
+
   cdn-server:
     env_file: ./cdn-server/.env
     container_name: cdn-server
@@ -106,6 +132,8 @@ services:
       - front-net
     ports:
       - "8090:8090"
+    restart: on-failure
+
   iframe-server:
     env_file: ./iframe-server/.env
     container_name: iframe-server
@@ -119,6 +147,15 @@ services:
       - front-net
     ports:
       - "8010:8010"
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          cpus: 0.25
+          memory: 256M
+        reservations:
+          memory: 128M
+
   watcher:
     container_name: watcher
     env_file: ./watcher/.env
@@ -129,12 +166,13 @@ services:
       - ./watcher/src:/usr/src/app/src
       - ./watcher/scripts:/usr/src/app/scripts
       - ./watcher/tests:/usr/src/app/tests
-      - ./watcher/target:/usr/src/app/target
       - ./watcher/.env:/usr/src/app/.env
     networks:
       - back-net
     ports:
       - "8000:8000"
+    restart: on-failure
+
   mongodb:
     container_name: mongodb
     networks:
@@ -146,6 +184,7 @@ services:
       - mongodb:/data/db
     environment:
       - MONGO_INITDB_DATABASE=${DB_NAME:-a11ywatch}
+
 networks:
   front-net:
   back-net:

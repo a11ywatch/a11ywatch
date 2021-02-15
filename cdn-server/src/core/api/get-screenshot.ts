@@ -11,9 +11,7 @@ const getScreenshot = (req, res) => {
   const url = `/screenshots/${req.params.domain}/${req.params.cdnPath}`;
 
   try {
-    DEV
-      ? res.sendFile(join(`${__dirname}/../../${url}`))
-      : getFile(`screenshots${url}`, res);
+    DEV ? res.sendFile(join(`${__dirname}/../../${url}`)) : getFile(url, res);
   } catch (e) {
     console.error(e);
     res.send(false);

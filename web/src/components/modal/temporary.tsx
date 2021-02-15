@@ -25,6 +25,7 @@ import {
   WebsiteTabs,
 } from '@app/components/general'
 import { CtaCdn } from '@app/components/cta'
+import { FakeButtonContainer } from '@app/components/fake'
 import { strings } from '@app-strings'
 import { EditableMixture } from '@app/components/mixtures/editable-mixture'
 
@@ -61,10 +62,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     height: '100%',
     ['& > img']: {
-      objectFit: 'contain',
       textAlign: 'center',
       display: 'block',
-      maxHeight: '63vh',
+      maxWidth: '100%',
+      maxHeight: '380vh',
     },
   },
   block: {
@@ -75,6 +76,16 @@ const useStyles = makeStyles((theme) => ({
       overflowY: 'scroll',
       maxHeight: '65vh',
     },
+  },
+  screenshotContainer: {
+    border: 'solid rgb(33,32,36)',
+    borderWidth: '30px 4px 4px',
+    borderRadius: 4,
+    overflowY: 'scroll',
+    maxHeight: 480,
+    margin: 20,
+    marginLeft: '20vw',
+    marginRight: '20vw',
   },
 }))
 
@@ -125,11 +136,14 @@ export function SwipeableTemporaryDrawer() {
               </div>
             }
             screenshot={
-              <div className={classes.centerAlign}>
-                <img
-                  src={website?.screenshot}
-                  alt={`${website?.url} screenshot`}
-                />
+              <div className={classes.screenshotContainer}>
+                <FakeButtonContainer />
+                <div className={classes.centerAlign}>
+                  <img
+                    src={website?.screenshot}
+                    alt={`screenshot of ${website?.url} tested`}
+                  />
+                </div>
               </div>
             }
           />

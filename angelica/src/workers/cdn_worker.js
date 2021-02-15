@@ -28,12 +28,14 @@ process.on(
     cdnSourceStripped,
     domain,
     screenshot,
+    screenshotStill,
   }) => {
     const body = JSON.stringify({
       scriptBuffer,
       cdnSourceStripped,
       domain,
       screenshot,
+      screenshotStill,
     });
 
     const apiEndpoint =
