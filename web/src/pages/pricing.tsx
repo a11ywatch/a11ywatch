@@ -73,7 +73,7 @@ function Pricing({
         <Typography variant='h2' component='h1' gutterBottom>
           Plans
         </Typography>
-        <Typography variant='h3' component='h2'>
+        <Typography variant='body1' component='h2'>
           Choose a plan that fits your needs
         </Typography>
         <Spacer height={'8vh'} />
