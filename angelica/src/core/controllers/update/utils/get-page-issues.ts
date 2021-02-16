@@ -8,32 +8,14 @@ import pa11y from "pa11y";
 import { pa11yConfig } from "@app/config";
 import { skipContentCheck } from "@app/core/lib";
 import { skipContentTemplate } from "../templates";
-
-interface Issue {
-  code: string;
-  type: string;
-  typeCode: number;
-  message: string;
-  context: string;
-  selector: string;
-  runner: string;
-  runnerExtras: any;
-}
-
-interface PageIssues {
-  issues?: [Issue];
-}
-
-interface PageMeta {
-  skipContentIncluded: boolean;
-}
+import type { PageIssues, IssueMeta } from "@app/types";
 
 export const getPageIssues = async ({
   urlPage,
   page,
   browser,
   pageHeaders,
-}): Promise<[PageIssues, PageMeta]> => {
+}): Promise<[PageIssues, IssueMeta]> => {
   const pa11yHeaders = pageHeaders?.length
     ? {
         headers: pageHeaders.map((item: any) => {
@@ -70,6 +52,6 @@ export const getPageIssues = async ({
     ];
   } catch (e) {
     console.log(`Page pa11y: ${e}`);
-    return [{}, { skipContentIncluded: null }];
+    return [{}, { skipContentIncluded: false }];
   }
 };

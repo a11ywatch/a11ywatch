@@ -4,6 +4,21 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
+export interface Issue {
+  code: string;
+  type: string;
+  typeCode: number;
+  message: string;
+  context: string;
+  selector: string;
+  runner: string;
+  runnerExtras: any;
+}
+
+export interface PageIssues {
+  issues?: [Issue];
+}
+
 export interface IssueMeta {
   skipContentIncluded: boolean;
 }

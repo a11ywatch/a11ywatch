@@ -4,4 +4,4 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-export { IssueMeta, IssueData } from "./types";
+export { Issue, PageIssues, IssueMeta, IssueData } from "./types";
