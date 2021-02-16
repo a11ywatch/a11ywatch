@@ -15,23 +15,9 @@ import {
   grabHtmlSource,
   scriptBuild,
 } from "@app/core/lib";
+import type { IssueData } from "@app/types";
 import { sourceBuild } from "@a11ywatch/website-source-builder";
-
 import { loopIssues, getPageIssues, goToPage } from "./utils";
-
-interface IssueMeta {
-  skipContentIncluded: boolean;
-}
-interface IssueData {
-  possibleIssuesFixedByCdn: number;
-  totalIssues: number;
-  issuesFixedByCdn: number;
-  errorCount: number;
-  warningCount: number;
-  noticeCount: number;
-  adaScore: number;
-  issueMeta: IssueMeta;
-}
 
 const forked = fork("./src/workers/cdn_worker.js", [], { detached: true });
 
@@ -53,7 +39,6 @@ export const crawlWebsite = async ({
 
   const browser = await puppetPool.acquire();
   const page = await browser?.newPage();
-
   const {
     domain,
     pageUrl,
@@ -61,19 +46,20 @@ export const crawlWebsite = async ({
     cdnJsPath,
     cdnMinJsPath,
   } = sourceBuild(urlMap);
+
   let resolver = {
     webPage: null,
     issues: null,
     script: null,
   };
 
+  const [validPage] = await goToPage(page, pageUrl, browser);
+
+  if (!validPage) {
+    return EMPTY_RESPONSE;
+  }
+
   try {
-    const [validPage] = await goToPage(page, pageUrl, browser);
-
-    if (!validPage) {
-      return EMPTY_RESPONSE;
-    }
-
     const [issues, issueMeta] = await getPageIssues({
       urlPage: pageUrl,
       page,
@@ -83,7 +69,9 @@ export const crawlWebsite = async ({
 
     const [screenshot, screenshotStill] = await Promise.all([
       page.screenshot({ fullPage: true }),
-      page.screenshot({ fullPage: false }),
+      process.env.BACKUP_IMAGES
+        ? page.screenshot({ fullPage: false })
+        : undefined,
     ]);
 
     const pageHasCdn = await checkCdn({ page, cdnMinJsPath, cdnJsPath });
@@ -128,8 +116,9 @@ export const crawlWebsite = async ({
         adaScore,
         cdnConnected: pageHasCdn,
         screenshot: "screenshots/" + cdnJsPath.replace(".js", ".png"),
-        screenshotStill:
-          "screenshots/" + cdnJsPath.replace(".js", "-still.png"),
+        screenshotStill: screenshotStill
+          ? "screenshots/" + cdnJsPath.replace(".js", "-still.png")
+          : "",
         pageLoadTime: {
           duration,
           durationFormated: getPageSpeed(duration),

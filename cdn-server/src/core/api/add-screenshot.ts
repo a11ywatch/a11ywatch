@@ -39,7 +39,7 @@ export const addScreenshot = (req, res) => {
       srcPath,
     });
 
-    if (process.env.BACKUP_IMAGES) {
+    if (typeof screenshotStill !== "undefined") {
       createSS({
         cdnFileName: cdnFileName.replace(".png", "-still.png"),
         screenshot: screenshotStill,
