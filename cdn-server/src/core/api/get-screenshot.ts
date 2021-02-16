@@ -8,7 +8,7 @@ import { join } from "path";
 import { DEV, getFile } from "../../";
 
 const getScreenshot = (req, res) => {
-  const url = `/screenshots/${req.params.domain}/${req.params.cdnPath}`;
+  const url = `screenshots/${req.params.domain}/${req.params.cdnPath}`;
 
   try {
     DEV ? res.sendFile(join(`${__dirname}/../../${url}`)) : getFile(url, res);

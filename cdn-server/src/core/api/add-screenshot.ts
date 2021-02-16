@@ -7,17 +7,20 @@
 import { readFileSync, createWriteStream } from "fs";
 import { directoryExist, uploadToS3, AWS_S3_ENABLED } from "../../";
 
-const createSS = ({ srcPath, awsSSPath, cdnFileName, screenshot }: any) => {
+const createSS = ({ srcPath, cdnFileName, screenshot }: any) => {
   const dirExist = directoryExist(srcPath);
-
   if (dirExist) {
     const screenshotStream = createWriteStream(cdnFileName);
 
     screenshotStream.write(Buffer.from(screenshot));
     screenshotStream.on("finish", () => {
-      console.log(`COMPLETED WRITE: SS FILE: ${cdnFileName}`);
+      console.log(`WROTE: ${cdnFileName}`);
       if (AWS_S3_ENABLED) {
-        uploadToS3(readFileSync(cdnFileName), `${awsSSPath}.png`, cdnFileName);
+        uploadToS3(
+          readFileSync(cdnFileName),
+          `${srcPath.substring(4)}.png`,
+          cdnFileName
+        );
       }
     });
     screenshotStream.end();
@@ -26,23 +29,23 @@ const createSS = ({ srcPath, awsSSPath, cdnFileName, screenshot }: any) => {
 
 export const addScreenshot = (req, res) => {
   const { cdnSourceStripped, domain, screenshot, screenshotStill } = req.body;
-  try {
-    const srcPath = `src/screenshots/${domain}/${cdnSourceStripped}`;
-    const awsPath = srcPath.substring(4);
-    const cdnFileName = srcPath + ".png";
+  const srcPath = `src/screenshots/${domain}/${cdnSourceStripped}`;
+  const cdnFileName = srcPath + ".png";
 
+  try {
     createSS({
       cdnFileName,
       screenshot,
-      awsPath,
       srcPath,
     });
-    createSS({
-      cdnFileName: cdnFileName.replace(".png", "-still.png"),
-      screenshot: screenshotStill,
-      awsSSPath: `${awsPath}-still`,
-      srcPath: `${srcPath}-still`,
-    });
+
+    if (process.env.BACKUP_IMAGES) {
+      createSS({
+        cdnFileName: cdnFileName.replace(".png", "-still.png"),
+        screenshot: screenshotStill,
+        srcPath: `${srcPath}-still`,
+      });
+    }
 
     res.send(true);
   } catch (e) {
