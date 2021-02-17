@@ -5,7 +5,7 @@
  **/
 
 import { readFileSync, createWriteStream } from "fs";
-import { directoryExist, uploadToS3, AWS_S3_ENABLED } from "../../";
+import { directoryExist, log, uploadToS3, AWS_S3_ENABLED } from "../../";
 
 const createSS = ({ srcPath, cdnFileName, screenshot }: any) => {
   const dirExist = directoryExist(srcPath);
@@ -14,7 +14,7 @@ const createSS = ({ srcPath, cdnFileName, screenshot }: any) => {
 
     screenshotStream.write(Buffer.from(screenshot));
     screenshotStream.on("finish", () => {
-      console.log(`WROTE: ${cdnFileName}`);
+      log(`WROTE: ${cdnFileName}`);
       if (AWS_S3_ENABLED) {
         uploadToS3(
           readFileSync(cdnFileName),

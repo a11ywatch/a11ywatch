@@ -9,11 +9,9 @@ import fs from "fs";
 import { app, init } from "./lib";
 import { LogModel } from "./types";
 
-// TODO: SCHEDULE UPPER PATH BY 1 HOUR ZONES FOR QUICKER READS ALSO SEND LOGS TO DB INSTEAD OF USING SERVER RESOURCES
 const LOG_PATH = path.join(__dirname + `/logs/`);
 
 app.get("/", (req, res) => {
-  // TODO: REPLACE with clientside html to get data from /api/log
   res.json({
     server_status: "online",
   });
@@ -34,7 +32,7 @@ app.get("/api/log", (req, res) => {
  */
 app.post("/api/log", (req, res) => {
   try {
-    const { message, platform, type }: LogModel = req.body;
+    const { message, platform, type, container }: LogModel = req.body;
     const logPath = `/${LOG_PATH}/${type}/`;
 
     if (!fs.existsSync(logPath)) {
@@ -47,12 +45,13 @@ app.post("/api/log", (req, res) => {
       flags: "a",
     });
 
-    log.write(
-      `\n## ${new Date().toString()}: ${platform} - ${type}\n${message}\n`
-    );
+    const logOutput = `\n## ${new Date().toLocaleString()}\ntype: ${type}\ncontainer: ${container}\nplatform: ${platform}\n${message}\n`;
 
+    console.info(logOutput);
+
+    log.write(logOutput);
     log.end();
-    res.end();
+    res.send({ status: 200 });
   } catch (e) {
     console.error(e);
     res.send(e);

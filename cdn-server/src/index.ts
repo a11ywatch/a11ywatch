@@ -4,7 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-export { directoryExist, ensureDirectoryExistence } from "./utils";
+export { directoryExist, log, ensureDirectoryExistence } from "./utils";
 export { uploadToS3, getFile } from "./aws";
 export { AWS_S3_ENABLED, BUCKET_NAME, DEV, PORT } from "./config";
 export { app, initApp } from "./app";

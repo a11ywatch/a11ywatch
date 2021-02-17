@@ -7,10 +7,9 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import fs from "fs";
-import path from "path";
+import { rmdirSync } from "fs";
+import { join } from "path";
 import { CronJob } from "cron";
-
 import { PORT } from "./config";
 
 const app = express();
@@ -18,13 +17,13 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const init = () =>
+const init = () => {
   app.listen(PORT, () => {
     console.log(`server listening on port ${PORT}!`);
     if (process.env.DYNO === "web.1" || !process.env.DYNO) {
       const job = new CronJob("0 0 * * 0", function () {
         try {
-          fs.rmdirSync(path.join(__dirname + `/logs/`), {
+          rmdirSync(join(__dirname + `/logs/`), {
             recursive: true,
           });
         } catch (e) {
@@ -34,5 +33,5 @@ const init = () =>
       job.start();
     }
   });
-
+};
 export { app, init };

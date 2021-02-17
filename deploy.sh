@@ -18,6 +18,8 @@ elif [ "$REMOTE" == "iframe-server" ]; then
 	git subtree push --prefix iframe-server iframe-server master
 elif [ "$REMOTE" == "example-site" ]; then
 	git subtree push --prefix example-site example-site master
+elif [ "$REMOTE" == "logger" ]; then
+	git subtree push --prefix logger logger master
 else
 	echo "No remote set. Use 'git remote add alias path' for more info look up adding git remotes."
 fi

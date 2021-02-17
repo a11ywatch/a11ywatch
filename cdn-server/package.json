@@ -40,5 +40,10 @@
     "preset": "ts-jest",
     "coverageDirectory": "./coverage/",
     "collectCoverage": true
-  }
+  },
+  "keywords": [
+    "accessibility",
+    "testing",
+    "WCAG"
+  ]
 }

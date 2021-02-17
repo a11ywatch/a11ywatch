@@ -138,5 +138,10 @@
   "cacheDirectories": [
     ".next/cache"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": [
+    "accessibility",
+    "testing",
+    "WCAG"
+  ]
 }

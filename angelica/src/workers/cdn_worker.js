@@ -4,7 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
 
 const DEV = process.env.NODE_ENV !== "production";
 const proxyDockerUrls = ["mav", "localhost", "angelica", "cdn-server", "api"];

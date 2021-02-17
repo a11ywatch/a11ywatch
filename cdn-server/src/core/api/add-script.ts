@@ -6,7 +6,7 @@
 
 import { createReadStream, createWriteStream } from "fs";
 import { minify } from "uglify-js";
-import { directoryExist, uploadToS3, AWS_S3_ENABLED } from "../../";
+import { directoryExist, log, uploadToS3, AWS_S3_ENABLED } from "../../";
 
 export const addScript = (req, res) => {
   try {
@@ -30,7 +30,7 @@ export const addScript = (req, res) => {
         writeStreamMinified.write(minBuffer, "base64");
 
         writeStream.on("finish", () => {
-          console.log(`COMPLETED WRITE: CDN FILE: ${cdnFileName}`);
+          log(`COMPLETED WRITE: CDN FILE: ${cdnFileName}`);
           if (AWS_S3_ENABLED) {
             uploadToS3(
               createReadStream(cdnFileName),
