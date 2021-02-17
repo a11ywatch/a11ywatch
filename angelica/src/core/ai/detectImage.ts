@@ -5,6 +5,7 @@
  **/
 import fetch from "node-fetch";
 import { AI_SERVICE_URL } from "@app/config";
+import { log } from "@a11ywatch/log";
 
 const defaultConfig = {
   width: 0,
@@ -44,7 +45,7 @@ export const detectImageModel = async (
       );
     }
   } catch (e) {
-    console.error(e);
+    log(e, { type: "error" });
   }
   return null;
 };

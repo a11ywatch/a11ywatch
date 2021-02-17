@@ -5,7 +5,8 @@
  **/
 
 import { readFileSync, createWriteStream } from "fs";
-import { directoryExist, log, uploadToS3, AWS_S3_ENABLED } from "../../";
+import { log } from "@a11ywatch/log";
+import { directoryExist, uploadToS3, AWS_S3_ENABLED } from "../../";
 
 const createSS = ({ srcPath, cdnFileName, screenshot }: any) => {
   const dirExist = directoryExist(srcPath);

@@ -6,11 +6,12 @@
 
 import validUrl from "valid-url";
 import { sourceBuild } from "@a11ywatch/website-source-builder";
+import { log } from "@a11ywatch/log";
 import { ApiResponse, responseModel, makeWebsite } from "@app/core/models";
+import { SCRIPTS_CDN } from "@app/config";
 import { getWebsite } from "../../websites";
 import { generateWebsiteAverage } from "./domain";
 import { fetchPuppet, extractPageData } from "./utils";
-import { SCRIPTS_CDN } from "@app/config";
 
 export const scanWebsite = async ({
   userId: userIdMap,
@@ -120,7 +121,7 @@ export const scanWebsite = async ({
         resolve(responseModel());
       }
     } catch (e) {
-      console.error(e);
+      log(e, { type: "error" });
       reject(e);
     }
   });

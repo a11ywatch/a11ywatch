@@ -8,6 +8,7 @@ import { fork } from "child_process";
 import validUrl from "valid-url";
 import getPageSpeed from "get-page-speed";
 import { format } from "prettier";
+import { log } from "@a11ywatch/log";
 
 import {
   puppetPool,
@@ -164,7 +165,7 @@ export const crawlWebsite = async ({
       },
     };
   } catch (e) {
-    console.error(e);
+    log(e, { type: "error" });
   } finally {
     if (browser?.isConnected()) {
       puppetPool.clean(browser, page);

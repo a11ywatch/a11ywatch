@@ -5,8 +5,9 @@
  **/
 
 import { createReadStream, createWriteStream } from "fs";
+import { log } from "@a11ywatch/log";
 import { minify } from "uglify-js";
-import { directoryExist, log, uploadToS3, AWS_S3_ENABLED } from "../../";
+import { directoryExist, uploadToS3, AWS_S3_ENABLED } from "../../";
 
 export const addScript = (req, res) => {
   try {

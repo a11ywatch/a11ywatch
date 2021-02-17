@@ -20,20 +20,20 @@ app.get("/", (req, res) => {
 app.get("/api/log", (req, res) => {
   try {
     const { type } = req.query;
-    res.sendFile(`/${LOG_PATH}/${type}/log.md`);
+    const datePath = new Date().toISOString().split("T")[0];
+    res.sendFile(`/${LOG_PATH}/${datePath}/${type ?? "info"}/log.md`);
   } catch (e) {
     console.error(e);
     res.send(e);
   }
 });
 
-/*
- * @body(message: String, type: String, platform: String)
- */
 app.post("/api/log", (req, res) => {
   try {
     const { message, platform, type, container }: LogModel = req.body;
-    const logPath = `/${LOG_PATH}/${type}/`;
+    const today = new Date();
+    const datePath = today.toISOString().split("T")[0];
+    const logPath = `/${LOG_PATH}/${datePath}/${type}/`;
 
     if (!fs.existsSync(logPath)) {
       fs.mkdirSync(logPath, {
@@ -45,7 +45,7 @@ app.post("/api/log", (req, res) => {
       flags: "a",
     });
 
-    const logOutput = `\n## ${new Date().toLocaleString()}\ntype: ${type}\ncontainer: ${container}\nplatform: ${platform}\n${message}\n`;
+    const logOutput = `${today.toLocaleString()}\ntype: ${type}\ncontainer: ${container}\nplatform: ${platform}\n${message}\n`;
 
     console.info(logOutput);
 

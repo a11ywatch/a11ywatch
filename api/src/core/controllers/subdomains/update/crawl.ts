@@ -7,9 +7,11 @@
 import validUrl from "valid-url";
 import { emailMessager } from "@app/core/messagers";
 import { sourceBuild } from "@a11ywatch/website-source-builder";
+import { log } from "@a11ywatch/log";
 import { pubsub } from "@app/core/graph/subscriptions";
 import { SUBDOMAIN_ADDED, ISSUE_ADDED, WEBSITE_ADDED } from "@app/core/static";
 import { ApiResponse, responseModel } from "@app/core/models";
+import { SCRIPTS_CDN } from "@app/config";
 import { IssuesController } from "../../issues";
 import { ScriptsController } from "../../scripts";
 import { getWebsite } from "../../websites";
@@ -17,7 +19,6 @@ import { AnalyticsController } from "../../analytics";
 import { getDomain } from "../find";
 import { generateWebsiteAverage } from "./domain";
 import { collectionUpdate, fetchPuppet, extractPageData } from "./utils";
-import { SCRIPTS_CDN } from "@app/config";
 
 export const crawlWebsite = async ({
   userId: userIdMap,
@@ -194,7 +195,7 @@ export const crawlWebsite = async ({
         resolve(responseModel());
       }
     } catch (e) {
-      console.error(e);
+      log(e, { type: "error" });
       return responseModel();
     }
   });

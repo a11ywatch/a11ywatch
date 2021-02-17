@@ -7,7 +7,7 @@
 import { isSameDay } from "date-fns";
 import { connect } from "@app/database";
 import { logoSvg, footer } from "@app/html";
-
+import { log } from "@a11ywatch/log";
 import { transporter, mailOptions, realUser, sendMailCallback } from "../utils";
 import { issuesFoundTemplate } from "../email-templates";
 
@@ -31,7 +31,7 @@ export const emailMessager = {
           sendMailCallback
         );
       } catch (e) {
-        console.error(e);
+        log(e, { type: "error" });
       }
     }
   },
@@ -85,7 +85,7 @@ export const emailMessager = {
             sendMailCallback
           );
         } catch (e) {
-          console.error(e);
+          log(e, { type: "error" });
         }
       }
     }
