@@ -40,9 +40,9 @@ const createPuppeteerFactory = ({ puppeteerArgs, validate }) => ({
       console.error(e);
     }
   },
-  async destroy(browser) {
+  destroy(browser) {
     try {
-      await browser?.close();
+      browser?.close();
     } catch (e) {
       console.error(e);
     }
