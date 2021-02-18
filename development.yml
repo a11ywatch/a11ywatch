@@ -104,6 +104,7 @@ services:
       - ./example-site/:/usr/src/app/
     networks:
       - front-net
+      - back-net
     ports:
       - "8050:8050"
     restart: on-failure
