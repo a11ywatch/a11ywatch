@@ -4,7 +4,6 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import { fork } from "child_process";
 import { EMAIL_ERROR, CRAWLER_FINISHED } from "./strings";
 import {
   updateUser,
@@ -12,13 +11,12 @@ import {
   addPaymentSubscription,
   cancelSubscription,
 } from "./graph/mutations";
+import { forkProcess } from "./utils";
 
 const defaultPayload = {
   keyid: null,
   audience: null,
 };
-
-const forked = fork("./src/workers/worker.js", [], { detached: true });
 
 export const Mutation = {
   updateUser,
@@ -53,7 +51,8 @@ export const Mutation = {
     });
 
     if (url && canScan) {
-      forked.send({ urlMap: url, userId: keyid });
+      forkProcess({ urlMap: url, userId: keyid });
+
       return {
         website: null,
         code: url ? 200 : 404,

@@ -13,3 +13,4 @@ export { realUser } from "./getters";
 export { getUser } from "./get-user";
 export { usageExceededThreshold } from "./get-usage";
 export { getCollectionLength } from "./get-collection-length";
+export { forkProcess } from "./fork";

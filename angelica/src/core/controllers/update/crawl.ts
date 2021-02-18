@@ -20,8 +20,6 @@ import type { IssueData } from "@app/types";
 import { sourceBuild } from "@a11ywatch/website-source-builder";
 import { loopIssues, getPageIssues, goToPage } from "./utils";
 
-const forked = fork("./src/workers/cdn_worker.js", [], { detached: true });
-
 const EMPTY_RESPONSE = {
   webPage: null,
   issues: null,
@@ -38,8 +36,13 @@ export const crawlWebsite = async ({
     return EMPTY_RESPONSE;
   }
 
+  const forked = fork(`${__dirname}/cdn_worker`, [], {
+    detached: true,
+  });
+
   const browser = await puppetPool.acquire();
   const page = await browser?.newPage();
+
   const {
     domain,
     pageUrl,

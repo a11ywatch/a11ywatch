@@ -4,7 +4,6 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import { fork } from "child_process";
 import validUrl from "valid-url";
 
 import {
@@ -13,12 +12,12 @@ import {
   SUCCESS,
   WEBSITE_URL_ERROR,
 } from "@app/core/strings";
+import { forkProcess } from "@app/core/utils";
+
 import { getHostName, initUrl } from "@a11ywatch/website-source-builder";
 
 import { TEMP_WATCHER_BLACKLIST } from "@app/config/server";
 import { getWebsite } from "../find";
-
-const forked = fork("./src/workers/worker.js", [], { detached: true });
 
 export const addWebsite = async ({
   userId,
@@ -86,8 +85,7 @@ export const addWebsite = async ({
     if (url[url.length - 1] === "/") {
       cleanUrlParse = cleanUrlParse.slice(0, -1);
     }
-
-    forked.send({ urlMap: cleanUrlParse, userId });
+    forkProcess({ urlMap: cleanUrlParse, userId });
   }
 
   return {

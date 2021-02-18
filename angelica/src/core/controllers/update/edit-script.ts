@@ -9,8 +9,6 @@ import { format } from "prettier";
 import { scriptBuild } from "@app/core/lib";
 import { sourceBuild } from "@a11ywatch/website-source-builder";
 
-const forked = fork("./src/workers/cdn_worker.js", [], { detached: true });
-
 export const editScript = async ({
   userId,
   url: urlMap,
@@ -18,7 +16,9 @@ export const editScript = async ({
   newScript,
 }) => {
   const { domain, cdnSourceStripped } = sourceBuild(urlMap);
-
+  const forked = fork(`${__dirname}/cdn_worker`, [], {
+    detached: true,
+  });
   try {
     resolver.script = format(newScript, {
       semi: true,
