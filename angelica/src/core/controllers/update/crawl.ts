@@ -66,7 +66,7 @@ export const crawlWebsite = async ({
     script: null,
   };
 
-  const [validPage] = await goToPage(page, pageUrl, browser);
+  const [validPage] = await goToPage(page, urlMap, browser);
 
   if (!validPage) {
     return EMPTY_RESPONSE;
