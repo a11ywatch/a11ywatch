@@ -64,7 +64,6 @@ const useStyles = makeStyles((theme) => ({
     ['& > img']: {
       textAlign: 'center',
       display: 'block',
-      maxWidth: '100%',
       maxHeight: '380vh',
     },
   },
@@ -82,10 +81,10 @@ const useStyles = makeStyles((theme) => ({
     borderWidth: '30px 4px 4px',
     borderRadius: 4,
     overflowY: 'scroll',
-    maxHeight: 480,
+    maxHeight: '60vh',
     margin: 20,
-    marginLeft: '20vw',
-    marginRight: '20vw',
+    marginLeft: '25vw',
+    marginRight: '25vw',
   },
 }))
 
