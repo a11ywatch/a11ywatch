@@ -5,21 +5,7 @@
  **/
 
 import fetch from "node-fetch";
-
-const DEV = process.env.NODE_ENV !== "production";
-const proxyDockerUrls = ["mav", "localhost", "angelica", "cdn-server", "api"];
-
-const replaceDockerNetwork = (url) => {
-  if (!DEV && process.env.DOCKER_ENV) {
-    const includesElement = (element) => url.includes(element);
-    const hasIndex = proxyDockerUrls.findIndex(includesElement);
-
-    if (hasIndex !== -1) {
-      return url.replace(proxyDockerUrls[hasIndex], "127.0.0.1");
-    }
-  }
-  return url;
-};
+import { SCRIPTS_CDN_URL } from "@app/config";
 
 process.on(
   "message",
@@ -42,14 +28,11 @@ process.on(
       typeof screenshot !== "undefined" ? "add-screenshot" : "add-script";
 
     try {
-      await fetch(
-        `${replaceDockerNetwork(process.env.SCRIPTS_CDN_URL)}/${apiEndpoint}`,
-        {
-          method: "POST",
-          body,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      await fetch(`${SCRIPTS_CDN_URL}/${apiEndpoint}`, {
+        method: "POST",
+        body,
+        headers: { "Content-Type": "application/json" },
+      });
     } catch (e) {
       console.error(e);
     }

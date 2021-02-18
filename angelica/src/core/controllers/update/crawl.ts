@@ -36,12 +36,21 @@ export const crawlWebsite = async ({
     return EMPTY_RESPONSE;
   }
 
-  const forked = fork(`${__dirname}/cdn_worker`, [], {
-    detached: true,
-  });
+  let browser = null;
 
-  const browser = await puppetPool.acquire();
-  const page = await browser?.newPage();
+  try {
+    browser = await puppetPool.acquire();
+  } catch (e) {
+    log(e, { type: "error" });
+  }
+
+  let page = null;
+
+  try {
+    page = await browser?.newPage();
+  } catch (e) {
+    log(e, { type: "error" });
+  }
 
   const {
     domain,
@@ -83,7 +92,7 @@ export const crawlWebsite = async ({
       page,
     });
 
-    let {
+    const {
       errorCount,
       warningCount,
       noticeCount,
@@ -97,6 +106,10 @@ export const crawlWebsite = async ({
       domain,
       cdnSrc: cdnSourceStripped,
     };
+
+    const forked = fork(`${__dirname}/cdn_worker`, [], {
+      detached: true,
+    });
 
     if (authed) {
       forked.send({

@@ -8,6 +8,7 @@ import { fork } from "child_process";
 import { format } from "prettier";
 import { scriptBuild } from "@app/core/lib";
 import { sourceBuild } from "@a11ywatch/website-source-builder";
+import { log } from "@a11ywatch/log";
 
 export const editScript = async ({
   userId,
@@ -40,7 +41,7 @@ export const editScript = async ({
       domain: domain || resolver?.domain,
     });
   } catch (e) {
-    console.error(e);
+    log(e, { type: "error" });
   }
 
   return resolver;

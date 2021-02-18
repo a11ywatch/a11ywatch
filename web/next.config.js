@@ -8,23 +8,12 @@ const { resolve } = require('path')
 const { parsed } = require('dotenv').config()
 const { domainMap } = require('./domain-map')
 const { generateSiteMap } = require('./generate-sitemap')
-const { getDynamicPaths, proxyDockerUrls } = require('./dynamic-paths')
+const { getDynamicPaths } = require('./dynamic-paths')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const withPWA = require('next-pwa')
+const { replaceDockerNetwork } = require('@a11ywatch/website-source-builder')
 
 const dev = process.env.NODE_ENV !== 'production'
-
-const replaceDockerNetwork = (url) => {
-  if (!dev && process.env.DOCKER_ENV) {
-    const includesElement = (element) => url.includes(element)
-    const hasIndex = proxyDockerUrls.findIndex(includesElement)
-
-    if (hasIndex !== -1) {
-      return url.replace(proxyDockerUrls[hasIndex], process.env.DOCKER_SERVICE)
-    }
-  }
-  return url
-}
 
 const env = Object.assign({}, parsed, {
   dev,

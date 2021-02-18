@@ -14,5 +14,4 @@ const getDynamicPaths = ({ themeType }) => ({
 
 module.exports = {
   getDynamicPaths,
-  proxyDockerUrls: ['mav', 'localhost', 'angelica', 'cdn-server', 'api'],
 }

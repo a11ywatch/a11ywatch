@@ -27,9 +27,6 @@ services:
       - ./angelica/src:/usr/src/app/src
       - ./angelica/__tests__:/usr/src/app/__tests__
       - ./angelica/.env:/usr/src/app/.env
-    depends_on:
-      - mav
-      - cdn-server
     networks:
       - back-net
     ports:

@@ -5,24 +5,13 @@
  **/
 
 import { config as envConf } from "dotenv";
+import { replaceDockerNetwork } from "@a11ywatch/website-source-builder";
 import fs from "fs";
 
 envConf();
 
 const DEV = process.env.NODE_ENV !== "production";
 const TEST_ENV = process.env.NODE_ENV === "test";
-
-const replaceDockerNetwork = (url: string): string => {
-  const proxyDockerUrls = ["mav", "localhost", "angelica", "cdn-server", "api"];
-  if (!DEV && process.env.DOCKER_ENV == "true") {
-    const hasIndex = proxyDockerUrls.findIndex((urls) => url.includes(urls));
-
-    if (hasIndex !== -1) {
-      url = url.replace(proxyDockerUrls[hasIndex], proxyDockerUrls[hasIndex]);
-    }
-  }
-  return url;
-};
 
 let PUBLIC_KEY = String(process.env.PUBLIC_KEY).replace(/\\n/gm, "\n");
 let PRIVATE_KEY = String(process.env.PRIVATE_KEY).replace(/\\n/gm, "\n");
