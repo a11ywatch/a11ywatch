@@ -10,6 +10,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import { config, corsOptions, logServerInit } from "./config";
 import { aiModels, detectImageModel } from "./ai";
+import { log } from "@a11ywatch/log";
 
 const app = express();
 
@@ -27,7 +28,7 @@ app
       aiModels.clearModels();
       res.send(true);
     } catch (e) {
-      console.error(e);
+      log(e, { type: "error", container: "mav" });
       next();
     }
   })
@@ -36,7 +37,7 @@ app
       await aiModels.initModels();
       res.send(true);
     } catch (e) {
-      console.error(e);
+      log(e, { type: "error", container: "mav" });
       next();
     }
   })
@@ -52,7 +53,7 @@ app
         next();
       }
     } catch (e) {
-      console.error(e);
+      log(e, { type: "error", container: "mav" });
       next();
     }
   });

@@ -4,53 +4,30 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-const { createCanvas, Image } = require("canvas");
-const { aiModels } = require("./ai-models");
+import { aiModels } from "./ai-models";
+import { log } from "@a11ywatch/log";
+import { getImage } from "./canvas-image";
 
 interface ClassifyModelType {
   className: string;
   probability: number;
 }
 
-// TODO: generate img from TENSOR 8byte array: removes node canvas need
 export const detectImageModel = async (
   imageBase64: string,
   config: { width: number; height: number } = { width: 0, height: 0 }
 ): Promise<ClassifyModelType> => {
-  if (!imageBase64) {
-    return null;
-  }
+  const canv = await getImage(imageBase64, config);
+
   let predictions = [];
 
   try {
-    const mobileNetModel = await aiModels.initMobileNet(true);
-    const img = new Image();
-
-    const canv = await new Promise((resolve) => {
-      img.onload = function () {
-        const srcWidth = config.width || img.width;
-        const srcHeight = config.height || img.width;
-        const canvas = createCanvas(srcWidth, srcHeight);
-
-        canvas.getContext("2d").drawImage(img, 0, 0, srcWidth, srcHeight);
-        resolve(canvas);
-      };
-
-      img.onerror = function () {
-        resolve(null);
-      };
-
-      img.src = imageBase64;
-    });
-
-    if (!canv) {
-      return null;
-    }
+    const mobileNetModel = await aiModels.initMobileNet(1);
 
     predictions = await mobileNetModel?.classify(canv);
 
     if (predictions?.length && predictions[0].probability <= 0.3) {
-      const cocoaSDModel = await aiModels.initcocoSSD(true);
+      const cocoaSDModel = await aiModels.initcocoSSD(1);
       predictions = await cocoaSDModel?.detect(canv);
     }
 
@@ -64,7 +41,7 @@ export const detectImageModel = async (
     console.log("Predictions: ", pred);
     return pred;
   } catch (e) {
-    console.error(e);
+    log(e, { type: "error", container: "mav" });
     return null;
   }
 };

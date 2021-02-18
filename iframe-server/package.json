@@ -1,7 +1,7 @@
 {
   "name": "iframe-server",
   "version": "1.0.0",
-  "description": "iframe proxy server for a11ywatch",
+  "description": "iframe proxy server to bypass security issues",
   "main": "./dist/server.js",
   "scripts": {
     "test": "jest",
@@ -13,6 +13,7 @@
     "node": "12.x"
   },
   "dependencies": {
+    "@a11ywatch/log": "^0.1.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.0",
     "express": "4.17.1",

@@ -15,7 +15,7 @@
     "node": "10.18.0"
   },
   "dependencies": {
-    "@a11ywatch/log": "0.0.3",
+    "@a11ywatch/log": "^0.1.0",
     "@a11ywatch/website-source-builder": "0.0.1",
     "body-parser": "^1.19.0",
     "cors": "2.8.0",

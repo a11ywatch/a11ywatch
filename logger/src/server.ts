@@ -21,6 +21,7 @@ app.get("/api/log", (req, res) => {
   try {
     const { type } = req.query;
     const datePath = new Date().toISOString().split("T")[0];
+
     res.sendFile(`/${LOG_PATH}/${datePath}/${type ?? "info"}/log.md`);
   } catch (e) {
     console.error(e);
@@ -45,7 +46,7 @@ app.post("/api/log", (req, res) => {
       flags: "a",
     });
 
-    const logOutput = `${today.toLocaleString()}\ntype: ${type}\ncontainer: ${container}\nplatform: ${platform}\n${message}\n`;
+    const logOutput = `${today.toLocaleString()}\ntype: ${type}\ncontainer: ${container}\nplatform: ${platform}\n${message}\n\n`;
 
     console.info(logOutput);
 
