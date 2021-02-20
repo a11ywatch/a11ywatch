@@ -4,7 +4,14 @@
  * LICENSE file in the root directory of this source tree.
  **/
 import React, { useState } from 'react'
-import { List, Button, Typography, IconButton, Fade } from '@material-ui/core'
+import {
+  List,
+  ListItem,
+  Button,
+  Typography,
+  IconButton,
+  Fade,
+} from '@material-ui/core'
 import { Close as CloseIcon } from '@material-ui/icons'
 import { printElement } from '@app/utils'
 
@@ -12,7 +19,7 @@ import { useIssueFeed } from '@app/data'
 import { issueSort } from '@app/lib'
 
 import { issueFeedStyles as useStyles } from './styles'
-import { WebsitePrimaryCell } from './cells'
+import { WebsitePrimaryCell, RenderIssuesList } from './cells'
 
 const CTA_LIST_ID = 'cta-issue-list'
 
@@ -67,14 +74,20 @@ export function IssueFeed({
           id={CTA_LIST_ID}
         >
           {issue?.sort(issueSort).map((item: any, listIndex: number) => {
-            return (
-              <WebsitePrimaryCell
-                key={`${listIndex} ${item?.selector} ${item?.code}`}
+            const Issue = () => (
+              <RenderIssuesList
                 item={item}
                 url={issue?.pageUrl}
-                error
                 listIndex={listIndex}
+                error
                 {...checkItemProps}
+              />
+            )
+
+            return (
+              <ListItem
+                component={Issue}
+                key={`${listIndex} ${item?.selector} ${item?.code}`}
               />
             )
           })}

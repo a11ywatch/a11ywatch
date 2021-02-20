@@ -14,4 +14,4 @@ COPY . .
 
 RUN npm run build
 
-CMD [ "yarn", "start" ]
+CMD [ "NODE_ENV=production", "node", "./dist/server.js" ]

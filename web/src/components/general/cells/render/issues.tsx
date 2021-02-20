@@ -5,7 +5,6 @@
  **/
 
 import React from 'react'
-
 import { ListItem, ListItemIcon, Typography, Checkbox } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { WithHighlight } from '@app/components/adhoc'
@@ -100,11 +99,16 @@ export function RenderIssue({
         <div>
           <Typography
             variant='subtitle1'
+            component={'p'}
             className={`${classes.mainTitle} ${classes.normalContentColor}`}
           >
             {selector}
           </Typography>
-          <Typography variant='subtitle2' className={classes.mainSubtitle}>
+          <Typography
+            variant='subtitle2'
+            className={classes.mainSubtitle}
+            component={'p'}
+          >
             {code}
           </Typography>
         </div>
