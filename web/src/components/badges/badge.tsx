@@ -12,14 +12,13 @@ import type { BadgeProps } from './badge-types'
 export const Badge = ({
   style,
   inline,
-  size,
+  size: badgeSize,
   src,
   href,
   label,
   title,
 }: BadgeProps) => {
-  const height = size === 'small' ? 25 : 36
-  const width = size === 'small' ? 25 : 36
+  const size = badgeSize === 'small' ? '25' : '36'
 
   const Anchor = ({ children }: { children: any }) => {
     return (
@@ -34,7 +33,7 @@ export const Badge = ({
     )
   }
 
-  const Img = () => <img src={src} style={{ height, width }} alt={title} />
+  const Img = () => <img src={src} height={size} width={size} alt={title} />
 
   if (inline) {
     return (

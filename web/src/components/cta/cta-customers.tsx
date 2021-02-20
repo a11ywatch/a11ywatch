@@ -36,7 +36,7 @@ export function CtaCustomers() {
   const clickItem = useCallback((item: string) => {
     toggleModal(true, item)
   }, [])
-  const size = useMediaQuery('(min-width:600px)') ? 78 : 25
+  const size = useMediaQuery('(min-width:600px)') ? '78' : '25'
 
   return (
     <section className={classes.root}>
