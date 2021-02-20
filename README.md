@@ -31,6 +31,13 @@ docker-compose -f development.yml up
 
 By default the ui application opens on port 3000. For the full story, head over to the [developer's documentation](https://a11ywatch.github.io/a11ywatch-docs/docs/getting-started).
 
+## Contributing
+
+Read the [contributing guide](/CONTRIBUTING.md) to learn about our development process, how to propose bugfixes and improvements, and how to build and test your changes to A11yWatch.
+
+Notice that contributions go far beyond pull requests and commits.
+Although we love giving you the opportunity to put your stamp on A11yatch, we also are thrilled to receive a variety of [other contributions](https://a11ywatch.com/getting-started/faq/#a11yatch-is-awesome-how-can-i-support-the-project).
+
 ## Backers
 
 Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/a11ywatch#backer)]

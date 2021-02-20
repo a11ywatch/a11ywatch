@@ -13,6 +13,12 @@ export const Routes = [
   },
   {
     nav: false,
+    href: '/faq',
+    name: 'FAQ',
+    type: 'resources',
+  },
+  {
+    nav: false,
     href: '/privacy',
     name: 'Privacy Policy',
     type: 'resources',
@@ -21,7 +27,7 @@ export const Routes = [
     nav: false,
     href: '/contact',
     name: 'Contact',
-    type: 'explore',
+    type: 'resources',
   },
   {
     nav: false,
