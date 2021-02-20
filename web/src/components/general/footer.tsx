@@ -19,16 +19,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 24,
     overflow: 'hidden',
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
-    color: 'inherit',
-  },
   flex: {
-    flex: 1,
-  },
-  block: {
-    display: 'flex',
-    flexDirection: 'column',
     flex: 1,
   },
   center: {
@@ -37,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+      display: 'block',
+    },
   },
   linkContainer: {
     marginTop: 12,
@@ -45,6 +39,14 @@ const useStyles = makeStyles((theme) => ({
     listStyleType: 'none',
     [theme.breakpoints.down('sm')]: {
       maxWidth: '100%',
+      fontSize: '1.5em',
+    },
+  },
+  socialContainer: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      justifyContent: 'space-around',
+      alignItems: 'center',
     },
   },
   logo: {
@@ -52,7 +54,10 @@ const useStyles = makeStyles((theme) => ({
   },
   blockContainer: {
     flex: 0.2,
-    marginRight: 20,
+    marginRight: '1.5em',
+    [theme.breakpoints.down('sm')]: {
+      marginRight: 0,
+    },
   },
   sticky: {
     position: 'fixed',
@@ -68,7 +73,8 @@ const useStyles = makeStyles((theme) => ({
   },
   linkHeading: {
     [theme.breakpoints.down('sm')]: {
-      fontSize: '1.5em',
+      fontSize: '1.7em',
+      fontWeight: '600',
     },
   },
   spacing: {
@@ -103,20 +109,17 @@ const Footer = ({
 }) => {
   const classes = useStyles()
 
-  const SectionLinks = ({
-    title,
-    filterType,
-  }: {
-    title: string
-    filterType: string
-  }) => {
+  const SectionLinks = ({ title }: { title: string }) => {
     return (
       <div className={classes.blockContainer}>
         <Typography variant={'h4'} className={classes.linkHeading}>
           {title}
         </Typography>
         <ul className={classes.linkContainer}>
-          <NavLinks filterType={filterType} className={classes.linkSpace} />
+          <NavLinks
+            filterType={title.toLowerCase()}
+            className={classes.linkSpace}
+          />
         </ul>
       </div>
     )
@@ -129,46 +132,46 @@ const Footer = ({
       }`}
     >
       <Container maxWidth='lg'>
-        <div className={classes.block}>
-          <div className={classes.link}>
-            <div className={classes.blockContainer}>
-              <Typography className={classes.logo}>
-                {strings.appName}
-              </Typography>
-              <ul className={classes.linkContainer}>
-                {[
-                  { icon: TwitterBadge },
-                  { icon: GithubBadge },
-                  { icon: SpectrumBadge },
-                ].map(({ icon }: any, i: number) => (
-                  <li className={classes.link} key={i}>
-                    {React.createElement(icon, { inline: true })}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <SectionLinks title={'Explore'} filterType={'explore'} />
-            <SectionLinks title={'Resources'} filterType={'resources'} />
+        <div className={classes.link}>
+          <div className={classes.blockContainer}>
+            <Typography className={classes.logo}>{strings.appName}</Typography>
+            <ul
+              className={`${classes.linkContainer} ${classes.socialContainer}`}
+            >
+              {[
+                { Icon: TwitterBadge },
+                { Icon: GithubBadge },
+                { Icon: SpectrumBadge },
+              ].map(({ Icon }: any, i: number) => (
+                <li className={classes.link} key={i}>
+                  <Icon inline />
+                </li>
+              ))}
+            </ul>
           </div>
-          {APP_TYPE !== 'main' ? (
-            <div className={classes.linkContainer}>
-              <Typography variant={'body2'}>
-                {strings.appName} Group ® Brands:
-              </Typography>
-              <Typography
-                component={'a'}
-                href={`https://www.${strings.appName.toLowerCase()}.com`}
-                variant={'body2'}
-                color={'secondary'}
-                style={{ marginLeft: 6 }}
-              >
-                {strings.appName}
-              </Typography>
-            </div>
-          ) : null}
-          <FixedCopyRight />
+          <SectionLinks title={'Explore'} />
+          <SectionLinks title={'Resources'} />
+          <SectionLinks title={'Company'} />
+          <SectionLinks title={'Legal'} />
         </div>
+        {APP_TYPE !== 'main' ? (
+          <div className={classes.linkContainer}>
+            <Typography variant={'body2'}>
+              {strings.appName} Group ® Brands:
+            </Typography>
+            <Typography
+              component={'a'}
+              href={`https://www.${strings.appName.toLowerCase()}.com`}
+              variant={'body2'}
+              color={'secondary'}
+              style={{ marginLeft: 6 }}
+            >
+              {strings.appName}
+            </Typography>
+          </div>
+        ) : null}
       </Container>
+      <FixedCopyRight />
     </footer>
   )
 }

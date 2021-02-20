@@ -9,7 +9,7 @@ export const Routes = [
     nav: false,
     href: '/terms-of-service',
     name: 'Terms of Service',
-    type: 'resources',
+    type: 'legal',
   },
   {
     nav: false,
@@ -21,25 +21,25 @@ export const Routes = [
     nav: false,
     href: '/privacy',
     name: 'Privacy Policy',
-    type: 'resources',
+    type: 'legal',
   },
   {
     nav: false,
     href: '/contact',
     name: 'Contact',
-    type: 'resources',
+    type: 'company',
   },
   {
     nav: false,
     href: '/donate',
     name: 'Donate',
-    type: 'resources',
+    type: 'company',
   },
   {
     nav: false,
     href: '/about',
     name: 'About',
-    type: 'resources',
+    type: 'company',
   },
   {
     nav: false,
@@ -63,7 +63,7 @@ export const Routes = [
     nav: false,
     href: 'https://a11ywatch.blog',
     name: 'Blog',
-    type: 'resources',
+    type: 'company',
   },
   {
     nav: false,
@@ -99,7 +99,7 @@ export const Routes = [
     nav: true,
     href: '/pricing',
     name: 'Pricing',
-    type: 'explore',
+    type: 'company',
   },
   {
     nav: true,
@@ -121,7 +121,7 @@ export const Routes = [
     nav: false,
     href: '/careers',
     name: 'Careers',
-    type: 'resources',
+    type: 'company',
   },
   {
     nav: false,

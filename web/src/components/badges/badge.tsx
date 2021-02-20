@@ -41,7 +41,7 @@ export const Badge = ({
       <Anchor>
         <div style={{ display: 'flex' }}>
           <Img />
-          <Typography variant={'subtitle1'} style={{ marginLeft: 12 }}>
+          <Typography variant={'subtitle1'} style={{ marginLeft: '0.35em' }}>
             {title}
           </Typography>
         </div>
