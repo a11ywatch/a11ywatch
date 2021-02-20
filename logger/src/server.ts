@@ -30,13 +30,11 @@ app.get("/api/log", (req, res) => {
 });
 
 app.post("/api/log", (req, res) => {
-  try {
-    const { message, platform, type, container }: LogModel = req.body;
-    const today = new Date();
-    const logPath = `/${LOG_PATH}/${
-      today.toISOString().split("T")[0]
-    }/${type}/`;
+  const { message, platform, type, container }: LogModel = req.body;
+  const today = new Date();
+  const logPath = `/${LOG_PATH}/${today.toISOString().split("T")[0]}/${type}/`;
 
+  try {
     if (!fs.existsSync(logPath)) {
       fs.mkdirSync(logPath, {
         recursive: true,

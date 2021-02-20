@@ -27,7 +27,7 @@ const init = () => {
             recursive: true,
           });
         } catch (e) {
-          console.error("failed to clear log dir");
+          console.error("cron failed to clean");
         }
       });
       job.start();
