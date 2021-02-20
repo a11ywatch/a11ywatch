@@ -7,6 +7,7 @@
 import React, { useMemo, useCallback } from 'react'
 import { IconButton, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import { useMediaQuery } from '@material-ui/core'
 import { strings } from '@app-strings'
 import { useSearch } from '@app/data'
 
@@ -20,32 +21,22 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     overflow: 'hidden',
     border: `1px solid ${theme.palette.background.paper}`,
-    borderRadius: '8px',
+    borderRadius: 8,
     width: '100%',
     justifyContent: 'space-around',
     display: 'flex',
-    padding: '10px',
+    padding: 10,
     flexDirection: 'row',
-  },
-  image: {
-    flex: 1,
-    display: 'flex',
-    width: '78px',
-    height: '78px',
-    [theme.breakpoints.down('sm')]: {
-      width: '25px',
-      height: '25px',
-    },
   },
 }))
 
 export function CtaCustomers() {
   const classes = useStyles()
   const { toggleModal } = useSearch()
-
   const clickItem = useCallback((item: string) => {
     toggleModal(true, item)
   }, [])
+  const size = useMediaQuery('(min-width:600px)') ? 78 : 25
 
   return (
     <section className={classes.root}>
@@ -59,13 +50,14 @@ export function CtaCustomers() {
         {useMemo(() => ['twitter', 'github', 'dropbox'], []).map((item, i) => (
           <IconButton
             onClick={() => clickItem(`https://${item}.com`)}
-            aria-label={`Scan ${item}.com for WCAG issues`}
+            aria-label={`Scan ${item} for issues`}
             key={item + i}
           >
             <img
               src={`static/img/${item}.svg`}
               alt={item}
-              className={classes.image}
+              width={size}
+              height={size}
             />
           </IconButton>
         ))}
