@@ -3,10 +3,14 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
+import { Router } from "express";
 
-import { app, init, apiRouter, landingRouter } from "./lib";
+const landingRouter = Router();
 
-app.use("/", landingRouter);
-app.use("/api", apiRouter);
+landingRouter.get("/", (request, res) => {
+  res.json({
+    server_status: "online",
+  });
+});
 
-init(app);
+export { landingRouter };

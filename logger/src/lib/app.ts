@@ -17,8 +17,8 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const init = () => {
-  app.listen(PORT, () => {
+const init = (_app: any) => {
+  _app.listen(PORT, () => {
     console.log(`server listening on port ${PORT}!`);
     if (process.env.DYNO === "web.1" || !process.env.DYNO) {
       new CronJob("0 0 * * 0", function () {
@@ -33,4 +33,5 @@ const init = () => {
     }
   });
 };
+
 export { app, init };
