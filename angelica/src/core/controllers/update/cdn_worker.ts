@@ -6,6 +6,7 @@
 
 import fetch from "node-fetch";
 import { SCRIPTS_CDN_URL } from "@app/config";
+import { log } from "@a11ywatch/log";
 
 process.on(
   "message",
@@ -34,7 +35,7 @@ process.on(
         headers: { "Content-Type": "application/json" },
       });
     } catch (e) {
-      console.error(e);
+      log(e, { type: "error", container: "angelica" });
     }
   }
 );

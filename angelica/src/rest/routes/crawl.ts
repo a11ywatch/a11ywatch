@@ -1,4 +1,5 @@
 import { crawlWebsite } from "@app/core/controllers";
+import { log } from "@a11ywatch/log";
 
 const crawl = async (req, res, next) => {
   try {
@@ -11,7 +12,7 @@ const crawl = async (req, res, next) => {
 
     res.send(JSON.stringify(data));
   } catch (e) {
-    console.error(e);
+    log(e, { type: "error" });
     next();
   }
 };

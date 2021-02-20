@@ -3,6 +3,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
+import { log } from "@a11ywatch/log";
 
 export const skipContentCheck = async ({
   page,
@@ -53,7 +54,7 @@ export const skipContentCheck = async ({
       return !!matchFound;
     });
   } catch (e) {
-    console.error(e);
+    log(e, { type: "error" });
   }
   return hasSkipContent;
 };

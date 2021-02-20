@@ -7,11 +7,6 @@ import fetch from "node-fetch";
 import { AI_SERVICE_URL } from "@app/config";
 import { log } from "@a11ywatch/log";
 
-const defaultConfig = {
-  width: 0,
-  height: 0,
-};
-
 interface ClassifyModelType {
   className: string;
   probability: number;
@@ -19,7 +14,10 @@ interface ClassifyModelType {
 
 export const detectImageModel = async (
   img,
-  config = defaultConfig
+  config = {
+    width: 0,
+    height: 0,
+  }
 ): Promise<ClassifyModelType> => {
   if (!img) {
     return null;

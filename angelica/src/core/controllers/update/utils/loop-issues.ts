@@ -13,6 +13,7 @@ import {
   imgAltMissing,
 } from "@app/core/strings";
 import { grabAlt } from "./grab-alt";
+import { log } from "@a11ywatch/log";
 
 const ISSUE_TIMEOUT = 14000;
 
@@ -47,7 +48,7 @@ export const loopIssues = ({ issues, page }): Promise<IssueInfo> => {
     }
     let generationStop = false;
     const destroyLoopIteration = setTimeout(() => {
-      console.log(`Issue fix timoout ${ISSUE_TIMEOUT}`);
+      log(`Issue fix setting timeout ${ISSUE_TIMEOUT}`);
       generationStop = true;
       resolve({
         errorCount,
@@ -65,7 +66,7 @@ export const loopIssues = ({ issues, page }): Promise<IssueInfo> => {
       issueIndex++
     ) {
       if (generationStop) {
-        console.log("GENERATION STOP");
+        log("Issue generation stopped");
         break;
       }
       let element = issues?.issues[issueIndex];

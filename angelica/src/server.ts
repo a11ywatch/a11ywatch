@@ -10,8 +10,11 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import { corsOptions, DEV } from "./config";
 import { root, crawl, detectImage, setScripts } from "./rest/routes";
+import { log, setConfig as setLogConfig } from "@a11ywatch/log";
 
 const app = express();
+
+setLogConfig({ container: "angelica" });
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json({ limit: "100mb", extended: true }));
@@ -22,11 +25,11 @@ app.post("/api/detectImage", detectImage);
 app.post("/api/updateScript", setScripts);
 
 const coreServer = app.listen(process.env.PORT || 0, () => {
-  console.log([
+  log(
     `🚀 Server ready at ${DEV ? "localhost" : "a11ywatch"}:${
       (coreServer.address() as AddressInfo).port
-    }`,
-  ]);
+    }`
+  );
 });
 
 export default coreServer;

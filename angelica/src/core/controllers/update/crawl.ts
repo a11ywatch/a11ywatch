@@ -36,6 +36,8 @@ export const crawlWebsite = async ({
     return EMPTY_RESPONSE;
   }
 
+  log(`Crawling Website: ${urlMap} `);
+
   let browser = null;
 
   try {

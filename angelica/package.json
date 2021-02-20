@@ -12,10 +12,10 @@
     "start": "node dist/server.js"
   },
   "engines": {
-    "node": "10.18.0"
+    "node": "v12.x"
   },
   "dependencies": {
-    "@a11ywatch/log": "^0.1.1",
+    "@a11ywatch/log": "^0.1.7",
     "@a11ywatch/website-source-builder": "^0.0.4",
     "body-parser": "^1.19.0",
     "cors": "2.8.0",

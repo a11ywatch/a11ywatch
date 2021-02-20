@@ -1,9 +1,10 @@
 import { adjustScript, editScript } from "@app/core/controllers";
+import { log } from "@a11ywatch/log";
 
 const setScripts = async (req, res, next) => {
-  try {
-    const { editScript: edit, url, userId, script, newScript } = req.body;
+  const { editScript: edit, url, userId, script, newScript } = req.body;
 
+  try {
     const data = await (edit ? editScript : adjustScript)(
       Object.assign(
         {},
@@ -18,7 +19,7 @@ const setScripts = async (req, res, next) => {
 
     res.send(JSON.stringify(data));
   } catch (e) {
-    console.error(e);
+    log(e, { type: "error" });
     next();
   }
 };

@@ -5,6 +5,7 @@
  **/
 
 import { createPuppeteerPool } from "./create-puppeteer-pool";
+import { log } from "@a11ywatch/log";
 
 const puppeteerPool = createPuppeteerPool();
 
@@ -13,15 +14,15 @@ const puppetPool = {
     try {
       return await puppeteerPool.acquire();
     } catch (e) {
-      console.error(e);
+      log(e, { type: "error" });
       return null;
     }
   },
   close: async (browser) => {
     try {
-      await browser.close();
+      await browser?.close();
     } catch (e) {
-      console.error(e);
+      log(e, { type: "error" });
     }
   },
   clean: async (browser, page) => {
@@ -31,7 +32,7 @@ const puppetPool = {
         await puppeteerPool.release(browser);
       }
     } catch (e) {
-      console.error(e);
+      log(e, { type: "error" });
     }
   },
 };
