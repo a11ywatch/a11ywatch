@@ -21,16 +21,15 @@ const init = () => {
   app.listen(PORT, () => {
     console.log(`server listening on port ${PORT}!`);
     if (process.env.DYNO === "web.1" || !process.env.DYNO) {
-      const job = new CronJob("0 0 * * 0", function () {
+      new CronJob("0 0 * * 0", function () {
         try {
           rmdirSync(join(__dirname + `/logs/`), {
             recursive: true,
           });
         } catch (e) {
-          console.error("cron failed to clean");
+          console.error(e, "cron failed to clean");
         }
-      });
-      job.start();
+      }).start();
     }
   });
 };
