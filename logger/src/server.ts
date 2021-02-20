@@ -7,7 +7,7 @@
 import path from "path";
 import fs from "fs";
 import { app, init } from "./lib";
-import { LogModel } from "./types";
+import type { LogModel } from "./types";
 
 const LOG_PATH = path.join(__dirname + `/logs/`);
 
