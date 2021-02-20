@@ -9,4 +9,6 @@ import { app, init, apiRouter, landingRouter } from "./lib";
 app.use("/", landingRouter);
 app.use("/api", apiRouter);
 
-init(app);
+const server = init(app);
+
+export { server };

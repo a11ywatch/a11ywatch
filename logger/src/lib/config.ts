@@ -5,4 +5,5 @@
  **/
 
 export const DEV: boolean = process.env.NODE_ENV !== "production";
-export const PORT: number = parseInt(process.env.PORT, 10) || 8022;
+export const PORT: number =
+  process.env.NODE_ENV === "test" ? 0 : parseInt(process.env.PORT, 10) || 8022;

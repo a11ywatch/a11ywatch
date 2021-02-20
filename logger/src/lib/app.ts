@@ -18,7 +18,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const init = (_app: any) => {
-  _app.listen(PORT, () => {
+  return _app.listen(PORT, () => {
     console.log(`server listening on port ${PORT}!`);
     if (process.env.DYNO === "web.1" || !process.env.DYNO) {
       new CronJob("0 0 * * 0", function () {
@@ -34,4 +34,12 @@ const init = (_app: any) => {
   });
 };
 
-export { app, init };
+const killServer = (_server: any) => {
+  return new Promise((resolve) => {
+    _server.close(() => {
+      resolve(console.log("HTTP server closed"));
+    });
+  });
+};
+
+export { app, init, killServer };
