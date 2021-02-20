@@ -37,6 +37,9 @@ import {
   websiteCrawl,
   websiteCrawlAuthed,
 } from "./rest/routes";
+import { setConfig as setLogConfig } from "@a11ywatch/log";
+
+setLogConfig({ container: "api" });
 
 const { GRAPHQL_PORT } = config;
 

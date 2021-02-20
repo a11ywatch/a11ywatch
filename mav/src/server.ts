@@ -8,9 +8,11 @@ import "@tensorflow/tfjs-node-gpu";
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
+import { log, setConfig as setLogConfig } from "@a11ywatch/log";
 import { config, corsOptions, logServerInit } from "./config";
 import { aiModels, detectImageModel } from "./ai";
-import { log } from "@a11ywatch/log";
+
+setLogConfig({ container: "mav" });
 
 const app = express();
 
@@ -28,7 +30,7 @@ app
       aiModels.clearModels();
       res.send(true);
     } catch (e) {
-      log(e, { type: "error", container: "mav" });
+      log(e, { type: "error" });
       next();
     }
   })
@@ -37,7 +39,7 @@ app
       await aiModels.initModels();
       res.send(true);
     } catch (e) {
-      log(e, { type: "error", container: "mav" });
+      log(e, { type: "error" });
       next();
     }
   })
@@ -53,7 +55,7 @@ app
         next();
       }
     } catch (e) {
-      log(e, { type: "error", container: "mav" });
+      log(e, { type: "error" });
       next();
     }
   });

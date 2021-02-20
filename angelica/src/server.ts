@@ -12,9 +12,9 @@ import { corsOptions, DEV } from "./config";
 import { root, crawl, detectImage, setScripts } from "./rest/routes";
 import { log, setConfig as setLogConfig } from "@a11ywatch/log";
 
-const app = express();
-
 setLogConfig({ container: "angelica" });
+
+const app = express();
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json({ limit: "100mb", extended: true }));
@@ -26,7 +26,7 @@ app.post("/api/updateScript", setScripts);
 
 const coreServer = app.listen(process.env.PORT || 0, () => {
   log(
-    `🚀 Server ready at ${DEV ? "localhost" : "a11ywatch"}:${
+    `🚀 Server ready at ${DEV ? "localhost" : ""}:${
       (coreServer.address() as AddressInfo).port
     }`
   );

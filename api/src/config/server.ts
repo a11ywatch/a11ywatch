@@ -3,6 +3,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
+import { log } from "@a11ywatch/log";
 import { config } from "./config";
 
 const { CLIENT_URL, CRAWL_URL, ROOT_URL, DEV } = config;
@@ -65,7 +66,7 @@ export const cronTimer = DEV ? "0 1 * * *" : "0 16 * * *";
 const source = DEV ? "localhost" : ROOT_URL;
 
 export const logServerInit = (port, { graphqlPath, subscriptionsPath }) => {
-  console.log([
+  log([
     `🚀 Server ready at ${source}:${port}${graphqlPath}`,
     `🚀 Subscriptions ready at ws://${source}:${port}${subscriptionsPath}`,
   ]);
