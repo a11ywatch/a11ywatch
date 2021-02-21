@@ -15,9 +15,10 @@ const SCRIPTS_CDN_URL_HOST = process.env.SCRIPTS_CDN_URL_HOST;
 const MAIN_API_URL = process.env.MAIN_API_URL;
 const AI_SERVICE_URL = replaceDockerNetwork(process.env.AI_SERVICE_URL);
 const SCRIPTS_CDN_URL = replaceDockerNetwork(process.env.SCRIPTS_CDN_URL);
-const CDN_URL = DEV
-  ? replaceDockerNetwork(process.env.SCRIPTS_CDN_URL, ["cdn-server"], true)
-  : String(process.env.SCRIPTS_CDN_URL);
+const CDN_URL =
+  DEV && process.env.SCRIPTS_CDN_URL
+    ? replaceDockerNetwork(process.env.SCRIPTS_CDN_URL, ["cdn-server"], true)
+    : String(process.env.SCRIPTS_CDN_URL);
 
 export {
   DEV,

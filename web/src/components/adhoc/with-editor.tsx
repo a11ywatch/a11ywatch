@@ -36,7 +36,7 @@ const WithEditor = ({
           language={language}
           defaultValue={children}
           theme='vs-dark'
-          height={height || !setScript ? '65vh' : '345px'}
+          height={height || '100%'}
           width={width || '100%'}
         />
       )}

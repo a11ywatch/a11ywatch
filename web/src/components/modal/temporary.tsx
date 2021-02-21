@@ -33,10 +33,18 @@ import { EditableMixture } from '@app/components/mixtures/editable-mixture'
 const useStyles = makeStyles((theme) => ({
   container: {
     padding: theme.spacing(1),
+    width: '23vw',
+    [theme.breakpoints.down('sm')]: {
+      width: 'auto',
+    },
   },
   root: {
     height: '100vh',
     overflow: 'hidden',
+    display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+      display: 'block',
+    },
   },
   loading: {
     display: 'flex',
@@ -62,6 +70,7 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     paddingRight: 6,
+    paddingLeft: 6,
   },
   centerAlign: {
     display: 'flex',
@@ -76,11 +85,7 @@ const useStyles = makeStyles((theme) => ({
   block: {
     flex: 1,
     display: 'block',
-    height: 'inherit',
-    ['& > pre']: {
-      overflowY: 'scroll',
-      height: 'inherit',
-    },
+    height: '100%',
   },
   screenshotContainer: {
     border: 'solid rgb(33,32,36)',
@@ -107,18 +112,17 @@ export function SwipeableTemporaryDrawer() {
       <div className={classes.root}>
         <div className={classes.container}>
           <Grid className={classes.row}>
-            <Typography variant='h4' component='p' className={classes.title}>
-              {website?.url || strings.trySearch}
-            </Typography>
             <IconButton aria-label='close modal' onClick={toggleDrawer(false)}>
               <CloseIcon />
             </IconButton>
+            <Typography variant='h5' component='p' className={classes.title}>
+              {website?.url || strings.trySearch}
+            </Typography>
           </Grid>
           <RenderSecondary {...website} />
           <CtaCdn website={website} block />
           <Spacer height={4} />
         </div>
-        <Divider />
         {Object.keys(website).length <= 1 ? (
           <>
             <div className={classes.loading} role='presentation'>
@@ -137,7 +141,7 @@ export function SwipeableTemporaryDrawer() {
                   lineProps={() => ({
                     style: { display: 'block', cursor: 'pointer' },
                   })}
-                  editMode={false}
+                  editMode
                 >
                   {website?.html || ''}
                 </EditableMixture>

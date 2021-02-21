@@ -4,9 +4,7 @@
 
 ![A11yWatch](web/public/static/img/favicon.png?raw=true "A11yWatch Logo")
 
-system for accessibility, software productivity, and performance
-
-[![caption](https://i.gyazo.com/b04d7b84fa0571460ae789c1860e90b3.gif)](https://i.gyazo.com/b04d7b84fa0571460ae789c1860e90b3.mp4)
+the tool for accessibility, software productivity, and performance
 
 ## Getting Started
 

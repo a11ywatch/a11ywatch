@@ -22,6 +22,7 @@ function TabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`a11y-tabpanel-${index}`}
       aria-labelledby={`a11y-tab-${index}`}
+      style={{ height: '100%' }}
       {...other}
     >
       {value === index && children}
@@ -44,12 +45,13 @@ export function WebsiteTabs({ issues, html, screenshot }: any) {
   }
 
   return (
-    <div>
+    <div style={{ height: '100%', width: '100%' }}>
       <Tabs
         value={value}
         onChange={handleChange}
         aria-label='web page tabs to compare problems and fixes'
         variant='fullWidth'
+        fixed
       >
         <Tab label='Insights' {...a11yProps(0)} />
         <Tab label='HTML' {...a11yProps(1)} />
