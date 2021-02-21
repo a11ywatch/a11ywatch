@@ -58,6 +58,7 @@ export const adjustScript = async ({
       ),
       domain: domain || resolver?.domain,
     });
+    forked.unref();
   } catch (e) {
     log(e, { type: "error" });
   }

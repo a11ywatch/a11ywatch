@@ -120,14 +120,20 @@ export const crawlWebsite = async ({
         scriptBody: scriptBuild(scriptProps, true),
         domain,
       });
+      forked.unref();
     }
 
-    forked.send({
+    const forkedStriped = fork(`${__dirname}/cdn_worker`, [], {
+      detached: true,
+    });
+
+    forkedStriped.send({
       cdnSourceStripped,
       domain,
       screenshot,
       screenshotStill,
     });
+    forkedStriped.unref();
 
     const cdn_url = CDN_URL.replace("/api", "");
 

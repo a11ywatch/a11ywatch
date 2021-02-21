@@ -40,6 +40,7 @@ export const editScript = async ({
       ),
       domain: domain || resolver?.domain,
     });
+    forked.unref();
   } catch (e) {
     log(e, { type: "error" });
   }
