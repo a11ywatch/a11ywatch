@@ -5,6 +5,7 @@
  **/
 
 export {
+  INTERCOM_ENABLED,
   AppConfig,
   SCRIPTS_CDN_URL_HOST,
   INTERCOM_APPID,

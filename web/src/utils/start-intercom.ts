@@ -6,14 +6,14 @@
 
 import { loadIntercom } from 'intercom-next'
 import { userModel } from '@app/data'
-import { INTERCOM_APPID } from '@app/configs'
+import { INTERCOM_APPID, INTERCOM_ENABLED } from '@app/configs'
 import { domInteractive } from './dom-load-time'
 
 let BLOCK = 0
 
 export function startIntercom() {
   // Prevent intercom from injecting twice
-  if (BLOCK || !INTERCOM_APPID) {
+  if (BLOCK || !INTERCOM_APPID || !INTERCOM_ENABLED) {
     return
   }
   const email = userModel?.email

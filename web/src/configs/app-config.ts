@@ -20,6 +20,7 @@ const API_ENDPOINT =
 const STRIPE_KEY = process.env.STRIPE_KEY
 const SUPER_MODE = process.env.SUPER_MODE
 const DONORBOX_URL = process.env.DONORBOX_URL
+const INTERCOM_ENABLED = process.env.INTERCOM_ENABLED
 
 export {
   AppConfig,
@@ -32,4 +33,5 @@ export {
   STRIPE_KEY,
   SUPER_MODE,
   DONORBOX_URL,
+  INTERCOM_ENABLED,
 }

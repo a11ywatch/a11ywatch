@@ -37,6 +37,7 @@ const env = Object.assign({}, parsed, {
   // # NEXT.JS REQUIRED EXCLUDES
   NODE_ENV: undefined,
   NODE_MODULES_CACHE: undefined,
+  INTERCOM_ENABLED: process.env.INTERCOM_ENABLED,
 })
 
 module.exports = withPWA({
