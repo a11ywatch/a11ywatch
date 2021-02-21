@@ -11,12 +11,14 @@ export function ListSkeleton({
   count = 3,
   subTitle = true,
   smallCircle = false,
-}: any) {
-  return Array.from(Array(count).keys()).map((item) => (
+  avatar = true,
+}: any): any {
+  return Array.from(Array(count).keys()).map((item: string | number) => (
     <ListItemSkeleton
       key={item}
       subTitle={subTitle}
       smallCircle={smallCircle}
+      avatar={avatar}
     />
   ))
 }

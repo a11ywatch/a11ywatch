@@ -18,12 +18,13 @@ import { a11yDark } from '@app/styles'
 
 import { useSearch } from '@app/data'
 import {
-  Pulse,
   IssueFeed,
   RenderSecondary,
   Spacer,
   WebsiteTabs,
 } from '@app/components/general'
+import { ListSkeleton } from '@app/components/placeholders'
+
 import { CtaCdn } from '@app/components/cta'
 import { FakeButtonContainer } from '@app/components/fake'
 import { strings } from '@app-strings'
@@ -34,14 +35,19 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
   },
   root: {
-    maxHeight: '100vh',
+    height: '100vh',
     overflow: 'hidden',
   },
   loading: {
-    padding: 12,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
+    ['& > li > *']: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlign: 'center',
+      flex: 1,
+    },
   },
   row: {
     display: 'flex',
@@ -110,13 +116,16 @@ export function SwipeableTemporaryDrawer() {
           </Grid>
           <RenderSecondary {...website} />
           <CtaCdn website={website} block />
-          <Spacer height={6} />
+          <Spacer height={4} />
         </div>
         <Divider />
         {Object.keys(website).length <= 1 ? (
-          <div className={classes.loading} role='presentation'>
-            <Pulse visible size={30} aria-label='Loading issues' />
-          </div>
+          <>
+            <div className={classes.loading} role='presentation'>
+              <ListSkeleton avatar={false} subTitle={false} />
+            </div>
+            <ListSkeleton count={6} avatar={false} />
+          </>
         ) : (
           <WebsiteTabs
             issues={<IssueFeed website={website} renderListOnly />}

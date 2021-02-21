@@ -18,7 +18,7 @@ export const Badge = ({
   label,
   title,
 }: BadgeProps) => {
-  const size = badgeSize === 'small' ? '25' : '36'
+  const size = badgeSize === 'small' ? '20' : '32'
 
   const Anchor = ({ children }: { children: any }) => {
     return (
@@ -40,7 +40,10 @@ export const Badge = ({
       <Anchor>
         <div style={{ display: 'flex' }}>
           <Img />
-          <Typography variant={'subtitle1'} style={{ marginLeft: '0.35em' }}>
+          <Typography
+            variant={'subtitle1'}
+            style={{ marginLeft: '0.3em', fontSize: '1.05rem' }}
+          >
             {title}
           </Typography>
         </div>

@@ -82,17 +82,12 @@ services:
       - ./web/src:/usr/src/app/src
       - ./web/public:/usr/src/app/public
       - ./web/next.config.js:/usr/src/app/next.config.js
-      - ./web/postcss.config.js:/usr/src/app/postcss.config.js
       - ./web/tsconfig.json:/usr/src/app/tsconfig.json
-      - ./web/domain-map.js:/usr/src/app/domain-map.js
-      - ./web/dynamic-paths.js:/usr/src/app/dynamic-paths.js
-      - ./web/web-config.js:/usr/src/app/web-config.js
       - ./web/.env:/usr/src/app/.env
     networks:
       - front-net
     ports:
       - "3000:3000"
-    restart: on-failure
 
   example-site:
     container_name: example-site

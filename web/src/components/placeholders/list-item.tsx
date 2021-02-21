@@ -8,21 +8,29 @@ import React from 'react'
 import { ListItem, ListItemAvatar, ListItemText } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 
-export function ListItemSkeleton({ subTitle, smallCircle }: any) {
+export function ListItemSkeleton({
+  subTitle,
+  smallCircle,
+  avatar = true,
+}: any) {
   return (
     <ListItem style={{ height: subTitle ? 72 : 49 }}>
-      <ListItemAvatar>
-        <Skeleton
-          variant='circle'
-          width={smallCircle ? 20 : 40}
-          height={smallCircle ? 20 : 40}
-        />
-      </ListItemAvatar>
+      {avatar ? (
+        <ListItemAvatar>
+          <Skeleton
+            variant='circle'
+            width={smallCircle ? 20 : 40}
+            height={smallCircle ? 20 : 40}
+          />
+        </ListItemAvatar>
+      ) : null}
       <ListItemText
         disableTypography
         primary={<Skeleton height={9.5} width='30%' />}
         secondary={
-          !subTitle ? null : (
+          !subTitle ? (
+            <div />
+          ) : (
             <Skeleton height={9} width='20%' style={{ marginTop: 6 }} />
           )
         }

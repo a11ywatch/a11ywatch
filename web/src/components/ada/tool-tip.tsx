@@ -70,8 +70,7 @@ const ToolTip = ({
   elementParent,
   contrastRatio,
   message,
-}: // close,
-any) => {
+}: any) => {
   const store = observable({
     textFix: contrastRatio >= 3,
     toggle: action(() => {

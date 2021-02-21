@@ -11,6 +11,7 @@ const { generateSiteMap } = require('./generate-sitemap')
 const { getDynamicPaths } = require('./dynamic-paths')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const withPWA = require('next-pwa')
+const runtimeCaching = require('next-pwa/cache')
 const { replaceDockerNetwork } = require('@a11ywatch/website-source-builder')
 
 const dev = process.env.NODE_ENV !== 'production'
@@ -42,6 +43,9 @@ module.exports = withPWA({
   pwa: {
     dest: 'public',
     mode: process.env.WORKBOX_MODE || 'production',
+    disable: dev,
+    scope: '/src',
+    runtimeCaching,
   },
   compress: true,
   generateBuildId: async () =>
@@ -61,7 +65,7 @@ module.exports = withPWA({
       dev,
     })
 
-    config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//))
+    config.plugins.push(new webpack.IgnorePlugin(/\/__mocks__\//))
 
     config.resolve.alias = Object.assign({}, config.resolve.alias, {
       ['@app-theme']: resolve(__dirname, `./src/theme/${themeType}`),
