@@ -6,6 +6,7 @@
 
 import React from 'react'
 import { Typography, Tooltip } from '@material-ui/core'
+import Image from 'next/image'
 import { defaultProps } from './defaultProps'
 import type { BadgeProps } from './badge-types'
 
@@ -18,7 +19,7 @@ export const Badge = ({
   label,
   title,
 }: BadgeProps) => {
-  const size = badgeSize === 'small' ? '20' : '32'
+  const size = badgeSize === 'small' ? 20 : 32
 
   const Anchor = ({ children }: { children: any }) => {
     return (
@@ -33,7 +34,7 @@ export const Badge = ({
     )
   }
 
-  const Img = () => <img src={src} height={size} width={size} alt={title} />
+  const Img = () => <Image src={src} height={size} width={size} alt={title} />
 
   if (inline) {
     return (

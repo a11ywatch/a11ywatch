@@ -15,6 +15,7 @@ import {
 import { strings } from '@app-strings'
 import { metaSetter } from '@app/utils'
 import type { PageProps } from '@app/types'
+import NextImage from 'next/image'
 
 const useStyles = makeStyles(({ breakpoints, palette }) => ({
   paper: {
@@ -41,11 +42,13 @@ function Features({ name }: PageProps) {
 
   function Image({ src, alt }: { src: string; alt: string }) {
     return (
-      <img
+      <NextImage
         src={src}
         style={{ maxHeight: '30vh', maxWidth: '20vw' }}
         className='hide-print'
         alt={alt}
+        height={500}
+        width={400}
       />
     )
   }
@@ -68,12 +71,12 @@ function Features({ name }: PageProps) {
             </Heading>
           </Section>
           <Image
-            src='static/img/task_list.svg'
+            src='/static/img/task_list.svg'
             alt={'women and accessible app'}
           />
         </Paper>
         <Paper className={paper}>
-          <Image src='static/img/cloud_files.svg' alt={'cloud stored'} />
+          <Image src='/static/img/cloud_files.svg' alt={'cloud stored'} />
           <Section alignRight>
             <Heading>Auto CDN</Heading>
             <Heading variant='h6' component='h4'>
@@ -90,7 +93,7 @@ function Features({ name }: PageProps) {
       <div className={classes.row}>
         <Paper className={paper}>
           <Image
-            src='static/img/heatmap.svg'
+            src='/static/img/heatmap.svg'
             alt={'website playground to test fixes'}
           />
           <Section>
@@ -112,7 +115,7 @@ function Features({ name }: PageProps) {
               editor.
             </Heading>
           </Section>
-          <Image src='static/img/code_snippets.svg' alt={'code snippets'} />
+          <Image src='/static/img/code_snippets.svg' alt={'code snippets'} />
         </Paper>
       </div>
     </MarketingDrawer>

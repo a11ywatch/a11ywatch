@@ -17,6 +17,7 @@ import {
 import { strings } from '@app-strings'
 import { theme } from '@app-theme'
 import { metaSetter } from '@app/utils'
+import NextImage from 'next/image'
 import type { PageProps } from '@app/types'
 
 const useStyles = makeStyles((t: Theme) => ({
@@ -38,11 +39,12 @@ function RoadMap({ name }: PageProps) {
 
   function Image({ src, alt }: { src: string; alt: string }) {
     return (
-      <img
+      <NextImage
         alt={alt}
         src={src}
-        style={{ maxHeight: '30vh' }}
         className='hide-print'
+        height={350}
+        width={400}
       />
     )
   }
@@ -69,7 +71,7 @@ function RoadMap({ name }: PageProps) {
       <Spacer height={10} />
       <PaperSection row>
         <Image
-          src='static/img/server.svg'
+          src='/static/img/server.svg'
           alt={'javascript fixes from a cdn'}
         />
         <div>
@@ -100,7 +102,7 @@ function RoadMap({ name }: PageProps) {
           </Heading>
         </div>
         <Image
-          src='static/img/type_code.svg'
+          src='/static/img/type_code.svg'
           alt={'edit your code with accuracy'}
         />
       </PaperSection>
@@ -111,7 +113,7 @@ function RoadMap({ name }: PageProps) {
         }}
         row
       >
-        <Image src='static/img/source_code.svg' alt='source code visual' />
+        <Image src='/static/img/source_code.svg' alt='source code visual' />
         <div>
           <Heading>Compilation Fixes</Heading>
           <Heading variant='h6' component='h4' bold={false}>
@@ -137,7 +139,7 @@ function RoadMap({ name }: PageProps) {
           </Heading>
         </div>
         <Image
-          src='static/img/js_frameworks.svg'
+          src='/static/img/js_frameworks.svg'
           alt={'languages supported a variation'}
         />
       </PaperSection>

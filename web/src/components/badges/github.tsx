@@ -15,6 +15,6 @@ export const GithubBadge = (props: BadgeProps) => <Badge {...props} />
 GithubBadge.defaultProps = Object.assign({}, defaultProps, {
   title: 'GitHub',
   label: `${strings.appName} GitHub's organization`,
-  src: `static/img/github.svg`,
+  src: `/static/img/github.svg`,
   href: 'https://github.com/a11ywatch',
 })

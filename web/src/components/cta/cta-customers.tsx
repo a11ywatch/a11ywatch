@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { useMediaQuery } from '@material-ui/core'
 import { strings } from '@app-strings'
 import { useSearch } from '@app/data'
+import Image from 'next/image'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +37,7 @@ export function CtaCustomers() {
   const clickItem = useCallback((item: string) => {
     toggleModal(true, item)
   }, [])
-  const size = useMediaQuery('(min-width:600px)') ? '78' : '25'
+  const size = useMediaQuery('(min-width:600px)') ? 78 : 25
 
   return (
     <section className={classes.root}>
@@ -53,8 +54,8 @@ export function CtaCustomers() {
             aria-label={`Scan ${item} for issues`}
             key={item + i}
           >
-            <img
-              src={`static/img/${item}.svg`}
+            <Image
+              src={`/static/img/${item}.svg`}
               alt={item}
               width={size}
               height={size}

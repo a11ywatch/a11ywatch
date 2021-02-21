@@ -12,5 +12,5 @@ export type BadgeProps = {
   className?: string
   label?: string
   title?: string
-  src?: string
+  src: string
 }

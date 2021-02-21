@@ -5,7 +5,15 @@
  **/
 
 import React from 'react'
+import Image from 'next/image'
 
 export const Logo = () => {
-  return <img src={`static/img/logo.svg`} alt={'A11yWatch logo'} />
+  return (
+    <Image
+      src={`/static/img/logo.svg`}
+      alt={'A11yWatch logo'}
+      width={51}
+      height={30.88}
+    />
+  )
 }
