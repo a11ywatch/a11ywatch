@@ -9,6 +9,7 @@ import validUrl from "valid-url";
 import getPageSpeed from "get-page-speed";
 import { format } from "prettier";
 import { log } from "@a11ywatch/log";
+import { SCRIPTS_CDN_URL } from "@app/config";
 
 import {
   puppetPool,
@@ -134,9 +135,12 @@ export const crawlWebsite = async ({
         url: pageUrl,
         adaScore,
         cdnConnected: pageHasCdn,
-        screenshot: "screenshots/" + cdnJsPath.replace(".js", ".png"),
+        screenshot:
+          SCRIPTS_CDN_URL + "/screenshots/" + cdnJsPath.replace(".js", ".png"),
         screenshotStill: screenshotStill
-          ? "screenshots/" + cdnJsPath.replace(".js", "-still.png")
+          ? SCRIPTS_CDN_URL +
+            "/screenshots/" +
+            cdnJsPath.replace(".js", "-still.png")
           : "",
         pageLoadTime: {
           duration,

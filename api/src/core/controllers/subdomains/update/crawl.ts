@@ -11,7 +11,6 @@ import { log } from "@a11ywatch/log";
 import { pubsub } from "@app/core/graph/subscriptions";
 import { SUBDOMAIN_ADDED, ISSUE_ADDED, WEBSITE_ADDED } from "@app/core/static";
 import { ApiResponse, responseModel } from "@app/core/models";
-import { SCRIPTS_CDN } from "@app/config";
 import { IssuesController } from "../../issues";
 import { ScriptsController } from "../../scripts";
 import { getWebsite } from "../../websites";
@@ -120,7 +119,7 @@ export const crawlWebsite = async ({
           {},
           {
             issuesInfo: webPage?.issuesInfo || {},
-            screenshot: `${SCRIPTS_CDN}${webPage?.screenshot}`,
+            screenshot: webPage?.screenshot,
             lastScanDate: webPage?.lastScanDate,
             adaScore: avgScore,
             cdnConnected: website?.cdnConnected,
