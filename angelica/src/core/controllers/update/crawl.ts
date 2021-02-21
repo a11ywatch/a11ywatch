@@ -37,11 +37,10 @@ export const crawlWebsite = async ({
     return EMPTY_RESPONSE;
   }
 
-  log(`Crawling Website: ${urlMap} `);
-
   let browser = null;
 
   try {
+    log(`Crawling: ${urlMap} user: ${userId}`);
     browser = await puppetPool.acquire();
   } catch (e) {
     log(e, { type: "error" });
