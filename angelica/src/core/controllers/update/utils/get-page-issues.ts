@@ -27,7 +27,7 @@ export const getPageIssues = async ({
     : {};
 
   const conf = Object.assign({}, pa11yConfig, pa11yHeaders, {
-    ignoreUrl: true,
+    ignoreUrl: false,
     page,
     browser,
   });
