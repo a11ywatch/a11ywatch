@@ -60,6 +60,12 @@ function initServer(): HttpServer {
   app.post(CRAWL_WEBSITE, crawlWebsite);
   app.post(SCAN_WEBSITE_ASYNC, scanWebsite);
   app.post(IMAGE_CHECK, cors(), detectImage);
+  app.post(
+    "/admin/website-watch-scan",
+    cors({ origin: process.env.ADMIN_ORIGIN }),
+    websiteWatch
+  );
+
   app.route(WEBSITE_CHECK).get(websiteCrawlAuthed).post(websiteCrawlAuthed);
   app.route(CONFIRM_EMAIL).get(cors(), confirmEmail).post(cors(), confirmEmail);
 

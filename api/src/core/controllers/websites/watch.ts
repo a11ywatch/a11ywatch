@@ -9,11 +9,12 @@ import { sourceBuild, initUrl } from "@a11ywatch/website-source-builder";
 import { TEMP_WATCHER_BLACKLIST } from "@app/config/server";
 import { realUser } from "@app/core/utils";
 import { emailMessager } from "@app/core/messagers";
-import { getWebsitesWithUsers } from "../websites";
 import { crawlWebsite } from "@app/core/controllers/subdomains/update";
+import { log } from "@a11ywatch/log";
+import { getWebsitesWithUsers } from "../websites";
 
 export async function websiteWatch() {
-  console.log("WATCHER SCANNING:");
+  log("WATCHER SCANNING");
   try {
     await fetch(`${process.env.MAV_CLIENT_URL}/api/init`, {
       method: "POST",
@@ -38,11 +39,7 @@ export async function websiteWatch() {
         TEMP_WATCHER_BLACKLIST.includes(domain) ||
         !domain
       ) {
-        console.log(
-          "Watcher request did not run for ",
-          `- user id: ${userId}`,
-          `- domain: ${domain}`
-        );
+        log(`request did not run for - user id: ${userId} - domain: ${domain}`);
       } else {
         if (role === 0) {
           await crawlWebsite({
@@ -72,10 +69,10 @@ export async function websiteWatch() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
         });
-        console.log("WEBSITE WATCHER FINISHED ALL WEBSITES");
+        log("WEBSITE WATCHER FINISHED ALL WEBSITES");
       }
     }
   } catch (e) {
-    console.error(e);
+    log(e, { type: "error" });
   }
 }
