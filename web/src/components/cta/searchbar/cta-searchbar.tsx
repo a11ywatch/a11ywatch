@@ -100,7 +100,9 @@ const useStyles = makeStyles((theme: Theme) =>
         border: 0,
       },
       [theme.breakpoints.down(920)]: {
-        left: 0,
+        ['&:focus']: {
+          width: '100%',
+        },
         position: 'relative',
       },
     },
@@ -111,7 +113,7 @@ const useStyles = makeStyles((theme: Theme) =>
     searchIconFont: {
       fontSize: '4.2rem',
       [theme.breakpoints.down(920)]: {
-        fontSize: '3rem',
+        fontSize: '2.9rem',
       },
     },
     submit: {
@@ -141,6 +143,11 @@ const useStyles = makeStyles((theme: Theme) =>
     relative: {
       position: 'relative',
       paddingLeft: '18%',
+    },
+    formControl: {
+      [theme.breakpoints.down('sm')]: {
+        position: 'absolute',
+      },
     },
   })
 )
@@ -190,7 +197,7 @@ function CtaSearchBar({ children, checker }: any) {
         <div className={classes.searchIcon}>
           <SearchIcon className={classes.searchIconFont} />
         </div>
-        <FormControl fullWidth>
+        <FormControl fullWidth className={classes.formControl}>
           <InputLabel htmlFor='search-input' className={classes.hiddenLabel}>
             Search your website for issues
           </InputLabel>

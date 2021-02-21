@@ -172,7 +172,9 @@ const SignOnForm: FunctionComponent<SignOnProps> = ({ loginView, home }) => {
                     disabled={renderProps.disabled}
                     variant='text'
                     size='small'
-                    startIcon={<GoogleIcon className={classes.iconColor} />}
+                    startIcon={
+                      <GoogleIcon className={classes.iconColor} src={''} />
+                    }
                   >
                     {loginView ? 'Login' : 'Sign up with google'}
                   </Button>

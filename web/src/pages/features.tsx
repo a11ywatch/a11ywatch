@@ -44,7 +44,6 @@ function Features({ name }: PageProps) {
     return (
       <NextImage
         src={src}
-        style={{ maxHeight: '30vh', maxWidth: '20vw' }}
         className='hide-print'
         alt={alt}
         height={500}

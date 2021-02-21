@@ -31,12 +31,12 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: '8vw',
     textAlign: 'left',
     position: 'relative',
-    [theme.breakpoints.down(550)]: {
+    [theme.breakpoints.down('sm')]: {
       wordBreak: 'break-word',
       display: 'block',
       textAlign: 'center',
       paddingLeft: 0,
-      left: '-10px',
+      left: 20,
     },
   },
   smallFont: {

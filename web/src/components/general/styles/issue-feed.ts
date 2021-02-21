@@ -40,7 +40,7 @@ export const issueFeedStyles = makeStyles((theme: MergedTheme) => ({
     display: 'block',
     maxHeight: 'calc(100vh - 48px)',
     [theme.breakpoints.down('sm')]: {
-      maxHeight: '25vh',
+      maxHeight: '50vh',
     },
     paddingTop: 0,
   },

@@ -51,7 +51,6 @@ export function WebsiteTabs({ issues, html, screenshot }: any) {
         onChange={handleChange}
         aria-label='web page tabs to compare problems and fixes'
         variant='fullWidth'
-        fixed
       >
         <Tab label='Insights' {...a11yProps(0)} />
         <Tab label='HTML' {...a11yProps(1)} />
