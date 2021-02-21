@@ -76,10 +76,10 @@ const useStyles = makeStyles((theme) => ({
   block: {
     flex: 1,
     display: 'block',
-    maxHeight: '65vh',
+    height: 'inherit',
     ['& > pre']: {
       overflowY: 'scroll',
-      maxHeight: '65vh',
+      height: 'inherit',
     },
   },
   screenshotContainer: {

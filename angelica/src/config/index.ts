@@ -6,7 +6,7 @@
 
 export {
   DEV,
-  DOCKER_ENV,
+  CDN_URL,
   MAIN_API_URL,
   AI_SERVICE_URL,
   SCRIPTS_CDN_URL_HOST,
