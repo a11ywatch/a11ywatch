@@ -40,7 +40,12 @@ app.prepare().then(() => {
         res.send('')
       }
     } catch (e) {
-      console.error('iframe api endpoint error', e)
+      console.error(
+        dev
+          ? 'check your env variable for IFRAME_URL, if its missing try adding if in docker http://iframe-server:8010 or http://localhost:8010'
+          : 'iframe api endpoint error',
+        e
+      )
       res.send('')
     }
   })

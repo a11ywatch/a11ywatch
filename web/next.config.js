@@ -44,7 +44,6 @@ module.exports = withPWA({
     dest: 'public',
     mode: process.env.WORKBOX_MODE || 'production',
     disable: dev,
-    scope: '/src',
     runtimeCaching,
   },
   compress: true,

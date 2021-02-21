@@ -79,7 +79,8 @@ services:
     env_file:
       - ./web/.env
     volumes:
-      - ./web/src:/usr/src/app/src
+      - ./web/src:/usr/src/app/src'
+      - ./web/server:/usr/src/app/server
       - ./web/public:/usr/src/app/public
       - ./web/next.config.js:/usr/src/app/next.config.js
       - ./web/tsconfig.json:/usr/src/app/tsconfig.json

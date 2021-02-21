@@ -12,4 +12,4 @@ RUN apk --no-cache add --virtual native-deps \
 
 COPY . .
 
-CMD [ "TS_NODE_PROJECT=tsconfig.server.json", "ts-node", "./server/server.ts" ]
+CMD [ "yarn", "dev" ]
