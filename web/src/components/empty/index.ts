@@ -4,4 +4,4 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-export { NoWebsites } from './no-websites'
+export { Failure } from './failure'

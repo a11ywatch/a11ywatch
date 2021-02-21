@@ -11,7 +11,7 @@ import { Container, Box, List } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { VictoryLabel, VictoryTheme, VictoryBar, VictoryChart } from 'victory'
 import { PageTitle, Drawer } from '@app/components/general'
-import { NoWebsites } from '@app/components/empty'
+import { Failure } from '@app/components/empty'
 import { analyticsData, useSearchFilter } from '@app/data'
 import { filterSort } from '@app/lib'
 import { theme } from '@app-theme'
@@ -75,7 +75,7 @@ function Analytics({ name }: PageProps) {
                 </Box>
               </List>
             ) : !loading && !dataSource.length ? (
-              <NoWebsites />
+              <Failure />
             ) : (
               <List>
                 {dataSource?.map((source: any, i: number) => {

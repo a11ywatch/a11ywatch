@@ -8,14 +8,20 @@ import React from 'react'
 import { Typography } from '@material-ui/core'
 import { Box } from '@app/components/general'
 
-export function NoWebsites() {
+export function Failure({
+  title = 'Website failed to load',
+  subTitle = 'Please check your url and try again',
+}: {
+  title?: string
+  subTitle?: string
+}) {
   return (
     <Box>
       <Typography variant='h5' component='h2'>
-        No websites added yet.
+        {title}
       </Typography>
       <Typography variant='subtitle1' component='p'>
-        Go to the dashboard and add a website to get started.
+        {subTitle}
       </Typography>
     </Box>
   )
