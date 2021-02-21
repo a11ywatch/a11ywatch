@@ -4,9 +4,11 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import { log } from "@a11ywatch/log";
+import { log, setConfig as setLogConfig } from "@a11ywatch/log";
 import { websiteWatch } from "./watch-pages";
 import { initDbConnection } from "@app/database";
+
+setLogConfig({ container: "angelica" });
 
 process.on("message", async () => {
   try {

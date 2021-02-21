@@ -33,6 +33,8 @@ export const crawlWebsite = async ({
   pageHeaders,
   authed,
 }) => {
+  console.time("PageCrawl");
+
   if (!validUrl.isUri(urlMap)) {
     return EMPTY_RESPONSE;
   }
@@ -62,11 +64,7 @@ export const crawlWebsite = async ({
     cdnMinJsPath,
   } = sourceBuild(urlMap);
 
-  let resolver = {
-    webPage: null,
-    issues: null,
-    script: null,
-  };
+  let resolver = EMPTY_RESPONSE;
 
   const [validPage] = await goToPage(page, urlMap, browser);
 
@@ -82,12 +80,14 @@ export const crawlWebsite = async ({
       pageHeaders,
     });
 
+    console.time("Screenshot");
     const [screenshot, screenshotStill] = await Promise.all([
       page.screenshot({ fullPage: true }),
       process.env.BACKUP_IMAGES
         ? page.screenshot({ fullPage: false })
-        : undefined,
+        : Promise.resolve(undefined),
     ]);
+    console.timeEnd("Screenshot");
 
     const pageHasCdn = await checkCdn({ page, cdnMinJsPath, cdnJsPath });
     const [html, duration] = await grabHtmlSource({
@@ -119,20 +119,15 @@ export const crawlWebsite = async ({
         scriptBody: scriptBuild(scriptProps, true),
         domain,
       });
-      forked.unref();
     }
 
-    const forkedStriped = fork(`${__dirname}/cdn_worker`, [], {
-      detached: true,
-    });
-
-    forkedStriped.send({
+    forked.send({
       cdnSourceStripped,
       domain,
       screenshot,
       screenshotStill,
     });
-    forkedStriped.unref();
+    forked.unref();
 
     const cdn_url = CDN_URL.replace("/api", "");
 
@@ -193,10 +188,12 @@ export const crawlWebsite = async ({
     };
   } catch (e) {
     log(e, { type: "error" });
+    throw e;
   } finally {
     if (browser?.isConnected()) {
       puppetPool.clean(browser, page);
     }
+    console.timeEnd("PageCrawl");
   }
   return resolver;
 };

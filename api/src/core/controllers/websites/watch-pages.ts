@@ -34,6 +34,8 @@ export async function websiteWatch(): Promise<void> {
       const role = item?.role || 0;
       const { domain } = sourceBuild(url);
 
+      console.assert(!!domain, "Domain %n build", "didn't");
+
       if (
         !realUser(userId) ||
         TEMP_WATCHER_BLACKLIST.includes(domain) ||
