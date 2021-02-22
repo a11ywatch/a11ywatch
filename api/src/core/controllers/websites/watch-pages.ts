@@ -14,12 +14,6 @@ import { log } from "@a11ywatch/log";
 import { getWebsitesWithUsers } from "../websites";
 import v8 from "v8";
 
-async function delay() {
-  return new Promise((resolve) => {
-    resolve();
-  });
-}
-
 export async function websiteWatch(): Promise<void> {
   try {
     const stats = v8.getHeapStatistics();
@@ -63,11 +57,16 @@ export async function websiteWatch(): Promise<void> {
         log(`request did not run for - user id: ${userId} - domain: ${domain}`);
       } else {
         if (role === 0) {
-          await crawlWebsite({
-            url,
-            userId,
+          new Promise((resolve: any) => {
+            setImmediate(async () => {
+              resolve(
+                await crawlWebsite({
+                  url,
+                  userId,
+                })
+              );
+            });
           });
-          await delay();
         } else {
           await fetch(`${process.env.WATCHER_CLIENT_URL}/crawl`, {
             method: "POST",
