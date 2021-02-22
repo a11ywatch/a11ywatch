@@ -1,8 +1,8 @@
 {
   "name": "mav",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
-  "description": "tensorflow ai get img alts and more",
+  "description": "ai for generating accessibility fixes",
   "main": "./dist/server.js",
   "scripts": {
     "dev": "nodemon -e js,ts,graphql -r ts-node/register src/server.ts",
@@ -15,10 +15,10 @@
     "node": "14.3.0"
   },
   "dependencies": {
-    "@a11ywatch/log": "^0.2.7",
-    "@tensorflow-models/coco-ssd": "2.0.3",
-    "@tensorflow-models/facemesh": "0.0.3",
-    "@tensorflow-models/mobilenet": "2.0.4",
+    "@a11ywatch/log": "^0.2.8",
+    "@tensorflow-models/coco-ssd": "2.2.1",
+    "@tensorflow-models/facemesh": "0.0.5",
+    "@tensorflow-models/mobilenet": "2.1.0",
     "@tensorflow/tfjs-node-gpu": "1.7.4",
     "body-parser": "1.19.0",
     "canvas": "2.6.1",
