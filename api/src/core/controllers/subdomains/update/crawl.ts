@@ -25,7 +25,6 @@ export const crawlWebsite = async ({
   apiData = false,
 }) => {
   const userId = Number(userIdMap);
-  console.log(`CRAWLING:`, urlMap, `user_id:${userId}`);
 
   if (
     !urlMap ||
@@ -47,6 +46,7 @@ export const crawlWebsite = async ({
 
   return await new Promise(async (resolve) => {
     try {
+      log(`ANGELICA SCAN:`, urlMap, `user_id:${userId}`);
       const dataSource = await fetchPuppet({
         pageHeaders: website?.pageHeaders,
         url: urlMap,

@@ -12,10 +12,23 @@ import { emailMessager } from "@app/core/messagers";
 import { crawlWebsite } from "@app/core/controllers/subdomains/update";
 import { log } from "@a11ywatch/log";
 import { getWebsitesWithUsers } from "../websites";
+import v8 from "v8";
 
 export async function websiteWatch(): Promise<void> {
-  log("WATCHER SCANNING");
   try {
+    log("WATCHER SCANNING");
+    const stats = v8.getHeapStatistics();
+
+    if (
+      stats.total_heap_size * 0.2 >
+      stats.total_heap_size - stats.used_heap_size
+    ) {
+      log("Server memory near peak failed to run all website crawl", {
+        type: "error",
+      });
+      return Promise.resolve(undefined);
+    }
+
     await fetch(`${process.env.MAV_CLIENT_URL}/api/init`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
