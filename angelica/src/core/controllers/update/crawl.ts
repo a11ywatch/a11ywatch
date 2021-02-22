@@ -66,13 +66,12 @@ export const crawlWebsite = async ({
 
   let resolver = Object.assign({}, EMPTY_RESPONSE);
 
-  const [validPage] = await goToPage(page, urlMap, browser);
-
-  if (!validPage) {
-    return EMPTY_RESPONSE;
-  }
-
   try {
+    const [validPage] = await goToPage(page, urlMap, browser);
+
+    if (!validPage) {
+      return EMPTY_RESPONSE;
+    }
     const [issues, issueMeta] = await getPageIssues({
       urlPage: pageUrl,
       page,
@@ -121,17 +120,13 @@ export const crawlWebsite = async ({
       });
     }
 
-    const forkedSS = fork(`${__dirname}/cdn_worker`, [], {
-      detached: true,
-    });
-
-    forkedSS.send({
+    forked.send({
       cdnSourceStripped,
       domain,
       screenshot,
       screenshotStill,
     });
-    forkedSS.unref();
+    forked.unref();
 
     const cdn_url = CDN_URL.replace("/api", "");
 

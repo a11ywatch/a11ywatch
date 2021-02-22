@@ -14,15 +14,21 @@ import { log } from "@a11ywatch/log";
 import { getWebsitesWithUsers } from "../websites";
 import v8 from "v8";
 
+async function delay() {
+  return new Promise((resolve) => {
+    resolve();
+  });
+}
+
 export async function websiteWatch(): Promise<void> {
   try {
     const stats = v8.getHeapStatistics();
 
     if (
-      stats.total_heap_size * 0.2 <
+      stats.total_heap_size * 0.4 <
       stats.total_heap_size - stats.used_heap_size
     ) {
-      log("Server memory near peak failed to run all website crawl", {
+      log("Server memory near peak, failed to run all website crawl", {
         type: "error",
       });
       return Promise.resolve(undefined);
@@ -43,7 +49,7 @@ export async function websiteWatch(): Promise<void> {
       const item = allWebPages[websiteIterator];
       const userId = item?.userId;
       const url = item?.url;
-      const role = item?.role || 0;
+      const role = item?.role ?? 0;
       const { domain } = sourceBuild(url);
 
       console.assert(!!domain, "Domain %n build", "didn't");
@@ -61,6 +67,7 @@ export async function websiteWatch(): Promise<void> {
             url,
             userId,
           });
+          await delay();
         } else {
           await fetch(`${process.env.WATCHER_CLIENT_URL}/crawl`, {
             method: "POST",
