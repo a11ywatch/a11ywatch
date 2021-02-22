@@ -70,8 +70,8 @@ const goToPage = async (
 
   try {
     await page?.goto(url, {
-      timeout: retryCount === 0 ? 20000 : 5000,
-      waitUntil: "networkidle2",
+      timeout: retryCount === 0 ? 15000 : 5000,
+      waitUntil: "domcontentloaded",
     });
   } catch (e) {
     console.error(e);
