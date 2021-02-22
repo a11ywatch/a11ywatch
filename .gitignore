@@ -40,3 +40,4 @@ npm-debug.log
 
 # bin
 .bin
+.vscode

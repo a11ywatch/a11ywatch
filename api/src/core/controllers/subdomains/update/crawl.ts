@@ -46,7 +46,7 @@ export const crawlWebsite = async ({
 
   return await new Promise(async (resolve) => {
     try {
-      log(`ANGELICA SCAN:`, urlMap, `user_id:${userId}`);
+      log(`ANGELICA SCAN: ${pageUrl} user_id:${userId}`);
       const dataSource = await fetchPuppet({
         pageHeaders: website?.pageHeaders,
         url: urlMap,

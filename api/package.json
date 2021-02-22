@@ -16,7 +16,7 @@
     "node": "v12.x"
   },
   "dependencies": {
-    "@a11ywatch/log": "^0.2.7",
+    "@a11ywatch/log": "^0.2.8",
     "@a11ywatch/website-source-builder": "^0.0.4",
     "apollo-server": "2.9.7",
     "apollo-server-express": "2.9.7",

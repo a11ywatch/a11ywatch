@@ -18,11 +18,11 @@ const puppetPool = {
     try {
       const stream = v8.getHeapStatistics();
       if (
-        stream.total_heap_size * 0.3 >
+        stream.total_heap_size * 0.4 <
         stream.total_heap_size - stream.used_heap_size
       ) {
-        console.warn("heap low wait for event");
-        return setImmediatePromise(puppeteerPool.acquire);
+        log("os heap to low to grab puppet pool", { type: "error" });
+        return await setImmediatePromise(puppeteerPool.acquire);
       }
 
       return await puppeteerPool.acquire();

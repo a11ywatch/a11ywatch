@@ -16,11 +16,10 @@ import v8 from "v8";
 
 export async function websiteWatch(): Promise<void> {
   try {
-    log("WATCHER SCANNING");
     const stats = v8.getHeapStatistics();
 
     if (
-      stats.total_heap_size * 0.2 >
+      stats.total_heap_size * 0.2 <
       stats.total_heap_size - stats.used_heap_size
     ) {
       log("Server memory near peak failed to run all website crawl", {
@@ -48,6 +47,7 @@ export async function websiteWatch(): Promise<void> {
       const { domain } = sourceBuild(url);
 
       console.assert(!!domain, "Domain %n build", "didn't");
+      console.log(`Watcher scanning url ${url}`);
 
       if (
         !realUser(userId) ||
