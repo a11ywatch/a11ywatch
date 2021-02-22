@@ -4,7 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Button, Typography } from '@material-ui/core'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { strings } from '@app-strings'
@@ -54,15 +54,15 @@ function CtaCdn({ website, block }: any) {
     : 'Gathering details'
 
   const cdnTitle = shouldBlock
-    ? `Login to fix ${possibleIssuesFixedByCdn} out of ${totalIssuesOnPage} issues instantly with a custom secure cdn for the current page for free`
+    ? `Login to fix ${possibleIssuesFixedByCdn} out of ${totalIssuesOnPage} issues instantly with a custom secure cdn free`
     : `Fix ${possibleIssuesFixedByCdn} out of ${totalIssuesOnPage} issues instantly ${strings.tryOutCdn} `
 
   const moreInfo = shouldBlock
-    ? `Get all your pages issues at once and more after signing in. `
+    ? `Get all your pages issues at once and more after signing in`
     : ''
 
   return (
-    <>
+    <Fragment>
       <span className={classes.row} style={{ marginTop: 12 }}>
         <Typography
           component='span'
@@ -109,7 +109,7 @@ function CtaCdn({ website, block }: any) {
       {hasWebsite === 0 ? (
         <Typography>No issues found, great job!</Typography>
       ) : null}
-    </>
+    </Fragment>
   )
 }
 

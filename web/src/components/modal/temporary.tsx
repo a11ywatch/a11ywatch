@@ -117,12 +117,12 @@ export function SwipeableTemporaryDrawer() {
           <Spacer height={4} />
         </div>
         {Object.keys(website).length <= 1 ? (
-          <Fragment>
+          <div style={{ width: '100%' }}>
             <div className={classes.loading} role='presentation'>
               <ListSkeleton avatar={false} subTitle={false} />
             </div>
-            <ListSkeleton count={6} avatar={false} />
-          </Fragment>
+            <ListSkeleton count={8} avatar={false} />
+          </div>
         ) : (
           <WebsiteTabs
             issues={<IssueFeed website={website} renderListOnly />}
