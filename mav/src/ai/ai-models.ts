@@ -6,8 +6,6 @@
 
 import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
-// const facemesh = require("@tensorflow-models/facemesh");
-import { log } from "@a11ywatch/log";
 
 import {
   CLEAR_MODELS,
@@ -55,7 +53,7 @@ const aiModels = {
         return cocoaSDModel;
       }
     } catch (e) {
-      log(e, { type: "error" });
+      console.log(e);
       if (retry === 0) {
         this.initcocoSSD(1);
       }
