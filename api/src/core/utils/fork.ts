@@ -9,4 +9,5 @@ const forked = fork(`${__dirname}/worker`, [], { detached: true });
 
 export const forkProcess = ({ urlMap, userId }: any) => {
   forked.send({ urlMap, userId });
+  forked.unref();
 };
