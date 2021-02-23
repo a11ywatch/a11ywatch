@@ -6,8 +6,9 @@
 
 import { fork } from "child_process";
 
+const forked = fork(`${__dirname}/watch-forked`, [], { detached: true });
+
 export const websiteWatch = (_?: any, res?: any): any => {
-  const forked = fork(`${__dirname}/watch-forked`, [], { detached: true });
   forked.send({});
   forked.unref();
   if (res && "send" in res) {

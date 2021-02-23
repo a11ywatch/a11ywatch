@@ -9,6 +9,10 @@ import { skipNavigationMethod, scriptBuild } from "@app/core/lib";
 import { sourceBuild } from "@a11ywatch/website-source-builder";
 import { log } from "@a11ywatch/log";
 
+const forked = fork(`${__dirname}/cdn_worker`, [], {
+  detached: true,
+});
+
 export const adjustScript = async ({
   userId,
   url: urlMap,
@@ -16,9 +20,7 @@ export const adjustScript = async ({
 }) => {
   const enabledSkip = resolver?.scriptMeta?.skipContentEnabled;
   const { domain, cdnSourceStripped } = sourceBuild(urlMap);
-  const forked = fork(`${__dirname}/cdn_worker`, [], {
-    detached: true,
-  });
+
   try {
     let scriptBody = resolver?.script;
 

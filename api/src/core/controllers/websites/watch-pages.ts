@@ -15,9 +15,8 @@ import { getWebsitesWithUsers } from "../websites";
 import v8 from "v8";
 
 export async function websiteWatch(): Promise<void> {
+  const stats = v8.getHeapStatistics();
   try {
-    const stats = v8.getHeapStatistics();
-
     if (
       stats.total_heap_size * 0.4 <
       stats.total_heap_size - stats.used_heap_size
@@ -46,7 +45,6 @@ export async function websiteWatch(): Promise<void> {
       const role = item?.role ?? 0;
       const { domain } = sourceBuild(url);
 
-      console.assert(!!domain, "Domain %n build", "didn't");
       console.log(`Watcher scanning url ${url}`);
 
       if (

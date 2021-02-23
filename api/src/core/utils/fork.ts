@@ -5,8 +5,8 @@
  **/
 import { fork } from "child_process";
 
-export const forkProcess = ({ urlMap, userId }: any) => {
-  const forked = fork(`${__dirname}/worker`, [], { detached: true });
+const forked = fork(`${__dirname}/worker`, [], { detached: true });
 
+export const forkProcess = ({ urlMap, userId }: any) => {
   forked.send({ urlMap, userId });
 };

@@ -21,6 +21,10 @@ import type { IssueData } from "@app/types";
 import { sourceBuild } from "@a11ywatch/website-source-builder";
 import { loopIssues, getPageIssues, goToPage } from "./utils";
 
+const forked = fork(`${__dirname}/cdn_worker`, [], {
+  detached: true,
+});
+
 const EMPTY_RESPONSE = {
   webPage: null,
   issues: null,
@@ -107,10 +111,6 @@ export const crawlWebsite = async ({
       domain,
       cdnSrc: cdnSourceStripped,
     };
-
-    const forked = fork(`${__dirname}/cdn_worker`, [], {
-      detached: true,
-    });
 
     if (authed) {
       forked.send({
