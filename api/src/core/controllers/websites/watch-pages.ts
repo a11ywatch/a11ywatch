@@ -5,14 +5,15 @@
  **/
 
 import fetch from "node-fetch";
-import { sourceBuild, initUrl } from "@a11ywatch/website-source-builder";
+import v8 from "v8";
+import { initUrl } from "@a11ywatch/website-source-builder";
 import { TEMP_WATCHER_BLACKLIST } from "@app/config/server";
 import { realUser } from "@app/core/utils";
 import { emailMessager } from "@app/core/messagers";
 import { crawlWebsite } from "@app/core/controllers/subdomains/update";
 import { log } from "@a11ywatch/log";
 import { getWebsitesWithUsers } from "../websites";
-import v8 from "v8";
+import { getPageItem } from "./utils";
 
 export async function websiteWatch(): Promise<void> {
   const stats = v8.getHeapStatistics();
@@ -39,13 +40,11 @@ export async function websiteWatch(): Promise<void> {
       websiteIterator < allWebPages.length;
       websiteIterator++
     ) {
-      const item = allWebPages[websiteIterator];
-      const userId = item?.userId;
-      const url = item?.url;
-      const role = item?.role ?? 0;
-      const { domain } = sourceBuild(url);
+      const { domain, userId, url, role } = getPageItem(
+        allWebPages[websiteIterator]
+      );
 
-      console.log(`Watcher scanning url ${url}`);
+      console.log(`Page watcher scanning url ${url}`);
 
       if (
         !realUser(userId) ||
@@ -55,15 +54,9 @@ export async function websiteWatch(): Promise<void> {
         log(`request did not run for - user id: ${userId} - domain: ${domain}`);
       } else {
         if (role === 0) {
-          new Promise((resolve: any) => {
-            setImmediate(async () => {
-              resolve(
-                await crawlWebsite({
-                  url,
-                  userId,
-                })
-              );
-            });
+          await crawlWebsite({
+            url,
+            userId,
           });
         } else {
           await fetch(`${process.env.WATCHER_CLIENT_URL}/crawl`, {

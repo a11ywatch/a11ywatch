@@ -5,10 +5,10 @@
  **/
 
 import { log, setConfig as setLogConfig } from "@a11ywatch/log";
-import { websiteWatch } from "./watch-pages";
 import { initDbConnection } from "@app/database";
+import { websiteWatch } from "./watch-pages";
 
-setLogConfig({ container: "angelica" });
+setLogConfig({ container: "api" });
 
 process.on("message", async () => {
   try {

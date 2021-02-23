@@ -15,7 +15,7 @@
     "node": "14.3.0"
   },
   "dependencies": {
-    "@a11ywatch/log": "^0.2.8",
+    "@a11ywatch/log": "^0.2.9",
     "@tensorflow-models/coco-ssd": "2.2.1",
     "@tensorflow-models/facemesh": "0.0.5",
     "@tensorflow-models/mobilenet": "2.1.0",
