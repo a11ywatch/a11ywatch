@@ -11,5 +11,10 @@ export const forkProcess = ({ urlMap, userId }: any) => {
   });
   forked.send({ urlMap, userId });
   forked.unref();
-  forked.kill("SIGINT");
+
+  forked.on("message", (message: string) => {
+    if (message === "close") {
+      forked.kill("SIGINT");
+    }
+  });
 };

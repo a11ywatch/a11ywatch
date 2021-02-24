@@ -16,5 +16,7 @@ process.on("message", async () => {
     await websiteWatch();
   } catch (e) {
     log(e, { type: "error" });
+  } finally {
+    process.send("close");
   }
 });

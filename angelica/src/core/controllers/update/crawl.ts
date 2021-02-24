@@ -21,10 +21,6 @@ import type { IssueData } from "@app/types";
 import { sourceBuild } from "@a11ywatch/website-source-builder";
 import { loopIssues, getPageIssues, goToPage } from "./utils";
 
-const forked = fork(`${__dirname}/cdn_worker`, [], {
-  detached: true,
-});
-
 const EMPTY_RESPONSE = {
   webPage: null,
   issues: null,
@@ -112,6 +108,10 @@ export const crawlWebsite = async ({
       cdnSrc: cdnSourceStripped,
     };
 
+    const forked = fork(`${__dirname}/cdn_worker`, [], {
+      detached: true,
+    });
+
     if (authed) {
       forked.send({
         cdnSourceStripped,
@@ -127,6 +127,12 @@ export const crawlWebsite = async ({
       screenshotStill,
     });
     forked.unref();
+
+    forked.on("message", (message: string) => {
+      if (message === "close") {
+        forked.kill("SIGINT");
+      }
+    });
 
     const cdn_url = CDN_URL.replace("/api", "");
 

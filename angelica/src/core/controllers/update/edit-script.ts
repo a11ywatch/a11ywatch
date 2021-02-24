@@ -10,10 +10,6 @@ import { scriptBuild } from "@app/core/lib";
 import { sourceBuild } from "@a11ywatch/website-source-builder";
 import { log } from "@a11ywatch/log";
 
-const forked = fork(`${__dirname}/cdn_worker`, [], {
-  detached: true,
-});
-
 export const editScript = async ({
   userId,
   url: urlMap,
@@ -27,7 +23,9 @@ export const editScript = async ({
       semi: true,
       parser: "html",
     });
-
+    const forked = fork(`${__dirname}/cdn_worker`, [], {
+      detached: true,
+    });
     forked.send({
       cdnSourceStripped,
       scriptBody: scriptBuild(
@@ -43,6 +41,11 @@ export const editScript = async ({
       domain: domain || resolver?.domain,
     });
     forked.unref();
+    forked.on("message", (message: string) => {
+      if (message === "close") {
+        forked.kill("SIGINT");
+      }
+    });
   } catch (e) {
     log(e, { type: "error" });
   }

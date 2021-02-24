@@ -11,7 +11,12 @@ export const websiteWatch = (_?: any, res?: any): any => {
     const forked = fork(`${__dirname}/watch-forked`, [], { detached: true });
     forked.send({});
     forked.unref();
-    forked.kill("SIGINT");
+
+    forked.on("message", (message: string) => {
+      if (message === "close") {
+        forked.kill("SIGINT");
+      }
+    });
 
     if (res && "send" in res) {
       res.send(true);

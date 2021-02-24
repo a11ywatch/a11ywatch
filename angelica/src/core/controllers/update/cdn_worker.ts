@@ -38,6 +38,8 @@ process.on(
       });
     } catch (e) {
       log(e, { type: "error" });
+    } finally {
+      process.send("close");
     }
   }
 );

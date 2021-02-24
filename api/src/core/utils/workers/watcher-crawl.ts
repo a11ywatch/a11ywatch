@@ -22,5 +22,7 @@ process.on("message", ({ urlMap, userId }) => {
     });
   } catch (e) {
     console.error(e);
+  } finally {
+    process.send("close");
   }
 });
