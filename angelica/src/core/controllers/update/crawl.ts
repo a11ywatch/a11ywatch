@@ -42,7 +42,6 @@ export const crawlWebsite = async ({
   let browser = null;
 
   try {
-    log(`Crawling: ${urlMap} user: ${userId}`);
     browser = await puppetPool.acquire();
   } catch (e) {
     log(e, { type: "error" });
@@ -67,17 +66,24 @@ export const crawlWebsite = async ({
   let resolver = Object.assign({}, EMPTY_RESPONSE);
 
   try {
+    log(`Crawling: ${urlMap} user: ${userId}`);
+
+    console.time(`GoToPage ${urlMap}`);
     const [validPage] = await goToPage(page, urlMap, browser);
+    console.timeEnd(`GoToPage ${urlMap}`);
 
     if (!validPage) {
       return EMPTY_RESPONSE;
     }
+
+    console.time(`GetPageIssues ${urlMap}`);
     const [issues, issueMeta] = await getPageIssues({
       urlPage: pageUrl,
       page,
       browser,
       pageHeaders,
     });
+    console.timeEnd(`GetPageIssues ${urlMap}`);
 
     console.time(`Screenshot ${urlMap}`);
     const [screenshot, screenshotStill] = await Promise.all([
@@ -88,11 +94,17 @@ export const crawlWebsite = async ({
     ]);
     console.timeEnd(`Screenshot ${urlMap}`);
 
+    console.time(`CheckCdn ${urlMap}`);
     const pageHasCdn = await checkCdn({ page, cdnMinJsPath, cdnJsPath });
+    console.timeEnd(`CheckCdn ${urlMap}`);
+
+    console.time(`GrabHtml ${urlMap}`);
     const [html, duration] = await grabHtmlSource({
       page,
     });
+    console.timeEnd(`GrabHtml ${urlMap}`);
 
+    console.time(`LoopIssues ${urlMap}`);
     const {
       errorCount,
       warningCount,
@@ -101,6 +113,7 @@ export const crawlWebsite = async ({
       scriptChildren,
       possibleIssuesFixedByCdn,
     } = await loopIssues({ page, issues });
+    console.timeEnd(`LoopIssues ${urlMap}`);
 
     const scriptProps = {
       scriptChildren,
@@ -193,7 +206,6 @@ export const crawlWebsite = async ({
     };
   } catch (e) {
     log(e, { type: "error" });
-    throw e;
   } finally {
     if (browser?.isConnected()) {
       puppetPool.clean(browser, page);
