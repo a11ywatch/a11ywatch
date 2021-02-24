@@ -7,10 +7,16 @@
 import { fork } from "child_process";
 
 export const websiteWatch = (_?: any, res?: any): any => {
-  const forked = fork(`${__dirname}/watch-forked`, [], { detached: true });
-  forked.send({});
-  forked.unref();
-  if (res && "send" in res) {
-    res.send(true);
+  try {
+    const forked = fork(`${__dirname}/watch-forked`, [], { detached: true });
+    forked.send({});
+    forked.unref();
+    forked.kill("SIGINT");
+
+    if (res && "send" in res) {
+      res.send(true);
+    }
+  } catch (e) {
+    console.error(e);
   }
 };

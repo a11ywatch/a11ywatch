@@ -5,9 +5,11 @@
  **/
 import { fork } from "child_process";
 
-const forked = fork(`${__dirname}/worker`, [], { detached: true });
-
 export const forkProcess = ({ urlMap, userId }: any) => {
+  const forked = fork(`${__dirname}/workers/watcher-crawl`, [], {
+    detached: true,
+  });
   forked.send({ urlMap, userId });
   forked.unref();
+  forked.kill("SIGINT");
 };
