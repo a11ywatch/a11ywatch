@@ -4,10 +4,4 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-export {
-  getWebsitesCrawler,
-  getWebsitesWithUsers,
-  getWebsite,
-  getWebsites,
-  getWebsitesDaily,
-} from "./get";
+export { MarketingWebsites } from './marketing-websites'

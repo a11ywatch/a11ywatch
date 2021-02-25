@@ -12,7 +12,7 @@ import type { PageProps } from '@app/types'
 
 function WebAccessibility({ name }: PageProps) {
   const checklistLinks = [
-    { href: 'https://a11yproject.com/checklist/' },
+    { href: 'https://a11yproject.com/checklist' },
     {
       href:
         'https://medium.com/@krisrivenburgh/the-ada-checklist-website-compliance-guidelines-for-2019-in-plain-english-123c1d58fad9',
@@ -30,6 +30,7 @@ function WebAccessibility({ name }: PageProps) {
   }
 
   const bold = { fontWeight: 600 }
+
   return (
     <MarketingDrawer title={name}>
       <PageTitle>Web Accessibility</PageTitle>
@@ -120,12 +121,12 @@ function WebAccessibility({ name }: PageProps) {
       </Typography>
       <List>
         <ListItem
-          href={'https://chakra-ui.com/'}
+          href={'https://chakra-ui.com'}
           component={'a'}
           target='_blank'
           style={linkStyle}
         >
-          https://chakra-ui.com/
+          https://chakra-ui.com
         </ListItem>
         <ListItem
           href={
@@ -139,7 +140,7 @@ function WebAccessibility({ name }: PageProps) {
         </ListItem>
       </List>
       <Typography variant='h4' component='h3' gutterBottom style={bold}>
-        Avoid intense animations
+        Avoid Intense Animations
       </Typography>
       <Typography variant='subtitle1' component='p' gutterBottom>
         Animations can be very powerful in describing a message using the right
@@ -191,6 +192,14 @@ function WebAccessibility({ name }: PageProps) {
           style={linkStyle}
         >
           https://www.a11ytips.dev
+        </ListItem>
+        <ListItem
+          href={'https://www.getstark.co'}
+          component={'a'}
+          target='_blank'
+          style={linkStyle}
+        >
+          Stark
         </ListItem>
         <ListItem
           href={

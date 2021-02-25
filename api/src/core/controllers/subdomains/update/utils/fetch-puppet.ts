@@ -9,10 +9,6 @@ import fetch from "node-fetch";
 export const fetchPuppet = async ({
   userId,
   url,
-  firstPage,
-  lastPage,
-  shared,
-  lastShared,
   pageHeaders,
   authed = true,
 }: any) => {
@@ -26,9 +22,6 @@ export const fetchPuppet = async ({
           pageHeaders: pageHeaders && Array(pageHeaders),
           url: String(encodeURIComponent(url)),
           userId: Number(userId),
-          firstPage: Boolean(firstPage),
-          lastPage: Boolean(lastPage),
-          shared: Boolean(shared),
           authed: Boolean(authed),
         }),
         headers: { "Content-Type": "application/json" },

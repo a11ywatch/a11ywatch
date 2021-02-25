@@ -14,13 +14,16 @@ import {
 } from '@app/components/cta'
 import { WithSwipeModal as SwipeableTemporaryDrawer } from '@app/components/adhoc'
 import { withApollo } from '@app/apollo'
+import { MarketingWebsites } from '@app/components/marketing'
+import { API_ENDPOINT } from '@app/configs'
 
-function Index() {
+function Index({ websites }: any) {
   return (
     <>
       <MarketingDrawer navPosition={'relative'}>
         <CtaIntro />
         <CtaVideo />
+        <MarketingWebsites websites={websites} />
         <CtaFeatures />
         <CtaCustomers />
         <Price blockFree />
@@ -29,6 +32,17 @@ function Index() {
       <SwipeableTemporaryDrawer />
     </>
   )
+}
+
+export async function getStaticProps() {
+  const res = await fetch(`${API_ENDPOINT}/getWebsitesDaily`)
+  const websites = await res.json()
+
+  return {
+    props: {
+      websites,
+    },
+  }
 }
 
 export default withApollo(Index)

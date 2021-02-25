@@ -12,17 +12,11 @@ import { getWebsite } from "../../websites";
 import { generateWebsiteAverage } from "./domain";
 import { fetchPuppet, extractPageData } from "./utils";
 
-export const scanWebsite = async ({
-  userId: userIdMap,
-  url: urlMap,
-  firstPage,
-  lastPage,
-  shared,
-}: any) => {
+export const scanWebsite = async ({ userId: userIdMap, url: urlMap }: any) => {
   const userId = Number(!userIdMap && userIdMap !== 0 ? -1 : userIdMap);
   console.log(`SCANNING:`, urlMap, `user_id:${userId}`);
 
-  if (!urlMap || !validUrl.isUri(urlMap)) {
+  if (!validUrl.isUri(urlMap)) {
     return responseModel({ msgType: ApiResponse.NotFound });
   }
 
@@ -52,10 +46,7 @@ export const scanWebsite = async ({
       const dataSource = await fetchPuppet({
         pageHeaders: website?.pageHeaders,
         url: urlMap,
-        userId: userId,
-        firstPage: firstPage,
-        lastPage: lastPage,
-        shared: shared,
+        userId,
         authed: false,
       });
 

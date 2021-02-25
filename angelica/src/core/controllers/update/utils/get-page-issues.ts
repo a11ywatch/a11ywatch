@@ -5,6 +5,7 @@
  **/
 
 import pa11y from "pa11y";
+import { log } from "@a11ywatch/log";
 import { pa11yConfig } from "@app/config";
 import { skipContentCheck } from "@app/core/lib";
 import { skipContentTemplate } from "../templates";
@@ -26,18 +27,19 @@ export const getPageIssues = async ({
       }
     : {};
 
-  const conf = Object.assign({}, pa11yConfig, pa11yHeaders, {
-    ignoreUrl: false,
-    page,
-    browser,
-  });
-
   try {
-    const issues = await pa11y(urlPage, conf);
+    const issues = await pa11y(
+      urlPage,
+      Object.assign({}, pa11yConfig, pa11yHeaders, {
+        ignoreUrl: true,
+        page,
+        browser,
+      })
+    );
     const skipContentIncluded = await skipContentCheck({ page });
 
     if (issues && !skipContentIncluded) {
-      if (issues?.issues?.length) {
+      if (issues.issues?.length) {
         issues.issues.push(skipContentTemplate);
       } else {
         issues.issues = [skipContentTemplate];
@@ -51,7 +53,7 @@ export const getPageIssues = async ({
       },
     ];
   } catch (e) {
-    console.log(`Page pa11y: ${e}`);
+    log(e);
     return [{}, { skipContentIncluded: false }];
   }
 };

@@ -24,6 +24,7 @@ import {
   WEBSITE_CRAWL,
   WEBSITE_CHECK,
   UNSUBSCRIBE_EMAILS,
+  GET_WEBSITES_DAILY,
 } from "./core/routes";
 import { initDbConnection, closeDbConnection } from "./database";
 import { Server } from "./apollo-server";
@@ -36,6 +37,7 @@ import {
   scanWebsite,
   websiteCrawl,
   websiteCrawlAuthed,
+  getDailyWebsites,
 } from "./rest/routes";
 import { setConfig as setLogConfig } from "@a11ywatch/log";
 
@@ -55,6 +57,7 @@ function initServer(): HttpServer {
   app.options(WEBSITE_CHECK, cors());
 
   app.get(ROOT, root);
+  app.get(GET_WEBSITES_DAILY, getDailyWebsites);
   app.get(UNSUBSCRIBE_EMAILS, cors(), unSubEmails);
   app.post(WEBSITE_CRAWL, websiteCrawl);
   app.post(CRAWL_WEBSITE, crawlWebsite);

@@ -10,9 +10,7 @@ import { makeStyles, createStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles(() =>
   createStyles({
     container: {
-      position: 'absolute',
-      marginTop: -24,
-      marginLeft: 5,
+      margin: '10px 7px',
       ['& > span']: {
         display: 'inline-block',
         position: 'relative',

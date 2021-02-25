@@ -13,3 +13,4 @@ export {
 } from "./crawl";
 export { detectImage } from "./services";
 export { confirmEmail, unSubEmails } from "./user";
+export { getDailyWebsites } from "./data";

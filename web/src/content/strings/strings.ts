@@ -29,7 +29,7 @@ export const generateStrings = ({
       'Improve your accessibility with our a11y monitor, helper and fixer powered by AI.',
     ctaTryOut: 'Try A11yWatch for free',
     ctaSeeHowItWorks: 'See How It Works',
-    customers: 'Thousands of people use A11yWatch',
+    customers: 'Over 50,000 people trust A11yWatch.',
     customersWhy:
       'See live results on a well known website like twitter, github, and dropbox below.',
     testimonials: [

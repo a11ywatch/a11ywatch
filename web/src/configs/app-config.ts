@@ -9,6 +9,7 @@ const AppConfig = {
   webSocketUrl: process.env.WEB_SOCKET_URL,
   dev: process.env.NODE_ENV !== 'production',
 }
+
 const SCRIPTS_CDN_URL_HOST = process.env.SCRIPTS_CDN_URL_HOST
 const INTERCOM_APPID = process.env.INTERCOM_APPID
 const APP_TYPE = process.env.APP_TYPE || 'main'

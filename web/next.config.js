@@ -45,7 +45,11 @@ module.exports = withPWA({
     dest: 'public',
     mode: process.env.WORKBOX_MODE || 'production',
     disable: dev,
+    scope: '/src',
     runtimeCaching,
+  },
+  images: {
+    domains: [dev ? '127.0.0.1' : process.env.CDN_URL_HOST],
   },
   compress: true,
   generateBuildId: async () =>
