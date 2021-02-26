@@ -49,7 +49,10 @@ module.exports = withPWA({
     runtimeCaching,
   },
   images: {
-    domains: [dev ? '127.0.0.1' : process.env.CDN_URL_HOST],
+    domains: [
+      dev ? '127.0.0.1' : process.env.CDN_URL_HOST,
+      'images.unsplash.com',
+    ],
   },
   compress: true,
   generateBuildId: async () =>

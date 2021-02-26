@@ -11,6 +11,7 @@ import { useMediaQuery } from '@material-ui/core'
 import { strings } from '@app-strings'
 import { useSearch } from '@app/data'
 import Image from 'next/image'
+import { SectionHeading } from '../text'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,9 +42,7 @@ export function CtaCustomers() {
 
   return (
     <section className={classes.root}>
-      <Typography variant='h4' component='h3'>
-        {strings.customers}
-      </Typography>
+      <SectionHeading>{strings.customers}</SectionHeading>
       <Typography variant='h6' component='h4' gutterBottom>
         {strings.customersWhy}
       </Typography>

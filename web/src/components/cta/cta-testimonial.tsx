@@ -7,6 +7,7 @@ import React from 'react'
 import { Avatar, Grid, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { strings } from '@app-strings'
+import Image from 'next/image'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,18 +18,14 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   bigAvatar: {
-    width: '310px',
-    height: '310px',
     display: 'block',
     objectFit: 'contain',
     margin: '0 auto',
     border: '4px solid white',
-    minWidth: '160px',
-    minHeight: '160px',
-    [theme.breakpoints.down('sm')]: {
-      width: '270px',
-      height: '270px',
-    },
+    height: '15vw',
+    width: '15vw',
+    minHeight: '200px',
+    minWidth: '200px',
   },
   title: {
     fontWeight: 'normal',
@@ -57,11 +54,15 @@ export function CtaTestimonial() {
         className={classes.container}
       >
         <Grid item xs={12} sm={6}>
-          <Avatar
-            alt={strings.testimonials[0].who}
-            src='https://images.unsplash.com/photo-1567473433986-94c54e951026?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80'
-            className={classes.bigAvatar}
-          />
+          <Avatar className={classes.bigAvatar} variant='circle'>
+            <Image
+              alt={strings.testimonials[0].who}
+              src='https://images.unsplash.com/photo-1567473433986-94c54e951026?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80'
+              height={310}
+              width={310}
+              quality={100}
+            />
+          </Avatar>
         </Grid>
         <Grid item xs={12} sm={6} container>
           <>

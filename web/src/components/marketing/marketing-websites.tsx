@@ -4,16 +4,17 @@
  * LICENSE file in the root directory of this source tree.
  **/
 import { makeStyles } from '@material-ui/core/styles'
-import { Screenshot } from '../general'
 import { Typography } from '@material-ui/core'
 import { strings } from '@app-strings'
+import { Screenshot } from '../general'
+import { SectionHeading } from '../text'
 
 const useStyles = makeStyles((theme: any) => ({
   container: {
     padding: theme.spacing(2),
     display: 'inline-flex',
     maxWidth: '95vw',
-    maxHeight: '40vh',
+    maxHeight: '75vh',
     overflowY: 'hidden',
     overflowX: 'scroll',
   },
@@ -32,8 +33,9 @@ function MarketingWebsites({ websites }: any) {
 
   return (
     <section className={root}>
-      <Typography variant='h4' component='h3'>
-        {strings.usersUsing}
+      <SectionHeading>{strings.usersUsing}</SectionHeading>
+      <Typography variant='h6' component='p' gutterBottom>
+        Check out some of the pages being used on A11yWatch
       </Typography>
       <div className={container}>
         {websites.map(({ screenshot, url }: any, i: number) => {

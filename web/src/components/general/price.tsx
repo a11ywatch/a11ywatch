@@ -9,6 +9,8 @@ import { Typography, Grid, Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Ribbon } from '@app/components/general'
 import { priceConfig } from '@app/configs'
+import { SectionHeading } from '../text'
+import { Spacer } from './spacer'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -63,6 +65,12 @@ export function Price({
 
   return (
     <>
+      {typeof onClick === 'undefined' ? (
+        <>
+          <SectionHeading>Pricing</SectionHeading>
+          <Spacer />
+        </>
+      ) : null}
       <Grid container spacing={1} className={!onClick ? classes.root : ''}>
         {priceConfig.plans
           .filter((item: any) => {

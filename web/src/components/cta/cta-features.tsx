@@ -8,6 +8,7 @@ import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { strings } from '@app-strings'
 import { makeStyles } from '@material-ui/core/styles'
+import { SectionHeading } from '../text'
 
 import {
   Accessibility as AccessibilityIcon,
@@ -132,9 +133,7 @@ const CtaFeatures = () => {
   return (
     <section className={classes.root}>
       <div>
-        <Typography variant='h4' component='h2'>
-          {strings.headers[2][0]}
-        </Typography>
+        <SectionHeading>{strings.headers[2][0]}</SectionHeading>
         <Typography variant='h6' component='p' gutterBottom>
           {strings.headers[2][1]}
         </Typography>

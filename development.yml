@@ -80,6 +80,7 @@ services:
       - ./web/.env
     volumes:
       - ./web/src:/usr/src/app/src'
+      - ./web/.next:/usr/src/app/.next'
       - ./web/server:/usr/src/app/server
       - ./web/public:/usr/src/app/public
       - ./web/next.config.js:/usr/src/app/next.config.js

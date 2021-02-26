@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     background: 'rgb(33,32,36)',
     overflow: 'hidden',
     maxHeight: '60vh',
-    minWidth: '30%',
+    minWidth: '38%',
     borderRadius: 4,
   },
   screenshotContainer: {
