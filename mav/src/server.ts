@@ -17,7 +17,7 @@ setLogConfig({ container: "mav" });
 const app = express();
 
 app.use(cors(corsOptions));
-app.use(bodyParser.json({ limit: "100mb", extended: true }));
+app.use(bodyParser.json({ limit: "500mb", extended: true }));
 
 app
   .get("/", (req, res) => {
@@ -50,7 +50,7 @@ app
           width: Number(req.body.width),
           height: Number(req.body.height),
         });
-        res.send(JSON.stringify(data));
+        res.json(data);
       } else {
         next();
       }

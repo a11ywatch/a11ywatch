@@ -33,14 +33,7 @@ export const detectImageModel = async (
       headers: { "Content-Type": "application/json" },
     });
     if (data?.status === 200) {
-      const result = await data?.text();
-      return (
-        (result != "null" &&
-          result?.length &&
-          result[0] !== "<" &&
-          JSON.parse(result)) ||
-        null
-      );
+      return await data.json();
     }
   } catch (e) {
     log(e, { type: "error" });

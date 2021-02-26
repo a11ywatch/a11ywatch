@@ -220,8 +220,9 @@ export const crawlWebsite = async ({
           webResponse = {
             website: {
               ...websiteAdded,
+              url: pageUrl,
               issue: slicedIssue,
-              script: null,
+              script,
             },
           };
         }

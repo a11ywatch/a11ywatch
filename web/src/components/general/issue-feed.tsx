@@ -4,14 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 import React, { useState } from 'react'
-import {
-  List,
-  ListItem,
-  Button,
-  Typography,
-  IconButton,
-  Fade,
-} from '@material-ui/core'
+import { List, Button, Typography, IconButton, Fade } from '@material-ui/core'
 import { Close as CloseIcon } from '@material-ui/icons'
 import { printElement } from '@app/utils'
 
@@ -85,10 +78,7 @@ export function IssueFeed({
             )
 
             return (
-              <ListItem
-                component={Issue}
-                key={`${listIndex} ${item?.selector} ${item?.code}`}
-              />
+              <Issue key={`${listIndex} ${item?.selector} ${item?.code}`} />
             )
           })}
         </List>

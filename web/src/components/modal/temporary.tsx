@@ -4,7 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Grid, Typography, Drawer, IconButton } from '@material-ui/core'
 import { Close as CloseIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
@@ -23,11 +23,12 @@ import { ListSkeleton } from '@app/components/placeholders'
 import { CtaCdn } from '@app/components/cta'
 import { strings } from '@app-strings'
 import { EditableMixture } from '@app/components/mixtures/editable-mixture'
+import { useMediaQuery } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   container: {
     padding: theme.spacing(1),
-    width: '23vw',
+    width: '38vw',
     [theme.breakpoints.down('sm')]: {
       width: 'auto',
     },
@@ -83,6 +84,7 @@ const useStyles = makeStyles((theme) => ({
 export function SwipeableTemporaryDrawer() {
   const classes = useStyles()
   const { bottomModal, website, toggleModal } = useSearch()
+  const desktop = useMediaQuery('(min-width:600px)')
 
   const toggleDrawer = (type: any) => () => {
     toggleModal(type, '')
@@ -102,7 +104,18 @@ export function SwipeableTemporaryDrawer() {
           </Grid>
           <RenderSecondary {...website} />
           <CtaCdn website={website} block />
-          <Spacer height={4} />
+          <Spacer height={8} />
+          {website?.script?.script && desktop ? (
+            <Fragment>
+              <Typography variant='h6' component='p' gutterBottom>
+                JS Execution Fixes
+              </Typography>
+              <Spacer height={2} />
+              <EditableMixture language='html' style={a11yDark} editMode>
+                {website?.script?.script || ''}
+              </EditableMixture>
+            </Fragment>
+          ) : null}
         </div>
         {Object.keys(website).length <= 1 ? (
           <div style={{ width: '100%' }}>

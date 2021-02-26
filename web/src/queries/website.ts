@@ -16,6 +16,9 @@ const GET_WEBSITE = gql`
       cdnConnected
       htmlIncluded
       screenshot
+      script {
+        script
+      }
       pageLoadTime {
         duration
         durationFormated

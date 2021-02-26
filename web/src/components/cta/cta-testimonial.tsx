@@ -54,7 +54,7 @@ export function CtaTestimonial() {
         className={classes.container}
       >
         <Grid item xs={12} sm={6}>
-          <Avatar className={classes.bigAvatar} variant='circle'>
+          <Avatar className={classes.bigAvatar} variant='circular'>
             <Image
               alt={strings.testimonials[0].who}
               src='https://images.unsplash.com/photo-1567473433986-94c54e951026?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80'
