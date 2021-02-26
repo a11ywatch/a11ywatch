@@ -23,9 +23,9 @@ function Index({ websites }: any) {
       <MarketingDrawer navPosition={'relative'}>
         <CtaIntro />
         <CtaVideo />
-        <MarketingWebsites websites={websites} />
         <CtaFeatures />
         <CtaCustomers />
+        <MarketingWebsites websites={websites} />
         <Price blockFree />
         <SignOnForm home />
       </MarketingDrawer>

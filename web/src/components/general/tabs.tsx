@@ -37,7 +37,7 @@ function a11yProps(index: number) {
   }
 }
 
-export function WebsiteTabs({ issues, html, screenshot }: any) {
+export function WebsiteTabs({ issues, html, screenshot, playground }: any) {
   const [value, setValue] = useState<number>(0)
 
   const handleChange = (_: any, newValue: number) => {
@@ -55,6 +55,7 @@ export function WebsiteTabs({ issues, html, screenshot }: any) {
         <Tab label='Insights' {...a11yProps(0)} />
         <Tab label='HTML' {...a11yProps(1)} />
         <Tab label='Screenshots' {...a11yProps(2)} />
+        <Tab label='Playground' {...a11yProps(3)} />
       </Tabs>
       <TabPanel value={value} index={0}>
         {issues}
@@ -64,6 +65,9 @@ export function WebsiteTabs({ issues, html, screenshot }: any) {
       </TabPanel>
       <TabPanel value={value} index={2}>
         {screenshot}
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        {playground}
       </TabPanel>
     </div>
   )

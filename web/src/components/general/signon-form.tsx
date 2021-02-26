@@ -140,7 +140,7 @@ const SignOnForm: FunctionComponent<SignOnProps> = ({ loginView, home }) => {
           gutterBottom
           align='center'
         >
-          {(loginView && 'Login') || (home && 'Try for Free') || 'Register'}
+          {(loginView && 'Login') || (home && 'Sign up for free') || 'Register'}
         </Typography>
         <div className={classes.paper}>
           {GOOGLE_CLIENT_ID ? (
@@ -240,7 +240,7 @@ const SignOnForm: FunctionComponent<SignOnProps> = ({ loginView, home }) => {
               </FormControl>
             </div>
             <Button className={classes.submit} type='submit'>
-              {loginView ? 'Login' : 'Create Account'}
+              {loginView ? 'Login' : 'Sign up with email'}
             </Button>
           </form>
           {home ? (

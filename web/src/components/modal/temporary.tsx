@@ -17,6 +17,7 @@ import {
   Spacer,
   WebsiteTabs,
   Screenshot,
+  TestView,
 } from '@app/components/general'
 import { ListSkeleton } from '@app/components/placeholders'
 import { CtaCdn } from '@app/components/cta'
@@ -99,7 +100,7 @@ export function SwipeableTemporaryDrawer() {
         {Object.keys(website).length <= 1 ? (
           <div style={{ width: '100%' }}>
             <div className={classes.loading} role='presentation'>
-              <ListSkeleton avatar={false} subTitle={false} />
+              <ListSkeleton avatar={false} subTitle={false} count={4} />
             </div>
             <ListSkeleton count={8} avatar={false} />
           </div>
@@ -123,6 +124,7 @@ export function SwipeableTemporaryDrawer() {
             screenshot={
               <Screenshot url={website?.url} src={website?.screenshot} />
             }
+            playground={<TestView url={website?.url} marketing />}
           />
         )}
       </div>

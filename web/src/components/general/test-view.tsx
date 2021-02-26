@@ -13,27 +13,31 @@ import { OverlayPortalContainer } from './overlay'
 import { issueData, scriptData } from '@app/data'
 import { HomeManager } from '@app/managers'
 
-const TestViewContainer = observer(({ store, marketing }: any) => {
-  const url = store?.getTestFrameUrl
-  const { issue } = issueData(url)
-  const { script } = scriptData(url)
+const TestViewContainer = observer(
+  ({ url: currentUrl, store, marketing }: any) => {
+    const url = currentUrl ?? store?.getTestFrameUrl
+    const { issue } = issueData(url)
+    const { script } = scriptData(url)
 
+    return (
+      <>
+        <TestOutIframe url={url} issue={issue} />
+        <Fab
+          direction='left'
+          autoFix
+          issue={issue}
+          script={script}
+          marketing={marketing}
+        />
+        <OverlayPortalContainer />
+        <IssueModal issue={issue} />
+      </>
+    )
+  }
+)
+
+export function TestView({ marketing, url }: any) {
   return (
-    <>
-      <TestOutIframe url={url} issue={issue} />
-      <Fab
-        direction='left'
-        autoFix
-        issue={issue}
-        script={script}
-        marketing={marketing}
-      />
-      <OverlayPortalContainer />
-      <IssueModal issue={issue} />
-    </>
+    <TestViewContainer store={HomeManager} marketing={marketing} url={url} />
   )
-})
-
-export function TestView({ marketing }: any) {
-  return <TestViewContainer store={HomeManager} marketing={marketing} />
 }
