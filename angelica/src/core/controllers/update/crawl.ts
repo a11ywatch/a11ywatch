@@ -125,7 +125,7 @@ export const crawlWebsite = async ({
       detached: true,
     });
 
-    if (authed) {
+    if (typeof authed !== "undefined") {
       forked.send({
         cdnSourceStripped,
         scriptBody: scriptBuild(scriptProps, true),

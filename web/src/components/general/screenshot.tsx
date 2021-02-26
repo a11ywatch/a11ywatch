@@ -23,21 +23,19 @@ const useStyles = makeStyles((theme) => ({
   container: {
     background: 'rgb(33,32,36)',
     overflow: 'hidden',
-    maxWidth: '35vw',
     maxHeight: '60vh',
     minWidth: '30%',
+    borderRadius: 4,
   },
   screenshotContainer: {
-    borderRadius: 4,
     overflowY: 'scroll',
-    maxHeight: '60vh',
-    marginLeft: '25vw',
-    marginRight: '25vw',
+    maxHeight: 'inherit',
   },
   resetMargin: {
     marginLeft: 'auto',
     marginRight: 'auto',
     ['& > img']: {
+      maxWidth: '35vw',
       maxHeight: '38vh',
     },
   },
@@ -46,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
   space: {
     marginRight: theme.spacing(2),
+    marginLeft: '0px',
   },
 }))
 

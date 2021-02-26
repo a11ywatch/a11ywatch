@@ -24,10 +24,7 @@ export const crawlWebsite = async ({
   url: urlMap,
   apiData = false,
 }) => {
-  const userId = Number(userIdMap);
-
   if (
-    !urlMap ||
     !validUrl.isUri(urlMap) ||
     (process.env.NODE_ENV === "production" && urlMap?.includes("localhost:"))
   ) {
@@ -35,6 +32,9 @@ export const crawlWebsite = async ({
   }
 
   let { domain, pageUrl } = sourceBuild(urlMap);
+
+  const authenticated = typeof userIdMap !== "undefined";
+  const userId = authenticated ? Number(userIdMap) : null;
 
   let [website, websiteCollection] = await getWebsite(
     {
@@ -50,10 +50,22 @@ export const crawlWebsite = async ({
       const dataSource = await fetchPuppet({
         pageHeaders: website?.pageHeaders,
         url: urlMap,
-        userId: userId,
+        userId,
+        authed: authenticated,
       });
 
       if (dataSource) {
+        if (!dataSource?.webPage) {
+          resolve({
+            website: null,
+            code: 300,
+            success: false,
+            message: `Website timeout exceeded threshhold ${
+              authenticated ? "" : "for free scan"
+            }, website rendered to slow under 15000 ms`,
+          });
+        }
+
         let {
           script,
           issues,
@@ -120,6 +132,7 @@ export const crawlWebsite = async ({
           {
             issuesInfo: webPage?.issuesInfo || {},
             screenshot: webPage?.screenshot,
+            html: webPage.html,
             lastScanDate: webPage?.lastScanDate,
             adaScore: avgScore,
             cdnConnected: website?.cdnConnected,
@@ -187,9 +200,37 @@ export const crawlWebsite = async ({
 
         const websiteAdded = Object.assign({}, website, updateWebsiteProps);
 
-        pubsub.publish(WEBSITE_ADDED, { websiteAdded });
+        if (authenticated) {
+          pubsub.publish(WEBSITE_ADDED, { websiteAdded });
+        }
 
-        resolve(responseModel({ data: apiData ? dataSource : websiteAdded }));
+        let webResponse;
+
+        if (!authenticated) {
+          const slicedIssue =
+            issues?.issues?.slice(
+              issues?.issues.length -
+                Math.max(Math.round(issues?.issues.length / 4), 2)
+            ) || [];
+
+          if (websiteAdded.issuesInfo) {
+            websiteAdded.issuesInfo.limitedCount = slicedIssue.length;
+          }
+
+          webResponse = {
+            website: {
+              ...websiteAdded,
+              issue: slicedIssue,
+              script: null,
+            },
+          };
+        }
+
+        resolve(
+          responseModel(
+            webResponse ?? { data: apiData ? dataSource : websiteAdded }
+          )
+        );
       } else {
         resolve(responseModel());
       }

@@ -65,15 +65,9 @@ export const Mutation = {
       );
     }
   },
-  scanWebsite: async (_, { userId, url, password }, context) => {
-    const { keyid, audience } = context.user?.payload || defaultPayload;
-    const useID =
-      typeof password !== "undefined" && password === process.env.ADMIN_PASS;
-
-    return await context.models.SubDomain.scanWebsite({
-      userId: useID ? userId : keyid,
+  scanWebsite: async (_, { url }, context) => {
+    return await context.models.SubDomain.crawlWebsite({
       url,
-      audience,
     });
   },
   removeWebsite: async (

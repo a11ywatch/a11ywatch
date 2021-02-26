@@ -71,6 +71,13 @@ const useStyles = makeStyles((theme) => ({
     display: 'block',
     height: '100%',
   },
+  center: {
+    display: 'flex',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+  },
 }))
 
 export function SwipeableTemporaryDrawer() {
@@ -122,7 +129,9 @@ export function SwipeableTemporaryDrawer() {
               </div>
             }
             screenshot={
-              <Screenshot url={website?.url} src={website?.screenshot} />
+              <div className={classes.center}>
+                <Screenshot url={website?.url} src={website?.screenshot} />
+              </div>
             }
             playground={<TestView url={website?.url} marketing />}
           />
