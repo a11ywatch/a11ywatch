@@ -2,7 +2,7 @@
 
 [![A11yWatch](https://circleci.com/gh/A11yWatch/a11ywatch.svg?style=svg)](https://circleci.com/gh/A11yWatch/a11ywatch)[![Maintainability](https://api.codeclimate.com/v1/badges/f5fdfe29c6e911f323cf/maintainability)](https://codeclimate.com/github/A11yWatch/a11ywatch/maintainability)[![codecov](https://codecov.io/gh/A11yWatch/a11ywatch/branch/master/graph/badge.svg?token=MBV2LGQO3J)](https://codecov.io/gh/A11yWatch/a11ywatch)
 
-![A11yWatch](web/public/static/img/favicon.png?raw=true "A11yWatch Logo")
+![A11yWatch](https://raw.githubusercontent.com/A11yWatch/Project-Screenshots/master/banner.jpeg?raw=true "A11yWatch Logo")
 
 the tool for accessibility, software productivity, and performance
 
