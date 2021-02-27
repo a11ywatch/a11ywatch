@@ -11,7 +11,7 @@ describePage(
   },
   () => {
     expect(
-      screen.getByRole('button', { name: 'Create Account' })
+      screen.getByRole('button', { name: 'Sign up with email' })
     ).toBeInTheDocument()
   }
 )
