@@ -22,8 +22,8 @@ process.on(
   }) => {
     const headers = { "Content-Type": "application/json" };
     try {
-      Promise.all([
-        await fetch(`${SCRIPTS_CDN_URL}/add-screenshot`, {
+      await Promise.all([
+        fetch(`${SCRIPTS_CDN_URL}/add-screenshot`, {
           method: "POST",
           body: JSON.stringify({
             cdnSourceStripped,
@@ -33,7 +33,7 @@ process.on(
           }),
           headers,
         }),
-        await fetch(`${SCRIPTS_CDN_URL}/add-script`, {
+        fetch(`${SCRIPTS_CDN_URL}/add-script`, {
           method: "POST",
           body: JSON.stringify({
             scriptBuffer,
