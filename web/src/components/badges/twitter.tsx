@@ -17,5 +17,5 @@ TwitterBadge.defaultProps = {
   title: 'Twitter',
   label: `${strings.appName} on Twitter`,
   src: `/static/img/twitter.svg`,
-  href: '/https://twitter.com/A11yWatcher',
+  href: 'https://twitter.com/A11yWatcher',
 }
