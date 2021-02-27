@@ -17,7 +17,8 @@ import {
   MarketingWebsites,
   MarketingTestimonial,
 } from '@app/components/marketing'
-import { API_ENDPOINT } from '@app/configs'
+import { dev, API_ENDPOINT, API_URI_DOCKER } from '@app/configs'
+import { replaceDockerNetwork } from '@a11ywatch/website-source-builder'
 
 function Index({ websites }: any) {
   return (
@@ -40,7 +41,11 @@ function Index({ websites }: any) {
 export async function getStaticProps() {
   let websites: any = []
   try {
-    const res = await fetch(`${API_ENDPOINT}/getWebsitesDaily`)
+    const res = await fetch(
+      `${
+        !process.browser && dev ? API_URI_DOCKER : API_ENDPOINT
+      }/getWebsitesDaily`
+    )
     websites = await res.json()
   } catch (e) {
     console.error(e)

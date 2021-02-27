@@ -7,9 +7,8 @@ services:
       context: ./api
       dockerfile: ./Dockerfile.dev
     volumes:
-      - ./api/src:/usr/src/app/src
-      - ./api/__tests__:/usr/src/app/__tests__
-      - ./api/.env:/usr/src/app/.env
+      - ./api/:/usr/src/app
+      - /usr/src/app/node_modules
     networks:
       - back-net
       - front-net
@@ -26,9 +25,8 @@ services:
       context: ./angelica
       dockerfile: ./Dockerfile.dev
     volumes:
-      - ./angelica/src:/usr/src/app/src
-      - ./angelica/__tests__:/usr/src/app/__tests__
-      - ./angelica/.env:/usr/src/app/.env
+      - ./angelica/:/usr/src/app
+      - /usr/src/app/node_modules
     networks:
       - back-net
     ports:
@@ -42,9 +40,8 @@ services:
       context: ./mav
       dockerfile: ./Dockerfile.dev
     volumes:
-      - ./mav/src:/usr/src/app/src
-      - ./mav/__tests__:/usr/src/app/__tests__
-      - ./mav/.env:/usr/src/app/.env
+      - ./mav/:/usr/src/app
+      - /usr/src/app/node_modules
     networks:
       - back-net
     ports:
@@ -58,8 +55,8 @@ services:
       context: ./logger
       dockerfile: ./Dockerfile.dev
     volumes:
-      - ./logger/src:/usr/src/app/src
-      - ./logger/.env:/usr/src/app/.env
+      - ./logger/:/usr/src/app
+      - /usr/src/app/node_modules
     networks:
       - back-net
     ports:
@@ -81,13 +78,9 @@ services:
     env_file:
       - ./web/.env
     volumes:
-      - ./web/src:/usr/src/app/src'
-      - ./web/.next:/usr/src/app/.next'
-      - ./web/server:/usr/src/app/server
-      - ./web/public:/usr/src/app/public
-      - ./web/next.config.js:/usr/src/app/next.config.js
-      - ./web/tsconfig.json:/usr/src/app/tsconfig.json
-      - ./web/.env:/usr/src/app/.env
+      - ./web/:/usr/src/app
+      - /usr/src/app/node_modules
+      - /usr/src/app/.next
     networks:
       - front-net
     ports:
@@ -122,8 +115,8 @@ services:
       context: ./cdn-server
       dockerfile: ./Dockerfile.dev
     volumes:
-      - ./cdn-server/src:/usr/src/app/src
-      - ./cdn-server/.env:/usr/src/app/.env
+      - ./cdn-server/:/usr/src/app
+      - /usr/src/app/node_modules
     networks:
       - back-net
       - front-net
@@ -138,8 +131,8 @@ services:
       context: ./iframe-server
       dockerfile: ./Dockerfile.dev
     volumes:
-      - ./iframe-server/src:/usr/src/app/src
-      - ./iframe-server/.env:/usr/src/app/.env
+      - ./iframe-server/:/usr/src/app
+      - /usr/src/app/node_modules
     networks:
       - front-net
     ports:

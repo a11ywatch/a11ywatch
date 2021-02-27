@@ -17,7 +17,7 @@ building A11yWatch from source, how to contribute code
 and documentation, who to contact about what, and etc.
 
 If you want to build A11yWatch right away there are multiple options, the easiest way is to use docker:
-Please allocate atleast 6gb of memory and enable kubernetes for the simplest configuration setup.
+Please allocate atleast 6gb of memory.
 
 ##### You have a working [Docker environment].
 

@@ -16,6 +16,8 @@ export {
   STRIPE_KEY,
   SUPER_MODE,
   DONORBOX_URL,
+  API_URI_DOCKER,
+  dev,
 } from './app-config'
 export { Routes, LoggedInRoutes, LOGGIN_ROUTES } from './routes'
 export { features } from './features'
