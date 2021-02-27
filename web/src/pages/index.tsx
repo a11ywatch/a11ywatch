@@ -42,9 +42,12 @@ export async function getStaticProps() {
   try {
     const res = await fetch(
       `${
-        !process.browser && dev ? API_URI_DOCKER : API_ENDPOINT
+        !process.browser && dev
+          ? String(API_URI_DOCKER).replace('graphql', 'api')
+          : API_ENDPOINT
       }/getWebsitesDaily`
     )
+
     websites = await res.json()
   } catch (e) {
     console.error(e)

@@ -40,6 +40,12 @@ const env = Object.assign({}, parsed, {
   INTERCOM_ENABLED: process.env.INTERCOM_ENABLED,
 })
 
+const domains = ['images.unsplash.com', process.env.CDN_URL_HOST]
+
+if (dev) {
+  domains.push('127.0.0.1', 'localhost')
+}
+
 module.exports = withPWA({
   pwa: {
     dest: 'public',
@@ -49,11 +55,7 @@ module.exports = withPWA({
     runtimeCaching,
   },
   images: {
-    domains: [
-      dev ? '127.0.0.1' : '',
-      'images.unsplash.com',
-      process.env.CDN_URL_HOST,
-    ],
+    domains: domains,
   },
   compress: true,
   generateBuildId: async () =>

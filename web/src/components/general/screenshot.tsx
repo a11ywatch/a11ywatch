@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     background: 'rgb(33,32,36)',
     overflow: 'hidden',
     maxHeight: '60vh',
-    minWidth: '42%',
+    minWidth: '35%',
     borderRadius: 4,
   },
   screenshotContainer: {
@@ -69,7 +69,6 @@ export function Screenshot({ src, url, resetMargin, width, height }: any) {
             alt={`screenshot of ${url} tested`}
             width={width ?? 450}
             height={height ?? 500}
-            quality={100}
           />
         </div>
       </div>
