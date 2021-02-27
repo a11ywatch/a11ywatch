@@ -50,8 +50,9 @@ module.exports = withPWA({
   },
   images: {
     domains: [
-      dev ? '127.0.0.1' : process.env.CDN_URL_HOST,
+      dev ? '127.0.0.1' : '',
       'images.unsplash.com',
+      process.env.CDN_URL_HOST,
     ],
   },
   compress: true,

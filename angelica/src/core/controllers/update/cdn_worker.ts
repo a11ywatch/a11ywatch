@@ -18,24 +18,31 @@ process.on(
     domain,
     screenshot,
     screenshotStill,
+    authed,
   }) => {
-    const body = JSON.stringify({
-      scriptBuffer,
-      cdnSourceStripped,
-      domain,
-      screenshot,
-      screenshotStill,
-    });
-
-    const apiEndpoint =
-      typeof screenshot !== "undefined" ? "add-screenshot" : "add-script";
-
+    const headers = { "Content-Type": "application/json" };
     try {
-      await fetch(`${SCRIPTS_CDN_URL}/${apiEndpoint}`, {
-        method: "POST",
-        body,
-        headers: { "Content-Type": "application/json" },
-      });
+      Promise.all([
+        await fetch(`${SCRIPTS_CDN_URL}/add-screenshot`, {
+          method: "POST",
+          body: JSON.stringify({
+            cdnSourceStripped,
+            domain,
+            screenshot,
+            screenshotStill,
+          }),
+          headers,
+        }),
+        await fetch(`${SCRIPTS_CDN_URL}/add-script`, {
+          method: "POST",
+          body: JSON.stringify({
+            scriptBuffer,
+            cdnSourceStripped,
+            domain,
+          }),
+          headers,
+        }),
+      ]);
     } catch (e) {
       log(e, { type: "error" });
     } finally {

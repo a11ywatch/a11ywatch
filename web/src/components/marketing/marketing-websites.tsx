@@ -43,8 +43,8 @@ function MarketingWebsites({ websites }: any) {
             <Screenshot
               url={url}
               src={screenshot}
-              width={600}
-              height={1220}
+              width={495}
+              height={495}
               resetMargin
               key={i}
             />

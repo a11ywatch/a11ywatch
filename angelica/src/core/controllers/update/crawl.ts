@@ -27,12 +27,7 @@ const EMPTY_RESPONSE = {
   script: null,
 };
 
-export const crawlWebsite = async ({
-  userId,
-  url: urlMap,
-  pageHeaders,
-  authed,
-}) => {
+export const crawlWebsite = async ({ userId, url: urlMap, pageHeaders }) => {
   console.time(`PageCrawl ${urlMap}`);
 
   if (!validUrl.isUri(urlMap)) {
@@ -44,7 +39,7 @@ export const crawlWebsite = async ({
   try {
     browser = await puppetPool.acquire();
   } catch (e) {
-    log(e, { type: "error" });
+    log(e?.message, { type: "error" });
   }
 
   let page = null;
@@ -52,7 +47,7 @@ export const crawlWebsite = async ({
   try {
     page = await browser?.newPage();
   } catch (e) {
-    log(e, { type: "error" });
+    log(e?.message, { type: "error" });
   }
 
   const {
@@ -125,19 +120,12 @@ export const crawlWebsite = async ({
       detached: true,
     });
 
-    if (typeof authed !== "undefined") {
-      forked.send({
-        cdnSourceStripped,
-        scriptBody: scriptBuild(scriptProps, true),
-        domain,
-      });
-    }
-
     forked.send({
       cdnSourceStripped,
       domain,
       screenshot,
       screenshotStill,
+      scriptBody: scriptBuild(scriptProps, true),
     });
     forked.unref();
 
@@ -205,7 +193,7 @@ export const crawlWebsite = async ({
       },
     };
   } catch (e) {
-    log(e, { type: "error" });
+    log(e?.message, { type: "error" });
   } finally {
     if (browser?.isConnected()) {
       puppetPool.clean(browser, page);

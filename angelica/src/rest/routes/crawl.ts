@@ -7,12 +7,11 @@ const crawl = async (req, res, next) => {
       url: decodeURIComponent(req.body.url + ""),
       userId: req.body.userId,
       pageHeaders: req.body.pageHeaders,
-      authed: req.body.authed,
     });
 
-    res.send(JSON.stringify(data));
+    res.json(data);
   } catch (e) {
-    log(e, { type: "error" });
+    log(e?.message, { type: "error" });
     next();
   }
 };

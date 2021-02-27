@@ -17,7 +17,7 @@ setLogConfig({ container: "angelica" });
 const app = express();
 
 app.use(cors(corsOptions));
-app.use(bodyParser.json({ limit: "100mb", extended: true }));
+app.use(bodyParser.json({ limit: "500mb", extended: true }));
 
 app.get("/", root);
 app.post("/api/getPageIssues", crawl);

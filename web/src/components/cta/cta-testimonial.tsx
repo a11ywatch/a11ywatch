@@ -24,8 +24,12 @@ const useStyles = makeStyles((theme) => ({
     border: '4px solid white',
     height: '15vw',
     width: '15vw',
-    minHeight: '200px',
-    minWidth: '200px',
+    minHeight: '310px',
+    minWidth: '310px',
+    [theme.breakpoints.down('sm')]: {
+      minHeight: 150,
+      minWidth: 150,
+    },
   },
   title: {
     fontWeight: 'normal',
