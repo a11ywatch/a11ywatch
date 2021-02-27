@@ -32,14 +32,14 @@ const useStyles = makeStyles(() => ({
 }))
 
 export const getType = ({ modalType, html }: any) => {
+  const classes = useStyles()
+
   switch (modalType) {
     case 0:
       return null
     case 1:
       return <EnableNotifications />
     case 2:
-      const classes = useStyles()
-
       return (
         <div className={classes.container}>
           <WithHighlight className={classes.code}>{html}</WithHighlight>
