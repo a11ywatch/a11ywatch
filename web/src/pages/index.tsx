@@ -18,7 +18,6 @@ import {
   MarketingTestimonial,
 } from '@app/components/marketing'
 import { dev, API_ENDPOINT, API_URI_DOCKER } from '@app/configs'
-import { replaceDockerNetwork } from '@a11ywatch/website-source-builder'
 
 function Index({ websites }: any) {
   return (

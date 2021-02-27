@@ -32,7 +32,7 @@ function Consulting({ name }: PageProps) {
 
   return (
     <MarketingDrawer title={name} footerSpacing>
-      <PageTitle>Web Accessibility Consultants</PageTitle>
+      <PageTitle>{strings.consulting}</PageTitle>
       <Typography variant='body1' component='p' gutterBottom>
         {strings.appName} has experts when it comes to accessibility who can
         provide a hands on or off consulting. We provide services amongst web,

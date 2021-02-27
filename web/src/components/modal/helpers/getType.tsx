@@ -39,12 +39,13 @@ export const getType = ({ modalType, html }: any) => {
       return null
     case 1:
       return <EnableNotifications />
-    case 2:
+    case 2: {
       return (
         <div className={classes.container}>
           <WithHighlight className={classes.code}>{html}</WithHighlight>
         </div>
       )
+    }
 
     default:
       return null

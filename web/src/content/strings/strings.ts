@@ -19,6 +19,7 @@ export const generateStrings = ({
     meta,
     title: 'Web Accessibility',
     monitoring: 'Monitoring',
+    consulting: 'Web Accessibility Consultants',
     fixer: 'Fixer',
     helper: 'Helper',
     watcher: 'Watcher',
