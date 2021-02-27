@@ -7,12 +7,12 @@
 const fetch = require("node-fetch");
 const { initUrl } = require("@a11ywatch/website-source-builder");
 
-process.on("message", ({ urlMap, userId }) => {
+process.on("message", async ({ urlMap, userId }) => {
   const url = String(initUrl(urlMap, true));
   console.log("REQUESTING SPIDER DOMAIN SCAN:", url);
 
   try {
-    fetch(`${process.env.WATCHER_CLIENT_URL}/crawl`, {
+    await fetch(`${process.env.WATCHER_CLIENT_URL}/crawl`, {
       method: "POST",
       body: JSON.stringify({
         url,
