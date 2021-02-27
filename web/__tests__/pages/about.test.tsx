@@ -6,6 +6,4 @@
 
 import { strings } from '@app/content/strings/a11y/en'
 
-const name = 'About'
-
-describePage({ folder: name.toLowerCase(), name: `${name} ${strings.appName}` })
+describePage({ folder: 'about' })

@@ -7,7 +7,6 @@ import React, { useRef, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   Paper,
-  Typography,
   TextField,
   Button,
   FormControl,
@@ -15,7 +14,7 @@ import {
 } from '@material-ui/core'
 import { AppManager, UserManager } from '@app/managers'
 import { userData } from '@app/data'
-import { MarketingDrawer } from '@app/components/general'
+import { MarketingDrawer, PageTitle } from '@app/components/general'
 import { withApollo } from '@app/apollo'
 import { useRouter } from 'next/router'
 import { metaSetter } from '@app/utils'
@@ -69,7 +68,7 @@ function ResetPassword({ name }: PageProps) {
 
   const emailRef = useRef(null)
   const resetRef = useRef(null)
-  const resetSent = forgotPasswordData?.forgotPassword?.email === 'true'
+  const resetSent = forgotPasswordData?.forgotPassword?.email == 'true'
   let savedEmail = ''
 
   const title = resetSent ? 'Enter Reset Code' : 'Reset Password'
@@ -123,9 +122,7 @@ function ResetPassword({ name }: PageProps) {
 
   return (
     <MarketingDrawer title={name} footerSpacing>
-      <Typography variant='h2' component={resetSent ? 'h3' : 'h1'} gutterBottom>
-        {title}
-      </Typography>
+      <PageTitle component={resetSent ? 'h3' : 'h1'}>{title}</PageTitle>
       <Paper className={classes.paper}>
         <form autoComplete={resetSent ? 'on' : 'off'} onSubmit={submit}>
           <div>

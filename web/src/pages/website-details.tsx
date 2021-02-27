@@ -14,7 +14,7 @@ import { metaSetter } from '@app/utils'
 
 function WebsiteDetails() {
   const router = useRouter()
-  const { websiteUrl } = router.query
+  const { websiteUrl } = router?.query
   const { issue } = issueData(websiteUrl)
   const { script } = scriptData(websiteUrl)
 

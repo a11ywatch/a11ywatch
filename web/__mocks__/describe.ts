@@ -26,7 +26,12 @@ global.describePage = jest.fn(
             name,
           })
         )
-        expect(screen.getByRole('heading', { name })).toBeInTheDocument()
+        expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
+
+        if (typeof name !== 'undefined') {
+          expect(screen.getByRole('heading', { name })).toBeInTheDocument()
+        }
+
         if (typeof callBack === 'function') {
           jest.fn(callBack)
         }

@@ -4,5 +4,4 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-const name = '404'
-describePage({ folder: name, name })
+describePage({ folder: '404' })

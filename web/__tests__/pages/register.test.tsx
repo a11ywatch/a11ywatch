@@ -4,6 +4,4 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-const name = 'Register'
-
-describePage({ folder: name.toLowerCase(), name })
+describePage({ folder: 'register' })

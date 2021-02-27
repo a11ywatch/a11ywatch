@@ -30,7 +30,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function PageTitle({ title = '', rightButton = false, children }: any) {
+function PageTitle({
+  title = '',
+  rightButton = false,
+  children,
+  component = 'h1',
+}: any) {
   const classes = useStyles()
   const renderTitle = title || children
 
@@ -41,7 +46,11 @@ function PageTitle({ title = '', rightButton = false, children }: any) {
   if (rightButton) {
     return (
       <div className={`${classes.row} ${classes.topBlock}`}>
-        <Typography variant='h4' component='h1' className={classes.title}>
+        <Typography
+          variant='h4'
+          component={component}
+          className={classes.title}
+        >
           {renderTitle}
         </Typography>
         {rightButton}
@@ -51,7 +60,7 @@ function PageTitle({ title = '', rightButton = false, children }: any) {
   return (
     <Typography
       variant='h4'
-      component='h1'
+      component={component}
       className={`${classes.title} ${classes.topBlock}`}
     >
       {renderTitle}
