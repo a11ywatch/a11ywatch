@@ -5,7 +5,7 @@
  **/
 
 import { WEBSITE_EXIST_ERROR, SUCCESS } from "@app/core/strings";
-import { getCollectionLength } from "@app/core/utils";
+import { getLastItemInCollection } from "@app/core/utils";
 import { getDomain } from "../find";
 
 export const addDomain = async ({ userId, url, audience }) => {
@@ -15,7 +15,7 @@ export const addDomain = async ({ userId, url, audience }) => {
     throw new Error(WEBSITE_EXIST_ERROR);
   }
 
-  const lastItem = await getCollectionLength(collection, userId);
+  const lastItem = await getLastItemInCollection(collection, userId);
 
   const website = {
     userId,

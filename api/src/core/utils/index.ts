@@ -12,5 +12,7 @@ export { arrayAverage } from "./calculations";
 export { realUser } from "./getters";
 export { getUser } from "./get-user";
 export { usageExceededThreshold } from "./get-usage";
-export { getCollectionLength } from "./get-collection-length";
+export { getLastItemInCollection } from "./get-last-item-in-collection";
 export { forkProcess } from "./fork";
+export { blockWebsiteAdd } from "./limits";
+export { stripUrlEndingSlash } from "./strip-url-ending-slash";

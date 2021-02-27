@@ -20,6 +20,8 @@ const WebsiteModel = {
   },
   issues: [],
   lastScanDate: new Date().toUTCString(),
+  pageHeaders: null,
+  online: null,
 };
 
 interface Params {

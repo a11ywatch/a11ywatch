@@ -6,7 +6,7 @@
 
 import { connect } from "@app/database";
 import type { Params } from "../types";
-import { websiteSearchParams, getCollectionLength } from "@app/core/utils";
+import { websiteSearchParams, getLastItemInCollection } from "@app/core/utils";
 
 export const getWebsite = async (
   { userId, url, domain }: Params,
@@ -21,9 +21,11 @@ export const getWebsite = async (
         domain,
       })
     );
-    const collectionLength = await getCollectionLength(collection, url);
+    const lastItem = await getLastItemInCollection(collection, url);
 
-    return chain ? [website, collection, collectionLength?.length] : website;
+    return chain
+      ? [website, collection, lastItem?.length ? lastItem[0].id : 0]
+      : website;
   } catch (e) {
     console.error(e);
   }
