@@ -5,3 +5,4 @@
  **/
 
 export { MarketingWebsites } from './marketing-websites'
+export { MarketingTestimonial } from './marketing-testimonial'

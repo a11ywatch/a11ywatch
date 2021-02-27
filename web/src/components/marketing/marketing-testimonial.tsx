@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export function CtaTestimonial() {
+export function MarketingTestimonial(): any {
   const classes = useStyles()
 
   return (

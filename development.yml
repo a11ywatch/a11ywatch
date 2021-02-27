@@ -16,7 +16,8 @@ services:
     ports:
       - "8080:8080"
     restart: on-failure
-
+    depends_on:
+      - mongodb
   angelica:
     container_name: angelica
     env_file: ./angelica/.env
