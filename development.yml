@@ -18,6 +18,7 @@ services:
     restart: on-failure
     depends_on:
       - mongodb
+
   angelica:
     container_name: angelica
     env_file: ./angelica/.env
@@ -178,8 +179,6 @@ services:
       - "27017:27017"
     volumes:
       - mongodb:/data/db
-      - ./dump:/dump
-    command: mongorestore
     environment:
       - MONGO_INITDB_DATABASE=${DB_NAME:-a11ywatch}
 
