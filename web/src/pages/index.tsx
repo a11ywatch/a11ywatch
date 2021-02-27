@@ -38,8 +38,13 @@ function Index({ websites }: any) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch(`${API_ENDPOINT}/getWebsitesDaily`)
-  const websites = await res.json()
+  let websites: any = []
+  try {
+    const res = await fetch(`${API_ENDPOINT}/getWebsitesDaily`)
+    websites = await res.json()
+  } catch (e) {
+    console.error(e)
+  }
 
   return {
     props: {
