@@ -82,8 +82,8 @@ export const getWebsitesDaily = async (_?: any, chain?: boolean) => {
     const [collection] = await connect("Websites");
     const websites = await collection
       .find({
-        screenshot: { $exists: true, $ne: null },
-        adaScore: { $gte: 70 },
+        screenshot: { $exists: true, $ne: undefined },
+        adaScore: { $gte: 80 },
       })
       .project({ screenshot: 1, url: 1, _id: 0 })
       .limit(8)
