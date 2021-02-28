@@ -17,7 +17,7 @@ import {
   MarketingWebsites,
   MarketingTestimonial,
 } from '@app/components/marketing'
-import { dev, API_ENDPOINT, API_URI_DOCKER } from '@app/configs'
+import { dev, DOCKER_ENV, API_ENDPOINT, API_URI_DOCKER } from '@app/configs'
 
 function Index({ websites }: any) {
   return (
@@ -42,7 +42,7 @@ export async function getStaticProps() {
   try {
     const res = await fetch(
       `${
-        !process.browser && dev
+        !process.browser && dev && DOCKER_ENV
           ? String(API_URI_DOCKER).replace('graphql', 'api')
           : API_ENDPOINT
       }/getWebsitesDaily`

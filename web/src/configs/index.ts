@@ -17,6 +17,7 @@ export {
   SUPER_MODE,
   DONORBOX_URL,
   API_URI_DOCKER,
+  DOCKER_ENV,
   dev,
 } from './app-config'
 export { Routes, LoggedInRoutes, LOGGIN_ROUTES } from './routes'

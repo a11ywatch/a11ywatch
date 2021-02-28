@@ -34,6 +34,7 @@ const env = Object.assign({}, parsed, {
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_ANALYTIC_ID: process.env.GOOGLE_ANALYTIC_ID,
   DONORBOX_URL: process.env.DONORBOX_URL,
+  DOCKER_ENV: process.env.DOCKER_ENV,
   // # NEXT.JS REQUIRED EXCLUDES
   NODE_ENV: undefined,
   NODE_MODULES_CACHE: undefined,

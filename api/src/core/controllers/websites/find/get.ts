@@ -85,7 +85,7 @@ export const getWebsitesDaily = async (page?: number, chain?: boolean) => {
     const websites = await collection
       .find({
         screenshot: { $exists: true, $ne: undefined },
-        adaScore: { $gte: 90 },
+        adaScore: { $gte: 50 },
       })
       .skip(page * 8)
       .project({ screenshot: 1, url: 1, _id: 0 })

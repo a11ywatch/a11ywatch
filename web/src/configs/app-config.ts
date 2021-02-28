@@ -25,6 +25,7 @@ const SUPER_MODE = process.env.SUPER_MODE
 const DONORBOX_URL = process.env.DONORBOX_URL
 const INTERCOM_ENABLED = process.env.INTERCOM_ENABLED
 const API_URI_DOCKER = process.env.API_URI_DOCKER
+const DOCKER_ENV = process.env.DOCKER_ENV
 
 export {
   dev,
@@ -40,4 +41,5 @@ export {
   SUPER_MODE,
   DONORBOX_URL,
   INTERCOM_ENABLED,
+  DOCKER_ENV,
 }
