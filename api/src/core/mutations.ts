@@ -41,13 +41,11 @@ export const Mutation = {
     });
   },
   addWebsite,
-  crawlWebsite: async (_, { userId, url, password }, context) => {
+  crawlWebsite: async (_, { userId, url }, context) => {
     const { keyid } = context.user?.payload || defaultPayload;
-    const useID =
-      typeof password !== "undefined" && password === process.env.ADMIN_PASS;
 
     const canScan = await context.models.User.updateScanAttempt({
-      userId: useID ? userId : keyid,
+      userId: keyid,
     });
 
     if (url && canScan) {
@@ -66,8 +64,11 @@ export const Mutation = {
     }
   },
   scanWebsite: async (_, { url }, context) => {
+    const userId = context.user?.payload?.keyid;
+
     return await context.models.SubDomain.crawlWebsite({
       url,
+      userId,
     });
   },
   removeWebsite: async (

@@ -20,7 +20,7 @@ import { generateWebsiteAverage } from "./domain";
 import { collectionUpdate, fetchPuppet, extractPageData } from "./utils";
 
 export const crawlWebsite = async ({
-  userId: userIdMap,
+  userId,
   url: urlMap,
   apiData = false,
 }) => {
@@ -30,14 +30,12 @@ export const crawlWebsite = async ({
   ) {
     return responseModel({ msgType: ApiResponse.NotFound });
   }
-
   const { domain, pageUrl } = sourceBuild(urlMap);
-  const authenticated = typeof userIdMap !== "undefined";
-  const userId = authenticated ? Number(userIdMap) : null;
+  const authenticated = typeof userId !== "undefined";
 
   return await new Promise(async (resolve) => {
     try {
-      let [website, websiteCollection] = await getWebsite(
+      const [website, websiteCollection] = await getWebsite(
         {
           domain,
           userId,
@@ -138,6 +136,9 @@ export const crawlWebsite = async ({
             pageLoadTime: null,
             cdnConnected: website?.cdnConnected,
             online: !!website?.online || null,
+            domain,
+            userId,
+            pageUrl,
           }
         );
 
@@ -165,11 +166,11 @@ export const crawlWebsite = async ({
           issueExist,
           "ISSUES",
         ]);
-        await collectionUpdate(
-          updateWebsiteProps,
-          [websiteCollection, !!website, "WEBSITE"],
-          { searchProps: { domain, userId } }
-        );
+        await collectionUpdate(updateWebsiteProps, [
+          websiteCollection,
+          website,
+          "WEBSITE",
+        ]);
         if (script) {
           if (!scripts?.scriptMeta) {
             script.scriptMeta = {

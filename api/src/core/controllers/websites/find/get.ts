@@ -14,15 +14,13 @@ export const getWebsite = async (
 ) => {
   try {
     const [collection] = await connect("Websites");
-    const website = await collection.findOne(
-      websiteSearchParams({
-        userId,
-        url,
-        domain,
-      })
-    );
+    const params = websiteSearchParams({
+      userId,
+      url,
+      domain,
+    });
+    const website = await collection.findOne(params);
     const lastItem = await getLastItemInCollection(collection, url);
-
     return chain
       ? [website, collection, lastItem?.length ? lastItem[0].id : 0]
       : website;
