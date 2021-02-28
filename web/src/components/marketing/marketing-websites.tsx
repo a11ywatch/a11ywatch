@@ -35,20 +35,20 @@ function MarketingWebsites({ websites }: any) {
     <section className={root}>
       <SectionHeading>{strings.usersUsing}</SectionHeading>
       <Typography variant='h6' component='p' gutterBottom>
-        Check out some of the pages being used on A11yWatch
+        Some of our users using A11yWatch
       </Typography>
       <div className={container}>
-        {websites.map(({ screenshot, url }: any, i: number) => {
-          return (
+        {websites.map(({ screenshotStill, url }: any, i: number) => {
+          return screenshotStill ? (
             <Screenshot
               url={url}
-              src={screenshot}
-              width={495}
-              height={495}
+              src={screenshotStill}
+              width={480}
+              height={500}
               resetMargin
               key={i}
             />
-          )
+          ) : null
         })}
       </div>
     </section>

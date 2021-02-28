@@ -143,7 +143,11 @@ export function SwipeableTemporaryDrawer() {
             }
             screenshot={
               <div className={classes.center}>
-                <Screenshot url={website?.url} src={website?.screenshot} />
+                <Screenshot
+                  url={website?.url}
+                  src={website?.screenshot}
+                  height={1000}
+                />
               </div>
             }
             playground={<TestView url={website?.url} marketing />}

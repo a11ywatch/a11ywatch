@@ -31,21 +31,20 @@ export const crawlWebsite = async ({
     return responseModel({ msgType: ApiResponse.NotFound });
   }
 
-  let { domain, pageUrl } = sourceBuild(urlMap);
-
+  const { domain, pageUrl } = sourceBuild(urlMap);
   const authenticated = typeof userIdMap !== "undefined";
   const userId = authenticated ? Number(userIdMap) : null;
 
-  let [website, websiteCollection] = await getWebsite(
-    {
-      domain,
-      userId,
-    },
-    true
-  );
-
   return await new Promise(async (resolve) => {
     try {
+      let [website, websiteCollection] = await getWebsite(
+        {
+          domain,
+          userId,
+        },
+        true
+      );
+
       log(`ANGELICA SCAN: ${pageUrl} user_id:${userId}`);
       const dataSource = await fetchPuppet({
         pageHeaders: website?.pageHeaders,
@@ -132,11 +131,12 @@ export const crawlWebsite = async ({
           {
             issuesInfo: webPage?.issuesInfo || {},
             screenshot: webPage?.screenshot,
+            screenshotStill: webPage?.screenshotStill,
             html: webPage.html,
             lastScanDate: webPage?.lastScanDate,
             adaScore: avgScore,
-            cdnConnected: website?.cdnConnected,
             pageLoadTime: null,
+            cdnConnected: website?.cdnConnected,
             online: !!website?.online || null,
           }
         );
@@ -148,53 +148,51 @@ export const crawlWebsite = async ({
           updateWebsiteProps.online = true;
         }
 
-        if (!apiData) {
-          await collectionUpdate(
-            {
-              pageUrl,
-              domain,
-              errorCount,
-              warningCount,
-              noticeCount,
-              userId,
-              adaScore,
-            },
-            [analyticsCollection, analytics, "ANALYTICS"]
-          );
-          await collectionUpdate(newIssue, [
-            issuesCollection,
-            issueExist,
-            "ISSUES",
-          ]);
-          await collectionUpdate(
-            updateWebsiteProps,
-            [websiteCollection, true, "WEBSITE"],
-            { searchProps: { domain, userId } }
-          );
-          if (script) {
-            if (!scripts?.scriptMeta) {
-              script.scriptMeta = {
-                skipContentEnabled: true,
-              };
-              await collectionUpdate(script, [
-                scriptsCollection,
-                scripts,
-                "SCRIPTS",
-              ]);
-            }
+        await collectionUpdate(
+          {
+            pageUrl,
+            domain,
+            errorCount,
+            warningCount,
+            noticeCount,
+            userId,
+            adaScore,
+          },
+          [analyticsCollection, analytics, "ANALYTICS"]
+        );
+        await collectionUpdate(newIssue, [
+          issuesCollection,
+          issueExist,
+          "ISSUES",
+        ]);
+        await collectionUpdate(
+          updateWebsiteProps,
+          [websiteCollection, !!website, "WEBSITE"],
+          { searchProps: { domain, userId } }
+        );
+        if (script) {
+          if (!scripts?.scriptMeta) {
+            script.scriptMeta = {
+              skipContentEnabled: true,
+            };
+            await collectionUpdate(script, [
+              scriptsCollection,
+              scripts,
+              "SCRIPTS",
+            ]);
           }
-          if (webPage) {
-            await collectionUpdate(
-              webPage,
-              [subDomainCollection, newSite, "SUBDOMAIN"],
-              { searchProps: { pageUrl, userId } }
-            );
+        }
+        if (webPage) {
+          await collectionUpdate(
+            webPage,
+            [subDomainCollection, newSite, "SUBDOMAIN"],
+            { searchProps: { pageUrl, userId } }
+          );
 
-            if (!newSite) {
-              pubsub.publish(SUBDOMAIN_ADDED, {
-                subDomainAdded: webPage,
-              });
-            }
+          if (!newSite) {
+            pubsub.publish(SUBDOMAIN_ADDED, {
+              subDomainAdded: webPage,
+            });
           }
         }
 

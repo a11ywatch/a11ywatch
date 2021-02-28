@@ -136,6 +136,7 @@ export const crawlWebsite = async ({ userId, url: urlMap, pageHeaders }) => {
     });
 
     const cdn_url = CDN_URL.replace("/api", "");
+    const cdn_base = cdn_url + "/screenshots/";
 
     resolver = {
       webPage: {
@@ -143,10 +144,9 @@ export const crawlWebsite = async ({ userId, url: urlMap, pageHeaders }) => {
         url: pageUrl,
         adaScore,
         cdnConnected: pageHasCdn,
-        screenshot:
-          cdn_url + "/screenshots/" + cdnJsPath.replace(".js", ".png"),
+        screenshot: cdn_base + cdnJsPath.replace(".js", ".png"),
         screenshotStill: screenshotStill
-          ? cdn_url + "/screenshots/" + cdnJsPath.replace(".js", "-still.png")
+          ? cdn_base + cdnJsPath.replace(".js", "-still.png")
           : "",
         pageLoadTime: {
           duration,
