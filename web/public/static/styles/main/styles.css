@@ -9,3 +9,8 @@
   background: #424242;
   max-width: 5px;
 }
+.goog-te-banner-frame {
+  bottom: 0;
+  top: unset !important;
+  display: none;
+}

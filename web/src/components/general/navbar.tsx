@@ -15,7 +15,7 @@ import { strings } from '@app-strings'
 import { NavBarTitle } from './navigation'
 import { Link } from './link'
 import { AuthMenu } from './auth-menu'
-import { GithubBadge } from '../badges'
+import { TranslateBadge } from '../badges'
 
 const WrapShadow = dynamic(
   () => import('./wrap-shadow').then((mod) => mod.WrapShadow) as any,
@@ -148,7 +148,7 @@ const NavBar = ({
           )}
           {marketing ? (
             <div className={classes.ghIcon}>
-              <GithubBadge size='large' />
+              <TranslateBadge size='large' />
             </div>
           ) : null}
         </Toolbar>

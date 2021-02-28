@@ -19,7 +19,7 @@ export const Badge = ({
   label,
   title,
 }: BadgeProps) => {
-  const size = badgeSize === 'small' ? 20 : 32
+  const size = badgeSize === 'small' ? 24 : 32
 
   const Anchor = ({ children }: { children: any }) => {
     return (

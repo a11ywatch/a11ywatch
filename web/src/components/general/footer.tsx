@@ -12,7 +12,7 @@ import { strings } from '@app-strings'
 
 import { Link } from './link'
 import { FixedCopyRight } from './fixed-copy-right'
-import { GithubBadge, TwitterBadge, SpectrumBadge } from '../badges'
+import { GithubBadge, TwitterBadge, TranslateBadge } from '../badges'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -141,7 +141,7 @@ const Footer = ({
               {[
                 { Icon: TwitterBadge },
                 { Icon: GithubBadge },
-                { Icon: SpectrumBadge },
+                { Icon: TranslateBadge },
               ].map(({ Icon }: any, i: number) => (
                 <li className={classes.link} key={i}>
                   <Icon inline />

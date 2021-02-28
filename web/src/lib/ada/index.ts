@@ -5,3 +5,4 @@
  **/
 
 export { bindItemClick } from './bind'
+export { loadTranslate } from './load-translate'

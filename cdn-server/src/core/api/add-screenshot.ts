@@ -10,7 +10,7 @@ import { directoryExist, uploadToS3, AWS_S3_ENABLED } from "../../";
 
 const createSS = ({ srcPath, cdnFileName, screenshot }: any) => {
   const dirExist = directoryExist(srcPath);
-  if (dirExist) {
+  if (dirExist && screenshot) {
     const screenshotStream = createWriteStream(cdnFileName);
 
     screenshotStream.write(Buffer.from(screenshot));
@@ -28,25 +28,24 @@ const createSS = ({ srcPath, cdnFileName, screenshot }: any) => {
   }
 };
 
-export const addScreenshot = (req, res) => {
+export const addScreenshot = async (req, res) => {
   const { cdnSourceStripped, domain, screenshot, screenshotStill } = req.body;
   const srcPath = `src/screenshots/${domain}/${cdnSourceStripped}`;
   const cdnFileName = srcPath + ".png";
 
   try {
-    createSS({
-      cdnFileName,
-      screenshot,
-      srcPath,
-    });
-
-    if (typeof screenshotStill !== "undefined") {
+    await Promise.all([
+      createSS({
+        cdnFileName,
+        screenshot,
+        srcPath,
+      }),
       createSS({
         cdnFileName: cdnFileName.replace(".png", "-still.png"),
         screenshot: screenshotStill,
         srcPath: `${srcPath}-still`,
-      });
-    }
+      }),
+    ]);
 
     res.send(true);
   } catch (e) {
