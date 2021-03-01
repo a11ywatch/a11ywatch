@@ -4,12 +4,17 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
+declare global {
+  interface Window {
+    google: any
+  }
+}
+
 function loadTranslate(save = false) {
   let translateEle
 
   if (typeof window !== 'undefined' && 'google' in window) {
     const layoutType = window.innerWidth >= 800 ? 'SIMPLE' : 'vk'
-    // @ts-ignore
     if (window.google.translate && window.google.translate.TranslateElement) {
       const translator = document.querySelector('#google_translate_element')
 
@@ -27,7 +32,7 @@ function loadTranslate(save = false) {
         }
       }
 
-      if (translateEle && save) {
+      if (translator && translateEle && save) {
         translateEle.setAttribute(
           'style',
           'width:1px; height: 1px; opacity: 0; padding: 0px; position: absolute; clip: rect(1px 1px 1px 1px); overflow:hidden;'

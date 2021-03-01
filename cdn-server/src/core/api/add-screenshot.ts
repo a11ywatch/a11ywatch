@@ -8,48 +8,49 @@ import { readFileSync, createWriteStream } from "fs";
 import { log } from "@a11ywatch/log";
 import { directoryExist, uploadToS3, AWS_S3_ENABLED } from "../../";
 
-const createSS = ({ srcPath, cdnFileName, screenshot }: any) => {
-  const dirExist = directoryExist(srcPath);
-  if (dirExist && screenshot) {
-    const screenshotStream = createWriteStream(cdnFileName);
+const createSS = ({ srcPath, cdnFileName, screenshot }: any): any => {
+  try {
+    if (screenshot && directoryExist(srcPath)) {
+      const screenshotStream = createWriteStream(cdnFileName);
+      screenshotStream.write(Buffer.from(screenshot));
 
-    screenshotStream.write(Buffer.from(screenshot));
-    screenshotStream.on("finish", async () => {
-      log(`WROTE: ${cdnFileName}`);
-      if (AWS_S3_ENABLED) {
-        await uploadToS3(
-          readFileSync(cdnFileName),
-          `${srcPath.substring(4)}.png`,
-          cdnFileName
-        );
-      }
-    });
-    screenshotStream.end();
+      screenshotStream.on("finish", () => {
+        if (AWS_S3_ENABLED) {
+          uploadToS3(
+            readFileSync(cdnFileName),
+            `${srcPath.substring(4)}.png`,
+            cdnFileName
+          );
+        }
+        log(`WROTE: ${cdnFileName}`);
+      });
+      screenshotStream.end();
+    }
+  } catch (e) {
+    log(e?.message, { type: "error" });
   }
 };
 
-export const addScreenshot = async (req, res) => {
+export const addScreenshot = (req, res) => {
   const { cdnSourceStripped, domain, screenshot, screenshotStill } = req.body;
   const srcPath = `src/screenshots/${domain}/${cdnSourceStripped}`;
   const cdnFileName = srcPath + ".png";
 
   try {
-    await Promise.all([
-      createSS({
-        cdnFileName,
-        screenshot,
-        srcPath,
-      }),
-      createSS({
-        cdnFileName: cdnFileName.replace(".png", "-still.png"),
-        screenshot: screenshotStill,
-        srcPath: `${srcPath}-still`,
-      }),
-    ]);
+    createSS({
+      cdnFileName,
+      screenshot,
+      srcPath,
+    });
+    createSS({
+      cdnFileName: cdnFileName.replace(".png", "-still.png"),
+      screenshot: screenshotStill,
+      srcPath: `${srcPath}-still`,
+    });
 
     res.send(true);
   } catch (e) {
-    console.error(e);
+    log(e?.message, { type: "error" });
     res.send(false);
   }
 };
