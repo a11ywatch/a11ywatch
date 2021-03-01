@@ -148,7 +148,7 @@ const NavBar = ({
           )}
           {marketing ? (
             <div className={classes.ghIcon}>
-              <TranslateBadge size='large' />
+              <TranslateBadge />
             </div>
           ) : null}
         </Toolbar>

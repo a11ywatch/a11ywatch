@@ -9,6 +9,7 @@ function loadTranslate(save = false) {
 
   if (typeof window !== 'undefined' && 'google' in window) {
     const layoutType = window.innerWidth >= 800 ? 'SIMPLE' : 'vk'
+    // @ts-ignore
     if (window.google.translate && window.google.translate.TranslateElement) {
       const translator = document.querySelector('#google_translate_element')
 

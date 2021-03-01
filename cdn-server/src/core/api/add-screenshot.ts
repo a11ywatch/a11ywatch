@@ -8,13 +8,13 @@ import { readFileSync, createWriteStream } from "fs";
 import { log } from "@a11ywatch/log";
 import { directoryExist, uploadToS3, AWS_S3_ENABLED } from "../../";
 
-const createSS = async ({ srcPath, cdnFileName, screenshot }: any) => {
+const createSS = ({ srcPath, cdnFileName, screenshot }: any) => {
   const dirExist = directoryExist(srcPath);
   if (dirExist && screenshot) {
     const screenshotStream = createWriteStream(cdnFileName);
 
     screenshotStream.write(Buffer.from(screenshot));
-    screenshotStream.on("finish", () => {
+    screenshotStream.on("finish", async () => {
       log(`WROTE: ${cdnFileName}`);
       if (AWS_S3_ENABLED) {
         await uploadToS3(
