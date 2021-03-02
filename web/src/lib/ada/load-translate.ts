@@ -10,7 +10,7 @@ declare global {
   }
 }
 
-function loadTranslate(save = false) {
+function loadTranslate(save: boolean = false) {
   let translateEle
 
   if (typeof window !== 'undefined' && 'google' in window) {

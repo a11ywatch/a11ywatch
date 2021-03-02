@@ -99,8 +99,8 @@ function CtaSearch({ checker }: any) {
           </Head>
         ) : (
           <Head>
-            <Heading>{`${strings.title} `}</Heading>
-            <Heading className={roll.g}>
+            <Heading component='p'>{`${strings.title} `}</Heading>
+            <Heading className={roll.g} component='p'>
               {useMemo(
                 () => [
                   strings.monitoring,
@@ -112,6 +112,7 @@ function CtaSearch({ checker }: any) {
                 [strings]
               ).map((item: string, itemIndex: number): any => (
                 <Heading
+                  component='p'
                   // @ts-ignore
                   className={`${roll.roll} ${roll[`d${itemIndex}`]} ${
                     roll.gi

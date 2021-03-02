@@ -55,6 +55,7 @@ export default function MyApp({ Component, pageProps }: MergedApp) {
         <meta name='format-detection' content='telephone=no' />
         <meta name='apple-mobile-web-app-capable' content='yes' />
         <link rel='apple-touch-icon' href='./static/img/favicon-small.png' />
+        <script src='./static/load-google.min.js' defer />
         <link rel='icon' type='image/x-icon' href='./static/img/favicon.png' />
         <link
           rel='preload'

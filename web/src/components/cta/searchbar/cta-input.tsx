@@ -15,12 +15,9 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: 'flex',
       borderRadius: theme.shape.borderRadius,
-
-      [theme.breakpoints.down(920)]: {
-        flexDirection: 'column',
-      },
       [theme.breakpoints.down('sm')]: {
         position: 'relative',
+        flexDirection: 'column',
       },
     },
     search: {
@@ -35,6 +32,10 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       borderTopLeftRadius: theme.shape.borderRadius,
       borderBottomLeftRadius: theme.shape.borderRadius,
+      [theme.breakpoints.down('sm')]: {
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
+      },
     },
     hiddenLabel: {
       border: 0,
@@ -55,19 +56,9 @@ const useStyles = makeStyles((theme: Theme) =>
       minWidth: '187.562px',
       fontWeight: 'bold',
       fontSize: '1.5rem',
-      [theme.breakpoints.down(920)]: {
-        fontSize: '1rem',
-        paddingLeft: theme.spacing(3),
-        paddingRight: theme.spacing(3),
-        minWidth: '80px',
-      },
       [theme.breakpoints.down('sm')]: {
-        flex: 1,
-        width: '100%',
-        bottom: 0,
         borderTopLeftRadius: 0,
         borderTopRightRadius: 0,
-        position: 'absolute',
       },
     },
     inputRoot: {
@@ -75,11 +66,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     inputInput: {
       padding: theme.spacing(1),
-    },
-    formControl: {
-      [theme.breakpoints.down('sm')]: {
-        position: 'absolute',
-      },
     },
   })
 )

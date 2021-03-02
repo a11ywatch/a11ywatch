@@ -52,6 +52,7 @@ export function CtaVideo() {
               allowFullScreen
               title='A11yWatch demo video'
               className={`${classes.video} ${classes.frame}`}
+              loading='lazy'
             />
           </div>
         </div>
