@@ -17,19 +17,17 @@ function loadTranslate(save: boolean = false) {
     const layoutType = window.innerWidth >= 800 ? 'SIMPLE' : 'vk'
     if (window.google.translate && window.google.translate.TranslateElement) {
       const translator = document.querySelector('#google_translate_element')
+      const dataTemp = new window.google.translate.TranslateElement(
+        {
+          pageLanguage: 'en',
+          layout:
+            window.google.translate.TranslateElement.InlineLayout[layoutType],
+        },
+        'google_translate_element'
+      )
 
-      if (!translator) {
-        const dataTemp = new window.google.translate.TranslateElement(
-          {
-            pageLanguage: 'en',
-            layout:
-              window.google.translate.TranslateElement.InlineLayout[layoutType],
-          },
-          'google_translate_element'
-        )
-        if (save) {
-          translateEle = dataTemp.ca
-        }
+      if (save) {
+        translateEle = dataTemp.ca
       }
 
       if (translator && translateEle && save) {
