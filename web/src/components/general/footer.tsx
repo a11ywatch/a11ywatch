@@ -12,7 +12,13 @@ import { strings } from '@app-strings'
 
 import { Link } from './link'
 import { FixedCopyRight } from './fixed-copy-right'
-import { GithubBadge, TwitterBadge, TranslateBadge } from '../badges'
+import {
+  GithubBadge,
+  TwitterBadge,
+  FacebookBadge,
+  LinkedinBadge,
+  TranslateBadge,
+} from '../badges'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -141,7 +147,8 @@ const Footer = ({
               {[
                 { Icon: TwitterBadge },
                 { Icon: GithubBadge },
-                { Icon: TranslateBadge },
+                { Icon: FacebookBadge },
+                { Icon: LinkedinBadge },
               ].map(({ Icon }: any, i: number) => (
                 <li className={classes.link} key={i}>
                   <Icon inline />
@@ -170,6 +177,9 @@ const Footer = ({
             </Typography>
           </div>
         ) : null}
+        <div className={classes.linkContainer}>
+          <TranslateBadge inline />
+        </div>
       </Container>
       <FixedCopyRight />
     </footer>

@@ -10,6 +10,7 @@ import {
   CtaIntro,
   CtaVideo,
   CtaCustomers,
+  CtaSearch,
 } from '@app/components/cta'
 import { WithSwipeModal as SwipeableTemporaryDrawer } from '@app/components/adhoc'
 import { withApollo } from '@app/apollo'
@@ -27,6 +28,7 @@ function Index({ websites }: any) {
         <CtaVideo />
         <CtaFeatures />
         <CtaCustomers />
+        <CtaSearch />
         <MarketingWebsites websites={websites} />
         <MarketingTestimonial />
         <Price blockFree />

@@ -27,27 +27,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+function clickTranslate(event: any) {
+  event?.preventDefault()
+
+  let translate = document?.querySelector('.goog-te-combo')
+
+  if (!translate) {
+    translate = document?.querySelector(
+      '.goog-te-gadget-simple .goog-te-menu-value span'
+    )
+  }
+
+  if (translate) {
+    const evt = document.createEvent('MouseEvent')
+    evt.initEvent('click', { bubbles: true } as any)
+    translate.dispatchEvent(evt)
+  }
+}
+
 export const TranslateBadge = ({ inline }: { inline?: boolean }) => {
   const classes = useStyles()
   const ariaT = 'Translate page using google'
-
-  function clickTranslate(event: any) {
-    event?.preventDefault()
-
-    let translate = document?.querySelector('.goog-te-combo')
-
-    if (!translate) {
-      translate = document?.querySelector(
-        '.goog-te-gadget-simple .goog-te-menu-value span'
-      )
-    }
-
-    if (translate) {
-      const evt = document.createEvent('MouseEvent')
-      evt.initEvent('click', { bubbles: true } as any)
-      translate.dispatchEvent(evt)
-    }
-  }
 
   const readyChange = (event: any) => {
     if (event.target.readyState === 'complete') {

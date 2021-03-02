@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function CtaIntro({ checker }: any) {
+function CtaSearch({ checker }: any) {
   const classes = useStyles()
   const roll = rollStyles()
 
@@ -82,19 +82,51 @@ function CtaIntro({ checker }: any) {
         checker ? ` ${classes.detailedContainer}` : ''
       }`}
     >
-      <Typography variant='h2' component={'h1'}>
-        Monitor your website accessibility
-      </Typography>
-      <Typography variant='subtitle1' component={'p'}>
-        Safeguard to a pleasant web experience
-      </Typography>
+      {checker ? (
+        <>
+          <Typography variant='h1' component={'h1'}>
+            Web Accessibility Checker
+          </Typography>
+          <Typography variant='h5' component={'span'}>
+            Check your website for accessibility issues for free
+          </Typography>
+        </>
+      ) : null}
       <CtaSearchBar checker={checker}>
-        <Head>
-          <Heading>Scan Website</Heading>
-        </Head>
+        {checker ? (
+          <Head>
+            <Heading>Check website for issues</Heading>
+          </Head>
+        ) : (
+          <Head>
+            <Heading>{`${strings.title} `}</Heading>
+            <Heading className={roll.g}>
+              {useMemo(
+                () => [
+                  strings.monitoring,
+                  strings.fixer,
+                  strings.helper,
+                  strings.ai,
+                  strings.productivity,
+                ],
+                [strings]
+              ).map((item: string, itemIndex: number): any => (
+                <Heading
+                  // @ts-ignore
+                  className={`${roll.roll} ${roll[`d${itemIndex}`]} ${
+                    roll.gi
+                  } ${classes.smallFont}`}
+                  key={item}
+                >
+                  {item}
+                </Heading>
+              ))}
+            </Heading>
+          </Head>
+        )}
       </CtaSearchBar>
     </section>
   )
 }
 
-export { CtaIntro }
+export { CtaSearch }

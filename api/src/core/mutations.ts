@@ -64,11 +64,8 @@ export const Mutation = {
     }
   },
   scanWebsite: async (_, { url }, context) => {
-    const userId = context.user?.payload?.keyid;
-
     return await context.models.SubDomain.crawlWebsite({
       url,
-      userId,
     });
   },
   removeWebsite: async (
