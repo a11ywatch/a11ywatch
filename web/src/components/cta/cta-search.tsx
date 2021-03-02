@@ -56,9 +56,9 @@ function CtaSearch({ checker }: any) {
   const classes = useStyles()
   const roll = rollStyles()
 
-  const Head = ({ children }: any) => {
+  const Head = ({ children, component = 'h1' }: any) => {
     return (
-      <Typography className={classes.title} component={'h1'}>
+      <Typography className={classes.title} component={component}>
         {children}
       </Typography>
     )
@@ -98,7 +98,7 @@ function CtaSearch({ checker }: any) {
             <Heading>Check website for issues</Heading>
           </Head>
         ) : (
-          <Head>
+          <Head component='p'>
             <Heading component='p'>{`${strings.title} `}</Heading>
             <Heading className={roll.g} component='p'>
               {useMemo(

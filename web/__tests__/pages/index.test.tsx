@@ -7,11 +7,11 @@
 describePage(
   {
     folder: 'index',
-    name: 'Web Accessibility Monitoring Fixer Helper AI Productivity',
+    name: 'Monitor Web Accessibility',
   },
   () => {
     expect(
-      screen.getByRole('button', { name: 'Sign up with email' })
+      screen.getByRole('button', { name: 'Sign up free' })
     ).toBeInTheDocument()
   }
 )

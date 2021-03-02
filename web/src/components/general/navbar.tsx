@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: theme.palette.background.default,
     overflow: 'hidden',
+    zIndex: 1,
     ...theme.mixins.toolbar,
   },
   menu: {

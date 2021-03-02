@@ -6,3 +6,4 @@
 
 export { MarketingWebsites } from './marketing-websites'
 export { MarketingTestimonial } from './marketing-testimonial'
+export { MarketingShapesTop } from './marketing-shapes-top'

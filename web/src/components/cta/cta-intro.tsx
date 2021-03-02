@@ -5,10 +5,11 @@
  **/
 
 import React from 'react'
-import { Typography } from '@material-ui/core'
+import { Typography, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { CtaInput } from './searchbar'
 import Image from 'next/image'
+import { Link } from '../general'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +37,11 @@ const useStyles = makeStyles((theme) => ({
   intro: {
     lineHeight: '1.15em',
   },
+  submit: {
+    marginTop: 10,
+    width: 200,
+    marginBottom: 20,
+  },
 }))
 
 function CtaIntro({ checker }: any) {
@@ -54,6 +60,9 @@ function CtaIntro({ checker }: any) {
         <Typography variant='subtitle1' component={'p'} gutterBottom>
           Safeguard to a pleasant web experience
         </Typography>
+        <Button component={Link} className={classes.submit} href={'/register'}>
+          {'Sign up free'}
+        </Button>
         <CtaInput />
       </div>
       <div className={`${classes.block} ${classes.mobileHidden}`}>

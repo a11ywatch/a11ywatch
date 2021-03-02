@@ -3,7 +3,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
-import React from 'react'
+import React, { Fragment } from 'react'
 import { MarketingDrawer, SignOnForm, Price } from '@app/components/general'
 import {
   CtaFeatures,
@@ -17,13 +17,15 @@ import { withApollo } from '@app/apollo'
 import {
   MarketingWebsites,
   MarketingTestimonial,
+  MarketingShapesTop,
 } from '@app/components/marketing'
 import { dev, DOCKER_ENV, API_ENDPOINT, API_URI_DOCKER } from '@app/configs'
 
 function Index({ websites }: any) {
   return (
-    <>
+    <Fragment>
       <MarketingDrawer navPosition={'relative'}>
+        <MarketingShapesTop />
         <CtaIntro />
         <CtaVideo />
         <CtaFeatures />
@@ -35,7 +37,7 @@ function Index({ websites }: any) {
         <SignOnForm home />
       </MarketingDrawer>
       <SwipeableTemporaryDrawer />
-    </>
+    </Fragment>
   )
 }
 
