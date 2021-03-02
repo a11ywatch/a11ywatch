@@ -22,8 +22,8 @@ export const generateStrings = ({
     consulting: 'Web Accessibility Consultants',
     fixer: 'Fixer',
     helper: 'Helper',
-    watcher: 'Watcher',
-    ai: 'AI',
+    watcher: 'Insight',
+    ai: 'Monitor',
     productivity: 'Productivity',
     ctaDetails: 'Everything you need to improve your websites accessibility',
     ctaInfo:
