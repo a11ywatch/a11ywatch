@@ -1,8 +1,13 @@
-import React, { useEffect, Fragment } from 'react'
+/*
+ * Copyright (c) A11yWatch, LLC. and its affiliates.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ **/
+import React, { memo, Fragment } from 'react'
 import { IconButton, Tooltip, Typography } from '@material-ui/core'
+import { useTranslator } from './utils'
 import { makeStyles } from '@material-ui/core/styles'
 import GTranslateIcon from '@material-ui/icons/GTranslate'
-import { loadTranslate } from '@app/lib'
 
 const useStyles = makeStyles((theme) => ({
   badge: {
@@ -27,77 +32,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function clickTranslate(event: any) {
-  event?.preventDefault()
-
-  let translate = document?.querySelector('.goog-te-combo')
-
-  if (!translate) {
-    translate = document?.querySelector(
-      '.goog-te-gadget-simple .goog-te-menu-value span'
-    )
-  }
-
-  if (translate) {
-    const evt = document.createEvent('MouseEvent')
-    evt.initEvent('click', { bubbles: true } as any)
-    translate.dispatchEvent(evt)
-  }
-}
-
-export const TranslateBadge = ({ inline }: { inline?: boolean }) => {
+const TranslateBadgeMain = ({ inline }: { inline?: boolean }) => {
   const classes = useStyles()
+  const { setMessageListener, clickTranslate } = useTranslator()
   const ariaT = 'Translate page using google'
-
-  const readyChange = (event: any) => {
-    if (event.target.readyState === 'complete') {
-      loadTranslate()
-      document.removeEventListener('readystatechange', readyChange)
-    }
-  }
-
-  const receiveMessage = (event: any) => {
-    if (event.origin !== window?.location?.origin) {
-      return
-    }
-    if (event.data === 'TRX_FINISHED') {
-      document.addEventListener('readystatechange', readyChange)
-      window.removeEventListener('message', receiveMessage)
-    }
-  }
-
-  useEffect(() => {
-    let messageListener: any
-    if (typeof document !== 'undefined') {
-      const translateLoaded = document.querySelector(
-        `script[src="/static/load-google.min.js"]`
-      )
-
-      if (translateLoaded) {
-        loadTranslate(true)
-        return
-      }
-
-      const script = document.createElement('script')
-
-      script.src = '/static/load-google.min.js'
-      script.defer = true
-      document.body.appendChild(script)
-
-      messageListener = window?.addEventListener(
-        'message',
-        receiveMessage,
-        false
-      )
-    }
-
-    return () => {
-      if (messageListener) {
-        messageListener?.removeEventListener('message', receiveMessage)
-      }
-    }
-  }, [])
-
   const iconStyles = { color: '#959da5' }
 
   if (inline) {
@@ -105,6 +43,7 @@ export const TranslateBadge = ({ inline }: { inline?: boolean }) => {
       <button
         style={{ display: 'flex', alignItems: 'center' }}
         onClick={clickTranslate}
+        onMouseOver={setMessageListener}
       >
         <GTranslateIcon style={iconStyles} />
         <Typography
@@ -124,6 +63,7 @@ export const TranslateBadge = ({ inline }: { inline?: boolean }) => {
           onClick={clickTranslate}
           aria-label={ariaT}
           className={classes.badge}
+          onMouseOver={setMessageListener}
         >
           <GTranslateIcon style={iconStyles} />
         </IconButton>
@@ -132,3 +72,5 @@ export const TranslateBadge = ({ inline }: { inline?: boolean }) => {
     </Fragment>
   )
 }
+
+export const TranslateBadge = memo(TranslateBadgeMain)
