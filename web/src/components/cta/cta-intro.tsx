@@ -4,7 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Typography, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { CtaInput } from './searchbar'
@@ -13,11 +13,11 @@ import { Link } from '../general'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingBottom: '12%',
     display: 'flex',
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: '6%',
     [theme.breakpoints.down('sm')]: {
       paddingTop: '18%',
       display: 'block',
@@ -42,38 +42,60 @@ const useStyles = makeStyles((theme) => ({
     width: 200,
     marginBottom: 20,
   },
+  join: {
+    marginBottom: '12%',
+    textAlign: 'center',
+    color: '#7c828d',
+  },
 }))
 
 function CtaIntro({ checker }: any) {
   const classes = useStyles()
 
   return (
-    <section
-      className={`${classes.root}${
-        checker ? ` ${classes.detailedContainer}` : ''
-      }`}
-    >
-      <div className={classes.block}>
-        <Typography variant='h2' component={'h1'} className={classes.intro}>
-          Monitor Web Accessibility
-        </Typography>
+    <Fragment>
+      <section
+        className={`${classes.root}${
+          checker ? ` ${classes.detailedContainer}` : ''
+        }`}
+      >
+        <div className={classes.block}>
+          <Typography variant='h2' component={'h1'} className={classes.intro}>
+            Monitor Web Accessibility
+          </Typography>
+          <Typography variant='subtitle1' component={'p'} gutterBottom>
+            Safeguard to a pleasant web experience
+          </Typography>
+          <Button
+            component={Link}
+            className={classes.submit}
+            href={'/register'}
+          >
+            {'Sign up free'}
+          </Button>
+          <CtaInput />
+        </div>
+        <div className={`${classes.block} ${classes.mobileHidden}`}>
+          <Image
+            src={'/static/img/intro.svg'}
+            height={500}
+            width={500}
+            alt='image of content being controlled'
+          />
+        </div>
+      </section>
+      <div className={classes.join}>
         <Typography variant='subtitle1' component={'p'} gutterBottom>
-          Safeguard to a pleasant web experience
+          JOIN THOUSANDS OF HIGHLY PRODUCTIVE TEAMS
         </Typography>
-        <Button component={Link} className={classes.submit} href={'/register'}>
-          {'Sign up free'}
-        </Button>
-        <CtaInput />
-      </div>
-      <div className={`${classes.block} ${classes.mobileHidden}`}>
         <Image
-          src={'/static/img/intro.svg'}
-          height={500}
-          width={500}
-          alt='image of content being controlled'
+          src={'/static/img/wave.svg'}
+          height={12}
+          width={180}
+          role='presentation'
         />
       </div>
-    </section>
+    </Fragment>
   )
 }
 
