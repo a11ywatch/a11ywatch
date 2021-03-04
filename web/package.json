@@ -63,6 +63,7 @@
     "react-resize-detector": "5.0.6",
     "react-stripe-checkout": "2.6.3",
     "react-syntax-highlighter": "12.2.1",
+    "react-visibility-sensor": "^5.1.1",
     "subscriptions-transport-ws": "0.9.16",
     "ua-parser-js": "0.7.21",
     "use-scroll-event": "0.0.19",

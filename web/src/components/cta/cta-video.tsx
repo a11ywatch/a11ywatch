@@ -6,6 +6,8 @@
 
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import VisibilitySensor from 'react-visibility-sensor'
+import Image from 'next/image'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,20 +44,36 @@ const useStyles = makeStyles((theme) => ({
 export function CtaVideo() {
   const classes = useStyles()
 
+  const videoClassName = `${classes.video} ${classes.frame}`
+
   return (
     <div className={classes.root}>
       <div className={classes.card}>
-        <div className={`${classes.float} ${classes.video}`}>
-          <div className={classes.video}>
-            <iframe
-              src={`https://player.vimeo.com/video/389034032?title=0&byline=0&portrait=0&muted=1&autoplay=${1}&controls=0&loop=1&texttrack=en`}
-              allowFullScreen
-              title='A11yWatch demo video'
-              className={`${classes.video} ${classes.frame}`}
-              loading='lazy'
-            />
-          </div>
-        </div>
+        <VisibilitySensor partialVisibility>
+          {({ isVisible }) => (
+            <div className={`${classes.float} ${classes.video}`}>
+              <div className={classes.video}>
+                {isVisible ? (
+                  <iframe
+                    src={`https://player.vimeo.com/video/389034032?title=0&byline=0&portrait=0&muted=1&autoplay=${1}&controls=0&loop=1&texttrack=en`}
+                    allowFullScreen
+                    title='A11yWatch demo video'
+                    className={videoClassName}
+                  />
+                ) : (
+                  <span className={videoClassName}>
+                    <Image
+                      src={`/static/img/intro-poster.png`}
+                      alt='A11yWatch intro video poster'
+                      height={'552.16'}
+                      width={'1232'}
+                    />
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
+        </VisibilitySensor>
       </div>
     </div>
   )
