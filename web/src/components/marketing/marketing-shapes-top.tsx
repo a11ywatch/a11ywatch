@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   oval1: {
-    display: 'inline',
     top: 360,
     left: 0,
   },

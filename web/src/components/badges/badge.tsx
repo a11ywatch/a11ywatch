@@ -39,11 +39,11 @@ export const Badge = ({
   if (inline) {
     return (
       <Anchor>
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', paddingRight: 6 }}>
           <Img />
           <Typography
             variant={'subtitle1'}
-            style={{ marginLeft: '0.3em', fontSize: '1.05rem' }}
+            style={{ marginLeft: '0.3em', fontSize: '1.02rem' }}
           >
             {title}
           </Typography>
