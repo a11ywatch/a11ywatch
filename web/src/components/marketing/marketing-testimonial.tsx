@@ -11,6 +11,7 @@ import Image from 'next/image'
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    paddingTop: '12%',
     paddingBottom: '12%',
   },
   container: {

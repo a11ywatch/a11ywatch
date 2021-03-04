@@ -15,9 +15,9 @@ import { SectionHeading } from '../text'
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    paddingTop: '12%',
     paddingBottom: '12%',
     width: 'calc(100% - 3px)',
-    display: 'block',
   },
   card: {
     position: 'relative',

@@ -14,6 +14,10 @@ import { Spacer } from './spacer'
 
 const useStyles = makeStyles(() => ({
   root: {
+    paddingTop: '12%',
+    paddingBottom: '12%',
+  },
+  container: {
     flexGrow: 1,
   },
   icon: {
@@ -63,15 +67,16 @@ export function Price({
       ? highLightStyles
       : ''
 
+  const Container = !onClick ? 'section' : 'div'
   return (
-    <>
+    <Container className={!onClick ? classes.root : ''}>
       {typeof onClick === 'undefined' ? (
         <>
           <SectionHeading>Pricing</SectionHeading>
           <Spacer />
         </>
       ) : null}
-      <Grid container spacing={1} className={!onClick ? classes.root : ''}>
+      <Grid container spacing={1} className={!onClick ? classes.container : ''}>
         {priceConfig.plans
           .filter((item: any) => {
             if (!blockFree) {
@@ -132,6 +137,6 @@ export function Price({
           support@a11ywatch.com
         </Typography>
       </div>
-    </>
+    </Container>
   )
 }
