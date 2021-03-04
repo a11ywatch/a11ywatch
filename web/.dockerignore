@@ -4,3 +4,8 @@ coverage
 .next
 dist
 README.md
+node_modules
+Dockerfile
+.dockerignore
+.git
+.gitignore
