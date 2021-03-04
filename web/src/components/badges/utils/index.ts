@@ -5,3 +5,4 @@
  **/
 
 export { useTranslator } from './use-translator'
+export { clickTranslate } from './click-translate'

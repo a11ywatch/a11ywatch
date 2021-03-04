@@ -10,14 +10,11 @@ declare global {
   }
 }
 
-function loadTranslate(save: boolean = false) {
-  let translateEle
-
+const loadTranslate = () => {
   if (typeof window !== 'undefined' && 'google' in window) {
     const layoutType = window.innerWidth >= 800 ? 'SIMPLE' : 'vk'
     if (window.google.translate && window.google.translate.TranslateElement) {
-      const translator = document.querySelector('#google_translate_element')
-      const dataTemp = new window.google.translate.TranslateElement(
+      new window.google.translate.TranslateElement(
         {
           pageLanguage: 'en',
           layout:
@@ -25,19 +22,6 @@ function loadTranslate(save: boolean = false) {
         },
         'google_translate_element'
       )
-
-      if (save) {
-        translateEle = dataTemp.ca
-      }
-
-      if (translator && translateEle && save) {
-        translateEle.setAttribute(
-          'style',
-          'width:1px; height: 1px; opacity: 0; padding: 0px; position: absolute; clip: rect(1px 1px 1px 1px); overflow:hidden;'
-        )
-
-        translator.replaceWith(translateEle)
-      }
     }
   }
 }

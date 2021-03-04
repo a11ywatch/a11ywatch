@@ -5,7 +5,7 @@
  **/
 import React, { memo, Fragment } from 'react'
 import { IconButton, Tooltip, Typography } from '@material-ui/core'
-import { useTranslator } from './utils'
+import { useTranslator, clickTranslate } from './utils'
 import { makeStyles } from '@material-ui/core/styles'
 import GTranslateIcon from '@material-ui/icons/GTranslate'
 
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const TranslateBadgeMain = ({ inline }: { inline?: boolean }) => {
   const classes = useStyles()
-  const { setMessageListener, clickTranslate } = useTranslator()
+  const { setMessageListener } = useTranslator()
   const ariaT = 'Translate page using google'
   const iconStyles = { color: '#959da5' }
 
@@ -43,7 +43,7 @@ const TranslateBadgeMain = ({ inline }: { inline?: boolean }) => {
       <button
         style={{ display: 'flex', alignItems: 'center' }}
         onClick={clickTranslate}
-        onMouseOver={setMessageListener}
+        onMouseEnter={setMessageListener}
       >
         <GTranslateIcon style={iconStyles} />
         <Typography
@@ -63,7 +63,7 @@ const TranslateBadgeMain = ({ inline }: { inline?: boolean }) => {
           onClick={clickTranslate}
           aria-label={ariaT}
           className={classes.badge}
-          onMouseOver={setMessageListener}
+          onMouseEnter={setMessageListener}
         >
           <GTranslateIcon style={iconStyles} />
         </IconButton>

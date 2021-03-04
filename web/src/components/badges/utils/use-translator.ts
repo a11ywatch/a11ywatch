@@ -8,19 +8,6 @@ import { useEffect } from 'react'
 import { loadTranslate } from '@app/lib'
 
 const useTranslator = (): any => {
-  let messageListener: any
-
-  const clickTranslate = (event: any) => {
-    event?.preventDefault()
-    const translate =
-      document?.querySelector('.goog-te-combo') ||
-      document?.querySelector('.goog-te-gadget-simple .goog-te-menu-value span')
-
-    const evt = document.createEvent('MouseEvent')
-    evt.initEvent('click', { bubbles: true } as any)
-    translate?.dispatchEvent(evt)
-  }
-
   const readyChange = (event: any) => {
     if (event.target.readyState === 'complete') {
       loadTranslate()
@@ -45,7 +32,7 @@ const useTranslator = (): any => {
       )
 
       if (translateLoaded) {
-        loadTranslate(true)
+        loadTranslate()
         return
       }
 
@@ -53,27 +40,24 @@ const useTranslator = (): any => {
       script.src = '/static/load-google.min.js'
       script.defer = true
       document.body.appendChild(script)
-
-      messageListener = window?.addEventListener(
-        'message',
-        receiveMessage,
-        false
-      )
+      window?.addEventListener('message', receiveMessage, false)
+      script.onload = () => {
+        setTimeout(() => {
+          loadTranslate()
+        }, 250)
+      }
     }
   }
 
   useEffect(() => {
     return () => {
-      if (messageListener) {
-        messageListener?.removeEventListener('message', receiveMessage)
-        document?.removeEventListener('readystatechange', readyChange)
-      }
+      window?.removeEventListener('message', receiveMessage)
+      document?.removeEventListener('readystatechange', readyChange)
     }
   }, [])
 
   return {
     setMessageListener,
-    clickTranslate,
   }
 }
 
