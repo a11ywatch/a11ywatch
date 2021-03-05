@@ -5,6 +5,7 @@
  **/
 
 import fetch from "node-fetch";
+import { log } from "@a11ywatch/log";
 
 export const fetchPuppet = async ({
   userId,
@@ -14,6 +15,8 @@ export const fetchPuppet = async ({
 }: any) => {
   let dataSource;
   try {
+    log(`ANGELICA SCAN: ${url} user_id:${userId}`);
+
     const data = await fetch(
       `${process.env.PUPPET_SERVICE}/api/getPageIssues`,
       {
@@ -29,10 +32,7 @@ export const fetchPuppet = async ({
     );
 
     if (data.status === 200) {
-      const source = await data?.text();
-
-      dataSource =
-        (source?.length && source[0] !== "<" && JSON.parse(source)) || null;
+      dataSource = await data?.json();
     }
   } catch (e) {
     console.error(e);

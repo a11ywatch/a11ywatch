@@ -11,13 +11,14 @@ import { log } from "@a11ywatch/log";
 import { pubsub } from "@app/core/graph/subscriptions";
 import { SUBDOMAIN_ADDED, ISSUE_ADDED, WEBSITE_ADDED } from "@app/core/static";
 import { ApiResponse, responseModel } from "@app/core/models";
+import { collectionUpsert } from "@app/core/utils";
 import { IssuesController } from "../../issues";
 import { ScriptsController } from "../../scripts";
 import { getWebsite } from "../../websites";
 import { AnalyticsController } from "../../analytics";
 import { getDomain } from "../find";
 import { generateWebsiteAverage } from "./domain";
-import { collectionUpdate, fetchPuppet, extractPageData } from "./utils";
+import { fetchPuppet, extractPageData } from "./utils";
 
 export const crawlWebsite = async ({
   userId,
@@ -43,7 +44,6 @@ export const crawlWebsite = async ({
         true
       );
 
-      log(`ANGELICA SCAN: ${pageUrl} user_id:${userId}`);
       const dataSource = await fetchPuppet({
         pageHeaders: website?.pageHeaders,
         url: urlMap,
@@ -51,189 +51,184 @@ export const crawlWebsite = async ({
         authed: authenticated,
       });
 
-      if (dataSource) {
-        if (!dataSource?.webPage) {
-          resolve({
-            website: null,
-            code: 300,
-            success: false,
-            message: `Website timeout exceeded threshhold ${
-              authenticated ? "" : "for free scan"
-            }, website rendered to slow under 15000 ms`,
-          });
-        }
+      if (!dataSource) {
+        return resolve(responseModel());
+      }
+      if (!dataSource?.webPage) {
+        return resolve({
+          website: null,
+          code: 300,
+          success: false,
+          message: `Website timeout exceeded threshhold ${
+            authenticated ? "" : "for free scan"
+          }, website rendered to slow or does not exist, please check your url and try again`,
+        });
+      }
 
-        let {
-          script,
-          issues,
-          webPage,
-          pageHasCdn,
-          errorCount,
-          noticeCount,
-          warningCount,
-          adaScore,
-        } = extractPageData(dataSource);
+      let {
+        script,
+        issues,
+        webPage,
+        pageHasCdn,
+        errorCount,
+        noticeCount,
+        warningCount,
+        adaScore,
+      } = extractPageData(dataSource);
 
-        const [newSite, subDomainCollection] = await getDomain(
-          {
-            userId,
-            url: pageUrl,
-          },
-          true
-        );
-        const [
-          issueExist,
-          issuesCollection,
-        ] = await IssuesController().getIssue(
-          { pageUrl, userId, noRetries: true },
-          true
-        );
-        const [
-          analytics,
-          analyticsCollection,
-        ] = await AnalyticsController().getWebsite({ pageUrl, userId }, true);
-        const [
-          scripts,
-          scriptsCollection,
-        ] = await ScriptsController().getScript(
-          { pageUrl, userId, noRetries: true },
-          true
-        );
+      const [newSite, subDomainCollection] = await getDomain(
+        {
+          userId,
+          url: pageUrl,
+        },
+        true
+      );
 
-        const newIssue = Object.assign({}, issues, {
+      const [issueExist, issuesCollection] = await IssuesController().getIssue(
+        { pageUrl, userId, noRetries: true },
+        true
+      );
+      const [
+        analytics,
+        analyticsCollection,
+      ] = await AnalyticsController().getWebsite({ pageUrl, userId }, true);
+      const [scripts, scriptsCollection] = await ScriptsController().getScript(
+        { pageUrl, userId, noRetries: true },
+        true
+      );
+
+      const newIssue = Object.assign({}, issues, {
+        domain,
+        userId,
+        pageUrl,
+      });
+
+      if (issues?.issues?.length) {
+        pubsub.publish(ISSUE_ADDED, { issueAdded: newIssue });
+        await emailMessager.sendMail({
+          userId,
+          data: issues,
+          confirmedOnly: true,
+        });
+      }
+
+      const avgScore = await generateWebsiteAverage(
+        {
+          domain,
+          // cdnConnected: pageHasCdn,
+          userId,
+        },
+        [website, websiteCollection]
+      );
+
+      const updateWebsiteProps = Object.assign(
+        {},
+        {
+          issuesInfo: webPage?.issuesInfo || {},
+          screenshot: webPage?.screenshot,
+          screenshotStill: webPage?.screenshotStill,
+          html: webPage.html,
+          lastScanDate: webPage?.lastScanDate,
+          adaScore: avgScore,
+          pageLoadTime: null,
+          cdnConnected: website?.cdnConnected,
+          online: !!website?.online || null,
           domain,
           userId,
           pageUrl,
-        });
+        }
+      );
 
-        if (issues?.issues?.length) {
-          pubsub.publish(ISSUE_ADDED, { issueAdded: newIssue });
-          await emailMessager.sendMail({
-            userId,
-            data: issues,
-            confirmedOnly: true,
+      // BIND ALL PROPS FROM WEBPAGE
+      if (website?.url === pageUrl) {
+        updateWebsiteProps.cdnConnected = pageHasCdn;
+        updateWebsiteProps.pageLoadTime = webPage?.pageLoadTime;
+        updateWebsiteProps.online = true;
+      }
+
+      await collectionUpsert(
+        {
+          pageUrl,
+          domain,
+          errorCount,
+          warningCount,
+          noticeCount,
+          userId,
+          adaScore,
+        },
+        [analyticsCollection, analytics, "ANALYTICS"]
+      );
+
+      await collectionUpsert(newIssue, [
+        issuesCollection,
+        issueExist,
+        "ISSUES",
+      ]);
+      await collectionUpsert(updateWebsiteProps, [
+        websiteCollection,
+        website,
+        "WEBSITE",
+      ]);
+      if (script) {
+        if (!scripts?.scriptMeta) {
+          script.scriptMeta = {
+            skipContentEnabled: true,
+          };
+          await collectionUpsert(script, [
+            scriptsCollection,
+            scripts,
+            "SCRIPTS",
+          ]);
+        }
+      }
+      if (webPage) {
+        await collectionUpsert(
+          webPage,
+          [subDomainCollection, newSite, "SUBDOMAIN"],
+          { searchProps: { pageUrl, userId } }
+        );
+
+        if (!newSite) {
+          pubsub.publish(SUBDOMAIN_ADDED, {
+            subDomainAdded: webPage,
           });
         }
-
-        const avgScore = await generateWebsiteAverage(
-          {
-            domain,
-            // cdnConnected: pageHasCdn,
-            userId,
-          },
-          [website, websiteCollection]
-        );
-
-        const updateWebsiteProps = Object.assign(
-          {},
-          {
-            issuesInfo: webPage?.issuesInfo || {},
-            screenshot: webPage?.screenshot,
-            screenshotStill: webPage?.screenshotStill,
-            html: webPage.html,
-            lastScanDate: webPage?.lastScanDate,
-            adaScore: avgScore,
-            pageLoadTime: null,
-            cdnConnected: website?.cdnConnected,
-            online: !!website?.online || null,
-            domain,
-            userId,
-            pageUrl,
-          }
-        );
-
-        // BIND ALL PROPS FROM WEBPAGE
-        if (website?.url === pageUrl) {
-          updateWebsiteProps.cdnConnected = pageHasCdn;
-          updateWebsiteProps.pageLoadTime = webPage?.pageLoadTime;
-          updateWebsiteProps.online = true;
-        }
-
-        await collectionUpdate(
-          {
-            pageUrl,
-            domain,
-            errorCount,
-            warningCount,
-            noticeCount,
-            userId,
-            adaScore,
-          },
-          [analyticsCollection, analytics, "ANALYTICS"]
-        );
-        await collectionUpdate(newIssue, [
-          issuesCollection,
-          issueExist,
-          "ISSUES",
-        ]);
-        await collectionUpdate(updateWebsiteProps, [
-          websiteCollection,
-          website,
-          "WEBSITE",
-        ]);
-        if (script) {
-          if (!scripts?.scriptMeta) {
-            script.scriptMeta = {
-              skipContentEnabled: true,
-            };
-            await collectionUpdate(script, [
-              scriptsCollection,
-              scripts,
-              "SCRIPTS",
-            ]);
-          }
-        }
-        if (webPage) {
-          await collectionUpdate(
-            webPage,
-            [subDomainCollection, newSite, "SUBDOMAIN"],
-            { searchProps: { pageUrl, userId } }
-          );
-
-          if (!newSite) {
-            pubsub.publish(SUBDOMAIN_ADDED, {
-              subDomainAdded: webPage,
-            });
-          }
-        }
-
-        const websiteAdded = Object.assign({}, website, updateWebsiteProps);
-
-        if (authenticated) {
-          pubsub.publish(WEBSITE_ADDED, { websiteAdded });
-        }
-
-        let webResponse;
-
-        if (!authenticated) {
-          const slicedIssue =
-            issues?.issues?.slice(
-              issues?.issues.length -
-                Math.max(Math.round(issues?.issues.length / 4), 2)
-            ) || [];
-
-          if (websiteAdded.issuesInfo) {
-            websiteAdded.issuesInfo.limitedCount = slicedIssue.length;
-          }
-
-          webResponse = {
-            website: {
-              ...websiteAdded,
-              url: pageUrl,
-              issue: slicedIssue,
-              script,
-            },
-          };
-        }
-
-        resolve(
-          responseModel(
-            webResponse ?? { data: apiData ? dataSource : websiteAdded }
-          )
-        );
-      } else {
-        resolve(responseModel());
       }
+
+      const websiteAdded = Object.assign({}, website, updateWebsiteProps);
+
+      if (authenticated) {
+        pubsub.publish(WEBSITE_ADDED, { websiteAdded });
+      }
+
+      let webResponse;
+
+      if (!authenticated) {
+        const slicedIssue =
+          issues?.issues?.slice(
+            issues?.issues.length -
+              Math.max(Math.round(issues?.issues.length / 4), 2)
+          ) || [];
+
+        if (websiteAdded.issuesInfo) {
+          websiteAdded.issuesInfo.limitedCount = slicedIssue.length;
+        }
+
+        webResponse = {
+          website: {
+            ...websiteAdded,
+            url: pageUrl,
+            issue: slicedIssue,
+            script,
+          },
+        };
+      }
+
+      resolve(
+        responseModel(
+          webResponse ?? { data: apiData ? dataSource : websiteAdded }
+        )
+      );
     } catch (e) {
       log(e, { type: "error" });
       return responseModel();

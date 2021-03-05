@@ -17,10 +17,7 @@ export const imageDetect = async ({ img }: { img: string }): Promise<any> => {
       headers: { "Content-Type": "application/json" },
     });
     if (data.status === 200) {
-      const source = await data?.text();
-
-      dataSource =
-        (source?.length && source[0] !== "<" && JSON.parse(source)) || null;
+      dataSource = await data?.json();
     }
   } catch (e) {
     console.error(e);

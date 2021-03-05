@@ -101,7 +101,7 @@ function CtaIntro({ checker }: any) {
         </div>
       </section>
       <div className={classes.join}>
-        <Typography variant='subtitle1' component={'p'} gutterBottom>
+        <Typography variant='subtitle2' component={'p'} gutterBottom>
           JOIN THOUSANDS OF HIGHLY PRODUCTIVE TEAMS
         </Typography>
         <Image

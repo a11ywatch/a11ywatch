@@ -52,7 +52,7 @@ function initServer(): HttpServer {
 
   app.use(cors(corsOptions));
   app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(bodyParser.json({ type: "application/*+json", limit: "100mb" }));
+  app.use(bodyParser.json({ type: "application/*+json", limit: "300mb" }));
   app.options(CONFIRM_EMAIL, cors());
   app.options(WEBSITE_CHECK, cors());
 

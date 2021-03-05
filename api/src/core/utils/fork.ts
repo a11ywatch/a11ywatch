@@ -5,11 +5,14 @@
  **/
 import { fork } from "child_process";
 
-export const forkProcess = ({ urlMap, userId }: any) => {
-  const forked = fork(`${__dirname}/workers/watcher-crawl`, [], {
+export const forkProcess = (
+  props: any,
+  workerPath: string = "watcher-crawl"
+) => {
+  const forked = fork(`${__dirname}/workers/${workerPath}`, [], {
     detached: true,
   });
-  forked.send({ urlMap, userId });
+  forked.send(props);
   forked.unref();
 
   forked.on("message", (message: string) => {

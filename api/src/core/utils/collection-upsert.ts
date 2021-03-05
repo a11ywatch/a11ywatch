@@ -4,8 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-// DYNAMIC COLLECTION UPDATES
-export const collectionUpdate = async (
+export const collectionUpsert = async (
   source: any,
   [collection, shouldUpdate, type],
   config?: any

@@ -16,3 +16,4 @@ export { getLastItemInCollection } from "./get-last-item-in-collection";
 export { forkProcess } from "./fork";
 export { blockWebsiteAdd } from "./limits";
 export { stripUrlEndingSlash } from "./strip-url-ending-slash";
+export { collectionUpsert } from "./collection-upsert";

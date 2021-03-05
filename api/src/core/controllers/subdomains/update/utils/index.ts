@@ -4,6 +4,5 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-export { collectionUpdate } from "./collection-update";
 export { fetchPuppet } from "./fetch-puppet";
 export { extractPageData } from "./extract-page-data";
