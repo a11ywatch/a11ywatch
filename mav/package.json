@@ -15,7 +15,7 @@
     "node": "14.3.0"
   },
   "dependencies": {
-    "@a11ywatch/log": "0.3.3",
+    "@a11ywatch/log": "^0.3.4",
     "@tensorflow-models/coco-ssd": "2.0.3",
     "@tensorflow-models/mobilenet": "2.0.4",
     "@tensorflow/tfjs-node-gpu": "1.7.4",
