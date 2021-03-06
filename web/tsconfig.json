@@ -26,7 +26,12 @@
       "@app-theme": ["./src/theme/main/index.ts"],
       "ui": ["./node_modules/@a11ywatch/ui/main"],
       "@app-config": ["./web-config.js"]
-    }
+    },
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules"
+      }
+    ]
   },
   "exclude": ["node_modules"],
   "include": ["next-env.d.ts", "./src/**/*.ts", "./src/**/*.tsx"]

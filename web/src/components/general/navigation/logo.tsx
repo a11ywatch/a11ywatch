@@ -11,8 +11,8 @@ export const Logo = () => {
     <img
       src='/static/img/logo.svg'
       alt='A11yWatch logo'
-      width={51}
-      height={30.88}
+      width={'51'}
+      height={'30'}
     />
   )
 }

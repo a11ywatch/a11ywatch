@@ -11,7 +11,6 @@ import Document, {
   DocumentContext,
 } from 'next/document'
 import { ServerStyleSheets } from '@material-ui/core/styles'
-import parser from 'ua-parser-js'
 import { userModel, initAppModel } from '@app/data'
 
 class MyDocument extends Document {
@@ -22,9 +21,6 @@ class MyDocument extends Document {
     if (ctx.req) {
       userModel.initModel({
         cookie: ctx.req.headers?.cookie,
-        deviceType:
-          // @ts-ignore
-          parser(ctx.req.headers['user-agent'])?.device?.type || 'desktop',
         originalUrl: ctx.req?.url || '',
       })
       initAppModel()
