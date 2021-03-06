@@ -38,12 +38,9 @@ function NavBarTitle({
 
   if (marketing && !notitle) {
     return (
-      <>
-        <Link href='/' className={classes.logo}>
-          <Logo />
-        </Link>
-        <span className={flexStyle} />
-      </>
+      <Link href='/' className={classes.logo}>
+        <Logo />
+      </Link>
     )
   }
 

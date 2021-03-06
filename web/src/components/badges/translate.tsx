@@ -42,7 +42,7 @@ const TranslateBadgeMain = ({
   const classes = useStyles()
   const { setMessageListener } = useTranslator()
   const ariaT = 'Translate page using google'
-  const iconStyles = { color: '#959da5', marginRight: 12 }
+  const iconStyles = { color: '#959da5' }
 
   if (inline) {
     return (
@@ -53,7 +53,7 @@ const TranslateBadgeMain = ({
         style={{ display: 'flex', alignItems: 'center', fontSize: '1.05rem' }}
       >
         <Fragment>
-          <GTranslateIcon style={iconStyles} />
+          <GTranslateIcon style={{ marginRight: 12, ...iconStyles }} />
           Translate
         </Fragment>
       </button>
