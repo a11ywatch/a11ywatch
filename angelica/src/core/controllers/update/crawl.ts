@@ -39,15 +39,17 @@ export const crawlWebsite = async ({ userId, url: urlMap, pageHeaders }) => {
   try {
     browser = await puppetPool.acquire();
   } catch (e) {
-    log(e?.message, { type: "error" });
+    log(e, { type: "error" });
   }
 
   let page = null;
 
   try {
-    page = await browser?.newPage();
+    if (typeof browser?.newPage === "function") {
+      page = await browser.newPage();
+    }
   } catch (e) {
-    log(e?.message, { type: "error" });
+    log(e, { type: "error" });
   }
 
   const {
@@ -193,7 +195,7 @@ export const crawlWebsite = async ({ userId, url: urlMap, pageHeaders }) => {
       },
     };
   } catch (e) {
-    log(e?.message, { type: "error" });
+    log(e, { type: "error" });
   } finally {
     if (browser?.isConnected()) {
       puppetPool.clean(browser, page);

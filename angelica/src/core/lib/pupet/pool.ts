@@ -22,7 +22,9 @@ const puppetPool = {
         stream.total_heap_size - stream.used_heap_size
       ) {
         log("os heap to low to grab puppet pool", { type: "error" });
-        return await setImmediatePromise(puppeteerPool.acquire);
+        return await setImmediatePromise(
+          async () => await puppeteerPool.acquire()
+        );
       }
 
       return await puppeteerPool.acquire();
