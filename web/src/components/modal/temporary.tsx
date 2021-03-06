@@ -18,6 +18,7 @@ import {
   WebsiteTabs,
   Screenshot,
   TestView,
+  Timer,
 } from '@app/components/general'
 import { ListSkeleton } from '@app/components/placeholders'
 import { CtaCdn } from '@app/components/cta'
@@ -90,6 +91,8 @@ export function SwipeableTemporaryDrawer() {
     toggleModal(type, '')
   }
 
+  const empty = Object.keys(website).length <= 1
+
   return (
     <Drawer anchor='bottom' open={bottomModal} onClose={toggleDrawer(false)}>
       <div className={classes.root}>
@@ -107,17 +110,16 @@ export function SwipeableTemporaryDrawer() {
           <Spacer height={8} />
           {website?.script?.script && desktop ? (
             <Fragment>
-              <Typography variant='h6' component='p' gutterBottom>
-                JS Execution Fixes
-              </Typography>
+              <Typography gutterBottom>JS Execution Fixes</Typography>
               <Spacer height={2} />
               <EditableMixture language='html' style={a11yDark} editMode>
                 {website?.script?.script || ''}
               </EditableMixture>
             </Fragment>
           ) : null}
+          {empty ? <Timer /> : null}
         </div>
-        {Object.keys(website).length <= 1 ? (
+        {empty ? (
           <div style={{ width: '100%' }}>
             <div className={classes.loading} role='presentation'>
               <ListSkeleton avatar={false} subTitle={false} count={4} />

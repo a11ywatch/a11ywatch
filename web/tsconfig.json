@@ -19,6 +19,7 @@
     "target": "esnext",
     "experimentalDecorators": true,
     "baseUrl": ".",
+    "removeComments": true,
     "paths": {
       "@app/*": ["./src/*"],
       "@app-strings": ["./src/content/strings/a11y"],
