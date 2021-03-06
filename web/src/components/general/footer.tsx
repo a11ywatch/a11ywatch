@@ -22,7 +22,7 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingTop: 24,
+    paddingTop: '6%',
     overflow: 'hidden',
   },
   flex: {
