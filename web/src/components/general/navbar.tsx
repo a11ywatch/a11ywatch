@@ -104,6 +104,19 @@ const NavBar = ({
   const classes = useStyles()
   const router = useRouter()
 
+  const buttonProps = !backButton
+    ? { href: '/', component: Link }
+    : {
+        onClick: (e: any) => {
+          e?.preventDefault()
+          if (backButton) {
+            router.back()
+          } else {
+            router.push('/')
+          }
+        },
+      }
+
   return (
     <>
       <AppBar
@@ -116,21 +129,11 @@ const NavBar = ({
             toolbar || children
           ) : (
             <>
-              <IconButton
-                href='/'
-                onClick={(e: any) => {
-                  e?.preventDefault()
-                  if (backButton) {
-                    router.back()
-                  } else {
-                    router.push('/')
-                  }
-                }}
-                component={Link}
-                className={classes.menu}
-              >
-                {backButton ? <BackIcon /> : !marketing ? <AppIcon /> : null}
-              </IconButton>
+              {backButton || !marketing ? (
+                <IconButton className={classes.menu} {...buttonProps}>
+                  {backButton ? <BackIcon /> : <AppIcon />}
+                </IconButton>
+              ) : null}
               <NavBarTitle
                 title={title}
                 flex
@@ -147,11 +150,7 @@ const NavBar = ({
               loginClassName={classes.login}
             />
           )}
-          {marketing ? (
-            <div className={classes.ghIcon}>
-              <TranslateBadge />
-            </div>
-          ) : null}
+          {marketing ? <TranslateBadge className={classes.ghIcon} /> : null}
         </Toolbar>
       </AppBar>
       {position === 'fixed' ? <WrapShadow /> : null}

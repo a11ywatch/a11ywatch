@@ -41,7 +41,7 @@ export function MarketingDrawer({
           />
         }
       >
-        <span className={classes.navContainer}>
+        <div className={classes.navContainer}>
           <NavBarTitle
             title={strings.appName}
             href='/'
@@ -54,7 +54,7 @@ export function MarketingDrawer({
               <SearchBar placeholder={'Enter website url...'} noWidth cta />
             </>
           ) : null}
-        </span>
+        </div>
       </NavBar>
       <main className={initClosed ? classes.contentSmall : classes.content}>
         {initClosed ? (

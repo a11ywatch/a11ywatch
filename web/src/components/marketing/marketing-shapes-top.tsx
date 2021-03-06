@@ -33,22 +33,24 @@ function MarketingShapesTop() {
 
   return (
     <Fragment>
-      <span className={`${classes.shape} ${classes.oval1}`}>
+      <div className={`${classes.shape} ${classes.oval1}`}>
         <Image
           src={'/static/img/shapes/oval-1.svg'}
           height={241}
           width={230}
           role='presentation'
+          alt=''
         />
-      </span>
-      <span className={`${classes.shape} ${classes.oval2}`}>
+      </div>
+      <div className={`${classes.shape} ${classes.oval2}`}>
         <Image
           src={'/static/img/shapes/oval-2.svg'}
           height={909}
           width={721}
           role='presentation'
+          alt=''
         />
-      </span>
+      </div>
     </Fragment>
   )
 }

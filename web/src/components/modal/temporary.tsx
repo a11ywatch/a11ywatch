@@ -108,16 +108,18 @@ export function SwipeableTemporaryDrawer() {
           <RenderSecondary {...website} />
           <CtaCdn website={website} block />
           <Spacer height={8} />
+          <Timer stop={!empty} />
           {website?.script?.script && desktop ? (
             <Fragment>
-              <Typography gutterBottom>JS Execution Fixes</Typography>
+              <Typography gutterBottom variant={'body2'}>
+                JS Fixes
+              </Typography>
               <Spacer height={2} />
               <EditableMixture language='html' style={a11yDark} editMode>
                 {website?.script?.script || ''}
               </EditableMixture>
             </Fragment>
           ) : null}
-          {empty ? <Timer /> : null}
         </div>
         {empty ? (
           <div style={{ width: '100%' }}>

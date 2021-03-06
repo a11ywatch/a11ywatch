@@ -42,22 +42,6 @@ const useStyles = makeStyles(({ palette, spacing, shadows }: Theme) =>
   })
 )
 
-// const inlineButtonStyle = {
-//   height: 60,
-//   width: 60,
-//   maxWidth: 60,
-//   maxHeight: 60,
-//   padding: 0,
-//   fontFamily: `Roboto, Helvetica Neue, BlinkMacSystemFont, sans-serif`,
-//   fontSize: 22,
-//   fontWeight: 800,
-//   borderRadius: 30,
-//   boxShadow: '0 3px 5px 2px rgba(30, 30, 30, .4)',
-//   zIndex: 999999,
-//   border: 0,
-//   position: 'absolute',
-// }
-
 let modalStyle = {
   position: 'sticky' as 'sticky',
   left: 0,
@@ -93,74 +77,68 @@ export function AnnotationContainer({
   }
 
   return (
-    <>
-      <Modal
-        aria-labelledby='simple-modal-title'
-        aria-describedby='simple-modal-description'
-        open={store.activeAnnotation}
-        container={() => rootRef.current}
-        onClose={onClick}
-        keepMounted
+    <Modal
+      aria-labelledby='simple-modal-title'
+      aria-describedby='simple-modal-description'
+      open={store.activeAnnotation}
+      container={() => rootRef.current}
+      onClose={onClick}
+      keepMounted
+    >
+      <Paper
+        style={modalStyle}
+        className={classes.paper}
+        ref={annotationRef}
+        onMouseDown={(e: any) =>
+          handler.dragMouseDown(e, annotationRef.current)
+        }
       >
-        <Paper
-          style={modalStyle}
-          className={classes.paper}
-          ref={annotationRef}
-          onMouseDown={(e: any) =>
-            handler.dragMouseDown(e, annotationRef.current)
-          }
+        <div className={classes.row}>
+          <Typography variant='h6' component='h3' className={classes.title}>
+            RECOMMENDED
+          </Typography>
+          <IconButton
+            edge='start'
+            color='inherit'
+            aria-label='close modal'
+            onClick={onClick}
+            style={{ marginRight: 6 }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </div>
+        <Typography
+          variant='body2'
+          className={classes.title}
+          style={{ fontWeight: 500 }}
+          gutterBottom
         >
-          <div className={classes.row}>
-            <Typography variant='h6' component='h3' className={classes.title}>
-              RECOMMENDED
-            </Typography>
-            <IconButton
-              edge='start'
-              color='inherit'
-              aria-label='close modal'
-              onClick={onClick}
-              style={{ marginRight: 6 }}
-            >
-              <CloseIcon />
-            </IconButton>
-          </div>
-          <Typography
-            variant='body2'
-            className={classes.title}
-            style={{ fontWeight: 500 }}
-            gutterBottom
-          >
-            {context}
-          </Typography>
-          <Typography
-            variant='subtitle2'
-            className={`${classes.title} ${classes.maxSize}`}
-            gutterBottom
-          >
-            {code}
-          </Typography>
-          <Typography
-            variant='subtitle1'
-            className={classes.title}
-            gutterBottom
-          >
-            {message}
-          </Typography>
-          {message?.includes('contrast ratio') ? (
-            <ToolTip
-              visible={store.activeAnnotation}
-              source={source}
-              portalID={portalID}
-              elementParent={elementParent}
-              contrastRatio={contrastRatio}
-              message={message}
-              code={code}
-              context={context}
-              close={onClick}
-            />
-          ) : null}
-        </Paper>
-      </Modal>
-    </>
+          {context}
+        </Typography>
+        <Typography
+          variant='subtitle2'
+          className={`${classes.title} ${classes.maxSize}`}
+          gutterBottom
+        >
+          {code}
+        </Typography>
+        <Typography variant='subtitle1' className={classes.title} gutterBottom>
+          {message}
+        </Typography>
+        {message?.includes('contrast ratio') ? (
+          <ToolTip
+            visible={store.activeAnnotation}
+            source={source}
+            portalID={portalID}
+            elementParent={elementParent}
+            contrastRatio={contrastRatio}
+            message={message}
+            code={code}
+            context={context}
+            close={onClick}
+          />
+        ) : null}
+      </Paper>
+    </Modal>
   )
 }

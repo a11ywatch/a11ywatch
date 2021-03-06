@@ -94,9 +94,7 @@ function CtaSearch({ checker }: any) {
       ) : null}
       <CtaSearchBar checker={checker}>
         {checker ? (
-          <Head>
-            <Heading>Check website for issues</Heading>
-          </Head>
+          <Head>Check website for issues</Head>
         ) : (
           <Head component='p'>
             <Heading component='p'>{`${strings.title} `}</Heading>

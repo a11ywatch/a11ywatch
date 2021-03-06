@@ -4,7 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 import React, { memo, Fragment } from 'react'
-import { IconButton, Tooltip, Typography } from '@material-ui/core'
+import { IconButton, Tooltip } from '@material-ui/core'
 import { useTranslator, clickTranslate } from './utils'
 import { makeStyles } from '@material-ui/core/styles'
 import GTranslateIcon from '@material-ui/icons/GTranslate'
@@ -32,26 +32,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const TranslateBadgeMain = ({ inline }: { inline?: boolean }) => {
+const TranslateBadgeMain = ({
+  inline,
+  className,
+}: {
+  className?: string
+  inline?: boolean
+}) => {
   const classes = useStyles()
   const { setMessageListener } = useTranslator()
   const ariaT = 'Translate page using google'
-  const iconStyles = { color: '#959da5' }
+  const iconStyles = { color: '#959da5', marginRight: 12 }
 
   if (inline) {
     return (
       <button
-        style={{ display: 'flex', alignItems: 'center' }}
         onClick={clickTranslate}
         onMouseEnter={setMessageListener}
+        className={className}
+        style={{ display: 'flex', alignItems: 'center', fontSize: '1.05rem' }}
       >
-        <GTranslateIcon style={iconStyles} />
-        <Typography
-          variant={'subtitle1'}
-          style={{ marginLeft: '0.3em', fontSize: '1.05rem' }}
-        >
+        <Fragment>
+          <GTranslateIcon style={iconStyles} />
           Translate
-        </Typography>
+        </Fragment>
       </button>
     )
   }
@@ -62,7 +66,7 @@ const TranslateBadgeMain = ({ inline }: { inline?: boolean }) => {
         <IconButton
           onClick={clickTranslate}
           aria-label={ariaT}
-          className={classes.badge}
+          className={`${className}${className ? ' ' + classes.badge : ''}`}
           onMouseEnter={setMessageListener}
         >
           <GTranslateIcon style={iconStyles} />

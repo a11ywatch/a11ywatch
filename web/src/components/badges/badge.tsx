@@ -4,9 +4,8 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Typography, Tooltip } from '@material-ui/core'
-import Image from 'next/image'
 import { defaultProps } from './defaultProps'
 import type { BadgeProps } from './badge-types'
 
@@ -21,44 +20,50 @@ export const Badge = ({
 }: BadgeProps) => {
   const size = badgeSize === 'small' ? 24 : 32
 
-  const Anchor = ({ children }: { children: any }) => {
+  const Anchor = ({
+    children,
+    style: aStyle,
+  }: {
+    style: any
+    children: any
+  }) => {
     return (
-      <a
-        href={href}
-        style={!inline ? style : {}}
-        target={'_blank'}
-        aria-label={label}
-      >
+      <a href={href} style={aStyle} target={'_blank'} aria-label={label}>
         {children}
       </a>
     )
   }
 
-  const Img = () => <Image src={src} height={size} width={size} alt={title} />
+  const Img = () => <img src={src} height={size} width={size} alt={title} />
 
   if (inline) {
     return (
-      <Anchor>
-        <div style={{ display: 'flex', paddingRight: 6 }}>
+      <Anchor
+        style={Object.assign({}, style, {
+          display: 'flex',
+          paddingRight: 6,
+          alignItems: 'center',
+        })}
+      >
+        <Fragment>
           <Img />
           <Typography
             variant={'subtitle1'}
+            component={'p'}
             style={{ marginLeft: '0.3em', fontSize: '1.02rem' }}
           >
             {title}
           </Typography>
-        </div>
+        </Fragment>
       </Anchor>
     )
   }
 
   return (
     <Tooltip title={String(label)}>
-      <>
-        <Anchor>
-          <Img />
-        </Anchor>
-      </>
+      <Anchor style={style}>
+        <Img />
+      </Anchor>
     </Tooltip>
   )
 }

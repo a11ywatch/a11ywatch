@@ -54,11 +54,6 @@ export function InputHeaders({
 }: any) {
   const classes = useStyles()
 
-  // const formLabelStyles = {
-  //   root: classes.formLabel,
-  //   label: classes.formLabelText,
-  // }
-
   return customHeader
     ? customFields?.map((item: any, index: number) => {
         const inputKeyName = 'Key'

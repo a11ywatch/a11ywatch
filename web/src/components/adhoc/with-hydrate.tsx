@@ -7,15 +7,10 @@
 import { useEffect } from 'react'
 import { userModel } from '@app/data'
 
-// TODO: RENAME to WithAppInit
 export function WithHydrate({ children }: { children?: any }): any {
   useEffect(() => {
     userModel.initModel({
       originalUrl: '',
-      // deviceType:
-      //   (window.innerWidth <= 600 && 'mobile') ||
-      //   new UAParser().getResult()?.device?.type ||
-      //   'desktop',
       deviceType: '',
       cookie: document.cookie,
     })

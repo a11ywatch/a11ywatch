@@ -11,7 +11,7 @@ const WithSignOnForm = dynamic(
   () => import('../general/signon-form').then((mod) => mod.SignOnForm) as any,
   {
     ssr: false,
-    loading: () => <SignOnFormSkeleton home={false} loginView={false} />,
+    loading: () => <SignOnFormSkeleton loginView={false} />,
   }
 )
 

@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
       position: 'absolute',
       left: '100%',
       content: '"FREE forever."',
-      font: '700 12px/17px Axiforma,Arial,serif,',
+      font: '700 12px/17px Axiforma,Arial,serif',
       textAlign: 'left',
       letterSpacing: 1,
       textTransform: 'uppercase',
@@ -114,6 +114,7 @@ function CtaIntro({ checker }: any) {
           height={8}
           width={120}
           role='presentation'
+          alt=''
         />
         <a className={classes.bottomAnchor} href='#video-section'>
           <ExpandMore />

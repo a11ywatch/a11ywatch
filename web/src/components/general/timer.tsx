@@ -7,15 +7,28 @@
 import React, { useState, useEffect } from 'react'
 import { Typography } from '@material-ui/core'
 
-export const Timer = () => {
+export const Timer = ({ stop }: { stop?: boolean }) => {
   const [seconds, setSeconds] = useState(0)
 
   useEffect(() => {
     const interval = setInterval(() => {
       setSeconds((seconds) => seconds + 1)
     }, 1000)
+    if (stop) {
+      clearInterval(interval)
+    }
     return () => clearInterval(interval)
-  }, [seconds])
+  }, [stop])
 
-  return <Typography gutterBottom>Scan time: {seconds}s</Typography>
+  return (
+    <Typography
+      gutterBottom
+      variant={'subtitle1'}
+      style={{
+        color: seconds > 20 ? 'red' : seconds > 10 ? 'yellow' : 'inherit',
+      }}
+    >
+      Scan time: {seconds}s
+    </Typography>
+  )
 }

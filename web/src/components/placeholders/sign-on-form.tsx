@@ -64,13 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export function SignOnFormSkeleton({
-  loginView,
-  home,
-}: {
-  loginView?: boolean
-  home?: boolean
-}) {
+export function SignOnFormSkeleton({ loginView }: { loginView?: boolean }) {
   const classes = useStyles()
 
   return (
@@ -85,58 +79,47 @@ export function SignOnFormSkeleton({
         >
           {loginView ? 'Login' : 'Sign up with google'}
         </Button>
-        <div>
-          <div>
-            <FormControl>
-              <TextField
-                id='email'
-                aria-describedby='my-email-text'
-                className={classes.textField}
-                label='Email'
-                type='email'
-                margin='dense'
-                autoFocus={false}
-                autoComplete='email'
-                variant='outlined'
-                required
-              />
-              <FormHelperText id='my-email-text' className={classes.textCenter}>
-                We'll never share your email.
-              </FormHelperText>
-            </FormControl>
-          </div>
-          <div>
-            <FormControl>
-              <TextField
-                id='password'
-                aria-describedby='my-password-text'
-                className={`${classes.textField}`}
-                label='Password'
-                margin='dense'
-                inputProps={{
-                  minLength: '6',
-                }}
-                autoFocus={false}
-                type='password'
-                autoComplete='current-password'
-                variant='outlined'
-                required
-              />
-              <FormHelperText
-                id='my-password-text'
-                className={classes.textCenter}
-                style={{ marginBottom: 0 }}
-              >
-                We'll never share your password.
-              </FormHelperText>
-            </FormControl>
-          </div>
-        </div>
-        {home ? (
-          <span className={classes.row}>
-            <Typography />
-          </span>
-        ) : null}
+        <FormControl>
+          <TextField
+            id='email'
+            aria-describedby='my-email-text'
+            className={classes.textField}
+            label='Email'
+            type='email'
+            margin='dense'
+            autoFocus={false}
+            autoComplete='email'
+            variant='outlined'
+            required
+          />
+          <FormHelperText id='my-email-text' className={classes.textCenter}>
+            We'll never share your email.
+          </FormHelperText>
+        </FormControl>
+        <FormControl>
+          <TextField
+            id='password'
+            aria-describedby='my-password-text'
+            className={`${classes.textField}`}
+            label='Password'
+            margin='dense'
+            inputProps={{
+              minLength: '6',
+            }}
+            autoFocus={false}
+            type='password'
+            autoComplete='current-password'
+            variant='outlined'
+            required
+          />
+          <FormHelperText
+            id='my-password-text'
+            className={classes.textCenter}
+            style={{ marginBottom: 0 }}
+          >
+            We'll never share your password.
+          </FormHelperText>
+        </FormControl>
       </div>
     </Container>
   )
