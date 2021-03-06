@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme: any) => ({
     overflowX: 'scroll',
   },
   root: {
+    paddingTop: '12%',
     paddingBottom: '12%',
     width: 'calc(100% - 3px)',
     display: 'block',
