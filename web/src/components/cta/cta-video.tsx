@@ -11,6 +11,7 @@ import Image from 'next/image'
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    paddingTop: '12%',
     paddingBottom: '12%',
     overflow: 'hidden',
   },
@@ -47,7 +48,7 @@ export function CtaVideo() {
   const videoClassName = `${classes.video} ${classes.frame}`
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} id='video-section'>
       <div className={classes.card}>
         <VisibilitySensor partialVisibility>
           {({ isVisible }) => (

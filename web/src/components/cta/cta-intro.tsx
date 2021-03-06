@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { CtaInput } from './searchbar'
 import Image from 'next/image'
 import { Link } from '../general'
+import ExpandMore from '@material-ui/icons/ExpandMore'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: '6%',
     paddingBottom: '6%',
     [theme.breakpoints.down('sm')]: {
       paddingTop: '18%',
@@ -62,6 +64,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '12%',
     textAlign: 'center',
     color: '#7c828d',
+  },
+  bottomAnchor: {
+    display: 'block',
   },
 }))
 
@@ -110,6 +115,9 @@ function CtaIntro({ checker }: any) {
           width={120}
           role='presentation'
         />
+        <a className={classes.bottomAnchor} href='#video-section'>
+          <ExpandMore />
+        </a>
       </div>
     </Fragment>
   )
