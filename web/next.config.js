@@ -41,10 +41,21 @@ const env = Object.assign({}, parsed, {
   INTERCOM_ENABLED: process.env.INTERCOM_ENABLED,
 })
 
-const domains = ['images.unsplash.com', process.env.CDN_URL_HOST]
+let domains = ['images.unsplash.com']
 
 if (dev) {
   domains.push('127.0.0.1', 'localhost')
+}
+
+const CDN_HOST = process.env.CDN_URL_HOST
+
+if (CDN_HOST) {
+  if (CDN_HOST.includes(',')) {
+    const temp = CDN_HOST.split(',')
+    domains = domains.concat(temp)
+  } else {
+    domains.push(CDN_HOST)
+  }
 }
 
 module.exports = withPWA({

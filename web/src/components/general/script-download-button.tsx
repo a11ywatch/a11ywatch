@@ -6,9 +6,10 @@
 import React, { useState } from 'react'
 import { Menu, MenuItem, IconButton } from '@material-ui/core'
 import { MoreVert as MoreIcon } from '@material-ui/icons'
+import { dev } from '@app/configs'
 
 const convertDownloadPath = (cdn: string) =>
-  cdn?.replace('scripts/', 'download/')
+  dev ? cdn?.replace('cdn/', 'download/').replace('scripts/', 'download/') : cdn
 
 export function ScriptDownloadButton({ cdn_url, cdn_url_min }: any) {
   const [menuOpen, toggleMenu] = useState<any>(null)
@@ -20,6 +21,8 @@ export function ScriptDownloadButton({ cdn_url, cdn_url_min }: any) {
   const handleClose = () => {
     toggleMenu(null)
   }
+
+  console.log(cdn_url)
 
   return (
     <div>
