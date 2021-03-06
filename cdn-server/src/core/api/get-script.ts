@@ -9,7 +9,7 @@ import { log } from "@a11ywatch/log";
 import { DEV, getFile } from "../../";
 
 const getScript = (req, res) => {
-  const url = `/scripts/${req.params.domain}/${req.params.cdnPath}`;
+  const url = `scripts/${req.params.domain}/${req.params.cdnPath}`;
 
   try {
     DEV ? res.sendFile(join(`${__dirname}/../../${url}`)) : getFile(url, res);

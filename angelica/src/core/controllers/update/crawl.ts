@@ -59,7 +59,6 @@ export const crawlWebsite = async ({ userId, url: urlMap, pageHeaders }) => {
     cdnJsPath,
     cdnMinJsPath,
   } = sourceBuild(urlMap);
-
   let resolver = Object.assign({}, EMPTY_RESPONSE);
 
   try {
