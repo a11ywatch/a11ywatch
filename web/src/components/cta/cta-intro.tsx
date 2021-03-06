@@ -106,8 +106,8 @@ function CtaIntro({ checker }: any) {
         </Typography>
         <Image
           src={'/static/img/wave.svg'}
-          height={12}
-          width={180}
+          height={8}
+          width={120}
           role='presentation'
         />
       </div>
