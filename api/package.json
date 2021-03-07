@@ -25,6 +25,7 @@
     "date-fns": "2.7.0",
     "dotenv": "8.2.0",
     "express": "4.14.0",
+    "express-rate-limit": "^5.2.6",
     "generic-pool": "3.7.1",
     "get-page-speed": "^1.0.1",
     "graphql": "14.6.0",
@@ -39,6 +40,7 @@
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.2.3",
+    "@types/express-rate-limit": "^5.1.1",
     "@types/jest": "^26.0.20",
     "@types/node": "^10.17.51",
     "babel-jest": "^26.6.3",

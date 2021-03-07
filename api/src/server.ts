@@ -40,10 +40,16 @@ import {
   getDailyWebsites,
 } from "./rest/routes";
 import { setConfig as setLogConfig } from "@a11ywatch/log";
+import rateLimit from "express-rate-limit";
 
 setLogConfig({ container: "api" });
 
 const { GRAPHQL_PORT } = config;
+
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 100,
+});
 
 function initServer(): HttpServer {
   initDbConnection();
@@ -53,6 +59,7 @@ function initServer(): HttpServer {
   app.use(cors(corsOptions));
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json({ type: "application/*+json", limit: "300mb" }));
+  app.use(limiter);
   app.options(CONFIRM_EMAIL, cors());
   app.options(WEBSITE_CHECK, cors());
 
