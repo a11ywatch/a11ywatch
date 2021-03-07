@@ -18,7 +18,7 @@ import { getWebsite } from "../../websites";
 import { AnalyticsController } from "../../analytics";
 import { getDomain } from "../find";
 import { generateWebsiteAverage } from "./domain";
-import { fetchPuppet, extractPageData } from "./utils";
+import { fetchPuppet, extractPageData, limitResponse } from "./utils";
 
 export const crawlWebsite = async ({
   userId,
@@ -130,7 +130,7 @@ export const crawlWebsite = async ({
           html: webPage.html,
           lastScanDate: webPage?.lastScanDate,
           adaScore: avgScore,
-          pageLoadTime: null,
+          pageLoadTime: webPage?.pageLoadTime,
           cdnConnected: website?.cdnConnected,
           online: !!website?.online || null,
           domain,
@@ -139,7 +139,6 @@ export const crawlWebsite = async ({
         }
       );
 
-      // BIND ALL PROPS FROM WEBPAGE
       if (website?.url === pageUrl) {
         updateWebsiteProps.cdnConnected = pageHasCdn;
         updateWebsiteProps.pageLoadTime = webPage?.pageLoadTime;
@@ -201,32 +200,17 @@ export const crawlWebsite = async ({
         pubsub.publish(WEBSITE_ADDED, { websiteAdded });
       }
 
-      let webResponse;
-
-      if (!authenticated) {
-        const slicedIssue =
-          issues?.issues?.slice(
-            issues?.issues.length -
-              Math.max(Math.round(issues?.issues.length / 4), 2)
-          ) || [];
-
-        if (websiteAdded.issuesInfo) {
-          websiteAdded.issuesInfo.limitedCount = slicedIssue.length;
-        }
-
-        webResponse = {
-          website: {
-            ...websiteAdded,
-            url: pageUrl,
-            issue: slicedIssue,
-            script,
-          },
-        };
-      }
+      const limitedResponse = limitResponse({
+        issues,
+        pageUrl,
+        script,
+        websiteAdded,
+        authenticated,
+      });
 
       resolve(
         responseModel(
-          webResponse ?? { data: apiData ? dataSource : websiteAdded }
+          limitedResponse ?? { data: apiData ? dataSource : websiteAdded }
         )
       );
     } catch (e) {

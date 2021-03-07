@@ -11,6 +11,7 @@ const { generateSiteMap } = require('./generate-sitemap')
 const { getDynamicPaths } = require('./dynamic-paths')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const withPWA = require('next-pwa')
+const runtimeCaching = require('next-pwa/cache')
 const { replaceDockerNetwork } = require('@a11ywatch/website-source-builder')
 
 const dev = process.env.NODE_ENV !== 'production'
@@ -60,6 +61,10 @@ if (CDN_HOST) {
 module.exports = withPWA({
   pwa: {
     dest: 'public',
+    mode: process.env.WORKBOX_MODE || 'production',
+    disable: dev,
+    scope: '/src',
+    runtimeCaching,
   },
   images: {
     domains: domains,

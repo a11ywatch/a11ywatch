@@ -90,7 +90,6 @@ export function SwipeableTemporaryDrawer() {
   const toggleDrawer = (type: any) => () => {
     toggleModal(type, '')
   }
-
   const empty = Object.keys(website).length <= 1
 
   return (
