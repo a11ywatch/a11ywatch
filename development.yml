@@ -66,9 +66,9 @@ services:
       resources:
         limits:
           cpus: 0.25
-          memory: 256M
-        reservations:
           memory: 128M
+        reservations:
+          memory: 64M
 
   web:
     container_name: web
@@ -142,9 +142,9 @@ services:
       resources:
         limits:
           cpus: 0.25
-          memory: 256M
-        reservations:
           memory: 128M
+        reservations:
+          memory: 64M
 
   watcher:
     container_name: watcher

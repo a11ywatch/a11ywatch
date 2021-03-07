@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function Screenshot({ src, url, resetMargin, width, height }: any) {
   const classes = useStyles()
+  const ImageComponent = !resetMargin ? 'img' : Image
 
   return (
     <div
@@ -65,7 +66,7 @@ export function Screenshot({ src, url, resetMargin, width, height }: any) {
         }`}
       >
         <div className={resetMargin ? classes.float : classes.centerAlign}>
-          <Image
+          <ImageComponent
             src={src}
             alt={`screenshot of ${url} tested`}
             width={width ?? 450}

@@ -1,5 +1,11 @@
-import { MAIN_API_URL, ANGELICA_API_URL } from "./config";
+import { DEV, MAIN_API_URL, ANGELICA_API_URL } from "./config";
+
+const origins = [MAIN_API_URL + "", ANGELICA_API_URL + ""];
+
+if (DEV) {
+  origins.push("localhost");
+}
 
 export const corsOptions = {
-  origin: [MAIN_API_URL + "", ANGELICA_API_URL + ""],
+  origin: origins,
 };
