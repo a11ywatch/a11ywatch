@@ -15,7 +15,7 @@ export const fetchPuppet = async ({
 }: any) => {
   let dataSource;
   try {
-    log(`ANGELICA SCAN: ${url} user_id:${userId}`);
+    log(`CRAWLING: ${url} user: ${userId}`);
 
     const data = await fetch(
       `${process.env.PUPPET_SERVICE}/api/getPageIssues`,

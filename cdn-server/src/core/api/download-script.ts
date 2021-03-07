@@ -9,7 +9,7 @@ import { log } from "@a11ywatch/log";
 import { DEV, getFile } from "../../";
 
 export const downloadScript = (req, res) => {
-  const url = `/scripts/${req.params.domain}/${req.params.cdnPath}`;
+  const url = `scripts/${req.params.domain}/${req.params.cdnPath}`;
   res.set("Content-Disposition", `attachment; filename=${req.params.cdnPath}`);
   try {
     DEV ? res.download(join(`${__dirname}/../../${url}`)) : getFile(url, res);
