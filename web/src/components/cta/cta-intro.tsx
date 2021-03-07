@@ -98,7 +98,7 @@ function CtaIntro({ checker }: any) {
         </div>
         <div className={`${classes.block} ${classes.mobileHidden}`}>
           <Image
-            src={'/static/img/intro.svg'}
+            src={`/static/img/${checker ? 'browser-stats' : 'intro'}.svg`}
             height={500}
             width={500}
             alt='image of content being controlled'
