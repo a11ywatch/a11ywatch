@@ -42,7 +42,7 @@ const plans = [
       '100 Private API request per day',
     ],
     Icon: PaidIcon,
-    cost: '10$/month',
+    cost: '3$/month',
   },
   {
     title: 'Premium',
@@ -56,7 +56,7 @@ const plans = [
       '500 Private API request per day',
     ],
     Icon: WhatsHot,
-    cost: '20$/month',
+    cost: '8$/month',
   },
 ]
 

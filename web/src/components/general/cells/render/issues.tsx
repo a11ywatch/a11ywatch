@@ -9,7 +9,7 @@ import { ListItem, ListItemIcon, Typography, Checkbox } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { WithHighlight } from '@app/components/adhoc'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   mainItemContainer: {
     overflow: 'hidden',
   },
@@ -19,17 +19,6 @@ const useStyles = makeStyles((theme) => ({
   list: {
     maxHeight: '50vh',
   },
-  mainTitle: {
-    fontSize: '16px',
-    maxWidth: '88vw',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    fontWeight: 500,
-    display: 'block',
-    [theme.breakpoints.down('sm')]: {
-      maxWidth: '75vw',
-    },
-  },
   mainSubtitle: {
     fontSize: '13px',
     marginBottom: '2px',
@@ -38,20 +27,17 @@ const useStyles = makeStyles((theme) => ({
     textOverflow: 'ellipsis',
     fontWeight: 400,
   },
-  normalContentColor: {
-    color: 'rgb(209,156,102)',
-  },
   blockColor: {
     color: 'rgb(202,109,102)',
   },
   error: {
-    background: 'rgba(239,83,80, 0.1)',
+    background: 'rgba(239,83,80, 0.05)',
   },
   notice: {
-    background: 'rgba(189,189,189, 0.1)',
+    background: 'rgba(189,189,189, 0.05)',
   },
   warning: {
-    background: 'rgba(255,238,88, 0.1)',
+    background: 'rgba(255,238,88, 0.05)',
   },
 }))
 
@@ -59,8 +45,7 @@ export function RenderIssue({
   message,
   code,
   context,
-  type,
-  selector,
+  type = 'notice',
   checkList,
   checked,
   handleToggle,
@@ -79,9 +64,9 @@ export function RenderIssue({
 
   return (
     <ListItem
-      divider={true}
       // @ts-ignore
-      className={`${classes[type] ? classes[type] : ''}`}
+      className={classes[type]}
+      divider
       {...checkListProps}
     >
       {checkList ? (
@@ -96,22 +81,13 @@ export function RenderIssue({
         </ListItemIcon>
       ) : null}
       <div className={classes.mainItemContainer}>
-        <div>
-          <Typography
-            variant='subtitle1'
-            component={'p'}
-            className={`${classes.mainTitle} ${classes.normalContentColor}`}
-          >
-            {selector}
-          </Typography>
-          <Typography
-            variant='subtitle2'
-            className={classes.mainSubtitle}
-            component={'p'}
-          >
-            {code}
-          </Typography>
-        </div>
+        <Typography
+          variant='subtitle2'
+          className={classes.mainSubtitle}
+          component={'p'}
+        >
+          {code}
+        </Typography>
         <Typography variant='body1' gutterBottom>
           {message}
         </Typography>

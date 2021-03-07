@@ -10,20 +10,33 @@ declare global {
   }
 }
 
-const loadTranslate = () => {
-  if (typeof window !== 'undefined' && 'google' in window) {
-    const layoutType = window.innerWidth >= 800 ? 'SIMPLE' : 'vk'
-    if (window.google.translate && window.google.translate.TranslateElement) {
-      new window.google.translate.TranslateElement(
-        {
-          pageLanguage: 'en',
-          layout:
-            window.google.translate.TranslateElement.InlineLayout[layoutType],
-        },
-        'google_translate_element'
-      )
+export function loadTranslate() {
+  try {
+    if (window?.google) {
+      const layoutType = window?.innerWidth >= 800 ? 'SIMPLE' : 'vk'
+
+      if (window?.google?.translate?.TranslateElement) {
+        const mainElement = new window.google.translate.TranslateElement(
+          {
+            pageLanguage: 'en',
+            layout:
+              window.google.translate.TranslateElement.InlineLayout[layoutType],
+          },
+          'google_translate_element'
+        )
+        if (mainElement?.V) {
+          const glang = document.getElementById('google_translate_element')
+
+          if (glang) {
+            glang.replaceWith(mainElement.V)
+          }
+        }
+        document.querySelectorAll('.goog-te-spinner-pos').forEach((el) => {
+          el.remove()
+        })
+      }
     }
+  } catch (error) {
+    console.log(error)
   }
 }
-
-export { loadTranslate }

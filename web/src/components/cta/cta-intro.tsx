@@ -82,10 +82,14 @@ function CtaIntro({ checker }: any) {
       >
         <div className={classes.block}>
           <Typography variant='h2' component={'h1'} className={classes.intro}>
-            Monitor Web Accessibility
+            {checker
+              ? 'Check Your Web Accessibility'
+              : 'Monitor Web Accessibility'}
           </Typography>
           <Typography variant='subtitle1' component={'p'} gutterBottom>
-            Safeguard to a pleasant web experience
+            {checker
+              ? 'Test your website metrics'
+              : 'Safeguard to a pleasant web experience'}
           </Typography>
           <Button
             component={Link}
@@ -105,21 +109,23 @@ function CtaIntro({ checker }: any) {
           />
         </div>
       </section>
-      <div className={classes.join}>
-        <Typography variant='subtitle2' component={'p'} gutterBottom>
-          JOIN THOUSANDS OF HIGHLY PRODUCTIVE TEAMS
-        </Typography>
-        <Image
-          src={'/static/img/wave.svg'}
-          height={8}
-          width={120}
-          role='presentation'
-          alt=''
-        />
-        <a className={classes.bottomAnchor} href='#video-section'>
-          <ExpandMore />
-        </a>
-      </div>
+      {checker ? null : (
+        <div className={classes.join}>
+          <Typography variant='subtitle2' component={'p'} gutterBottom>
+            JOIN THOUSANDS OF HIGHLY PRODUCTIVE TEAMS
+          </Typography>
+          <Image
+            src={'/static/img/wave.svg'}
+            height={8}
+            width={120}
+            role='presentation'
+            alt=''
+          />
+          <a className={classes.bottomAnchor} href='#video-section'>
+            <ExpandMore />
+          </a>
+        </div>
+      )}
     </Fragment>
   )
 }

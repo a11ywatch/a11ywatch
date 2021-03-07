@@ -5,6 +5,7 @@
  **/
 
 import React from 'react'
+import { dev } from '@app/configs'
 import { makeStyles } from '@material-ui/core/styles'
 import { FakeButtonContainer } from '@app/components/fake'
 import Image from 'next/image'
@@ -51,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function Screenshot({ src, url, resetMargin, width, height }: any) {
   const classes = useStyles()
-  const ImageComponent = !resetMargin ? 'img' : Image
+  const ImageComponent = !resetMargin && dev ? 'img' : Image
 
   return (
     <div
