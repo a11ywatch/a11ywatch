@@ -22,8 +22,8 @@ export function getFile(Key?: string, res?: Response, download?: boolean) {
   const params = { Bucket: BUCKET_NAME, Key };
   try {
     s3bucket.headObject(params, function (err) {
-      if (err && err.code === "NotFound") {
-        res.send(404);
+      if (err?.code === "NotFound") {
+        res.sendStatus(404);
       } else {
         const stream = s3bucket.getObject(params).createReadStream();
 

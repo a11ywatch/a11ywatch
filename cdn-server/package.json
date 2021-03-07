@@ -19,7 +19,7 @@
     "uglify-js": "^3.7.4"
   },
   "engines": {
-    "node": "12.x"
+    "node": "14.x"
   },
   "license": "MIT",
   "devDependencies": {

@@ -36,10 +36,6 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 'auto',
     marginRight: 'auto',
     overflowY: 'hidden',
-    ['& > img']: {
-      maxWidth: '36vw',
-      maxHeight: '38vh',
-    },
   },
   float: {
     float: 'left',

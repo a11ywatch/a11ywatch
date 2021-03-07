@@ -15,6 +15,7 @@ const createSS = ({ srcPath, cdnFileName, screenshot }: any): any => {
       screenshotStream.write(Buffer.from(screenshot));
 
       screenshotStream.on("finish", () => {
+        log(`WROTE: ${cdnFileName}`);
         if (AWS_S3_ENABLED) {
           uploadToS3(
             readFileSync(cdnFileName),
@@ -22,12 +23,11 @@ const createSS = ({ srcPath, cdnFileName, screenshot }: any): any => {
             cdnFileName
           );
         }
-        log(`WROTE: ${cdnFileName}`);
       });
       screenshotStream.end();
     }
   } catch (e) {
-    log(e?.message, { type: "error" });
+    log(e, { type: "error" });
   }
 };
 
@@ -50,7 +50,7 @@ export const addScreenshot = (req, res) => {
 
     res.send(true);
   } catch (e) {
-    log(e?.message, { type: "error" });
+    log(e, { type: "error" });
     res.send(false);
   }
 };
