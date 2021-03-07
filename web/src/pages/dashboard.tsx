@@ -5,20 +5,17 @@
  **/
 import React, { memo, useEffect } from 'react'
 import dynamic from 'next/dynamic'
-
 import { Button, Container, Fade } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-
 import {
   Box,
   List,
   MiniPlayer,
-  IssueFeed,
   PageTitle,
   LinearBottom,
   Drawer,
 } from '@app/components/general'
-
+import { IssueFeed } from '@app/components/feed'
 import { UserManager } from '@app/managers'
 import {
   websitesData,

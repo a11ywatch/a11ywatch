@@ -12,7 +12,7 @@ import { a11yDark } from '@app/styles'
 
 import { useSearch } from '@app/data'
 import {
-  IssueFeed,
+  IssueList,
   RenderSecondary,
   Spacer,
   WebsiteTabs,
@@ -130,7 +130,7 @@ export function SwipeableTemporaryDrawer() {
           </div>
         ) : (
           <WebsiteTabs
-            issues={<IssueFeed website={website} renderListOnly />}
+            issues={<IssueList website={website} />}
             html={
               <div className={classes.block}>
                 <EditableMixture
