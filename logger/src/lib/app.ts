@@ -23,7 +23,7 @@ const init = (_app: any) => {
     if (process.env.DYNO === "web.1" || !process.env.DYNO) {
       new CronJob("0 0 * * 0", function () {
         try {
-          rmdirSync(join(__dirname + `/logs/`), {
+          rmdirSync(join(`${__dirname}`, "..", "/logs/"), {
             recursive: true,
           });
         } catch (e) {
