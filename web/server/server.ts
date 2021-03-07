@@ -9,6 +9,7 @@ import type { Request, Response } from 'express'
 import next from 'next'
 import { join } from 'path'
 import fetch from 'isomorphic-unfetch'
+import rateLimit from 'express-rate-limit'
 
 const dev = process.env.NODE_ENV !== 'production'
 const URL_ENDPOINT = String(process.env.IFRAME_URL || 'http://localhost:8010')
@@ -16,9 +17,15 @@ const app = next({ dev })
 const handle = app.getRequestHandler()
 const port = process.env.PORT || 3000
 
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 100,
+})
+
 app.prepare().then(() => {
   const server = express()
   server.use(express.static(join(__dirname, 'public')))
+  server.use(limiter)
 
   server.get('/iframe', async (req: Request, res: Response) => {
     let url = String(req.query.url)
