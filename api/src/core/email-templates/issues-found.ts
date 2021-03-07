@@ -29,7 +29,7 @@ const issuesFoundTemplate: IssuesFound = (
       if (i === 4) {
         return;
       }
-      listData = `${listData}<li><div><div>"${item?.context}"</div><div style="font-weight: 500;">"${item?.selector}"</div><div style="font-weight: 400; font-size: 1em;">${item?.message}</div></div></li>`;
+      listData = `${listData}<li><div>${item?.context}</div><div style="font-weight: 400; font-size: 1em;">${item?.message}</div></li>`;
       return false;
     });
   }
