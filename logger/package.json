@@ -10,6 +10,9 @@
     "dev": "nodemon -e js,ts -r ts-node/register src/server.ts",
     "start": "NODE_ENV=production node dist/server.js"
   },
+  "engines": {
+    "node": "14.x"
+  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.0",

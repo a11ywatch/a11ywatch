@@ -14,7 +14,6 @@ services:
       - front-net
     ports:
       - "8080:8080"
-    restart: on-failure
     depends_on:
       - mongodb
 
@@ -31,7 +30,6 @@ services:
       - back-net
     ports:
       - "8040:8040"
-    restart: on-failure
 
   mav:
     container_name: mav
@@ -46,7 +44,6 @@ services:
       - back-net
     ports:
       - "8020:8020"
-    restart: on-failure
 
   logger:
     container_name: logger
@@ -61,14 +58,6 @@ services:
       - back-net
     ports:
       - "8022:8022"
-    restart: on-failure
-    deploy:
-      resources:
-        limits:
-          cpus: 0.25
-          memory: 128M
-        reservations:
-          memory: 64M
 
   web:
     container_name: web
@@ -99,14 +88,6 @@ services:
       - back-net
     ports:
       - "8050:8050"
-    restart: on-failure
-    deploy:
-      resources:
-        limits:
-          cpus: 0.25
-          memory: 256M
-        reservations:
-          memory: 128M
 
   cdn-server:
     env_file: ./cdn-server/.env
@@ -122,7 +103,6 @@ services:
       - front-net
     ports:
       - "8090:8090"
-    restart: on-failure
 
   iframe-server:
     env_file: ./iframe-server/.env
@@ -137,14 +117,6 @@ services:
       - front-net
     ports:
       - "8010:8010"
-    restart: on-failure
-    deploy:
-      resources:
-        limits:
-          cpus: 0.25
-          memory: 128M
-        reservations:
-          memory: 64M
 
   watcher:
     container_name: watcher
@@ -161,7 +133,6 @@ services:
       - back-net
     ports:
       - "8000:8000"
-    restart: on-failure
 
   mongodb:
     container_name: mongodb

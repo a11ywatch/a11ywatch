@@ -7,8 +7,11 @@
 import express from "express";
 import createIframe from "node-iframe";
 import cors from "cors";
+import { setConfig as setLogConfig, log } from "@a11ywatch/log";
 
 import { ROOT } from "./templates";
+
+setLogConfig({ container: "iframe-server" });
 
 const port = process.env.NODE_ENV === "test" ? 0 : process.env.PORT || 8010;
 
@@ -37,7 +40,7 @@ app.get("/iframe", (req, res) => {
 });
 
 const server = app.listen(port, () =>
-  console.log(`server listening on port ${server.address().port}!`)
+  log(`server listening on port ${server.address().port}!`)
 );
 
 export const killServer = () => {
