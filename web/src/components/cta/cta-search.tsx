@@ -11,6 +11,7 @@ import { strings } from '@app-strings'
 
 import { rollStyles } from '@app/styles'
 import { CtaSearchBar } from './searchbar'
+import { SectionHeading } from '../text'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -91,7 +92,9 @@ function CtaSearch({ checker }: any) {
             Check your website for accessibility issues for free
           </Typography>
         </>
-      ) : null}
+      ) : (
+        <SectionHeading>Scan your website free</SectionHeading>
+      )}
       <CtaSearchBar checker={checker}>
         {checker ? (
           <Head>Check website for issues</Head>
