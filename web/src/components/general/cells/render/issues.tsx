@@ -31,13 +31,13 @@ const useStyles = makeStyles(() => ({
     color: 'rgb(202,109,102)',
   },
   error: {
-    background: 'rgba(239,83,80, 0.05)',
+    background: 'rgba(239,83,80, 0.06)',
   },
   notice: {
-    background: 'rgba(189,189,189, 0.05)',
+    background: 'rgba(189,189,189, 0.06)',
   },
   warning: {
-    background: 'rgba(255,238,88, 0.05)',
+    background: 'rgba(255,238,88, 0.06)',
   },
 }))
 

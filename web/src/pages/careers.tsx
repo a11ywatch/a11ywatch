@@ -11,11 +11,12 @@ import type { PageProps } from '@app/types'
 
 function Careers({ name }: PageProps) {
   const Reqs = [
-    'Javascript',
     'React',
+    'Web Technology (html,css,js)',
     'Graphql',
-    'Node',
+    'Node.js',
     'Skilled at technical problem solving.',
+    'Care for accessibility or willing to learn more',
     'Must be able to communicate effectively and work with team members and members of other functional teams to coordinate and meet deliverables.',
     'Rust - nice to have some of our main services are built using this',
     'BS in Technology or Related Field - nice to have but not needed',
@@ -41,14 +42,14 @@ function Careers({ name }: PageProps) {
         >
           Software Engineer
         </Typography>
-        <Typography variant='body1' component='p' gutterBottom>
+        <Typography variant='subtitle2' component='p' gutterBottom>
           Required Skills:
         </Typography>
         <List>
           {Reqs.map((item: string) => {
             return (
               <ListItem key={item}>
-                <Typography variant='subtitle2' component='p' gutterBottom>
+                <Typography variant='subtitle1' component='p' gutterBottom>
                   - {item}
                 </Typography>
               </ListItem>
