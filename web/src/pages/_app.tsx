@@ -55,12 +55,11 @@ export default function MyApp({ Component, pageProps }: MergedApp) {
         <link rel='manifest' href='/static/manifest.json' />
         <meta name='format-detection' content='telephone=no' />
         <meta name='apple-mobile-web-app-capable' content='yes' />
-
         <meta name='twitter:card' content='summary' />
         <meta name='twitter:site' content={twitterSite} />
         <meta name='twitter:creator' content={twitterCreator} />
         <meta name='twitter:description' content={twitterDescription} />
-
+        <meta property='og:image' content='./static/img/banner.jpeg' />
         <link rel='apple-touch-icon' href='./static/img/favicon-small.png' />
         <link rel='icon' type='image/x-icon' href='./static/img/favicon.png' />
         <link
