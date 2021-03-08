@@ -6,4 +6,7 @@
 
 module.exports = {
   companyName: 'A11yWatch',
+  twitterSite: '@a11ywatcher',
+  twitterCreator: '@a11ywatcher',
+  twitterDescription: 'Web accessibility watcher and helper',
 }
