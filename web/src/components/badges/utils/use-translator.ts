@@ -25,7 +25,7 @@ const useTranslator = (): any => {
     }
   }
 
-  const setMessageListener = () => {
+  const setMessageListener = (_: any, cb?: () => any) => {
     if (typeof document !== 'undefined') {
       const translateLoaded = document.querySelector(
         `script[src="/static/load-google.min.js"]`
@@ -43,7 +43,7 @@ const useTranslator = (): any => {
       window?.addEventListener('message', receiveMessage, false)
       script.onload = () => {
         setTimeout(() => {
-          loadTranslate()
+          loadTranslate(cb)
         }, 250)
       }
     }

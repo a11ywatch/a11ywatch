@@ -10,33 +10,41 @@ declare global {
   }
 }
 
-export function loadTranslate() {
+export function loadTranslate(cb?: () => any) {
   try {
-    if (window?.google) {
-      const layoutType = window?.innerWidth >= 800 ? 'SIMPLE' : 'vk'
+    Promise.resolve().then(() => {
+      if (window?.google) {
+        const layoutType = window?.innerWidth >= 800 ? 'SIMPLE' : 'vk'
 
-      if (window?.google?.translate?.TranslateElement) {
-        const mainElement = new window.google.translate.TranslateElement(
-          {
-            pageLanguage: 'en',
-            layout:
-              window.google.translate.TranslateElement.InlineLayout[layoutType],
-          },
-          'google_translate_element'
-        )
-        if (mainElement?.V) {
-          const glang = document.getElementById('google_translate_element')
+        if (window?.google?.translate?.TranslateElement) {
+          const mainElement = new window.google.translate.TranslateElement(
+            {
+              pageLanguage: 'en',
+              layout:
+                window.google.translate.TranslateElement.InlineLayout[
+                  layoutType
+                ],
+            },
+            'google_translate_element'
+          )
+          if (mainElement?.V) {
+            const glang = document.getElementById('google_translate_element')
 
-          if (glang) {
-            glang.replaceWith(mainElement.V)
+            if (glang) {
+              glang.replaceWith(mainElement.V)
+            }
           }
+          document.querySelectorAll('.goog-te-spinner-pos').forEach((el) => {
+            el.remove()
+          })
         }
-        document.querySelectorAll('.goog-te-spinner-pos').forEach((el) => {
-          el.remove()
-        })
       }
+    })
+  } catch (e) {
+    console.error(e)
+  } finally {
+    if (typeof cb === 'function') {
+      cb()
     }
-  } catch (error) {
-    console.log(error)
   }
 }

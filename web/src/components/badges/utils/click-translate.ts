@@ -14,7 +14,6 @@ const clickTranslate = (event: any) => {
     observer.observe(translator, {
       childList: true,
     })
-
     return
   }
 

@@ -4,7 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 import React, { memo, Fragment } from 'react'
-import { IconButton, Tooltip } from '@material-ui/core'
+import { IconButton, Tooltip, useMediaQuery } from '@material-ui/core'
 import { useTranslator, clickTranslate } from './utils'
 import { makeStyles } from '@material-ui/core/styles'
 import GTranslateIcon from '@material-ui/icons/GTranslate'
@@ -40,14 +40,19 @@ const TranslateBadgeMain = ({
   inline?: boolean
 }) => {
   const classes = useStyles()
+  const desktop = useMediaQuery('(min-width:600px)')
   const { setMessageListener } = useTranslator()
   const ariaT = 'Translate page using google'
   const iconStyles = { color: '#959da5' }
 
+  function onClick(e: any): void {
+    !desktop ? setMessageListener(e, clickTranslate) : clickTranslate(e)
+  }
+
   if (inline) {
     return (
       <button
-        onClick={clickTranslate}
+        onClick={onClick}
         onMouseEnter={setMessageListener}
         className={className}
         style={{ display: 'flex', alignItems: 'center', fontSize: '1.05rem' }}
@@ -64,7 +69,7 @@ const TranslateBadgeMain = ({
     <Fragment>
       <Tooltip title={'Change language'}>
         <IconButton
-          onClick={clickTranslate}
+          onClick={onClick}
           aria-label={ariaT}
           className={`${className}${className ? ' ' + classes.badge : ''}`}
           onMouseEnter={setMessageListener}
