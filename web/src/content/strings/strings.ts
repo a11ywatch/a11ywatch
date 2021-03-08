@@ -30,7 +30,7 @@ export const generateStrings = ({
       'Improve your accessibility with our a11y monitor, helper and fixer powered by AI.',
     ctaTryOut: 'Try A11yWatch for free',
     ctaSeeHowItWorks: 'See How It Works',
-    customers: 'Over 20,000 websites scanned.',
+    customers: 'Over 20,000 websites scanned',
     usersUsing: 'Customers',
     customersWhy:
       'See live results on a well known website like twitter, github, and dropbox below.',

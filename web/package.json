@@ -4,7 +4,7 @@
   "main": "dist/server.ts",
   "private": false,
   "scripts": {
-    "dev": "TS_NODE_PROJECT=tsconfig.server.json ts-node ./server/server.ts",
+    "dev": "NODE_OPTIONS=--max_old_space_size=2048 TS_NODE_PROJECT=tsconfig.server.json ts-node ./server/server.ts",
     "start": "NODE_ENV=production node ./dist/server.js",
     "build": "next build && npm run build:server",
     "build:server": "tsc --project tsconfig.server.json",

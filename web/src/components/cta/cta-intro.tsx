@@ -63,6 +63,9 @@ const useStyles = makeStyles((theme) => ({
   join: {
     marginBottom: '12%',
     textAlign: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
     color: '#7c828d',
   },
   bottomAnchor: {
@@ -84,7 +87,7 @@ function CtaIntro({ checker }: any) {
           <Typography variant='h2' component={'h1'} className={classes.intro}>
             {checker
               ? 'Check Your Web Accessibility'
-              : 'Monitor Web Accessibility'}
+              : 'Web Accessibility Watcher'}
           </Typography>
           <Typography variant='subtitle1' component={'p'} gutterBottom>
             {checker
@@ -96,7 +99,7 @@ function CtaIntro({ checker }: any) {
             className={classes.submit}
             href={'/register'}
           >
-            {'Sign up free'}
+            {'Sign up'}
           </Button>
           <CtaInput />
         </div>
@@ -114,7 +117,7 @@ function CtaIntro({ checker }: any) {
           <Typography variant='subtitle2' component={'p'} gutterBottom>
             JOIN THOUSANDS OF HIGHLY PRODUCTIVE TEAMS
           </Typography>
-          <Image
+          <img
             src={'/static/img/wave.svg'}
             height={8}
             width={120}

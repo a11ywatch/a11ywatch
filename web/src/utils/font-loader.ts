@@ -4,6 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
+import { createElement } from 'react'
 import { APP_TYPE } from '@app/configs'
 
 export const generateFont = () => {
@@ -15,9 +16,14 @@ export const generateFont = () => {
       `${basePath}/IBMPlexSans-Bold.ttf`,
       `${basePath}/IBMPlexSans-SemiBold.ttf`,
       `${basePath}/IBMPlexSans-Light.ttf`,
-    ].map(
-      (href) =>
-        `<link ref="preload" as="font href="${href}" crossOrigin="anonymous"></link>`
+    ].map((href: string, i: number) =>
+      createElement('link', {
+        ref: 'preload',
+        as: 'font',
+        href,
+        crossOrigin: 'anonymous',
+        key: i,
+      })
     )
   }
 }

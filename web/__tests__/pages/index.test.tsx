@@ -7,11 +7,9 @@
 describePage(
   {
     folder: 'index',
-    name: 'Monitor Web Accessibility',
+    name: 'Web Accessibility Watcher',
   },
   () => {
-    expect(
-      screen.getByRole('button', { name: 'Sign up free' })
-    ).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Sign up' })).toBeInTheDocument()
   }
 )

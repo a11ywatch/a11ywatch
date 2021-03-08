@@ -3,25 +3,21 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
-
 import '@app-ui-stylesheet'
 import '@app/stylesheets/tailwind.css'
 import '@app/stylesheets/main.css'
-
 import React, { useEffect, Fragment } from 'react'
 import Router from 'next/router'
 import Head from 'next/head'
 import { AppProps } from 'next/app'
-
 import { CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/core/styles'
-
 import { strings } from '@app-strings'
 import { theme } from '@app-theme'
 import { twitterSite, twitterCreator, twitterDescription } from '@app-config'
 import { WithSnackBar, WithSkipContent } from '@app/components/adhoc'
 import { initAppModel, userModel } from '@app/data'
-import { startIntercom, generateFont } from '@app/utils'
+import { startIntercom } from '@app/utils'
 import { APP_TYPE } from '@app/configs'
 
 Router.events.on('routeChangeComplete', userModel.handleRoutes)
@@ -68,20 +64,9 @@ export default function MyApp({ Component, pageProps }: MergedApp) {
           as='style'
         />
         <link
-          rel='preload'
-          href={`./static/styles/${APP_TYPE}/fonts.css`}
-          as='style'
-        />
-        <link
           rel='stylesheet'
           type='text/css'
           href={`./static/styles/${APP_TYPE}/styles.css`}
-        />
-        {generateFont()}
-        <link
-          rel='stylesheet'
-          type='text/css'
-          href={`./static/styles/${APP_TYPE}/fonts.css`}
         />
       </Head>
       <ThemeProvider theme={theme}>

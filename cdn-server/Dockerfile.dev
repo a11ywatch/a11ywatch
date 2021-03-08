@@ -1,4 +1,4 @@
-FROM node:12.10.0-alpine AS BUILD_IMAGE
+FROM node:14.7.0-alpine AS BUILD_IMAGE
 
 WORKDIR /usr/src/app
 
@@ -8,7 +8,7 @@ RUN npm install
 
 COPY . .
 
-FROM node:12.10.0-alpine
+FROM node:14.7.0-alpine
 
 WORKDIR /usr/src/app
 

@@ -20,13 +20,22 @@ export const theme = (function () {
   return createMuiTheme({
     typography: {
       fontFamily: [
-        'IBM Plex Sans',
-        '"Helvetica Neue"',
-        'Arial',
+        'system-ui',
+        '-apple-system',
+        'Segoe UI',
+        'Roboto',
+        'Ubuntu',
+        'Cantarell',
+        'Noto Sans',
         'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
+        'BlinkMacSystemFont',
+        'Roboto',
+        'Helvetica Neue',
+        'Arial',
+        'Apple Color Emoji',
+        'Segoe UI Emoji',
+        'Segoe UI Symbol',
+        'Noto Color Emoji',
       ].join(','),
       button: {
         borderRadius: '2px',
