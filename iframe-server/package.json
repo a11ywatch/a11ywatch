@@ -7,7 +7,7 @@
     "test": "jest",
     "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",
     "start": "NODE_ENV=production node dist/server.js",
-    "dev": "nodemon -e js,ts -r ts-node/register src/server.ts"
+    "dev": "ts-node-dev src/server.ts --tranpileOnly"
   },
   "engines": {
     "node": "14.x"
@@ -25,11 +25,10 @@
   "license": "MIT",
   "devDependencies": {
     "jest": "^26.4.2",
-    "nodemon": "^2.0.3",
     "prettier": "^2.0.5",
     "supertest": "^4.0.2",
     "ts-jest": "^26.4.0",
-    "ts-node": "^8.9.1",
+    "ts-node-dev": "^1.1.6",
     "tsconfig-paths": "^3.9.0",
     "tscpaths": "0.0.9",
     "typescript": "^3.8.3"
