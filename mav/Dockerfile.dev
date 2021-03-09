@@ -2,16 +2,22 @@ FROM jeffmendez19/tensorflow-node-gpu
 
 WORKDIR /usr/src/app
 
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash
 RUN apt-get install -y nodejs
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci
 
+FROM jeffmendez19/tensorflow-node-gpu
+
+WORKDIR /usr/src/app
+
+COPY --from=0 /usr/src/app .
+COPY --from=0 /usr/bin/node /usr/bin/node
 COPY . .
 
-CMD [ "npm", "run", "dev"]
+CMD ["node_modules/ts-node-dev/lib/bin.js", "--transpile-only", "src/server.ts"]
 
 
 

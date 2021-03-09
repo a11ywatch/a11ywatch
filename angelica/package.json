@@ -5,7 +5,7 @@
   "description": "find a11y issues and add scripts",
   "main": "./dist/server.js",
   "scripts": {
-    "dev": "nodemon -e js,ts,graphql -r ts-node/register -r tsconfig-paths/register src/server.ts",
+    "dev": "nodemon -e js,ts -r ts-node/register/transpile-only -r tsconfig-paths/register src/server.ts",
     "test": "jest",
     "lint": "eslint .",
     "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",
