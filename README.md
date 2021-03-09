@@ -8,7 +8,7 @@ the tool for accessibility, software productivity, and performance
 
 ## Getting Started
 
-See our documentation on [a11ywatch.com](https://a11ywatch.github.io/a11ywatch-docs)
+See the documentation at [https://a11ywatch.github.io/a11ywatch-docs](https://a11ywatch.github.io/a11ywatch-docs)
 
 ## Develop
 
