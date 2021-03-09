@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest",
     "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",
-    "dev": "nodemon -e js,ts -r ts-node/register src/server.ts",
+    "dev": "nodemon src/server.ts",
     "start": "NODE_ENV=production node dist/server.js"
   },
   "engines": {
@@ -37,11 +37,5 @@
     "preset": "ts-jest",
     "coverageDirectory": "./coverage/",
     "collectCoverage": true
-  },
-  "nodemonConfig": {
-    "watch": ["src"],
-    "ext": "ts,json,js",
-    "ignore": ["src/**/*.spec.ts"],
-    "exec": "ts-node/register ./src/server.ts"
   }
 }

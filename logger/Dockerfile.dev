@@ -13,4 +13,4 @@ WORKDIR /usr/src/app
 COPY --from=0 /app .
 COPY . .
 
-CMD ["node_modules/nodemon/bin/nodemon.js"]
+CMD ["node_modules/nodemon/bin/nodemon.js", "src/server.ts"]
