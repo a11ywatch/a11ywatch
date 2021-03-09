@@ -1,24 +1,16 @@
-FROM node:14.7.0-alpine AS BUILD_IMAGE
+FROM mhart/alpine-node:14
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci
 
-COPY . .
-
-FROM node:14.7.0-alpine
+FROM mhart/alpine-node:slim-14
 
 WORKDIR /usr/src/app
 
-# copy from build image
-COPY --from=BUILD_IMAGE /usr/src/app/src ./src
-COPY --from=BUILD_IMAGE /usr/src/app/node_modules ./node_modules
-COPY --from=BUILD_IMAGE /usr/src/app/package.json ./package.json
-COPY --from=BUILD_IMAGE /usr/src/app/package-lock.json ./package-lock.json
-COPY --from=BUILD_IMAGE /usr/src/app/tsconfig.json ./tsconfig.json
-COPY --from=BUILD_IMAGE /usr/src/app/.env ./.env
-COPY --from=BUILD_IMAGE /usr/src/app/nodemon.json ./nodemon.json
+COPY --from=0 /app .
+COPY . .
 
-CMD [ "yarn", "dev"]
+CMD ["node_modules/nodemon/bin/nodemon.js"]

@@ -12,10 +12,10 @@
     "start": "node dist/server.js"
   },
   "engines": {
-    "node": "14.3.0"
+    "node": "14.x"
   },
   "dependencies": {
-    "@a11ywatch/log": "^0.3.4",
+    "@a11ywatch/log": "^0.3.5",
     "@tensorflow-models/coco-ssd": "2.0.3",
     "@tensorflow-models/mobilenet": "2.0.4",
     "@tensorflow/tfjs-node-gpu": "1.7.4",
