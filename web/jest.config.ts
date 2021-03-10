@@ -1,4 +1,4 @@
-const { defaults } = require('jest-config')
+import { defaults } from 'jest-config'
 
 module.exports = {
   testPathIgnorePatterns: [
@@ -7,7 +7,8 @@ module.exports = {
     '<rootDir>/coverage/',
     '<rootDir>/node_modules/(?!(monaco-editor)/)',
   ],
-  setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
+  moduleFileExtensions: [...defaults.moduleFileExtensions, 'ts', 'tsx'],
+  setupFilesAfterEnv: ['<rootDir>/tests/setupTests.ts'],
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/node_modules/babel-jest',
     '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$':
@@ -22,4 +23,5 @@ module.exports = {
   verbose: true,
   coverageDirectory: './coverage/',
   collectCoverage: true,
+  preset: 'ts-jest',
 }

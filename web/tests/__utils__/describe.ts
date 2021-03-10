@@ -7,6 +7,14 @@ import { createElement } from 'react'
 import { render, screen } from '@testing-library/react'
 import preloadAll from 'jest-next-dynamic'
 
+declare global {
+  namespace NodeJS {
+    interface Global {
+      describePage?: any
+    }
+  }
+}
+
 beforeAll(async () => {
   await preloadAll()
 })
@@ -20,7 +28,7 @@ jest.mock('next/router', () => ({
 }))
 
 global.describePage = jest.fn(
-  ({ component, folder, name: target }, callBack) => {
+  ({ component, folder, name: target }: any, callBack?: () => void) => {
     const name = target ?? (component && component.displayName)
 
     describe((folder ?? name).toUpperCase(), () => {
