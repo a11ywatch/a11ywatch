@@ -29,12 +29,12 @@ jest.mock('next/router', () => ({
 
 global.describePage = jest.fn(
   ({ component, folder, name: target }: any, callBack?: () => void) => {
-    const name = target ?? (component && component.displayName)
+    const name = target || (component && component.displayName)
 
-    describe((folder ?? name).toUpperCase(), () => {
+    describe((folder || name).toUpperCase(), () => {
       it('renders without crashing', () => {
         render(
-          createElement(component ?? require(`@app/pages/${folder}`).default, {
+          createElement(component || require(`@app/pages/${folder}`).default, {
             name,
           })
         )
