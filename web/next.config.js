@@ -8,7 +8,6 @@ const { resolve } = require('path')
 const { parsed } = require('dotenv').config()
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const withPWA = require('next-pwa')
-const runtimeCaching = require('next-pwa/cache')
 const { replaceDockerNetwork } = require('@a11ywatch/website-source-builder')
 const { domainMap } = require('./domain-map')
 const { generateSiteMap } = require('./generate-sitemap')
@@ -58,13 +57,27 @@ if (CDN_HOST) {
   }
 }
 
+const { themeType, stringType } = domainMap(process.env.APP_TYPE)
+const { uiStylePath, uiComponentPath } = getDynamicPaths({
+  themeType,
+  dev,
+})
+
+const aliases = {
+  ['@app-theme']: resolve(__dirname, `./src/theme/${themeType}`),
+  ['@app-strings']: resolve(__dirname, `./src/content/strings/${stringType}`),
+  ['@app']: resolve(__dirname, './src'),
+  ['@app-config']: resolve(__dirname, './web-config.js'),
+  ['@app-ui-stylesheet']: uiStylePath,
+  ['ui']: uiComponentPath,
+}
+
 module.exports = withPWA({
   pwa: {
     dest: 'public',
     mode: process.env.WORKBOX_MODE || 'production',
     disable: dev,
     scope: '/src',
-    runtimeCaching,
   },
   images: {
     domains: domains,
@@ -77,29 +90,16 @@ module.exports = withPWA({
   env,
   cssModules: true,
   typescriptLoaderOptions: {
-    transpileOnly: false,
+    transpileOnly: true,
   },
-  webpack: (config, { buildId, dev: development, defaultLoaders, webpack }) => {
+  webpack: (
+    config,
+    { buildId, dev: development, isServer, defaultLoaders, webpack }
+  ) => {
     generateSiteMap(process.env.DOMAIN_NAME)
-    const { themeType, stringType } = domainMap(process.env.APP_TYPE)
-    const { uiStylePath, uiComponentPath } = getDynamicPaths({
-      themeType,
-      dev,
-    })
 
     config.plugins.push(new webpack.IgnorePlugin(/tests/))
-
-    config.resolve.alias = Object.assign({}, config.resolve.alias, {
-      ['@app-theme']: resolve(__dirname, `./src/theme/${themeType}`),
-      ['@app-strings']: resolve(
-        __dirname,
-        `./src/content/strings/${stringType}`
-      ),
-      ['@app']: resolve(__dirname, './src'),
-      ['@app-config']: resolve(__dirname, './web-config.js'),
-      ['@app-ui-stylesheet']: uiStylePath,
-      ['ui']: uiComponentPath,
-    })
+    config.resolve.alias = Object.assign({}, config.resolve.alias, aliases)
 
     if (!development) {
       if (!Array.isArray(config.optimization.minimizer)) {

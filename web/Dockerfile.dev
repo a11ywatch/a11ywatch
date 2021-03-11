@@ -1,15 +1,16 @@
-FROM node:14.7.0-alpine
+FROM mhart/alpine-node:14
 
-WORKDIR /usr/src/app 
+WORKDIR /app
 
-COPY package*.json .env ./
+COPY package*.json ./
 
-RUN apk --no-cache add --virtual native-deps \
-	g++ gcc libgcc libstdc++ linux-headers make python && \
-	npm install --quiet node-gyp -g &&\
-	npm install --quiet && \
-	apk del native-deps
+RUN npm ci
 
+FROM mhart/alpine-node:slim-14
+
+WORKDIR /usr/src/app
+
+COPY --from=0 /app .
 COPY . .
 
-CMD [ "npm", "run", "dev" ]
+CMD ["node_modules/next/dist/bin/next", "dev"]

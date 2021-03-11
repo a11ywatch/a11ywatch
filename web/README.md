@@ -22,6 +22,11 @@ In order for google login to work please add the env variable `GOOGLE_CLIENT_ID`
 
 check https://localhost:3000
 
+## Iframe local website
+
+in order to enable iframe rending to get websites with annotations currently you need to start the container or app using
+`npm run dev:server`. Theres a work in progress to try to replicate this without needing a server proxy.
+
 ## LICENSE
 
 check the license file in the root of the project.

@@ -1,11 +1,10 @@
 npm-debug.log
-yarn-error.log
 coverage
 .next
 dist
 README.md
 node_modules
-Dockerfile
+Dockerfile*
 .dockerignore
 .git
 .gitignore
