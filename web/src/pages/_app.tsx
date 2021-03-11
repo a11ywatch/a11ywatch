@@ -54,13 +54,17 @@ export default function MyApp({ Component, pageProps }: MergedApp) {
         <meta name='twitter:card' content='summary_large_image' />
         <meta name='twitter:site' content={twitterSite} />
         <meta
+          property='twitter:image'
+          content={`${DOMAIN_NAME}/static/img/intro-poster.png`}
+        />
+        <meta
           property='og:title'
           content={`Web Accessibility | ${strings.appName}`}
         />
         <meta property='og:url' content={DOMAIN_NAME} />
         <meta
           property='og:image'
-          content={`${DOMAIN_NAME}/static/img/banner.jpeg`}
+          content={`${DOMAIN_NAME}/static/img/intro-poster.png`}
         />
         <meta property='og:description' content={description} />
         <link rel='apple-touch-icon' href='./static/img/favicon-small.png' />
