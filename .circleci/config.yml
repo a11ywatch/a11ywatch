@@ -13,7 +13,7 @@ jobs:
             - node-v1-{{ .Branch }}-
             - node-v1-
       - run:
-          command: cd api && npm install && npm test
+          command: cd api && npm ci && npm test
       - save_cache:
           paths:
             - ~/usr/local/lib/node_modules
@@ -32,7 +32,7 @@ jobs:
             - node-v1-{{ .Branch }}-
             - node-v1-
       - run:
-          command: cd angelica && npm install && npm test
+          command: cd angelica && npm ci && npm test
       - save_cache:
           paths:
             - ~/usr/local/lib/node_modules
@@ -51,7 +51,7 @@ jobs:
             - node-v1-{{ .Branch }}-
             - node-v1-
       - run:
-          command: cd mav && npm install && npm test
+          command: cd mav && npm ci && npm test
       - save_cache:
           paths:
             - ~/usr/local/lib/node_modules
@@ -70,7 +70,7 @@ jobs:
             - node-v1-{{ .Branch }}-
             - node-v1-
       - run:
-          command: cd web && npm install && npm test
+          command: cd web && npm ci && npm test
       - save_cache:
           paths:
             - ~/usr/local/lib/node_modules
@@ -89,7 +89,7 @@ jobs:
             - node-v1-{{ .Branch }}-
             - node-v1-
       - run:
-          command: cd iframe-server && npm install && npm test
+          command: cd iframe-server && npm ci && npm test
       - save_cache:
           paths:
             - ~/usr/local/lib/node_modules
@@ -108,7 +108,7 @@ jobs:
             - node-v1-{{ .Branch }}-
             - node-v1-
       - run:
-          command: cd cdn-server && npm install && npm test
+          command: cd cdn-server && npm ci && npm test
       - save_cache:
           paths:
             - ~/usr/local/lib/node_modules
@@ -127,7 +127,7 @@ jobs:
             - node-v1-{{ .Branch }}-
             - node-v1-
       - run:
-          command: cd logger && npm install && npm test
+          command: cd logger && npm ci && npm test
       - save_cache:
           paths:
             - ~/usr/local/lib/node_modules
