@@ -14,6 +14,7 @@ const { generateSiteMap } = require('./generate-sitemap')
 const { getDynamicPaths } = require('./dynamic-paths')
 
 const dev = process.env.NODE_ENV !== 'production'
+const DOMAIN_NAME = process.env.DOMAIN_NAME || 'https://www.a11ywatch.com'
 
 const env = Object.assign({}, parsed, {
   dev,
@@ -34,6 +35,7 @@ const env = Object.assign({}, parsed, {
   GOOGLE_ANALYTIC_ID: process.env.GOOGLE_ANALYTIC_ID,
   DONORBOX_URL: process.env.DONORBOX_URL,
   DOCKER_ENV: process.env.DOCKER_ENV,
+  DOMAIN_NAME,
   // # NEXT.JS REQUIRED EXCLUDES
   NODE_ENV: undefined,
   NODE_MODULES_CACHE: undefined,
@@ -96,7 +98,7 @@ module.exports = withPWA({
     config,
     { buildId, dev: development, isServer, defaultLoaders, webpack }
   ) => {
-    generateSiteMap(process.env.DOMAIN_NAME)
+    generateSiteMap(DOMAIN_NAME)
 
     config.plugins.push(new webpack.IgnorePlugin(/tests/))
     config.resolve.alias = Object.assign({}, config.resolve.alias, aliases)

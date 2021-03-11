@@ -20,9 +20,9 @@ function initAppModel() {
   if (typeof window !== 'undefined') {
     if (window.matchMedia('(display-mode: standalone)').matches) {
       setPwaInstalled()
-    }
-    !appModel.pwaInstalled &&
+    } else if (!appModel.pwaInstalled) {
       window.addEventListener(installed, setPwaInstalled)
+    }
   }
 }
 

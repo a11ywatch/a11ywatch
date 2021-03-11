@@ -5,6 +5,7 @@
  **/
 
 export {
+  DOMAIN_NAME,
   INTERCOM_ENABLED,
   AppConfig,
   SCRIPTS_CDN_URL_HOST,

@@ -14,11 +14,11 @@ import { CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { strings } from '@app-strings'
 import { theme } from '@app-theme'
-import { twitterSite, twitterCreator, twitterDescription } from '@app-config'
+import { twitterSite } from '@app-config'
 import { WithSnackBar, WithSkipContent } from '@app/components/adhoc'
 import { initAppModel, userModel } from '@app/data'
 // import { startIntercom } from '@app/utils'
-import { APP_TYPE } from '@app/configs'
+import { DOMAIN_NAME, APP_TYPE } from '@app/configs'
 
 Router.events.on('routeChangeComplete', userModel.handleRoutes)
 
@@ -34,28 +34,35 @@ export default function MyApp({ Component, pageProps }: MergedApp) {
     // startIntercom()
   }, [])
 
+  const meta = Component?.meta || strings?.meta
+  const { description, title, name } = meta
+
   return (
     <Fragment>
       <Head>
-        <title>{Component?.meta?.title || strings?.meta?.title}</title>
+        <title>{title}</title>
         <meta
           name='viewport'
           content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no'
         />
-        <meta
-          name='description'
-          content={Component?.meta?.description || strings?.meta?.description}
-        />
+        <meta name='description' content={description} />
         <meta name='theme-color' content={theme.palette.primary.main} />
         <meta name='mobile-web-app-capable' content='yes' />
         <link rel='manifest' href='/static/manifest.json' />
         <meta name='format-detection' content='telephone=no' />
         <meta name='apple-mobile-web-app-capable' content='yes' />
-        <meta name='twitter:card' content='summary' />
+        <meta name='twitter:card' content='summary_large_image' />
         <meta name='twitter:site' content={twitterSite} />
-        <meta name='twitter:creator' content={twitterCreator} />
-        <meta name='twitter:description' content={twitterDescription} />
-        <meta property='og:image' content='./static/img/banner.jpeg' />
+        <meta
+          property='og:title'
+          content={`Web Accessibility | ${strings.appName}`}
+        />
+        <meta property='og:url' content={DOMAIN_NAME} />
+        <meta
+          property='og:image'
+          content={`${DOMAIN_NAME}/static/img/banner.jpeg`}
+        />
+        <meta property='og:description' content={description} />
         <link rel='apple-touch-icon' href='./static/img/favicon-small.png' />
         <link rel='icon' type='image/x-icon' href='./static/img/favicon.png' />
         <link
@@ -72,7 +79,7 @@ export default function MyApp({ Component, pageProps }: MergedApp) {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <WithSkipContent />
-        <Component {...pageProps} name={Component?.meta?.name} />
+        <Component {...pageProps} name={name} />
         <WithSnackBar />
       </ThemeProvider>
     </Fragment>

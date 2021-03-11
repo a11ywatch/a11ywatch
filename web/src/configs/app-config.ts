@@ -26,8 +26,10 @@ const DONORBOX_URL = process.env.DONORBOX_URL
 const INTERCOM_ENABLED = process.env.INTERCOM_ENABLED
 const API_URI_DOCKER = process.env.API_URI_DOCKER
 const DOCKER_ENV = process.env.DOCKER_ENV
+const DOMAIN_NAME = process.env.DOMAIN_NAME
 
 export {
+  DOMAIN_NAME,
   dev,
   API_URI_DOCKER,
   AppConfig,
