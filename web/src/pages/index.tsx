@@ -4,13 +4,14 @@
  * LICENSE file in the root directory of this source tree.
  **/
 import React, { Fragment } from 'react'
-import { MarketingDrawer, SignOnForm, Price } from '@app/components/general'
+import { MarketingDrawer, Price } from '@app/components/general'
 import {
   CtaFeatures,
   CtaIntro,
   CtaVideo,
   CtaCustomers,
   CtaSearch,
+  CtaSignonForm,
 } from '@app/components/cta'
 import { WithSwipeModal as SwipeableTemporaryDrawer } from '@app/components/adhoc'
 import { withApollo } from '@app/apollo'
@@ -34,7 +35,7 @@ function Index({ websites }: any) {
         <MarketingWebsites websites={websites} />
         <MarketingTestimonial />
         <Price blockFree />
-        <SignOnForm home />
+        <CtaSignonForm />
       </MarketingDrawer>
       <SwipeableTemporaryDrawer />
     </Fragment>

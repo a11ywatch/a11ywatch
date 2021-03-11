@@ -44,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
 
 export function CtaVideo() {
   const classes = useStyles()
-
   const videoClassName = `${classes.video} ${classes.frame}`
 
   return (

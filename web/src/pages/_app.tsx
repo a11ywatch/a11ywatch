@@ -48,7 +48,7 @@ export default function MyApp({ Component, pageProps }: MergedApp) {
         <meta name='description' content={description} />
         <meta name='theme-color' content={theme.palette.primary.main} />
         <meta name='mobile-web-app-capable' content='yes' />
-        <link rel='manifest' href='/static/manifest.json' />
+        <link rel='manifest' href='./static/manifest.json' />
         <meta name='format-detection' content='telephone=no' />
         <meta name='apple-mobile-web-app-capable' content='yes' />
         <meta name='twitter:card' content='summary_large_image' />
