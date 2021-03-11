@@ -18,7 +18,7 @@ import { twitterSite } from '@app-config'
 import { WithSnackBar, WithSkipContent } from '@app/components/adhoc'
 import { initAppModel, userModel } from '@app/data'
 // import { startIntercom } from '@app/utils'
-import { DOMAIN_NAME, APP_TYPE } from '@app/configs'
+import { DOMAIN_NAME } from '@app/configs'
 
 Router.events.on('routeChangeComplete', userModel.handleRoutes)
 
@@ -65,16 +65,6 @@ export default function MyApp({ Component, pageProps }: MergedApp) {
         <meta property='og:description' content={description} />
         <link rel='apple-touch-icon' href='./static/img/favicon-small.png' />
         <link rel='icon' type='image/x-icon' href='./static/img/favicon.png' />
-        <link
-          rel='preload'
-          href={`./static/styles/${APP_TYPE}/styles.css`}
-          as='style'
-        />
-        <link
-          rel='stylesheet'
-          type='text/css'
-          href={`./static/styles/${APP_TYPE}/styles.css`}
-        />
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
