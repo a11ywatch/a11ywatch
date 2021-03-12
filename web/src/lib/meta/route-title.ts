@@ -88,7 +88,7 @@ export function routeTitle(route: string = '') {
       break
     default:
       title =
-        'A11yWatch - web accessibilty monitor, helper, and fixer to meet WCAG & ada compliance almost instantly'
+        'A11yWatch - web accessibilty watcher, helper, and fixer to improve accessibilty'
       break
   }
   return route === 'Index' ? title : `${title} - A11yWatch`

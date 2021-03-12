@@ -35,9 +35,9 @@ function WebAccessibility({ name }: PageProps) {
     <MarketingDrawer title={name}>
       <PageTitle>Web Accessibility</PageTitle>
       <Typography variant='subtitle1' component='h2' gutterBottom>
-        Improve your product's web accessibility for better ada compliance from
-        the start of the building process. Follow these principles to better
-        your websites accessibility with some building block rules.
+        Improve your product's web accessibility for better a11y from the start
+        of the building process. Follow these principles to improve your
+        websites accessibility with some building block rules.
       </Typography>
       <Typography variant='h4' component='h3' gutterBottom style={bold}>
         Color
