@@ -25,7 +25,7 @@ Please allocate atleast 6gb of memory.
 git clone https://github.com/a11ywatch/a11ywatch
 cd a11ywatch
 ./bootstrap-envs.sh
-docker-compose -f development.yml up
+docker-compose up
 ```
 
 By default the ui application opens on port 3000. For the full story, head over to the [developer's documentation](https://a11ywatch.github.io/a11ywatch-docs/docs/getting-started).

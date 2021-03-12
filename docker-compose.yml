@@ -1,84 +1,161 @@
 version: "3.0"
-
 services:
+  api:
+    container_name: api
+    env_file: ./api/.env
+    build:
+      context: ./api
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./api/:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - back-net
+      - front-net
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+
+  angelica:
+    container_name: angelica
+    env_file: ./angelica/.env
+    build:
+      context: ./angelica
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./angelica/:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - back-net
+    ports:
+      - "8040:8040"
+
+  mav:
+    container_name: mav
+    env_file: ./mav/.env
+    build:
+      context: ./mav
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./mav/:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - back-net
+    ports:
+      - "8020:8020"
+
+  logger:
+    container_name: logger
+    env_file: ./logger/.env
+    build:
+      context: ./logger
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./logger/:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - back-net
+    ports:
+      - "8022:8022"
+
   web:
-    env_file: ./web/.env
-    image: "${IMAGE_WEB}"
+    container_name: web
+    build:
+      context: ./web
+      dockerfile: ./Dockerfile.dev
+    env_file:
+      - ./web/.env
+    volumes:
+      - ./web/:/usr/src/app
+      - /usr/src/app/node_modules
+      - /usr/src/app/.next
+    networks:
+      - front-net
     ports:
       - "3000:3000"
+
+  example-site:
+    container_name: example-site
+    env_file: ./example-site/.env
+    build:
+      context: ./example-site
+      dockerfile: ./Dockerfile.dev
     volumes:
-      - /web
+      - ./example-site/:/usr/src/app/
+    networks:
+      - front-net
+      - back-net
+    ports:
+      - "8050:8050"
 
   cdn-server:
     env_file: ./cdn-server/.env
-    image: "${IMAGE_CDN_SERVER}"
+    container_name: cdn-server
+    build:
+      context: ./cdn-server
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./cdn-server/:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - back-net
+      - front-net
     ports:
       - "8090:8090"
-    volumes:
-      - /cdn-server
-
-  api:
-    env_file: ./api/.env
-    image: "${IMAGE_API}"
-    ports:
-      - "8080:8080"
-    volumes:
-      - /api
-
-  angelica:
-    env_file: ./angelica/.env
-    image: "${IMAGE_ANGELICA}"
-    ports:
-      - "8040:8040"
-    volumes:
-      - /angelica
 
   iframe-server:
     env_file: ./iframe-server/.env
-    image: "${IMAGE_IFRAME_SERVER}"
+    container_name: iframe-server
+    build:
+      context: ./iframe-server
+      dockerfile: ./Dockerfile.dev
     volumes:
-      - /iframe-server
+      - ./iframe-server/:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - front-net
     ports:
       - "8010:8010"
 
-  mav:
-    env_file: ./mav/.env
-    image: "${IMAGE_MAV}"
-    ports:
-      - "8020:8020"
-    volumes:
-      - /mav
-
   watcher:
+    container_name: watcher
     env_file: ./watcher/.env
-    image: "${IMAGE_WATCHER}"
+    build:
+      context: ./watcher
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./watcher/src:/usr/src/app/src
+      - ./watcher/scripts:/usr/src/app/scripts
+      - ./watcher/tests:/usr/src/app/tests
+      - ./watcher/.env:/usr/src/app/.env
+    networks:
+      - back-net
     ports:
       - "8000:8000"
+
+  mongodb:
+    container_name: mongodb
+    networks:
+      - back-net
+    image: mongo
+    ports:
+      - "27017:27017"
     volumes:
-      - /watcher
+      - mongodb:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=${DB_NAME:-a11ywatch}
 
-  # logger:
-  #   env_file: ./logger/.env
-  #   image: "${IMAGE_LOGGER}"
-  #   ports:
-  #     - "8022:8022"
-  #   volumes:
-  #     - /logger
-
-  # mongodb:
-  #   image: mongo
-  #   ports:
-  #     - "27017:27017"
-  #   # volumes:
-  #   #   - mongodb:/data/db
-  #   environment:
-  #     - MONGO_INITDB_DATABASE=ada-application-core
-
+networks:
+  front-net:
+  back-net:
 volumes:
+  mongodb:
   api:
   angelica:
   watcher:
   cdn-server:
   web:
   iframe-server:
-  # logger:
+  logger:
+  example-site:
