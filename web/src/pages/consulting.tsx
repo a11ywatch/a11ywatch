@@ -18,6 +18,7 @@ function Consulting({ name }: PageProps) {
     'Angular',
     'Swift',
     'Java',
+    'Kotlin',
     'Obj-C',
     'Vue',
   ]
@@ -44,19 +45,20 @@ function Consulting({ name }: PageProps) {
         WCAG Web Compliance Reduces Legal Risk
       </Typography>
       <Typography variant='body1' component='p' gutterBottom>
-        {strings.appName} we make sure to bring your product ADA compliant
-        without using any overlays, toolbars, and other manual processes that do
-        not correct the issues without the user input. When we use our AI we
-        make sure that the probability meets high standards or we make sure that
-        the remedies are correct by a human. This allows us to deliver
-        compliance at a high level of accuracy.
+        {strings.appName} we make sure to bring your product WCAG2.0 & ADA
+        compliant without using any overlays, toolbars, and other manual
+        processes that do not correct the issues without the user input. When we
+        use AI we validate that the probability meets high standards or we make
+        sure that the remedies are corrected by a human. This allows us to
+        deliver compliance at a high level of accuracy.
       </Typography>
       <Typography variant='h4' component='h3' gutterBottom style={bold}>
         Professional Support
       </Typography>
       <Typography variant='body1' component='p' gutterBottom>
         {strings.appName} can provide expert level support along the following
-        technologies for accessibility, UI, and UX.
+        technologies for accessibility, UI, and UX. We also can help setup
+        A11yWatch for private servers/usage.
       </Typography>
       <List>
         {LanguageSupport.map((item) => {
