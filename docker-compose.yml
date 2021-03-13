@@ -59,36 +59,6 @@ services:
     ports:
       - "8022:8022"
 
-  # web:
-  #   container_name: web
-  #   build:
-  #     context: ./web
-  #     dockerfile: ./Dockerfile.dev
-  #   env_file:
-  #     - ./web/.env
-  #   volumes:
-  #     - ./web/:/usr/src/app
-  #     - /usr/src/app/node_modules
-  #     - /usr/src/app/.next
-  #   networks:
-  #     - front-net
-  #   ports:
-  #     - "3000:3000"
-
-  example-site:
-    container_name: example-site
-    env_file: ./example-site/.env
-    build:
-      context: ./example-site
-      dockerfile: ./Dockerfile.dev
-    volumes:
-      - ./example-site/:/usr/src/app/
-    networks:
-      - front-net
-      - back-net
-    ports:
-      - "8050:8050"
-
   cdn-server:
     env_file: ./cdn-server/.env
     container_name: cdn-server
@@ -155,7 +125,5 @@ volumes:
   angelica:
   watcher:
   cdn-server:
-  # web:
   iframe-server:
   logger:
-  example-site:
