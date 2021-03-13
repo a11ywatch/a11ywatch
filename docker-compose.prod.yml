@@ -1,12 +1,12 @@
 version: "3.0"
 services:
-  web:
-    env_file: ./web/.env
-    image: "${IMAGE_WEB}"
-    ports:
-      - "3000:3000"
-    volumes:
-      - /web
+  # web:
+  #   env_file: ./web/.env
+  #   image: "${IMAGE_WEB}"
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - /web
 
   cdn-server:
     env_file: ./cdn-server/.env
@@ -77,6 +77,6 @@ volumes:
   angelica:
   watcher:
   cdn-server:
-  web:
+  # web:
   iframe-server:
   # logger:

@@ -17,7 +17,7 @@ building A11yWatch from source, how to contribute code
 and documentation, who to contact about what, and etc.
 
 If you want to build A11yWatch right away there are multiple options, the easiest way is to use docker:
-Please allocate atleast 6gb of memory.
+Please allocate atleast 3.25gb of memory.
 
 ##### You have a working [Docker environment].
 
@@ -28,6 +28,9 @@ cd a11ywatch
 docker-compose up
 ```
 
+##### Front-End Client
+
+For a client to use you can use the web application here [web-app](https://github.com/A11yWatch/a11ywatch-web), [ios-app](https://github.com/A11yWatch/a11ywatch-ios), or [android-app](https://github.com/A11yWatch/a11ywatch-android). The most up to date option at the moment is the web application. The mobile apps are a WIP.
 By default the ui application opens on port 3000. For the full story, head over to the [developer's documentation](https://a11ywatch.github.io/a11ywatch-docs/docs/getting-started).
 
 ## Contributing

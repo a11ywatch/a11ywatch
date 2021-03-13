@@ -1,5 +1,0 @@
-*.min.*
-node_modules
-vendor
-.next
-public/*

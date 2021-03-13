@@ -8,9 +8,6 @@ cpenv="sh $PWD/load-env.sh"
 
 $cpenv
 
-# Install web
-(cd web && $cpenv  && cd ..)
-
 # Install api
 (cd api && $cpenv  && npm run bootstrap && cd ..)
 

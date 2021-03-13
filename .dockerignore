@@ -1,10 +1,8 @@
 node_modules
 npm-debug.log
-storybook-static
 yarn-error.lock
 ecs-cli.asc
 AWSCLIV2.pkg
 LICENSE
 dump
-.next
 .vscode
