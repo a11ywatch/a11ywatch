@@ -5,9 +5,7 @@
  **/
 
 import { isBefore } from "date-fns";
-
 import { footer } from "@app/html";
-
 import { GENERAL_ERROR, PASSWORD_ERROR, SUCCESS } from "../../strings";
 import {
   transporter,
@@ -22,9 +20,9 @@ import {
   updateApiUsage,
   updateScanAttempt,
   toggleAlert,
+toggleProfile,
   verifyUser,
   forgotPassword,
-  createUser,
   confirmEmail,
   unsubscribeEmails,
   resetPassword,
@@ -32,6 +30,9 @@ import {
   addPaymentSubscription,
   cancelSubscription,
 } from "./update";
+import {
+  createUser,
+} from './set'
 import type { UserControllerType } from "./types";
 
 export const UsersController: UserControllerType = (
@@ -48,9 +49,9 @@ export const UsersController: UserControllerType = (
   updateUser: async ({ password, email, newPassword, stripeToken }) => {
     const [user, collection] = await getUser({ email }, true);
 
-    const salthash = password && saltHashPassword(password, user.salt);
+    const salthash = saltHashPassword(password, user?.salt);
 
-    if (password && salthash && user.password === salthash.passwordHash) {
+    if (user?.password === salthash?.passwordHash) {
       const jwt = await signJwt({
         email,
         role: user.role,
@@ -79,7 +80,7 @@ export const UsersController: UserControllerType = (
       };
     }
 
-    if (password && salthash && user.password !== salthash.passwordHash) {
+    if (user?.password !== salthash?.passwordHash) {
       throw new Error(PASSWORD_ERROR);
     }
 
@@ -88,6 +89,7 @@ export const UsersController: UserControllerType = (
   forgotPassword,
   resetPassword,
   toggleAlert,
+toggleProfile,
   confirmEmail,
   updateScanAttempt,
   validateEmail,

@@ -39,6 +39,14 @@ try {
   console.error(e);
 }
 
+(async () => {
+  if(process.env.NODE_ENV === "test") {
+      const { MongoMemoryServer } = require("mongodb-memory-server")
+      const MongoServer = new MongoMemoryServer()
+      client = new MongoClient(await MongoServer.getUri(), { useNewUrlParser: true });
+  }
+})()
+
 const initDbConnection = async (cb?: () => void) => {
   try {
     await client.connect();

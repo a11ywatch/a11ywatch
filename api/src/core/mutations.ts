@@ -135,6 +135,14 @@ export const Mutation = {
       alertEnabled,
     });
   },
+  toggleProfile: async (_, { profileVisible }, context) => {
+    const { keyid } = context.user?.payload || defaultPayload;
+
+    return await context.models.User.toggleProfile({
+      keyid,
+      profileVisible,
+    });
+  },
   updateScript: async (
     _,
     { url, scriptMeta, editScript, newScript },

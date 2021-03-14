@@ -53,7 +53,7 @@ export const config = {
   WATCHER_CLIENT_URL: replaceDockerNetwork(process.env.WATCHER_CLIENT_URL),
   CRAWL_URL: replaceDockerNetwork(process.env.CRAWL_URL),
   SCRIPTS_CDN_URL,
-  GRAPHQL_PORT: Number(process.env.PORT || process.env.GRAPHQL_PORT || 0),
+  GRAPHQL_PORT: Number(process.env.NODE_ENV === 'test' ? 0 : (process.env.PORT || process.env.GRAPHQL_PORT || 0)),
   EMAIL_SERVICE_PASSWORD: process.env.EMAIL_SERVICE_PASSWORD,
   STRIPE_KEY: process.env.STRIPE_KEY,
   SUBSCRIPTION_TIMOUT: process.env.SUBSCRIPTION_TIMOUT,

@@ -31,6 +31,10 @@ export const mutation = `
 			alertEnabled: Boolean
 		): UpdateUserMutationResponse
 
+		toggleProfile (
+			toggleAlert: Boolean
+		): UpdateUserMutationResponse
+
 		updateWebsite (
 			url: String
 			customHeaders: [CreatePageHeaders]
@@ -98,6 +102,7 @@ export const mutation = `
 		message: String!
 		user: User
 		alertEnabled: Boolean
+		profileVisible: Boolean
 	}
 
 	type UpdateScriptMutationResponse implements MutationResponse {

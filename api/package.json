@@ -7,7 +7,7 @@
   "scripts": {
     "bootstrap": "./bootstrap.sh",
     "dev": "nodemon -e js,ts,graphql -r ts-node/register/transpile-only -r tsconfig-paths/register src/server.ts",
-    "test": "jest --forceExit",
+    "test": "jest --forceExit --maxWorkers 4",
     "lint": "eslint .",
     "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",
     "start": "NODE_ENV=production node dist/server.js"
@@ -29,6 +29,7 @@
     "generic-pool": "3.7.1",
     "get-page-speed": "^1.0.1",
     "graphql": "14.6.0",
+    "graphql-tag": "^2.11.0",
     "graphql-tools": "0.8.0",
     "jsonwebtoken": "8.5.1",
     "mongodb": "3.3.4-rc0",
@@ -43,6 +44,7 @@
     "@types/express-rate-limit": "^5.1.1",
     "@types/jest": "^26.0.20",
     "@types/node": "^10.17.51",
+    "apollo-server-testing": "^2.21.1",
     "babel-jest": "^26.6.3",
     "eslint": "3.8.1",
     "eslint-config-airbnb": "12.0.0",
@@ -51,6 +53,7 @@
     "eslint-plugin-react": "6.4.1",
     "jest": "^26.6.3",
     "jest-config": "^26.6.3",
+    "mongodb-memory-server": "^6.9.6",
     "nodemon": "1.9.1",
     "prettier": "^2.2.1",
     "supertest": "^6.1.1",

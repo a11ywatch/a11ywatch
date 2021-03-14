@@ -29,6 +29,7 @@ export const user = `
 		activeSubscription: Boolean
 		emailConfirmed: Boolean
 		websites: [Website]
+		profileVisible: Boolean
 		history: [History]
 		scanInfo: ScanInformation
 		analytics(filter: String): [Analytic]

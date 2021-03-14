@@ -29,12 +29,15 @@ const serverConfig = {
     if (connection) {
       return connection.context;
     }
-    const user = getUser(req.headers?.authorization);
+      const authentication = req?.headers?.authorization 
+      const user = getUser(authentication);
+    if(process.env.NODE_ENV !== "test") {
 
-    if (!user && !BYPASS_AUTH.includes(req.body?.operationName)) {
-      throw new Error(
-        req.headers?.authorization ? TOKEN_EXPIRED_ERROR : AUTH_ERROR
-      );
+      if (!user && !BYPASS_AUTH.includes(req?.body?.operationName)) {
+        throw new Error(
+          authentication ? TOKEN_EXPIRED_ERROR : AUTH_ERROR
+        );
+      }
     }
 
     return {
