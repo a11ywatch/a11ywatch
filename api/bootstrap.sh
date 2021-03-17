@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 PRIVATE_KEY=private.key
 PUBLIC_KEY=public.key

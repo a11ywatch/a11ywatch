@@ -4,17 +4,17 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import type { Server as HttpServer } from "http";
-import type { AddressInfo } from "net";
-import express from "express";
-import http from "http";
-import cors from "cors";
-import bodyParser from "body-parser";
+import type { Server as HttpServer } from "http"
+import type { AddressInfo } from "net"
+import express from "express"
+import http from "http"
+import cors from "cors"
+import bodyParser from "body-parser"
 
-import { CronJob } from "cron";
-import { corsOptions, config, logServerInit } from "./config";
+import { CronJob } from "cron"
+import { corsOptions, config, logServerInit } from "./config"
 
-import { websiteWatch } from "./core/controllers/websites";
+import { websiteWatch } from "./core/controllers/websites"
 import {
   CRAWL_WEBSITE,
   CONFIRM_EMAIL,
@@ -24,10 +24,10 @@ import {
   WEBSITE_CRAWL,
   WEBSITE_CHECK,
   UNSUBSCRIBE_EMAILS,
-  GET_WEBSITES_DAILY,
-} from "./core/routes";
-import { initDbConnection, closeDbConnection } from "./database";
-import { Server } from "./apollo-server";
+  GET_WEBSITES_DAILY
+} from "./core/routes"
+import { initDbConnection, closeDbConnection } from "./database"
+import { Server } from "./apollo-server"
 import {
   confirmEmail,
   crawlWebsite,
@@ -37,77 +37,77 @@ import {
   scanWebsite,
   websiteCrawl,
   websiteCrawlAuthed,
-  getDailyWebsites,
-} from "./rest/routes";
-import { setConfig as setLogConfig } from "@a11ywatch/log";
-import rateLimit from "express-rate-limit";
+  getDailyWebsites
+} from "./rest/routes"
+import { setConfig as setLogConfig } from "@a11ywatch/log"
+import rateLimit from "express-rate-limit"
 
-setLogConfig({ container: "api" });
+setLogConfig({ container: "api" })
 
-const { GRAPHQL_PORT } = config;
+const { GRAPHQL_PORT } = config
 
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000,
-  max: 100,
-});
+  max: 100
+})
 
 function initServer(): HttpServer {
-  initDbConnection();
-  const server = new Server();
-  const app = express();
+  initDbConnection()
+  const server = new Server()
+  const app = express()
 
-  app.use(cors(corsOptions));
-  app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(bodyParser.json({ type: "application/*+json", limit: "300mb" }));
-  app.use(limiter);
-  app.options(CONFIRM_EMAIL, cors());
-  app.options(WEBSITE_CHECK, cors());
+  app.use(cors(corsOptions))
+  app.use(bodyParser.urlencoded({ extended: true }))
+  app.use(bodyParser.json({ type: "application/*+json", limit: "300mb" }))
+  app.use(limiter)
+  app.options(CONFIRM_EMAIL, cors())
+  app.options(WEBSITE_CHECK, cors())
 
-  app.get(ROOT, root);
-  app.get(GET_WEBSITES_DAILY, getDailyWebsites);
-  app.get(UNSUBSCRIBE_EMAILS, cors(), unSubEmails);
-  app.post(WEBSITE_CRAWL, websiteCrawl);
-  app.post(CRAWL_WEBSITE, crawlWebsite);
-  app.post(SCAN_WEBSITE_ASYNC, scanWebsite);
-  app.post(IMAGE_CHECK, cors(), detectImage);
+  app.get(ROOT, root)
+  app.get(GET_WEBSITES_DAILY, getDailyWebsites)
+  app.get(UNSUBSCRIBE_EMAILS, cors(), unSubEmails)
+  app.post(WEBSITE_CRAWL, websiteCrawl)
+  app.post(CRAWL_WEBSITE, crawlWebsite)
+  app.post(SCAN_WEBSITE_ASYNC, scanWebsite)
+  app.post(IMAGE_CHECK, cors(), detectImage)
   app.post(
     "/admin/website-watch-scan",
     cors({ origin: process.env.ADMIN_ORIGIN }),
     websiteWatch
-  );
+  )
 
-  app.route(WEBSITE_CHECK).get(websiteCrawlAuthed).post(websiteCrawlAuthed);
-  app.route(CONFIRM_EMAIL).get(cors(), confirmEmail).post(cors(), confirmEmail);
+  app.route(WEBSITE_CHECK).get(websiteCrawlAuthed).post(websiteCrawlAuthed)
+  app.route(CONFIRM_EMAIL).get(cors(), confirmEmail).post(cors(), confirmEmail)
 
-  server.applyMiddleware({ app, cors: false });
+  server.applyMiddleware({ app, cors: false })
 
-  const httpServer = http.createServer(app);
+  const httpServer = http.createServer(app)
 
-  server.installSubscriptionHandlers(httpServer);
+  server.installSubscriptionHandlers(httpServer)
 
-  const listener = httpServer.listen(GRAPHQL_PORT);
+  const listener = httpServer.listen(GRAPHQL_PORT)
 
   logServerInit((listener.address() as AddressInfo).port, {
     subscriptionsPath: server.subscriptionsPath,
-    graphqlPath: server.graphqlPath,
-  });
+    graphqlPath: server.graphqlPath
+  })
 
   if (process.env.DYNO === "web.1" || !process.env.DYNO) {
-    new CronJob("00 00 00 * * *", websiteWatch).start();
+    new CronJob("00 00 00 * * *", websiteWatch).start()
   }
 
-  return listener;
+  return listener
 }
 
-const coreServer = initServer();
+const coreServer = initServer()
 
 const killServer = async () => {
   try {
-    await Promise.all([closeDbConnection(), coreServer?.close()]);
+    await Promise.all([closeDbConnection(), coreServer?.close()])
   } catch (e) {
-    console.error("failed to kill server", e);
+    console.error("failed to kill server", e)
   }
-};
+}
 
-export { initServer, killServer };
-export default coreServer;
+export { initServer, killServer }
+export default coreServer

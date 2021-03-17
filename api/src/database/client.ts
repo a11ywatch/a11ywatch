@@ -4,90 +4,48 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import { MongoClient } from "mongodb";
-import { config, TEST_ENV } from "@app/config";
+import { MongoClient } from "mongodb"
+import { config } from "@app/config"
+import { log } from "@a11ywatch/log"
 
-interface Global extends NodeJS.Global {
-  __MONGO_URI__?: string;
-  __MONGO_DB_NAME__?: string;
-}
-
-const appGlobal: Global = global;
-
-const [DB_URI, DB_NAME, DB_CONFIG] = TEST_ENV
-  ? [
-      appGlobal?.__MONGO_URI__,
-      appGlobal?.__MONGO_DB_NAME__,
-      {
-        useUnifiedTopology: true,
-      },
-    ]
-  : [
-      config.DB_URL,
-      config.DB_NAME,
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      },
-    ];
-
-let client;
+let client
 
 try {
-  client = new MongoClient(DB_URI, DB_CONFIG);
+  client = new MongoClient(config.DB_URL, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true
+  })
 } catch (e) {
-  console.error(e);
+  log(e)
 }
 
-(async () => {
-  if(process.env.NODE_ENV === "test") {
-      const { MongoMemoryServer } = require("mongodb-memory-server")
-      const MongoServer = new MongoMemoryServer()
-      client = new MongoClient(await MongoServer.getUri(), { useNewUrlParser: true });
-  }
-})()
-
-const initDbConnection = async (cb?: () => void) => {
+const initDbConnection = async () => {
   try {
-    await client.connect();
+    await client?.connect()
   } catch (e) {
-    console.error(e);
-  } finally {
-    if (typeof cb === "function") {
-      cb();
-    }
+    log(e)
   }
-};
+}
 
 const connect = async (collectionType = "Websites") => {
-  let db;
+  const db = await client?.db(config.DB_NAME)
+  let collection = []
 
   try {
-    db = await client.db(DB_NAME);
+    collection = await db?.collection(collectionType)
   } catch (e) {
-    console.error("database connection failed:", e);
+    log(e)
   }
 
-  let collection = [];
-
-  if (db) {
-    try {
-      collection = await db.collection(collectionType);
-    } catch (e) {
-      console.error("collection not found:", e);
-    }
-  }
-
-  return [collection, client];
-};
+  return [collection, client]
+}
 
 const closeDbConnection = async () => {
   try {
-    await client?.close();
-    console.log("DB connection closed");
+    await client?.close()
   } catch (e) {
-    console.error("failed to kill db connection", e);
+    log(e)
   }
-};
+}
 
-export { client, connect, initDbConnection, closeDbConnection };
+export { client, connect, initDbConnection, closeDbConnection }
