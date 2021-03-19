@@ -6,3 +6,6 @@ AWSCLIV2.pkg
 LICENSE
 dump
 .vscode
+dist
+coverage
+Dockerfile

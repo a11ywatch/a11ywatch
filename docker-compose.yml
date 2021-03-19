@@ -7,7 +7,8 @@ services:
       context: ./api
       dockerfile: ./Dockerfile.dev
     volumes:
-      - ./api/:/usr/src/app
+      - ./api/src:/usr/src/app/src
+      - ./api/__tests__:/usr/src/app/__tests__
       - /usr/src/app/node_modules
     networks:
       - back-net
@@ -24,7 +25,8 @@ services:
       context: ./angelica
       dockerfile: ./Dockerfile.dev
     volumes:
-      - ./angelica/:/usr/src/app
+      - ./angelica/src:/usr/src/app/src
+      - ./angelica/__tests__:/usr/src/app/__tests__
       - /usr/src/app/node_modules
     networks:
       - back-net
@@ -38,7 +40,8 @@ services:
       context: ./mav
       dockerfile: ./Dockerfile.dev
     volumes:
-      - ./mav/:/usr/src/app
+      - ./mav/src:/usr/src/app/src
+      - ./mav/__tests__:/usr/src/app/__tests__
       - /usr/src/app/node_modules
     networks:
       - back-net
@@ -52,7 +55,8 @@ services:
       context: ./logger
       dockerfile: ./Dockerfile.dev
     volumes:
-      - ./logger/:/usr/src/app
+      - ./logger/src:/usr/src/app/src
+      - ./logger/__tests__:/usr/src/app/__tests__
       - /usr/src/app/node_modules
     networks:
       - back-net
@@ -66,7 +70,8 @@ services:
       context: ./cdn-server
       dockerfile: ./Dockerfile.dev
     volumes:
-      - ./cdn-server/:/usr/src/app
+      - ./cdn-server/src:/usr/src/app/src
+      - ./cdn-server/__tests__:/usr/src/app/__tests__
       - /usr/src/app/node_modules
     networks:
       - back-net
@@ -81,7 +86,8 @@ services:
       context: ./iframe-server
       dockerfile: ./Dockerfile.dev
     volumes:
-      - ./iframe-server/:/usr/src/app
+      - ./iframe-server/src:/usr/src/app/src
+      - ./iframe-server/__tests__:/usr/src/app/__tests__
       - /usr/src/app/node_modules
     networks:
       - front-net
