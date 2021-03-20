@@ -8,6 +8,8 @@ services:
       dockerfile: ./Dockerfile.dev
     volumes:
       - ./api/src:/usr/src/app/src
+      - ./api/package.json:/usr/src/app/package.json
+      - ./api/package-lock.json:/usr/src/app/package-lock.json
       - ./api/__tests__:/usr/src/app/__tests__
       - /usr/src/app/node_modules
     networks:
@@ -26,6 +28,8 @@ services:
       dockerfile: ./Dockerfile.dev
     volumes:
       - ./angelica/src:/usr/src/app/src
+      - ./angelica/package.json:/usr/src/app/package.json
+      - ./angelica/package-lock.json:/usr/src/app/package-lock.json
       - ./angelica/__tests__:/usr/src/app/__tests__
       - /usr/src/app/node_modules
     networks:
@@ -41,6 +45,8 @@ services:
       dockerfile: ./Dockerfile.dev
     volumes:
       - ./mav/src:/usr/src/app/src
+      - ./mav/package.json:/usr/src/app/package.json
+      - ./mav/package-lock.json:/usr/src/app/package-lock.json
       - ./mav/__tests__:/usr/src/app/__tests__
       - /usr/src/app/node_modules
     networks:
@@ -56,6 +62,8 @@ services:
       dockerfile: ./Dockerfile.dev
     volumes:
       - ./logger/src:/usr/src/app/src
+      - ./logger/package.json:/usr/src/app/package.json
+      - ./logger/package-lock.json:/usr/src/app/package-lock.json
       - ./logger/__tests__:/usr/src/app/__tests__
       - /usr/src/app/node_modules
     networks:
@@ -71,6 +79,8 @@ services:
       dockerfile: ./Dockerfile.dev
     volumes:
       - ./cdn-server/src:/usr/src/app/src
+      - ./cdn-server/package.json:/usr/src/app/package.json
+      - ./cdn-server/package-lock.json:/usr/src/app/package-lock.json
       - ./cdn-server/__tests__:/usr/src/app/__tests__
       - /usr/src/app/node_modules
     networks:
@@ -87,6 +97,8 @@ services:
       dockerfile: ./Dockerfile.dev
     volumes:
       - ./iframe-server/src:/usr/src/app/src
+      - ./iframe-server/package.json:/usr/src/app/package.json
+      - ./iframe-server/package-lock.json:/usr/src/app/package-lock.json
       - ./iframe-server/__tests__:/usr/src/app/__tests__
       - /usr/src/app/node_modules
     networks:

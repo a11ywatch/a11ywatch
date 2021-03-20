@@ -31,7 +31,7 @@ export const crawlWebsite = async ({
   ) {
     return responseModel({ msgType: ApiResponse.NotFound })
   }
-  const { domain, pageUrl } = sourceBuild(urlMap)
+  const { domain, pageUrl } = sourceBuild(urlMap, userId)
   const authenticated = typeof userId !== "undefined"
 
   return await new Promise(async resolve => {

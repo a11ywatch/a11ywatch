@@ -4,28 +4,28 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import { fork } from "child_process";
-import { format } from "prettier";
-import { scriptBuild } from "@app/core/lib";
-import { sourceBuild } from "@a11ywatch/website-source-builder";
-import { log } from "@a11ywatch/log";
+import { fork } from "child_process"
+import { format } from "prettier"
+import { scriptBuild } from "@app/core/lib"
+import { sourceBuild } from "@a11ywatch/website-source-builder"
+import { log } from "@a11ywatch/log"
 
 export const editScript = async ({
   userId,
   url: urlMap,
   script: resolver,
-  newScript,
+  newScript
 }) => {
-  const { domain, cdnSourceStripped } = sourceBuild(urlMap);
+  const { domain, cdnSourceStripped } = sourceBuild(urlMap, userId)
 
   try {
     resolver.script = format(newScript, {
       semi: true,
-      parser: "html",
-    });
+      parser: "html"
+    })
     const forked = fork(`${__dirname}/cdn_worker`, [], {
-      detached: true,
-    });
+      detached: true
+    })
     forked.send({
       cdnSourceStripped,
       scriptBody: scriptBuild(
@@ -34,21 +34,21 @@ export const editScript = async ({
             .replace("<script defer>", "")
             .replace("</script>", ""),
           domain,
-          cdnSrc: cdnSourceStripped,
+          cdnSrc: cdnSourceStripped
         },
         true
       ),
-      domain: domain || resolver?.domain,
-    });
-    forked.unref();
+      domain: domain || resolver?.domain
+    })
+    forked.unref()
     forked.on("message", (message: string) => {
       if (message === "close") {
-        forked.kill("SIGINT");
+        forked.kill("SIGINT")
       }
-    });
+    })
   } catch (e) {
-    log(e, { type: "error" });
+    log(e, { type: "error" })
   }
 
-  return resolver;
-};
+  return resolver
+}

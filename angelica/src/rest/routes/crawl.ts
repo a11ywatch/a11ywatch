@@ -1,19 +1,19 @@
-import { crawlWebsite } from "@app/core/controllers";
-import { log } from "@a11ywatch/log";
+import { crawlWebsite } from "@app/core/controllers"
+import { log } from "@a11ywatch/log"
 
 const crawl = async (req, res, next) => {
   try {
     const data = await crawlWebsite({
       url: decodeURIComponent(req.body.url + ""),
       userId: req.body.userId,
-      pageHeaders: req.body.pageHeaders,
-    });
+      pageHeaders: req.body.pageHeaders
+    })
 
-    res.json(data);
+    res.json(data)
   } catch (e) {
-    log(e?.message, { type: "error" });
-    next();
+    log(e)
+    next()
   }
-};
+}
 
-export { crawl };
+export { crawl }

@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@a11ywatch/log": "^0.3.5",
-    "@a11ywatch/website-source-builder": "^0.0.4",
+    "@a11ywatch/website-source-builder": "^0.0.9",
     "body-parser": "^1.19.0",
     "cors": "2.8.0",
     "date-fns": "2.7.0",
