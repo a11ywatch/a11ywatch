@@ -4,11 +4,11 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import fetch from "node-fetch";
-import { SCRIPTS_CDN_URL } from "@app/config";
-import { log, setConfig as setLogConfig } from "@a11ywatch/log";
+import fetch from "node-fetch"
+import { SCRIPTS_CDN_URL } from "@app/config"
+import { log, setConfig as setLogConfig } from "@a11ywatch/log"
 
-setLogConfig({ container: "angelica" });
+setLogConfig({ container: "angelica" })
 
 process.on(
   "message",
@@ -18,9 +18,9 @@ process.on(
     domain,
     screenshot,
     screenshotStill,
-    authed,
+    authed
   }) => {
-    const headers = { "Content-Type": "application/json" };
+    const headers = { "Content-Type": "application/json" }
     try {
       await Promise.all([
         fetch(`${SCRIPTS_CDN_URL}/add-screenshot`, {
@@ -29,24 +29,24 @@ process.on(
             cdnSourceStripped,
             domain,
             screenshot,
-            screenshotStill,
+            screenshotStill
           }),
-          headers,
+          headers
         }),
         fetch(`${SCRIPTS_CDN_URL}/add-script`, {
           method: "POST",
           body: JSON.stringify({
             scriptBuffer,
             cdnSourceStripped,
-            domain,
+            domain
           }),
-          headers,
-        }),
-      ]);
+          headers
+        })
+      ])
     } catch (e) {
-      log(e, { type: "error" });
+      log(e)
     } finally {
-      process.send("close");
+      process.send("close")
     }
   }
-);
+)

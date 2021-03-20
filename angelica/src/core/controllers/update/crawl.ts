@@ -193,7 +193,7 @@ export const crawlWebsite = async ({ userId, url: urlMap, pageHeaders }) => {
       }
     }
   } catch (e) {
-    log(e, { type: "error" })
+    log(e)
   } finally {
     if (browser?.isConnected()) {
       puppetPool.clean(browser, page)
