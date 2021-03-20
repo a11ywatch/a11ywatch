@@ -4,30 +4,25 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-export const extractPageData = (dataSource: any) => {
-  // issue counters
-  let errorCount;
-  let warningCount;
-  let noticeCount;
-  // score roundup
-  let adaScore;
-  // issue meta info
-  let issuesInfo;
-  // page has custom cdn
-  let pageHasCdn;
-
-  let script = dataSource?.script;
-  let issues = dataSource?.issues;
-  let webPage = dataSource?.webPage;
+export const extractPageData = (
+  dataSource: any = { script: null, issues: null, webPage: null }
+) => {
+  let errorCount
+  let warningCount
+  let noticeCount
+  let adaScore
+  let issuesInfo
+  let pageHasCdn
+  let { script, issues, webPage } = dataSource
 
   if (webPage) {
-    issuesInfo = webPage.issuesInfo;
-    pageHasCdn = webPage.cdnConnected;
+    issuesInfo = webPage.issuesInfo
+    pageHasCdn = webPage.cdnConnected
     if (issuesInfo) {
-      errorCount = issuesInfo.errorCount;
-      warningCount = issuesInfo.warningCount;
-      adaScore = issuesInfo.adaScore;
-      noticeCount = issuesInfo.noticeCount;
+      errorCount = issuesInfo.errorCount
+      warningCount = issuesInfo.warningCount
+      adaScore = issuesInfo.adaScore
+      noticeCount = issuesInfo.noticeCount
     }
   }
 
@@ -40,6 +35,6 @@ export const extractPageData = (dataSource: any) => {
     script,
     issues,
     webPage,
-    issuesInfo,
-  };
-};
+    issuesInfo
+  }
+}
