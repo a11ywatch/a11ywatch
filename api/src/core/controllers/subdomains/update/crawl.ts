@@ -126,7 +126,7 @@ export const crawlWebsite = async ({
         );
 
         updateWebsiteProps = Object.assign({}, webPage, {
-          adaScore: avgScore,
+          avgScore,
           cdnConnected: pageHasCdn,
           online: true,
         });
