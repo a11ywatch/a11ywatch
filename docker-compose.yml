@@ -134,6 +134,18 @@ services:
     environment:
       - MONGO_INITDB_DATABASE=${DB_NAME:-a11ywatch}
 
+  mongoclient:
+    container_name: mongoclient
+    networks:
+      - back-net
+    image: huggingface/mongoku
+    ports:
+      - "3100:3100"
+    volumes:
+      - mongodb:/data/db
+    environment:
+      - MONGOKU_DEFAULT_HOST=${HOST:-mongodb://mongodb:27017/?compressors=zlib&gssapiServiceName=mongodb}
+
 networks:
   front-net:
   back-net:
