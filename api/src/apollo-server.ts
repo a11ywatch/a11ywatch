@@ -34,7 +34,11 @@ const serverConfig = {
 
     if (process.env.NODE_ENV !== "test") {
       if (!user && !BYPASS_AUTH.includes(req?.body?.operationName)) {
-        throw new Error(AUTH_ERROR)
+        if (DEV && !req?.body?.operationName) {
+          console.info("graphql schema generating")
+        } else {
+          throw new Error(AUTH_ERROR)
+        }
       }
     }
 

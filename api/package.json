@@ -13,7 +13,7 @@
     "start": "NODE_ENV=production node dist/server.js"
   },
   "engines": {
-    "node": "v12.x"
+    "node": "v14.x"
   },
   "dependencies": {
     "@a11ywatch/log": "^0.3.5",
@@ -40,6 +40,8 @@
     "valid-url": "1.0.9"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.21.3",
+    "@graphql-codegen/typescript": "^1.21.1",
     "@shelf/jest-mongodb": "^1.2.3",
     "@types/express-rate-limit": "^5.1.1",
     "@types/jest": "^26.0.20",
