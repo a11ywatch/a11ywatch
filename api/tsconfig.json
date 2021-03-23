@@ -20,7 +20,10 @@
     "removeComments": true,
     "baseUrl": "./",
     "paths": {
-      "@app/*": ["./src/*"]
+      "@app/*": ["./src/*"],
+      "@a11ywatch-types": [
+        "./src/types.d.ts"
+      ]
     }
   },
   "include": ["src"],

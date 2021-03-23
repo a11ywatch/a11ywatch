@@ -19,6 +19,7 @@ import { AnalyticsController } from "../../analytics";
 import { getDomain } from "../find";
 import { generateWebsiteAverage } from "./domain";
 import { fetchPuppet, extractPageData, limitResponse } from "./utils";
+import type { Website } from "@a11ywatch-types";
 
 export const crawlWebsite = async ({
   userId,
@@ -113,7 +114,7 @@ export const crawlWebsite = async ({
         });
       }
 
-      let updateWebsiteProps = {};
+      let updateWebsiteProps: Website;
 
       if (website?.url === pageUrl) {
         const avgScore = await generateWebsiteAverage(
@@ -150,11 +151,14 @@ export const crawlWebsite = async ({
         issueExist,
         "ISSUES",
       ]);
-      await collectionUpsert(
-        updateWebsiteProps,
-        [websiteCollection, website, "WEBSITE"],
-        { searchProps: { url: pageUrl, userId } }
-      );
+
+      if (updateWebsiteProps) {
+        await collectionUpsert(
+          updateWebsiteProps,
+          [websiteCollection, website, "WEBSITE"],
+          { searchProps: { url: pageUrl, userId } }
+        );
+      }
 
       if (script) {
         if (!scripts?.scriptMeta) {
