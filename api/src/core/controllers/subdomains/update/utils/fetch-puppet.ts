@@ -15,8 +15,6 @@ export const fetchPuppet = async ({
 }: any) => {
   let dataSource;
   try {
-    log(`CRAWLING: ${url} user: ${userId}`);
-
     const data = await fetch(
       `${process.env.PUPPET_SERVICE}/api/getPageIssues`,
       {
@@ -35,7 +33,7 @@ export const fetchPuppet = async ({
       dataSource = await data?.json();
     }
   } catch (e) {
-    console.error(e);
+    log(e);
   }
 
   return dataSource;

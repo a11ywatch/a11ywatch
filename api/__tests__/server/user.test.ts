@@ -1,11 +1,11 @@
-import { createTestClient } from "apollo-server-testing"
-import { Server } from "@app/apollo-server"
-import gql from "graphql-tag"
+import { createTestClient } from "apollo-server-testing";
+import { Server } from "@app/apollo-server";
+import gql from "graphql-tag";
 
 describe("user", () => {
   it("create user successfully", async () => {
-    const server = new Server()
-    const { mutate } = createTestClient(server)
+    const server = new Server();
+    const { mutate } = createTestClient(server);
 
     const mutation = gql`
       mutation Register($email: String!, $password: String!) {
@@ -14,14 +14,14 @@ describe("user", () => {
           email
         }
       }
-    `
+    `;
 
-    const email = "nancy@foo.co"
+    const email = "nancy@foo.co";
     const res = await mutate({
       mutation,
-      variables: { email, password: "password" }
-    })
-    console.log(res)
-    return expect(res.data.register.email).toBe(email)
-  })
-})
+      variables: { email, password: "password" },
+    });
+
+    return expect(res.data.register.email).toBe(email);
+  });
+});

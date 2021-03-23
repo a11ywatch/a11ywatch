@@ -6,10 +6,10 @@
 
 const fetch = require("node-fetch");
 const { initUrl } = require("@a11ywatch/website-source-builder");
+const { log } = require("@a11ywatch/log");
 
 process.on("message", async ({ urlMap, userId }) => {
   const url = String(initUrl(urlMap, true));
-  console.log("REQUESTING SPIDER DOMAIN SCAN:", url);
 
   try {
     await fetch(`${process.env.WATCHER_CLIENT_URL}/crawl`, {
@@ -21,7 +21,7 @@ process.on("message", async ({ urlMap, userId }) => {
       headers: { "Content-Type": "application/json" },
     });
   } catch (e) {
-    console.error(e);
+    log(e);
   } finally {
     process.send("close");
   }

@@ -5,20 +5,9 @@
  **/
 
 import getPageSpeed from "get-page-speed";
-import { SUCCESS, WEBSITE_NOT_FOUND } from "@app/core/strings";
 import { arrayAverage } from "@app/core/utils";
 import { getWebsitesCrawler } from "../../websites/find";
-import { getDomain, getDomains } from "../find";
-
-export const updateDomain = async ({ userId, url }) => {
-  const [website] = await getDomain({ userId, url }, true);
-
-  if (!website) {
-    throw new Error(WEBSITE_NOT_FOUND);
-  }
-
-  return { website, code: 200, success: true, message: SUCCESS };
-};
+import { getDomains } from "../find";
 
 export const generateWebsiteAverage = async (
   {

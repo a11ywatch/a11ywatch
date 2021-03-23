@@ -11,25 +11,19 @@ export const collectionUpsert = async (
 ) => {
   try {
     const userId = config?.searchProps?.userId || source?.userId;
-    const pageUrl = config?.searchProps?.pageUrl || source?.pageUrl;
     const queryParams = config?.searchProps
       ? config?.searchProps
-      : { userId, pageUrl };
+      : { userId, pageUrl: config?.searchProps?.pageUrl || source?.pageUrl };
+
+    if (typeof queryParams?.pageUrl === "undefined" && !queryParams.url) {
+      queryParams.url = source?.url;
+    }
 
     if (!shouldUpdate) {
-      console.log(
-        `INSERTING ${type}: ${pageUrl || config?.searchProps?.domain}`
-      );
       return await collection.insertOne(source);
     } else if (shouldUpdate === "many") {
-      console.log(
-        `UPDATING_MANY ${type}: ${pageUrl || config?.searchProps?.domain}`
-      );
       return await collection.updateMany(queryParams, { $set: source });
     } else {
-      console.log(
-        `UPDATING ${type}: ${pageUrl || config?.searchProps?.domain}, params:`
-      );
       return await collection.updateOne(queryParams, { $set: source });
     }
   } catch (e) {

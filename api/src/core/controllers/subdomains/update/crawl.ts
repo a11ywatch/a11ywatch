@@ -120,7 +120,6 @@ export const crawlWebsite = async ({
         const avgScore = await generateWebsiteAverage(
           {
             domain,
-            // cdnConnected: pageHasCdn,
             userId,
           },
           [website, websiteCollection]
