@@ -6,3 +6,5 @@ Dockerfile.dev
 sample.env
 README.md
 dist
+src/screenshots/*
+src/scripts/*

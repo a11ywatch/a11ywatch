@@ -27,7 +27,7 @@ const createSS = ({ srcPath, cdnFileName, screenshot }: any): any => {
       screenshotStream.end();
     }
   } catch (e) {
-    log(e, { type: "error" });
+    log(e);
   }
 };
 
@@ -50,7 +50,7 @@ export const addScreenshot = (req, res) => {
 
     res.send(true);
   } catch (e) {
-    log(e, { type: "error" });
+    log(e);
     res.send(false);
   }
 };

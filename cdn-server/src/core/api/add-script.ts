@@ -43,7 +43,7 @@ export const addScript = (req, res) => {
         });
 
         writeStreamMinified.on("finish", () => {
-          console.log(`COMPLETED WRITE: Minified CDN FILE: ${cdnFileNameMin}`);
+          log(`COMPLETED WRITE: Minified CDN FILE: ${cdnFileNameMin}`);
           if (AWS_S3_ENABLED) {
             uploadToS3(
               createReadStream(cdnFileNameMin),
@@ -61,7 +61,7 @@ export const addScript = (req, res) => {
 
     res.send(true);
   } catch (e) {
-    console.error(e);
+    log(e);
     res.send(false);
   }
 };

@@ -8,9 +8,8 @@ import { app, initApp } from "./app";
 import {
   addScript,
   addScreenshot,
-  getScreenshot,
   getRoot,
-  getScript,
+  getFile,
   downloadScript,
   ROOT,
   ADD_SCRIPT,
@@ -22,8 +21,8 @@ import {
 
 app
   .get(ROOT, getRoot)
-  .get(GET_SCRIPT, getScript)
-  .get(GET_SCREENSHOT, getScreenshot)
+  .get(GET_SCRIPT, (req, res, next) => getFile(req, res, next, "scripts"))
+  .get(GET_SCREENSHOT, getFile)
   .get(DOWNLOAD_SCRIPT, downloadScript)
   .post(ADD_SCRIPT, addScript)
   .post(ADD_SCREENSHOT, addScreenshot);
