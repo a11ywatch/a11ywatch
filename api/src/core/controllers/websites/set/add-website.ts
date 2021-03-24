@@ -17,7 +17,6 @@ import {
 } from "@app/core/utils";
 import { WebsiteModel } from "@app/core/models/website";
 import { getHostName, initUrl } from "@a11ywatch/website-source-builder";
-import { TEMP_WATCHER_BLACKLIST } from "@app/config/server";
 import { getWebsite } from "../find";
 
 export const addWebsite = async ({
@@ -55,9 +54,7 @@ export const addWebsite = async ({
 
   await collection.insertOne(website);
 
-  if (!TEMP_WATCHER_BLACKLIST.includes(url)) {
-    forkProcess({ urlMap: stripUrlEndingSlash(url), userId });
-  }
+  forkProcess({ urlMap: stripUrlEndingSlash(url), userId });
 
   return {
     website,

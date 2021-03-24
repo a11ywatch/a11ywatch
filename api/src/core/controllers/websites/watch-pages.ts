@@ -7,7 +7,6 @@
 import fetch from "node-fetch";
 import v8 from "v8";
 import { initUrl } from "@a11ywatch/website-source-builder";
-import { TEMP_WATCHER_BLACKLIST } from "@app/config/server";
 import { realUser } from "@app/core/utils";
 import { emailMessager } from "@app/core/messagers";
 import { crawlWebsite } from "@app/core/controllers/subdomains/update";
@@ -46,11 +45,7 @@ export async function websiteWatch(): Promise<void> {
 
       console.info(`PQ Scanning: ${domain}`);
 
-      if (
-        !realUser(userId) ||
-        TEMP_WATCHER_BLACKLIST.includes(domain) ||
-        !domain
-      ) {
+      if (!realUser(userId) || !domain) {
         log(`request did not run for - user id: ${userId} - domain: ${domain}`);
       } else {
         if (role === 0) {
