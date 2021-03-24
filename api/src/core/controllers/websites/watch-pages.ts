@@ -44,7 +44,7 @@ export async function websiteWatch(): Promise<void> {
         allWebPages[websiteIterator]
       );
 
-      console.log(`PQ Scanning: ${domain}`);
+      console.info(`PQ Scanning: ${domain}`);
 
       if (
         !realUser(userId) ||

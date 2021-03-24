@@ -5,10 +5,9 @@
  **/
 
 import { emailMessager } from "@app/core/messagers";
-import { followUpEmail } from "@app/core/email-templates";
 import { UsersController } from "./users";
 
-export const usersEmail = async () => {
+export const usersEmail = async (subject: string, html: string) => {
   const [users] = await UsersController().getAllUsers(true);
 
   for (const item of users) {
@@ -16,13 +15,13 @@ export const usersEmail = async () => {
     const email = item?.email;
     const emailConfirmed = item?.emailConfirmed;
 
-    if (email) {
+    if (email && html) {
       await emailMessager.sendFollowupEmail({
         emailConfirmed,
         userId,
         email,
-        subject: "A11yWatch API now Open and Editable Custom Scripts",
-        html: followUpEmail,
+        subject,
+        html,
       });
     }
   }

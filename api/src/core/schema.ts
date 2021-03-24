@@ -21,7 +21,7 @@ import {
   payments,
   meta,
   input,
-} from "./types";
+} from "./graph/gql-types";
 
 const typeDefs = `
 ${meta}

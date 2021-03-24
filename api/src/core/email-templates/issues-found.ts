@@ -4,11 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-export interface Issue {
-  context: string;
-  message: string;
-  selector: string;
-}
+import type { Issue } from "@a11ywatch-types";
 
 export interface Data {
   issues: [Issue] | [];
@@ -35,7 +31,7 @@ const issuesFoundTemplate: IssuesFound = (
   }
 
   return `<h1>${data?.issues?.length} issues found for ${data?.pageUrl}!</h1>
-  ${listData}
+  <ul>${listData}</ul>
   <a href="https://www.a11ywatch.com/dashboard" style="font-weight: 800; font-size: 1.2em; display: block; background: #5c6bc0; padding: 10px; border-radius: 4px; color: white; text-align: center; text-decoration: none;">View Details</a>
   <p style="margin-top:10; margin-bottom: 10px;">If you want to stop receiving emails toggle the alert setting to off on the dashboard</p>
 `;

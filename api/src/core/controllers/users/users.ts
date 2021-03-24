@@ -20,7 +20,7 @@ import {
   updateApiUsage,
   updateScanAttempt,
   toggleAlert,
-toggleProfile,
+  toggleProfile,
   verifyUser,
   forgotPassword,
   confirmEmail,
@@ -30,9 +30,7 @@ toggleProfile,
   addPaymentSubscription,
   cancelSubscription,
 } from "./update";
-import {
-  createUser,
-} from './set'
+import { createUser } from "./set";
 import type { UserControllerType } from "./types";
 
 export const UsersController: UserControllerType = (
@@ -89,7 +87,7 @@ export const UsersController: UserControllerType = (
   forgotPassword,
   resetPassword,
   toggleAlert,
-toggleProfile,
+  toggleProfile,
   confirmEmail,
   updateScanAttempt,
   validateEmail,
