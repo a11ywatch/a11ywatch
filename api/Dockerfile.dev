@@ -8,7 +8,7 @@ RUN apk upgrade --update-cache --available && \
 	apk add openssl && \
 	rm -rf /var/cache/apk/*
 
-RUN npm run bootstrap && npm install
+RUN npm run bootstrap && npm ci
 
 COPY . .
 
