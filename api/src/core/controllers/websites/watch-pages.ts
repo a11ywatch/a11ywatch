@@ -43,8 +43,6 @@ export async function websiteWatch(): Promise<void> {
         allWebPages[websiteIterator]
       );
 
-      console.info(`PQ Scanning: ${domain}`);
-
       if (!realUser(userId) || !domain) {
         log(`request did not run for - user id: ${userId} - domain: ${domain}`);
       } else {

@@ -1,6 +1,6 @@
 # iframe-server
 
-create iframes on the server for content manipulation. ( please do not use to domain-front )
+create iframes on the server for content manipulation
 
 ## Getting Started
 

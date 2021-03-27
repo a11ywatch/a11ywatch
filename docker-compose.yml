@@ -8,6 +8,7 @@ services:
       dockerfile: ./Dockerfile.dev
     volumes:
       - ./api/src:/usr/src/app/src
+      - ./api/.env:/usr/src/app/.env
       - ./api/package.json:/usr/src/app/package.json
       - ./api/package-lock.json:/usr/src/app/package-lock.json
       - ./api/__tests__:/usr/src/app/__tests__
@@ -106,21 +107,15 @@ services:
     ports:
       - "8010:8010"
 
-  watcher:
-    container_name: watcher
-    env_file: ./watcher/.env
-    build:
-      context: ./watcher
-      dockerfile: ./Dockerfile.dev
-    volumes:
-      - ./watcher/src:/usr/src/app/src
-      - ./watcher/scripts:/usr/src/app/scripts
-      - ./watcher/tests:/usr/src/app/tests
-      - ./watcher/.env:/usr/src/app/.env
+  crawler:
+    container_name: crawler
+    image: jeffmendez19/crawler
     networks:
       - back-net
     ports:
       - "8000:8000"
+    environment: 
+      - CRAWL_URL=http://api:8080/api/website-crawl-background
 
   mongodb:
     container_name: mongodb

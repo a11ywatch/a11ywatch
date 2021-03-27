@@ -4,48 +4,54 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import { MongoClient } from "mongodb"
-import { config } from "@app/config"
-import { log } from "@a11ywatch/log"
+import { MongoClient } from "mongodb";
+import { config } from "@app/config";
+import { log } from "@a11ywatch/log";
 
-let client
+let client;
+
+const createClient = (): any =>
+  new MongoClient(config.DB_URL, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  });
 
 try {
-  client = new MongoClient(config.DB_URL, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true
-  })
+  client = createClient();
 } catch (e) {
-  log(e)
+  log(e);
 }
 
 const initDbConnection = async () => {
   try {
-    await client?.connect()
+    if (process.send !== undefined) {
+      client = createClient();
+    }
+    await client?.connect();
   } catch (e) {
-    log(e)
+    log(e);
   }
-}
+};
 
 const connect = async (collectionType = "Websites") => {
-  const db = await client?.db(config.DB_NAME)
-  let collection = []
+  let collection = [];
 
   try {
-    collection = await db?.collection(collectionType)
+    const db = await client?.db(config.DB_NAME);
+    collection = await db?.collection(collectionType);
   } catch (e) {
-    log(e)
+    log(e);
   }
 
-  return [collection, client]
-}
+  return [collection, client];
+};
 
 const closeDbConnection = async () => {
   try {
-    await client?.close()
+    await client?.close();
   } catch (e) {
-    log(e)
+    log(e);
   }
-}
+};
 
-export { client, connect, initDbConnection, closeDbConnection }
+export { client, connect, initDbConnection, closeDbConnection };

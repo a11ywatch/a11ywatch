@@ -25,6 +25,7 @@ export const crawlWebsite = async ({
   userId,
   url: urlMap,
   apiData = false,
+  parentSub = false,
 }) => {
   if (
     !validUrl.isUri(urlMap) ||
@@ -106,7 +107,12 @@ export const crawlWebsite = async ({
       });
 
       if (issues?.issues?.length) {
-        pubsub.publish(ISSUE_ADDED, { issueAdded: newIssue });
+        parentSub
+          ? process.send({
+              name: ISSUE_ADDED,
+              key: { name: "issueAdded", value: newIssue },
+            })
+          : pubsub.publish(ISSUE_ADDED, { issueAdded: newIssue });
         await emailMessager.sendMail({
           userId,
           data: issues,
@@ -180,16 +186,26 @@ export const crawlWebsite = async ({
         );
 
         if (!newSite) {
-          pubsub.publish(SUBDOMAIN_ADDED, {
-            subDomainAdded: webPage,
-          });
+          parentSub
+            ? process.send({
+                name: SUBDOMAIN_ADDED,
+                key: { name: "subDomainAdded", value: webPage },
+              })
+            : pubsub.publish(SUBDOMAIN_ADDED, {
+                subDomainAdded: webPage,
+              });
         }
       }
 
       const websiteAdded = Object.assign({}, website, updateWebsiteProps);
 
       if (authenticated) {
-        pubsub.publish(WEBSITE_ADDED, { websiteAdded });
+        parentSub
+          ? process.send({
+              name: WEBSITE_ADDED,
+              key: { name: "websiteAdded", value: websiteAdded },
+            })
+          : pubsub.publish(WEBSITE_ADDED, { websiteAdded });
       }
 
       resolve(

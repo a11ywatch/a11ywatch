@@ -9,44 +9,46 @@ import {
   crawlWebsite as crawl,
   scanWebsite as scan,
 } from "@app/core/controllers/subdomains/update";
-
+import { log } from "@a11ywatch/log";
 import { getUser, usageExceededThreshold } from "@app/core/utils";
 import { TOKEN_EXPIRED_ERROR, RATE_EXCEEDED_ERROR } from "@app/core/strings";
 
 const websiteCrawl = async (req, res) => {
   try {
     const { data } = req.body;
+    const parentSub = !!req?.pubsub;
 
     if (data) {
-      const { user_id, pages, domain } = JSON.parse(data);
+      const { user_id, pages, domain } =
+        typeof data === "string" ? JSON.parse(data) : data;
 
       if (pages?.length === 0) {
         if (domain) {
           await crawl({
             url: domain,
             userId: user_id,
+            parentSub,
           });
         } else {
           await UsersController().sendWebsiteOffline({ id: user_id, domain });
-          res.send(false);
+          res && res.send(false);
         }
-      } else {
-        for (
-          let websiteIterator = 0;
-          websiteIterator < pages.length;
-          websiteIterator++
-        ) {
-          await crawl({
-            url: pages[websiteIterator],
-            userId: user_id,
-          });
-        }
-        res.send(true);
+        return;
       }
+
+      for await (const url of pages) {
+        await crawl({
+          url,
+          userId: user_id,
+          parentSub,
+        });
+      }
+
+      res && res.send(true);
     }
   } catch (e) {
-    console.error(e);
-    res.send(false);
+    log(e);
+    res && res.send(false);
   }
 };
 
@@ -78,7 +80,7 @@ const scanWebsite = async (req, res) => {
 
     res.json(data);
   } catch (e) {
-    console.error(e);
+    log(e);
     res.json({ message: "Error: Page not found", status: 404, success: false });
   }
 };
@@ -135,7 +137,7 @@ const websiteCrawlAuthed = async (req, res) => {
       apiData: true,
     });
   } catch (e) {
-    console.error(e);
+    log(e);
   }
 
   res.json(data);

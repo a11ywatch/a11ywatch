@@ -4,6 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 import { fork } from "child_process";
+import { pubsub } from "@app/core/graph/subscriptions";
 
 export const forkProcess = (
   props: any,
@@ -12,10 +13,15 @@ export const forkProcess = (
   const forked = fork(`${__dirname}/workers/${workerPath}`, [], {
     detached: true,
   });
-  forked.send(props);
+  forked.send({ ...props });
   forked.unref();
 
-  forked.on("message", (message: string) => {
+  forked.on("message", (message: any) => {
+    if (message?.name && message?.key?.value) {
+      pubsub.publish(message?.name, {
+        [message?.key?.name]: message?.key?.value,
+      });
+    }
     if (message === "close") {
       forked.kill("SIGINT");
     }

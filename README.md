@@ -8,7 +8,7 @@ the tool for accessibility, software productivity, and performance
 
 ## Getting Started
 
-See the documentation at [https://a11ywatch.github.io/a11ywatch-docs](https://a11ywatch.github.io/a11ywatch-docs)
+See the documentation at [https://a11ywatch.github.io/docs](https://a11ywatch.github.io/docs)
 
 ## Develop
 
@@ -17,7 +17,7 @@ building A11yWatch from source, how to contribute code
 and documentation, who to contact about what, and etc.
 
 If you want to build A11yWatch right away there are multiple options, the easiest way is to use docker:
-Please allocate atleast 3.25gb of memory.
+Please allocate atleast 2gb of memory.
 
 ##### You have a working [Docker environment].
 

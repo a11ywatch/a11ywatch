@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 
 app.get("/iframe", (req, res) => {
   res.createIframe({
-    url: decodeURI(String(req.query.url)).replace(
+    url: decodeURI(req.query.url + "").replace(
       "http",
       req.protocol === "https" ? "https" : "http"
     ),
@@ -46,7 +46,7 @@ const server = app.listen(port, () =>
 export const killServer = () => {
   return new Promise((resolve) => {
     server.close(() => {
-      resolve(console.log("HTTP server closed"));
+      resolve();
     });
   });
 };
