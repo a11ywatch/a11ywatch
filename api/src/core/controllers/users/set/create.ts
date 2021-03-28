@@ -11,7 +11,6 @@ import { getUser } from "../find";
 import { confirmEmail } from "../update/confirm-email";
 
 export const createUser = async ({ email, password, googleId, role = 0 }) => {
-
   if (!email) {
     throw new Error(EMAIL_ERROR);
   }
@@ -61,10 +60,10 @@ export const createUser = async ({ email, password, googleId, role = 0 }) => {
       id,
       jwt: signJwt({ email, role, keyid: id }),
       role,
-      alertEnabled: false,
+      alertEnabled: true,
       emailConfirmed: false,
       googleId,
-      profileVisible: false
+      profileVisible: false,
     };
 
     await collection.insertOne(userObject);
