@@ -19,7 +19,8 @@ import { AnalyticsController } from "../../analytics";
 import { getDomain } from "../find";
 import { generateWebsiteAverage } from "./domain";
 import { fetchPuppet, extractPageData, limitResponse } from "./utils";
-import type { Website } from "@a11ywatch-types";
+import { createReport } from "../../reports";
+import type { Website } from "@app/types";
 
 export const crawlWebsite = async ({
   userId,
@@ -208,17 +209,20 @@ export const crawlWebsite = async ({
           : pubsub.publish(WEBSITE_ADDED, { websiteAdded });
       }
 
-      resolve(
-        responseModel(
-          limitResponse({
-            issues,
-            pageUrl,
-            script,
-            websiteAdded,
-            authenticated,
-          }) ?? { data: apiData ? dataSource : websiteAdded }
-        )
+      const responseData = limitResponse({
+        issues,
+        pageUrl,
+        script,
+        websiteAdded,
+        authenticated,
+      }) ?? { data: apiData ? dataSource : websiteAdded };
+
+      await createReport(
+        responseData?.website ?? responseData?.data?.website,
+        responseData?.data?.issues ?? responseData?.website?.issues ?? issues
       );
+
+      resolve(responseModel(responseData));
     } catch (e) {
       log(e);
       return responseModel();

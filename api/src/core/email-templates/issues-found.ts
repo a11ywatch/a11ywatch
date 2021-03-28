@@ -4,7 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  **/
 
-import type { Issue } from "@a11ywatch-types";
+import type { Issue } from "@app/types";
 
 export interface Data {
   issues: [Issue] | [];

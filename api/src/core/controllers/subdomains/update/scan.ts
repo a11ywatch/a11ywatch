@@ -9,8 +9,8 @@ import { sourceBuild } from "@a11ywatch/website-source-builder";
 import { log } from "@a11ywatch/log";
 import { ApiResponse, responseModel, makeWebsite } from "@app/core/models";
 import { getWebsite } from "../../websites";
-import { generateWebsiteAverage } from "./domain";
-import { fetchPuppet, extractPageData } from "./utils";
+import { fetchPuppet, extractPageData, limitIssue } from "./utils";
+import { createReport } from "../../reports";
 
 export const scanWebsite = async ({ userId: userIdMap, url: urlMap }: any) => {
   const userId = Number(!userIdMap && userIdMap !== 0 ? -1 : userIdMap);
@@ -28,7 +28,7 @@ export const scanWebsite = async ({ userId: userIdMap, url: urlMap }: any) => {
     throw new Error("Cannot use localhost, please use a valid web url.");
   }
 
-  let [website, websiteCollection] = await getWebsite(
+  let [website] = await getWebsite(
     {
       domain,
       userId,
@@ -61,39 +61,21 @@ export const scanWebsite = async ({ userId: userIdMap, url: urlMap }: any) => {
         }
         let { issues, webPage, pageHasCdn } = extractPageData(dataSource);
 
-        const avgScore = await generateWebsiteAverage(
-          {
-            domain,
-            userId,
-            url: null,
-          },
-          [website, websiteCollection]
-        );
-
         const updateWebsiteProps = {
+          ...website,
           ...webPage,
-          adaScore: avgScore,
-          cdnConnected: !!website?.cdnConnected,
-          pageLoadTime: webPage?.pageLoadTime ?? null,
-          online: !!website?.online || null,
+          cdnConnected: pageHasCdn,
         };
 
-        // BIND ALL PROPS FROM WEBPAGE
-        if (website?.url === pageUrl) {
-          updateWebsiteProps.cdnConnected = pageHasCdn;
-          updateWebsiteProps.pageLoadTime = webPage?.pageLoadTime;
-          updateWebsiteProps.online = true;
-        }
-
-        const slicedIssue =
-          issues?.issues?.slice(
-            issues?.issues.length -
-              Math.max(Math.round(issues?.issues.length / 4), 2)
-          ) || [];
+        const slicedIssue = limitIssue(issues);
 
         if (updateWebsiteProps.issuesInfo) {
           updateWebsiteProps.issuesInfo.limitedCount = slicedIssue.length;
         }
+
+        console.log(updateWebsiteProps);
+
+        await createReport(updateWebsiteProps, slicedIssue ?? issues);
 
         resolve(
           responseModel({

@@ -3,6 +3,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
+import { limitIssue } from "./limit-issue";
 
 export const limitResponse = ({
   authenticated,
@@ -16,13 +17,9 @@ export const limitResponse = ({
   issues: any;
   pageUrl: string;
   script: any;
-}) => {
+}): any => {
   if (!authenticated) {
-    const slicedIssue =
-      issues?.issues?.slice(
-        issues?.issues.length -
-          Math.max(Math.round(issues?.issues.length / 4), 2)
-      ) || [];
+    const slicedIssue = limitIssue(issues);
 
     if (websiteAdded.issuesInfo) {
       websiteAdded.issuesInfo.limitedCount = slicedIssue.length;

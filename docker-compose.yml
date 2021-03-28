@@ -140,6 +140,8 @@ services:
       - mongodb:/data/db
     environment:
       - MONGOKU_DEFAULT_HOST=${HOST:-mongodb://mongodb:27017/?compressors=zlib&gssapiServiceName=mongodb}
+    depends_on:
+      - mongodb
 
 networks:
   front-net:

@@ -3,5 +3,6 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
-export { getDailyWebsites } from "./websites";
-export { getWebsite } from "./website";
+
+export { createReport } from "./create";
+export { getReport } from "./read";
