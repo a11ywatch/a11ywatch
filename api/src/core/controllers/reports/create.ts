@@ -10,14 +10,14 @@ import type { Issue, Website } from "@app/types";
 export const createReport = async (website: Website, issues: Issue) => {
   try {
     const [collection] = await connect("Reports");
-    const issue = website?.issues || issues?.issues;
+    const issue = website?.issues?.length ? website.issues : issues?.issues;
 
     const report = {
       timestamp: new Date(website?.lastScanDate).getTime() || Date.now(),
       url: website?.url,
       website: {
         ...website,
-        issues: issue?.sort(issueSort),
+        issue: website?.issue?.length ? website?.issue : issue?.sort(issueSort),
       },
     };
 

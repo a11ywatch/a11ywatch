@@ -24,6 +24,7 @@
     "cron": "1.8.2",
     "date-fns": "2.7.0",
     "dotenv": "8.2.0",
+    "exceljs": "^4.2.1",
     "express": "4.14.0",
     "express-rate-limit": "^5.2.6",
     "generic-pool": "3.7.1",

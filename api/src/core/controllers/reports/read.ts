@@ -5,13 +5,21 @@
  **/
 import { connect } from "@app/database";
 
-export const getReport = async (url: string, timestamp?: number) => {
+export const getReport = async (url: string, timestamp?: string | number) => {
   try {
     const [collection] = await connect("Reports");
     const findBy =
-      typeof timestamp !== "undefined" ? { url, timestamp } : { url };
+      typeof timestamp !== "undefined"
+        ? { url, timestamp: Number(timestamp) }
+        : { url };
 
-    return await collection.findOne(findBy);
+    const report = await collection.findOne(findBy);
+
+    if (!report) {
+      return await collection.findOne({ url });
+    }
+
+    return report;
   } catch (e) {
     console.error(e);
   }

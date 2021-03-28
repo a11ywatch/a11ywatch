@@ -10,7 +10,7 @@ export const forkProcess = (
   props: any,
   workerPath: string = "watcher-crawl"
 ) => {
-  const forked = fork(`${__dirname}/workers/${workerPath}`, [], {
+  const forked = fork(`${__dirname}/${workerPath}`, [], {
     detached: true,
   });
   forked.send({ ...props });

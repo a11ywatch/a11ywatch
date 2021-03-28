@@ -66,7 +66,6 @@ function initServer(): HttpServer {
 
   app.get(ROOT, root);
   app.get("/api/get-website", cors(), getWebsite);
-
   app.get(GET_WEBSITES_DAILY, getDailyWebsites);
   app.get(UNSUBSCRIBE_EMAILS, cors(), unSubEmails);
   app.post(WEBSITE_CRAWL, websiteCrawl);

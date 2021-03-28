@@ -3,11 +3,10 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  **/
-
 const fetch = require("node-fetch");
-const { initUrl } = require("@a11ywatch/website-source-builder");
 
 process.on("message", async ({ urlMap, userId }) => {
+  const { initUrl } = require("@a11ywatch/website-source-builder");
   const url = String(initUrl(urlMap, true));
 
   try {

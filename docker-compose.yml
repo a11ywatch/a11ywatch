@@ -136,8 +136,6 @@ services:
     image: huggingface/mongoku
     ports:
       - "3100:3100"
-    volumes:
-      - mongodb:/data/db
     environment:
       - MONGOKU_DEFAULT_HOST=${HOST:-mongodb://mongodb:27017/?compressors=zlib&gssapiServiceName=mongodb}
     depends_on:

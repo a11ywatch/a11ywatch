@@ -218,8 +218,8 @@ export const crawlWebsite = async ({
       }) ?? { data: apiData ? dataSource : websiteAdded };
 
       await createReport(
-        responseData?.website ?? responseData?.data?.website,
-        responseData?.data?.issues ?? responseData?.website?.issues ?? issues
+        responseData?.website ?? responseData?.data,
+        responseData?.website?.issues ?? issues
       );
 
       resolve(responseModel(responseData));
