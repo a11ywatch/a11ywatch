@@ -21,20 +21,23 @@ const downloadToExcel = (
       firstFooter: `Test ran ${data?.website?.lastScanDate}`,
     },
   });
-  const wsStyle = { style: { font: { name: "system-ui" } } };
+
   worksheet.columns = [
-    { header: "Code", key: "code", width: 14, ...wsStyle },
-    { header: "Type", key: "type", width: 5, ...wsStyle },
-    { header: "Message", key: "message", width: 30, ...wsStyle },
-    { header: "Context", key: "context", width: 40, ...wsStyle },
-    { header: "Selector", key: "selector", width: 30, ...wsStyle },
+    { header: "Code", key: "code", width: 14 },
+    { header: "Type", key: "type", width: 5 },
+    { header: "Message", key: "message", width: 30 },
+    { header: "Context", key: "context", width: 40 },
+    { header: "Selector", key: "selector", width: 30 },
     { header: "Audit", key: "checked", width: 5, outlineLevel: 1 },
-  ];
+  ].map((items) => ({
+    ...items,
+    checked: 0,
+  }));
 
   worksheet.addRows(
     (data?.issue?.length ? data?.issue : data?.issues).map((items) => ({
       ...items,
-      checked: 0,
+      style: { font: { name: "Helvetica" } },
     }))
   );
 
