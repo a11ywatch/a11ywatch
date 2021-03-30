@@ -97,25 +97,7 @@ jobs:
       - codecov/upload:
           file: "./cdn-server/coverage/clover.xml"
           conf: "./codecov.yml"
-  logger:
-    docker:
-      - image: circleci/node:12.0.0
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - node-v1-{{ .Branch }}-{{ checksum "logger/package-lock.json" }}
-            - node-v1-{{ .Branch }}-
-            - node-v1-
-      - run:
-          command: cd logger && npm ci && npm test
-      - save_cache:
-          paths:
-            - ~/usr/local/lib/node_modules
-          key: node-v1-{{ .Branch }}-{{ checksum "logger/package-lock.json" }}
-      - codecov/upload:
-          file: "./logger/coverage/clover.xml"
-          conf: "./codecov.yml"
+
 workflows:
   build_and_test:
     jobs:
@@ -124,4 +106,3 @@ workflows:
       - angelica
       - iframe-server
       - cdn-server
-      - logger

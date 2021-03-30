@@ -57,21 +57,16 @@ services:
 
   logger:
     container_name: logger
-    env_file: ./logger/.env
-    build:
-      context: ./logger
-      dockerfile: ./Dockerfile.dev
+    image: jeffmendez19/logger
     volumes:
-      - ./logger/src:/usr/src/app/src
-      - ./logger/package.json:/usr/src/app/package.json
-      - ./logger/package-lock.json:/usr/src/app/package-lock.json
-      - ./logger/__tests__:/usr/src/app/__tests__
-      - /usr/src/app/node_modules
+      - /usr/src/app/dist/logs
     networks:
       - back-net
     ports:
       - "8022:8022"
-
+    environment:
+      - PORT=${LOGGER_PORT:-8022}
+  
   cdn-server:
     env_file: ./cdn-server/.env
     container_name: cdn-server
