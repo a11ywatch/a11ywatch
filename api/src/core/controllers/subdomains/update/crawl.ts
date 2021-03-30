@@ -217,10 +217,21 @@ export const crawlWebsite = async ({
         authenticated,
       }) ?? { data: apiData ? dataSource : websiteAdded };
 
-      await createReport(
-        responseData?.website ?? responseData?.data,
-        responseData?.website?.issues ?? issues
-      );
+      const timestamp = new Date().getTime();
+
+      if (responseData?.data) {
+        if (responseData?.data?.website) {
+          responseData.data.website.timestamp = timestamp;
+        } else {
+          responseData.data.timestamp = timestamp;
+        }
+      } else if (responseData.website) {
+        responseData.website.timestamp = timestamp;
+      }
+
+      const reportData = responseData?.website ?? responseData?.data;
+
+      await createReport(reportData, reportData?.issues ?? issues);
 
       resolve(responseModel(responseData));
     } catch (e) {

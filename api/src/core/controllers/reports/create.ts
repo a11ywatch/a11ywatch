@@ -13,10 +13,11 @@ export const createReport = async (website: Website, issues: Issue) => {
     const issue = website?.issues?.length ? website.issues : issues?.issues;
 
     const report = {
-      timestamp: new Date(website?.lastScanDate).getTime() || Date.now(),
+      timestamp: website?.timestamp || new Date().getTime(),
       url: website?.url,
       website: {
         ...website,
+        timestamp: undefined,
         issue: website?.issue?.length ? website?.issue : issue?.sort(issueSort),
       },
     };

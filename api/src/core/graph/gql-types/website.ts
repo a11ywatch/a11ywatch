@@ -33,6 +33,7 @@ export const website = `
 		cdn: String
 		pageHeaders: [PageHeaders]
 		online: Boolean
+		timestamp: String
 	}
 
 `;

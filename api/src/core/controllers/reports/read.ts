@@ -12,7 +12,6 @@ export const getReport = async (url: string, timestamp?: string | number) => {
       typeof timestamp !== "undefined"
         ? { url, timestamp: Number(timestamp) }
         : { url };
-
     const report = await collection.findOne(findBy);
 
     if (!report) {

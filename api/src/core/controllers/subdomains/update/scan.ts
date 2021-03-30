@@ -65,6 +65,7 @@ export const scanWebsite = async ({ userId: userIdMap, url: urlMap }: any) => {
           ...website,
           ...webPage,
           cdnConnected: pageHasCdn,
+          timestamp: new Date().getTime(),
         };
 
         const slicedIssue = limitIssue(issues);
@@ -72,8 +73,6 @@ export const scanWebsite = async ({ userId: userIdMap, url: urlMap }: any) => {
         if (updateWebsiteProps.issuesInfo) {
           updateWebsiteProps.issuesInfo.limitedCount = slicedIssue.length;
         }
-
-        console.log(updateWebsiteProps);
 
         await createReport(updateWebsiteProps, slicedIssue ?? issues);
 
