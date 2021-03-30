@@ -21,25 +21,6 @@ jobs:
       - codecov/upload:
           file: "./api/coverage/clover.xml"
           conf: "./codecov.yml"
-  angelica:
-    docker:
-      - image: circleci/node:12.0.0
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - node-v1-{{ .Branch }}-{{ checksum "angelica/package-lock.json" }}
-            - node-v1-{{ .Branch }}-
-            - node-v1-
-      - run:
-          command: cd angelica && npm ci && npm test
-      - save_cache:
-          paths:
-            - ~/usr/local/lib/node_modules
-          key: node-v1-{{ .Branch }}-{{ checksum "angelica/package-lock.json" }}
-      - codecov/upload:
-          file: "./angelica/coverage/clover.xml"
-          conf: "./codecov.yml"
   mav:
     docker:
       - image: circleci/node:12.0.0
@@ -103,6 +84,5 @@ workflows:
     jobs:
       - api
       - mav
-      - angelica
       - iframe-server
       - cdn-server

@@ -21,22 +21,18 @@ services:
     depends_on:
       - mongodb
 
-  angelica:
-    container_name: angelica
-    env_file: ./angelica/.env
-    build:
-      context: ./angelica
-      dockerfile: ./Dockerfile.dev
-    volumes:
-      - ./angelica/src:/usr/src/app/src
-      - ./angelica/package.json:/usr/src/app/package.json
-      - ./angelica/package-lock.json:/usr/src/app/package-lock.json
-      - ./angelica/__tests__:/usr/src/app/__tests__
-      - /usr/src/app/node_modules
+  pagemind:
+    container_name: pagemind
+    image: jeffmendez19/pagemind
     networks:
       - back-net
     ports:
       - "8040:8040"
+    environment:
+      - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://cdn-server:8090/api}
+      - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
+      - AI_SERVICE_URL=${SCRIPTS_CDN_URL:-http://mav:8020}
+      - PORT=${PAGEMIND_PORT:-8040}
 
   mav:
     container_name: mav
@@ -142,7 +138,6 @@ networks:
 volumes:
   mongodb:
   api:
-  angelica:
   watcher:
   cdn-server:
   iframe-server:

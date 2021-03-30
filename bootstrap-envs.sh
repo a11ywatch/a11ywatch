@@ -11,9 +11,6 @@ $cpenv
 # Install api
 (cd api && $cpenv  && npm run bootstrap && cd ..)
 
-# Install angelica
-(cd angelica && $cpenv  && cd ..)
-
 # Install cdn-server
 (cd cdn-server && $cpenv  && cd ..)
 
@@ -26,10 +23,5 @@ $cpenv
 # Install iframe-server
 (cd iframe-server && $cpenv  && cd ..)
 
-# Install logger
-(cd logger && $cpenv  && cd ..)
-
-# Install watcher and make sure RUST is installed. For windows make sure to go to https://www.rust-lang.org/tools/install and manually cd into the folder and run cargo run
-(cd watcher && $cpenv && cd ../)
 
 echo "env keys set for project"
