@@ -2,17 +2,7 @@ version: "3.0"
 services:
   api:
     container_name: api
-    env_file: ./api/.env
-    build:
-      context: ./api
-      dockerfile: ./Dockerfile.dev
-    volumes:
-      - ./api/src:/usr/src/app/src
-      - ./api/.env:/usr/src/app/.env
-      - ./api/package.json:/usr/src/app/package.json
-      - ./api/package-lock.json:/usr/src/app/package-lock.json
-      - ./api/__tests__:/usr/src/app/__tests__
-      - /usr/src/app/node_modules
+    image: jeffmendez19/a11ywatch-core
     networks:
       - back-net
       - front-net
@@ -20,6 +10,34 @@ services:
       - "8080:8080"
     depends_on:
       - mongodb
+    environment:
+      - DB_URL=${DB_URL:-mongodb://mongodb:27017/?compressors=zlib&gssapiServiceName=mongodb}
+      - DB_NAME=${DB_NAME:-a11ywatch}
+      - ENGINE_API_KEY=${ENGINE_API_KEY}
+      - APOLLO_GRAPH_VARIANT=${APOLLO_GRAPH_VARIANT:-current}
+      - APOLLO_SCHEMA_REPORTING=${APOLLO_SCHEMA_REPORTING:-true}
+      - CLIENT_URL=${CLIENT_URL:-http://localhost:3000}
+      - WATCHER_CLIENT_URL=${WATCHER_CLIENT_URL:-http://crawler:8000}
+      - GRAPHQL_PORT=${GRAPHQL_PORT:-8080}
+      - EMAIL_SERVICE_URL=${EMAIL_SERVICE_URL}
+      - EMAIL_MAIN_LEAD=${EMAIL_MAIN_LEAD}
+      - EMAIL_SERVICE_PASSWORD=${EMAIL_SERVICE_PASSWORD:-SomePassword}
+      - EMAIL_CLIENT_ID=${EMAIL_CLIENT_ID}
+      - EMAIL_CLIENT_KEY=${EMAIL_CLIENT_KEY}
+      - STRIPE_KEY=${STRIPE_KEY}
+      - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://localhost:8090/api}
+      - PUPPET_SERVICE=${PUPPET_SERVICE:-http://pagemind:8040}
+      - ROOT_URL=${ROOT_URL:-http://localhost:8080}
+      - STRIPE_BASIC_PLAN=${STRIPE_BASIC_PLAN}
+      - STRIPE_PREMIUM_PLAN=${STRIPE_PREMIUM_PLAN}
+      - MAV_CLIENT_URL=${MAV_CLIENT_URL:-http://mav:8020}
+      - PRIVATE_KEY=${PRIVATE_KEY}
+      - PUBLIC_KEY=${PUBLIC_KEY}
+      - LOGGER_ENABLED=${LOGGER_ENABLED:-true}
+      - LOGGER_URL=${LOGGER_URL:-logger}
+      - ADMIN_ORIGIN=${ADMIN_ORIGIN}
+      - BACKGROUND_CRAWL=${BACKGROUND_CRAWL:-false}
+      - DOCKER_ENV=true
 
   pagemind:
     container_name: pagemind
@@ -122,6 +140,4 @@ networks:
   back-net:
 volumes:
   mongodb:
-  api:
-  watcher:
   logger:

@@ -1,10 +1,8 @@
 # A11yWatch
 
-[![A11yWatch](https://circleci.com/gh/A11yWatch/a11ywatch.svg?style=svg)](https://circleci.com/gh/A11yWatch/a11ywatch)[![Maintainability](https://api.codeclimate.com/v1/badges/f5fdfe29c6e911f323cf/maintainability)](https://codeclimate.com/github/A11yWatch/a11ywatch/maintainability)[![codecov](https://codecov.io/gh/A11yWatch/a11ywatch/branch/master/graph/badge.svg?token=MBV2LGQO3J)](https://codecov.io/gh/A11yWatch/a11ywatch)
-
 ![A11yWatch](https://raw.githubusercontent.com/A11yWatch/Project-Screenshots/master/banner.jpeg?raw=true "A11yWatch Logo")
 
-the tool for accessibility, software productivity, and performance
+web accessibility automation.
 
 ## Getting Started
 
@@ -16,21 +14,17 @@ This repo hosts all information about
 building A11yWatch from source, how to contribute code
 and documentation, who to contact about what, and etc.
 
-If you want to build A11yWatch right away there are multiple options, the easiest way is to use docker:
-Please allocate atleast 2gb of memory.
-
-##### You have a working [Docker environment].
+##### [Docker environment].
 
 ```
 git clone https://github.com/a11ywatch/a11ywatch
 cd a11ywatch
-./bootstrap-envs.sh
 docker-compose up
 ```
 
 ##### Front-End Client
 
-For a client to use you can use the web application here [web-app](https://github.com/A11yWatch/a11ywatch-web), [ios-app](https://github.com/A11yWatch/a11ywatch-ios), or [android-app](https://github.com/A11yWatch/a11ywatch-android). The most up to date option at the moment is the web application. The mobile apps are a WIP.
+For a client to use you can use the web application here that is [web-app](https://github.com/A11yWatch/a11ywatch-web), [ios-app](https://github.com/A11yWatch/a11ywatch-ios), or [android-app](https://github.com/A11yWatch/a11ywatch-android). The most up to date option at the moment is the web application. The mobile apps are a WIP.
 By default the ui application opens on port 3000. For the full story, head over to the [developer's documentation](https://a11ywatch.github.io/a11ywatch-docs/docs/getting-started).
 
 ## Contributing

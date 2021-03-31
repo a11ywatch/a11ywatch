@@ -1,1 +1,0 @@
-export { detectImage } from "./watcher";
