@@ -103,7 +103,7 @@ services:
 
   crawler:
     container_name: crawler
-    image: jeffmendez19/crawler
+    image: a11ywatch/crawler
     networks:
       - back-net
     ports:
