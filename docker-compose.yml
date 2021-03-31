@@ -33,23 +33,20 @@ services:
       - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
       - AI_SERVICE_URL=${SCRIPTS_CDN_URL:-http://mav:8020}
       - PORT=${PAGEMIND_PORT:-8040}
+      - LOGGER_ENABLED=${LOGGER_ENABLED:-true}
 
   mav:
     container_name: mav
-    env_file: ./mav/.env
-    build:
-      context: ./mav
-      dockerfile: ./Dockerfile.dev
-    volumes:
-      - ./mav/src:/usr/src/app/src
-      - ./mav/package.json:/usr/src/app/package.json
-      - ./mav/package-lock.json:/usr/src/app/package-lock.json
-      - ./mav/__tests__:/usr/src/app/__tests__
-      - /usr/src/app/node_modules
+    image: jeffmendez19/mav
     networks:
       - back-net
     ports:
       - "8020:8020"
+    environment:
+      - MAIN_API_URL=${MAIN_API_URL:-http://api:8080}
+      - LOGGER_ENABLED=${LOGGER_ENABLED:-true}
+      - PORT=${MAV_PORT:-8020}
+      - DOCKER_ENV=true
 
   logger:
     container_name: logger
@@ -64,39 +61,27 @@ services:
       - PORT=${LOGGER_PORT:-8022}
   
   cdn-server:
-    env_file: ./cdn-server/.env
     container_name: cdn-server
-    build:
-      context: ./cdn-server
-      dockerfile: ./Dockerfile.dev
-    volumes:
-      - ./cdn-server/src:/usr/src/app/src
-      - ./cdn-server/package.json:/usr/src/app/package.json
-      - ./cdn-server/package-lock.json:/usr/src/app/package-lock.json
-      - ./cdn-server/__tests__:/usr/src/app/__tests__
-      - /usr/src/app/node_modules
+    image: jeffmendez19/elastic-cdn
     networks:
       - back-net
       - front-net
     ports:
       - "8090:8090"
+    environment:
+      - PORT=${ELASTIC_CDN_PORT:-8090}
+      - LOGGER_ENABLED=${LOGGER_ENABLED:-true}
 
   iframe-server:
-    env_file: ./iframe-server/.env
     container_name: iframe-server
-    build:
-      context: ./iframe-server
-      dockerfile: ./Dockerfile.dev
-    volumes:
-      - ./iframe-server/src:/usr/src/app/src
-      - ./iframe-server/package.json:/usr/src/app/package.json
-      - ./iframe-server/package-lock.json:/usr/src/app/package-lock.json
-      - ./iframe-server/__tests__:/usr/src/app/__tests__
-      - /usr/src/app/node_modules
+    image: jeffmendez19/iframer
     networks:
       - front-net
     ports:
       - "8010:8010"
+    environment:
+      - PORT=${IFRAMER_PORT:-8010}
+      - LOGGER_ENABLED=${LOGGER_ENABLED:-true}
 
   crawler:
     container_name: crawler
@@ -139,6 +124,4 @@ volumes:
   mongodb:
   api:
   watcher:
-  cdn-server:
-  iframe-server:
   logger:

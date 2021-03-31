@@ -1,8 +1,0 @@
-node_modules
-npm-debug.log
-etc
-Dockerfile
-Dockerfile.dev
-sample.env
-README.md
-dist

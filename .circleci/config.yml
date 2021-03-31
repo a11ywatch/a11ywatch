@@ -21,68 +21,8 @@ jobs:
       - codecov/upload:
           file: "./api/coverage/clover.xml"
           conf: "./codecov.yml"
-  mav:
-    docker:
-      - image: circleci/node:12.0.0
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - node-v1-{{ .Branch }}-{{ checksum "mav/package-lock.json" }}
-            - node-v1-{{ .Branch }}-
-            - node-v1-
-      - run:
-          command: cd mav && npm ci && npm test
-      - save_cache:
-          paths:
-            - ~/usr/local/lib/node_modules
-          key: node-v1-{{ .Branch }}-{{ checksum "mav/package-lock.json" }}
-      - codecov/upload:
-          file: "./mav/coverage/clover.xml"
-          conf: "./codecov.yml"
-  iframe-server:
-    docker:
-      - image: circleci/node:12.0.0
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - node-v1-{{ .Branch }}-{{ checksum "iframe-server/package-lock.json" }}
-            - node-v1-{{ .Branch }}-
-            - node-v1-
-      - run:
-          command: cd iframe-server && npm ci && npm test
-      - save_cache:
-          paths:
-            - ~/usr/local/lib/node_modules
-          key: node-v1-{{ .Branch }}-{{ checksum "iframe-server/package-lock.json" }}
-      - codecov/upload:
-          file: "./iframe-server/coverage/clover.xml"
-          conf: "./codecov.yml"
-  cdn-server:
-    docker:
-      - image: circleci/node:12.0.0
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - node-v1-{{ .Branch }}-{{ checksum "cdn-server/package-lock.json" }}
-            - node-v1-{{ .Branch }}-
-            - node-v1-
-      - run:
-          command: cd cdn-server && npm ci && npm test
-      - save_cache:
-          paths:
-            - ~/usr/local/lib/node_modules
-          key: node-v1-{{ .Branch }}-{{ checksum "cdn-server/package-lock.json" }}
-      - codecov/upload:
-          file: "./cdn-server/coverage/clover.xml"
-          conf: "./codecov.yml"
 
 workflows:
   build_and_test:
     jobs:
       - api
-      - mav
-      - iframe-server
-      - cdn-server

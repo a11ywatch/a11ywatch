@@ -70,7 +70,10 @@ function initServer(): HttpServer {
   app.get(UNSUBSCRIBE_EMAILS, cors(), unSubEmails);
   app.post(WEBSITE_CRAWL, websiteCrawl);
   app.post(`${WEBSITE_CRAWL}-background`, async (req, res) => {
-    if (typeof process.env.BACKGROUND_CRAWL !== "undefined") {
+    if (
+      typeof process.env.BACKGROUND_CRAWL !== "undefined" &&
+      process.env.BACKGROUND_CRAWL === "enabled"
+    ) {
       forkProcess({ req: { body: req.body, pubsub: true } }, "crawl-website");
       res.json(true);
     } else {

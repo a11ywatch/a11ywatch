@@ -1,1 +1,0 @@
-export { ROOT } from "./root";
