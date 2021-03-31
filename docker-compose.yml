@@ -109,7 +109,7 @@ services:
     ports:
       - "8000:8000"
     environment: 
-      - CRAWL_URL=http://api:8080/api/website-crawl-background
+      - CRAWL_URL={CRAWL_URL:-http://api:8080/api/website-crawl-background}
 
   mongodb:
     container_name: mongodb
