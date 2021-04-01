@@ -2,7 +2,7 @@ version: "3.0"
 services:
   api:
     container_name: api
-    image: jeffmendez19/a11ywatch-core
+    image: a11ywatch/a11ywatch-core
     networks:
       - back-net
       - front-net
@@ -109,7 +109,7 @@ services:
     ports:
       - "8000:8000"
     environment: 
-      - CRAWL_URL={CRAWL_URL:-http://api:8080/api/website-crawl-background}
+      - CRAWL_URL=${CRAWL_URL:-http://api:8080/api/website-crawl-background}
 
   mongodb:
     container_name: mongodb
