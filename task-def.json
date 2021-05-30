@@ -1,0 +1,813 @@
+{
+    "ipcMode": null,
+    "executionRoleArn": "arn:aws:iam::608440221714:role/ecsExecutionRoleDockerHub",
+    "containerDefinitions": [
+        {
+            "dnsSearchDomains": [],
+            "environmentFiles": null,
+            "logConfiguration": null,
+            "entryPoint": [],
+            "portMappings": [
+                {
+                    "hostPort": 3000,
+                    "protocol": "tcp",
+                    "containerPort": 3000
+                }
+            ],
+            "command": [],
+            "linuxParameters": {
+                "capabilities": {
+                    "add": null,
+                    "drop": null
+                },
+                "sharedMemorySize": null,
+                "tmpfs": null,
+                "devices": null,
+                "maxSwap": null,
+                "swappiness": null,
+                "initProcessEnabled": null
+            },
+            "cpu": 0,
+            "environment": [
+                {
+                    "name": "API",
+                    "value": "http://localhost:8080/graphql"
+                },
+                {
+                    "name": "API_URI_DOCKER",
+                    "value": "http://api:8080/graphql"
+                },
+                {
+                    "name": "APP_TYPE",
+                    "value": "main"
+                },
+                {
+                    "name": "DOCKER_INSTANCE",
+                    "value": "true"
+                },
+                {
+                    "name": "DOCKER_SERVICE",
+                    "value": "service.a11y"
+                },
+                {
+                    "name": "DOMAIN_NAME",
+                    "value": "https://www.a11ywatch.com"
+                },
+                {
+                    "name": "GITHUB_TOKEN",
+                    "value": ""
+                },
+                {
+                    "name": "GOOGLE_CLIENT_ID",
+                    "value": ""
+                },
+                {
+                    "name": "IAM_USER_KEY",
+                    "value": ""
+                },
+                {
+                    "name": "IAM_USER_SECRET",
+                    "value": ""
+                },
+                {
+                    "name": "INTERCOM_APPID",
+                    "value": ""
+                },
+                {
+                    "name": "NODE_ENV",
+                    "value": "development"
+                },
+                {
+                    "name": "PORT",
+                    "value": "3000"
+                },
+                {
+                    "name": "SCRIPTS_CDN_URL_HOST",
+                    "value": "http://localhost:8090/cdn"
+                },
+                {
+                    "name": "SCRIPTS_CDN_URL_HOST_LOCAL",
+                    "value": "http://localhost:8090/cdn"
+                },
+                {
+                    "name": "STRIPE_KEY",
+                    "value": ""
+                },
+                {
+                    "name": "WEB_SOCKET_URL",
+                    "value": "ws://localhost:8080/graphql"
+                }
+            ],
+            "resourceRequirements": null,
+            "ulimits": null,
+            "repositoryCredentials": {
+                "credentialsParameter": "arn:aws:secretsmanager:us-east-2:608440221714:secret:dockerhub-hy53Os"
+            },
+            "dnsServers": [],
+            "mountPoints": [
+                {
+                    "readOnly": false,
+                    "containerPath": "/web",
+                    "sourceVolume": "volume-6"
+                }
+            ],
+            "workingDirectory": null,
+            "secrets": null,
+            "dockerSecurityOptions": [],
+            "memory": null,
+            "memoryReservation": null,
+            "volumesFrom": [],
+            "stopTimeout": null,
+            "image": "jeffmendez19/a11y-web",
+            "startTimeout": null,
+            "firelensConfiguration": null,
+            "dependsOn": null,
+            "disableNetworking": null,
+            "interactive": null,
+            "healthCheck": null,
+            "essential": true,
+            "links": [],
+            "hostname": null,
+            "extraHosts": null,
+            "pseudoTerminal": false,
+            "user": null,
+            "readonlyRootFilesystem": false,
+            "dockerLabels": null,
+            "systemControls": null,
+            "privileged": false,
+            "name": "web"
+        },
+        {
+            "dnsSearchDomains": [],
+            "environmentFiles": null,
+            "logConfiguration": null,
+            "entryPoint": [],
+            "portMappings": [
+                {
+                    "hostPort": 8040,
+                    "protocol": "tcp",
+                    "containerPort": 8040
+                }
+            ],
+            "command": [],
+            "linuxParameters": {
+                "capabilities": {
+                    "add": null,
+                    "drop": null
+                },
+                "sharedMemorySize": null,
+                "tmpfs": null,
+                "devices": null,
+                "maxSwap": null,
+                "swappiness": null,
+                "initProcessEnabled": null
+            },
+            "cpu": 0,
+            "environment": [
+                {
+                    "name": "AI_SERVICE_URL",
+                    "value": "http://mav:8020"
+                },
+                {
+                    "name": "PORT",
+                    "value": "8040"
+                },
+                {
+                    "name": "SCRIPTS_CDN_URL",
+                    "value": "http://cdn-server:8090/api"
+                },
+                {
+                    "name": "ROOT_URL",
+                    "value": "http://localhost:3000"
+                },
+                {
+                    "name": "WATCHER_CLIENT_URL",
+                    "value": "http://watcher:8000"
+                },
+                {
+                    "name": "CLIENT_URL",
+                    "value": "http://localhost:3000"
+                },
+                {
+                    "name": "SCRIPTS_CDN_URL_HOST",
+                    "value": "http://localhost:8090/cdn"
+                },
+                {
+                    "name": "DOCKER_ENV",
+                    "value": "true"
+                }
+            ],
+            "resourceRequirements": null,
+            "ulimits": null,
+            "repositoryCredentials": {
+                "credentialsParameter": "arn:aws:secretsmanager:us-east-2:608440221714:secret:dockerhub-hy53Os"
+            },
+            "dnsServers": [],
+            "mountPoints": [
+                {
+                    "readOnly": false,
+                    "containerPath": "/angelica",
+                    "sourceVolume": "volume-9"
+                }
+            ],
+            "workingDirectory": null,
+            "secrets": null,
+            "dockerSecurityOptions": [],
+            "memory": null,
+            "memoryReservation": null,
+            "volumesFrom": [],
+            "stopTimeout": null,
+            "image": "jeffmendez19/angelica",
+            "startTimeout": null,
+            "firelensConfiguration": null,
+            "dependsOn": null,
+            "disableNetworking": null,
+            "interactive": null,
+            "healthCheck": null,
+            "essential": true,
+            "links": [],
+            "hostname": null,
+            "extraHosts": null,
+            "pseudoTerminal": false,
+            "user": null,
+            "readonlyRootFilesystem": false,
+            "dockerLabels": null,
+            "systemControls": null,
+            "privileged": false,
+            "name": "angelica"
+        },
+        {
+            "dnsSearchDomains": [],
+            "environmentFiles": null,
+            "logConfiguration": null,
+            "entryPoint": [],
+            "portMappings": [
+                {
+                    "hostPort": 8080,
+                    "protocol": "tcp",
+                    "containerPort": 8080
+                }
+            ],
+            "command": [],
+            "linuxParameters": {
+                "capabilities": {
+                    "add": null,
+                    "drop": null
+                },
+                "sharedMemorySize": null,
+                "tmpfs": null,
+                "devices": null,
+                "maxSwap": null,
+                "swappiness": null,
+                "initProcessEnabled": null
+            },
+            "cpu": 0,
+            "environment": [
+                {
+                    "name": "BYPASS_ADD_WEBSITES",
+                    "value": "true"
+                },
+                {
+                    "name": "CLIENT_URL",
+                    "value": "http://localhost:3000"
+                },
+                {
+                    "name": "CLIENT_URL_ADANET",
+                    "value": "http://ada.net"
+                },
+                {
+                    "name": "DB_NAME",
+                    "value": "ada-application-core"
+                },
+                {
+                    "name": "DB_URL",
+                    "value": "mongodb://mongodb:27017/?compressors=zlib&gssapiServiceName=mongodb"
+                },
+                {
+                    "name": "DOCKER_ENV",
+                    "value": "true"
+                },
+                {
+                    "name": "ECS_CLUSTER",
+                    "value": "a11ywatch"
+                },
+                {
+                    "name": "ECS_ENGINE_AUTH_DATA",
+                    "value": ""
+                },
+                {
+                    "name": "ECS_ENGINE_AUTH_TYPE",
+                    "value": "dockercfg"
+                },
+                {
+                    "name": "EMAIL_CLIENT_ID",
+                    "value": "111103664625775232215"
+                },
+                {
+                    "name": "EMAIL_CLIENT_KEY",
+                    "value": ""
+                },
+                {
+                    "name": "EMAIL_SERVICE_PASSWORD",
+                    "value": ""
+                },
+                {
+                    "name": "EMAIL_SERVICE_URL",
+                    "value": "support@a11ywatch.com"
+                },
+                {
+                    "name": "ENGINE_API_KEY",
+                    "value": ""
+                },
+                {
+                    "name": "GRAPHQL_PORT",
+                    "value": "8080"
+                },
+                {
+                    "name": "MAV_CLIENT_URL",
+                    "value": "http://mav:8020"
+                },
+                {
+                    "name": "PUPPET_SERVICE",
+                    "value": "http://angelica:8040"
+                },
+                {
+                    "name": "ROOT_URL",
+                    "value": "http://localhost:8080"
+                },
+                {
+                    "name": "SCRIPTS_CDN_URL",
+                    "value": "http://cdn-server:8090/api"
+                },
+                {
+                    "name": "SCRIPTS_CDN_URL_HOST",
+                    "value": "http://localhost:8090/cdn"
+                },
+                {
+                    "name": "STRIPE_KEY",
+                    "value": ""
+                },
+                {
+                    "name": "STRIPE_BASIC_PLAN",
+                    "value": ""
+                },
+                {
+                    "name": "STRIPE_PREMIUM_PLAN",
+                    "value": ""
+                },
+                {
+                    "name": "WATCHER_CLIENT_URL",
+                    "value": "http://watcher:8000"
+                }
+            ],
+            "resourceRequirements": null,
+            "ulimits": null,
+            "repositoryCredentials": {
+                "credentialsParameter": "arn:aws:secretsmanager:us-east-2:608440221714:secret:dockerhub-hy53Os"
+            },
+            "dnsServers": [],
+            "mountPoints": [
+                {
+                    "readOnly": false,
+                    "containerPath": "/api",
+                    "sourceVolume": "volume-8"
+                }
+            ],
+            "workingDirectory": null,
+            "secrets": null,
+            "dockerSecurityOptions": [],
+            "memory": null,
+            "memoryReservation": null,
+            "volumesFrom": [],
+            "stopTimeout": null,
+            "image": "jeffmendez19/a11y-api",
+            "startTimeout": null,
+            "firelensConfiguration": null,
+            "dependsOn": null,
+            "disableNetworking": null,
+            "interactive": null,
+            "healthCheck": null,
+            "essential": true,
+            "links": [],
+            "hostname": null,
+            "extraHosts": null,
+            "pseudoTerminal": false,
+            "user": null,
+            "readonlyRootFilesystem": false,
+            "dockerLabels": null,
+            "systemControls": null,
+            "privileged": false,
+            "name": "api"
+        },
+        {
+            "dnsSearchDomains": [],
+            "environmentFiles": null,
+            "logConfiguration": null,
+            "entryPoint": [],
+            "portMappings": [
+                {
+                    "hostPort": 8090,
+                    "protocol": "tcp",
+                    "containerPort": 8090
+                }
+            ],
+            "command": [],
+            "linuxParameters": {
+                "capabilities": {
+                    "add": null,
+                    "drop": null
+                },
+                "sharedMemorySize": null,
+                "tmpfs": null,
+                "devices": null,
+                "maxSwap": null,
+                "swappiness": null,
+                "initProcessEnabled": null
+            },
+            "cpu": 0,
+            "environment": [
+                {
+                    "name": "BUCKET_NAME",
+                    "value": "a11ywatch-scripts"
+                }
+            ],
+            "resourceRequirements": null,
+            "ulimits": null,
+            "repositoryCredentials": {
+                "credentialsParameter": "arn:aws:secretsmanager:us-east-2:608440221714:secret:dockerhub-hy53Os"
+            },
+            "dnsServers": [],
+            "mountPoints": [
+                {
+                    "readOnly": false,
+                    "containerPath": "/cdn-server",
+                    "sourceVolume": "volume-7"
+                }
+            ],
+            "workingDirectory": null,
+            "secrets": null,
+            "dockerSecurityOptions": [],
+            "memory": null,
+            "memoryReservation": null,
+            "volumesFrom": [],
+            "stopTimeout": null,
+            "image": "jeffmendez19/cdn-server",
+            "startTimeout": null,
+            "firelensConfiguration": null,
+            "dependsOn": null,
+            "disableNetworking": null,
+            "interactive": null,
+            "healthCheck": null,
+            "essential": true,
+            "links": [],
+            "hostname": null,
+            "extraHosts": null,
+            "pseudoTerminal": false,
+            "user": null,
+            "readonlyRootFilesystem": false,
+            "dockerLabels": null,
+            "systemControls": null,
+            "privileged": false,
+            "name": "cdn-server"
+        },
+        {
+            "dnsSearchDomains": [],
+            "environmentFiles": null,
+            "logConfiguration": null,
+            "entryPoint": [],
+            "portMappings": [
+                {
+                    "hostPort": 8020,
+                    "protocol": "tcp",
+                    "containerPort": 8020
+                }
+            ],
+            "command": [],
+            "linuxParameters": {
+                "capabilities": {
+                    "add": null,
+                    "drop": null
+                },
+                "sharedMemorySize": null,
+                "tmpfs": null,
+                "devices": null,
+                "maxSwap": null,
+                "swappiness": null,
+                "initProcessEnabled": null
+            },
+            "cpu": 0,
+            "environment": [
+                {
+                    "name": "PORT",
+                    "value": "8020"
+                },
+                {
+                    "name": "DOCKER_ENV",
+                    "value": "true"
+                }
+            ],
+            "resourceRequirements": null,
+            "ulimits": null,
+            "repositoryCredentials": {
+                "credentialsParameter": "arn:aws:secretsmanager:us-east-2:608440221714:secret:dockerhub-hy53Os"
+            },
+            "dnsServers": [],
+            "mountPoints": [
+                {
+                    "readOnly": false,
+                    "containerPath": "/mav",
+                    "sourceVolume": "volume-10"
+                }
+            ],
+            "workingDirectory": null,
+            "secrets": null,
+            "dockerSecurityOptions": [],
+            "memory": null,
+            "memoryReservation": null,
+            "volumesFrom": [],
+            "stopTimeout": null,
+            "image": "jeffmendez19/mav",
+            "startTimeout": null,
+            "firelensConfiguration": null,
+            "dependsOn": null,
+            "disableNetworking": null,
+            "interactive": null,
+            "healthCheck": null,
+            "essential": true,
+            "links": [],
+            "hostname": null,
+            "extraHosts": null,
+            "pseudoTerminal": false,
+            "user": null,
+            "readonlyRootFilesystem": false,
+            "dockerLabels": null,
+            "systemControls": null,
+            "privileged": false,
+            "name": "mav"
+        },
+        {
+            "dnsSearchDomains": [],
+            "environmentFiles": null,
+            "logConfiguration": null,
+            "entryPoint": [],
+            "portMappings": [
+                {
+                    "hostPort": 8000,
+                    "protocol": "tcp",
+                    "containerPort": 8000
+                }
+            ],
+            "command": [],
+            "linuxParameters": {
+                "capabilities": {
+                    "add": null,
+                    "drop": null
+                },
+                "sharedMemorySize": null,
+                "tmpfs": null,
+                "devices": null,
+                "maxSwap": null,
+                "swappiness": null,
+                "initProcessEnabled": null
+            },
+            "cpu": 0,
+            "environment": [
+                {
+                    "name": "CRAWL_URL",
+                    "value": "http://api:8080/api/crawlWebsite?websiteUrl="
+                }
+            ],
+            "resourceRequirements": null,
+            "ulimits": null,
+            "repositoryCredentials": {
+                "credentialsParameter": "arn:aws:secretsmanager:us-east-2:608440221714:secret:dockerhub-hy53Os"
+            },
+            "dnsServers": [],
+            "mountPoints": [
+                {
+                    "readOnly": false,
+                    "containerPath": "/watcher",
+                    "sourceVolume": "volume-5"
+                }
+            ],
+            "workingDirectory": null,
+            "secrets": null,
+            "dockerSecurityOptions": [],
+            "memory": null,
+            "memoryReservation": null,
+            "volumesFrom": [],
+            "stopTimeout": null,
+            "image": "jeffmendez19/watcher",
+            "startTimeout": null,
+            "firelensConfiguration": null,
+            "dependsOn": null,
+            "disableNetworking": null,
+            "interactive": null,
+            "healthCheck": null,
+            "essential": true,
+            "links": [],
+            "hostname": null,
+            "extraHosts": null,
+            "pseudoTerminal": false,
+            "user": null,
+            "readonlyRootFilesystem": false,
+            "dockerLabels": null,
+            "systemControls": null,
+            "privileged": false,
+            "name": "watcher"
+        },
+        {
+            "dnsSearchDomains": [],
+            "environmentFiles": null,
+            "logConfiguration": null,
+            "entryPoint": [],
+            "portMappings": [
+                {
+                    "hostPort": 8010,
+                    "protocol": "tcp",
+                    "containerPort": 8010
+                }
+            ],
+            "command": [],
+            "linuxParameters": {
+                "capabilities": {
+                    "add": null,
+                    "drop": null
+                },
+                "sharedMemorySize": null,
+                "tmpfs": null,
+                "devices": null,
+                "maxSwap": null,
+                "swappiness": null,
+                "initProcessEnabled": null
+            },
+            "cpu": 0,
+            "environment": [
+                {
+                    "name": "PORT",
+                    "value": "8010"
+                }
+            ],
+            "resourceRequirements": null,
+            "ulimits": null,
+            "repositoryCredentials": {
+                "credentialsParameter": "arn:aws:secretsmanager:us-east-2:608440221714:secret:dockerhub-hy53Os"
+            },
+            "dnsServers": [],
+            "mountPoints": [
+                {
+                    "readOnly": false,
+                    "containerPath": "/iframe-server",
+                    "sourceVolume": "volume-5"
+                }
+            ],
+            "workingDirectory": null,
+            "secrets": null,
+            "dockerSecurityOptions": [],
+            "memory": null,
+            "memoryReservation": null,
+            "volumesFrom": [],
+            "stopTimeout": null,
+            "image": "jeffmendez19/iframe-server",
+            "startTimeout": null,
+            "firelensConfiguration": null,
+            "dependsOn": null,
+            "disableNetworking": null,
+            "interactive": null,
+            "healthCheck": null,
+            "essential": true,
+            "links": [],
+            "hostname": null,
+            "extraHosts": null,
+            "pseudoTerminal": false,
+            "user": null,
+            "readonlyRootFilesystem": false,
+            "dockerLabels": null,
+            "systemControls": null,
+            "privileged": false,
+            "name": "iframe-server"
+        }
+    ],
+    "memory": "2048",
+    "taskRoleArn": "arn:aws:iam::608440221714:role/ecsExecutionRoleDockerHub",
+    "family": "a11y_service",
+    "pidMode": null,
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "networkMode": "awsvpc",
+    "cpu": "512",
+    "inferenceAccelerators": [],
+    "proxyConfiguration": null,
+    "volumes": [
+        {
+            "fsxWindowsFileServerVolumeConfiguration": null,
+            "efsVolumeConfiguration": null,
+            "name": "cdn-server",
+            "host": {
+                "sourcePath": null
+            },
+            "dockerVolumeConfiguration": null
+        },
+        {
+            "fsxWindowsFileServerVolumeConfiguration": null,
+            "efsVolumeConfiguration": null,
+            "name": "volume-7",
+            "host": {
+                "sourcePath": null
+            },
+            "dockerVolumeConfiguration": null
+        },
+        {
+            "fsxWindowsFileServerVolumeConfiguration": null,
+            "efsVolumeConfiguration": null,
+            "name": "volume-10",
+            "host": {
+                "sourcePath": null
+            },
+            "dockerVolumeConfiguration": null
+        },
+        {
+            "fsxWindowsFileServerVolumeConfiguration": null,
+            "efsVolumeConfiguration": null,
+            "name": "volume-9",
+            "host": {
+                "sourcePath": null
+            },
+            "dockerVolumeConfiguration": null
+        },
+        {
+            "fsxWindowsFileServerVolumeConfiguration": null,
+            "efsVolumeConfiguration": null,
+            "name": "api",
+            "host": {
+                "sourcePath": null
+            },
+            "dockerVolumeConfiguration": null
+        },
+        {
+            "fsxWindowsFileServerVolumeConfiguration": null,
+            "efsVolumeConfiguration": null,
+            "name": "angelica",
+            "host": {
+                "sourcePath": null
+            },
+            "dockerVolumeConfiguration": null
+        },
+        {
+            "fsxWindowsFileServerVolumeConfiguration": null,
+            "efsVolumeConfiguration": null,
+            "name": "web",
+            "host": {
+                "sourcePath": null
+            },
+            "dockerVolumeConfiguration": null
+        },
+        {
+            "fsxWindowsFileServerVolumeConfiguration": null,
+            "efsVolumeConfiguration": null,
+            "name": "watcher",
+            "host": {
+                "sourcePath": null
+            },
+            "dockerVolumeConfiguration": null
+        },
+        {
+            "fsxWindowsFileServerVolumeConfiguration": null,
+            "efsVolumeConfiguration": null,
+            "name": "iframe-server",
+            "host": {
+                "sourcePath": null
+            },
+            "dockerVolumeConfiguration": null
+        },
+        {
+            "fsxWindowsFileServerVolumeConfiguration": null,
+            "efsVolumeConfiguration": null,
+            "name": "volume-5",
+            "host": {
+                "sourcePath": null
+            },
+            "dockerVolumeConfiguration": null
+        },
+        {
+            "fsxWindowsFileServerVolumeConfiguration": null,
+            "efsVolumeConfiguration": null,
+            "name": "volume-8",
+            "host": {
+                "sourcePath": null
+            },
+            "dockerVolumeConfiguration": null
+        },
+        {
+            "fsxWindowsFileServerVolumeConfiguration": null,
+            "efsVolumeConfiguration": null,
+            "name": "volume-6",
+            "host": {
+                "sourcePath": null
+            },
+            "dockerVolumeConfiguration": null
+        }
+    ],
+    "tags": []
+}
