@@ -38,6 +38,7 @@ services:
       - ADMIN_ORIGIN=${ADMIN_ORIGIN}
       - BACKGROUND_CRAWL=${BACKGROUND_CRAWL:-false}
       - DOCKER_ENV=true
+      - CRAWL_URL=${WATCHER_CLIENT_URL:-http://crawler:8000}
 
   pagemind:
     container_name: pagemind
