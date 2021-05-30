@@ -52,6 +52,8 @@ services:
       - AI_SERVICE_URL=${SCRIPTS_CDN_URL:-http://mav:8020}
       - PORT=${PAGEMIND_PORT:-8040}
       - LOGGER_ENABLED=${LOGGER_ENABLED:-true}
+      - BACKUP_IMAGES=${BACKUP_IMAGES:-true}
+      - PUPPET_POOL_MAX=${PUPPET_POOL_MAX:-4}
 
   mav:
     container_name: mav
