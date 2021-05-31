@@ -1,0 +1,2 @@
+ORGANIZATION_NAME="a11ywatch"
+WORKSPACE_NAME="a11ywatch"

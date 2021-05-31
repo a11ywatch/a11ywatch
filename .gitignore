@@ -31,6 +31,7 @@ dockerhub-iam-policy-tasks-role.json
 #  build
 dist
 docker-builds
+.terraform
 ## storybook
 storybook-static
 
