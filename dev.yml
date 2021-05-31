@@ -48,6 +48,8 @@ services:
     build:
       context: ../pagemind
       dockerfile: Dockerfile.dev
+    volumes:
+      - ../pagemind/src:/usr/src/app/src
     networks:
       - back-net
     ports:
@@ -66,6 +68,8 @@ services:
     build:
       context: ../mav
       dockerfile: Dockerfile.dev
+    volumes:
+      - ../mav/src:/usr/src/app/src
     networks:
       - back-net
     ports:
