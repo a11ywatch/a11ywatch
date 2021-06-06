@@ -41,7 +41,7 @@ services:
 
   pagemind:
     container_name: pagemind
-    image: jeffmendez19/pagemind
+    image: a11ywatch/pagemind
     networks:
       - back-net
     ports:
@@ -57,7 +57,7 @@ services:
 
   mav:
     container_name: mav
-    image: jeffmendez19/mav
+    image: a11ywatch/mav
     networks:
       - back-net
     ports:
@@ -70,7 +70,7 @@ services:
 
   logger:
     container_name: logger
-    image: jeffmendez19/logger
+    image: a11ywatch/logger
     volumes:
       - /usr/src/app/dist/logs
     networks:
@@ -82,7 +82,7 @@ services:
 
   cdn-server:
     container_name: cdn-server
-    image: jeffmendez19/elastic-cdn
+    image: a11ywatch/elastic-cdn
     networks:
       - back-net
       - front-net
@@ -94,7 +94,7 @@ services:
 
   # iframe-server:
   #   container_name: iframe-server
-  #   image: jeffmendez19/iframer
+  #   image: a11ywatch/iframer
   #   networks:
   #     - front-net
   #   ports:
