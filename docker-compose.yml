@@ -82,7 +82,7 @@ services:
 
   cdn-server:
     container_name: cdn-server
-    image: a11ywatch/elastic-cdn
+    image: a11ywatch/cdn-server
     networks:
       - back-net
       - front-net

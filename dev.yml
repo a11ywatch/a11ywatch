@@ -104,17 +104,6 @@ services:
       - PORT=${ELASTIC_CDN_PORT:-8090}
       - LOGGER_ENABLED=${LOGGER_ENABLED:-true}
 
-  # iframe-server:
-  #   container_name: iframe-server
-  #   image: jeffmendez19/iframer
-  #   networks:
-  #     - front-net
-  #   ports:
-  #     - "8010:8010"
-  #   environment:
-  #     - PORT=${IFRAMER_PORT:-8010}
-  #     - LOGGER_ENABLED=${LOGGER_ENABLED:-true}
-
   crawler:
     container_name: crawler
     image: a11ywatch/crawler
