@@ -40,8 +40,8 @@ Support us with a monthly donation and help us continue our activities. [[Become
 
 ## Support
 
-If you need support, start with the [troubleshooting guide](https://a11ywatch.github.io/a11ywatch-docs/docs/troubleshooting),
-if you still need help please contact us [contact](https://a11ywatch.github.io/a11ywatch-docs/docs/contact).
+If you need support, start with the [troubleshooting guide](https://a11ywatch.github.io/docs/troubleshooting),
+if you still need help please contact us [contact](https://a11ywatch.github.io/docs/blog).
 
 ## LICENSE
 
