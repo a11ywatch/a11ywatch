@@ -94,7 +94,11 @@ services:
 
   cdn-server:
     container_name: cdn-server
-    image: jeffmendez19/elastic-cdn
+    build:
+      context: ../elastic-cdn
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ../elastic-cdn/src:/usr/src/app/src
     networks:
       - back-net
       - front-net
@@ -106,7 +110,11 @@ services:
 
   crawler:
     container_name: crawler
-    image: a11ywatch/crawler
+    build:
+      context: ../crawler
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ../crawler/src:/usr/src/app/src
     networks:
       - back-net
     ports:
