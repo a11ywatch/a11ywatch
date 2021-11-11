@@ -82,7 +82,7 @@ services:
 
   logger:
     container_name: logger
-    image: jeffmendez19/logger
+    image: a11ywatch/logger
     volumes:
       - /usr/src/app/dist/logs
     networks:
