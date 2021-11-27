@@ -62,7 +62,7 @@ services:
       - LOGGER_ENABLED=${LOGGER_ENABLED:-true}
       - BACKUP_IMAGES=${BACKUP_IMAGES:-true}
       - PUPPET_POOL_MAX=${PUPPET_POOL_MAX:-4}
-
+      - ASSETS_CDN=${ASSETS_CDN:-http://localhost:8090}
   mav:
     container_name: mav
     build:
