@@ -82,7 +82,9 @@ services:
 
   logger:
     container_name: logger
-    image: a11ywatch/logger
+    build:
+      context: ../logger
+      dockerfile: Dockerfile.dev
     volumes:
       - /usr/src/app/dist/logs
     networks:
