@@ -6,3 +6,4 @@ cd ../a11ywatch-web && git pull origin main
 cd ../crawler && git pull origin main
 cd ../pagemind && git pull origin main
 cd ../mav && git pull origin main
+cd ../logger && git pull origin main
