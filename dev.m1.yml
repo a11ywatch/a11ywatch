@@ -1,5 +1,22 @@
 version: "3.0"
 services:
+  web:
+    container_name: web
+    build:
+      context: ../a11ywatch-web
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ../a11ywatch-web/src:/app/src
+      - ../a11ywatch-web/next.config.js:/app/next.config.js
+      - ../a11ywatch-web/public:/app/public
+    networks:
+      - front-net
+    ports:
+      - "3000:3000"
+    environment:
+      - API=${API:-http://localhost:8080/graphql}
+      - WEB_SOCKET_URL=${WEB_SOCKET_URL:-ws://localhost:8080/graphql}
+
   api:
     container_name: api
     build:

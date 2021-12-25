@@ -24,10 +24,6 @@ cd a11ywatch
 docker-compose up
 ```
 
-##### Front-End Client
-
-For a client to use you can use the web application here that is [web-app](https://github.com/A11yWatch/a11ywatch-web), [ios-app](https://github.com/A11yWatch/a11ywatch-ios), or [android-app](https://github.com/A11yWatch/a11ywatch-android). The most up to date option at the moment is the web application. The mobile apps are a WIP.
-By default the ui application opens on port 3000. For the full story, head over to the [developer's documentation](https://a11ywatch.github.io/a11ywatch-docs/docs/getting-started).
 
 ## Contributing
 

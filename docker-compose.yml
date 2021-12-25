@@ -1,5 +1,16 @@
 version: "3.0"
 services:
+  web:
+    container_name: web
+    image: a11ywatch/web
+    networks:
+      - front-net
+    ports:
+      - "3000:3000"
+    environment:
+      - API=${API:-http://localhost:8080/graphql}
+      - WEB_SOCKET_URL=${WEB_SOCKET_URL:-ws://localhost:8080/graphql}
+
   api:
     container_name: api
     image: a11ywatch/a11ywatch-core
