@@ -6,13 +6,13 @@ web accessibility automation.
 
 ## Getting Started
 
-See the documentation at [https://a11ywatch.github.io/docs](https://a11ywatch.github.io/docs)
+See the documentation at [https://docs.a11ywatch.com](https://docs.a11ywatch.com)
 
 ## Develop
 
 This repo hosts all information about
 building A11yWatch from source, how to contribute code
-and documentation, who to contact about what, and etc. If you are using the apple silicon chip or m1 you need to run the `dev.m1.yml` instead of `dev.yml` and setup tensorflow from source locally and start the `mav` container local. We are working on getting this universal across all builds. 
+and documentation, who to contact about what, and etc. If you are using the apple silicon chip or m1 you need to run the `dev.m1.yml` instead of `dev.yml` and setup tensorflow from source locally and start the `mav` container local. We are working on getting this universal across all builds.
 
 `docker compose --file dev.yml up`
 
@@ -23,7 +23,6 @@ git clone https://github.com/a11ywatch/a11ywatch
 cd a11ywatch
 docker-compose up
 ```
-
 
 ## Contributing
 
