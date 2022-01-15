@@ -81,23 +81,23 @@ services:
       - BACKUP_IMAGES=${BACKUP_IMAGES:-true}
       - PUPPET_POOL_MAX=${PUPPET_POOL_MAX:-4}
       - ASSETS_CDN=${ASSETS_CDN:-http://localhost:8090}
-  # docker m1 setup is not available for tensorflow yet. Build from source and run locally to start the container.
-  # mav:
-  #   container_name: mav
-  #   build:
-  #     context: ../mav
-  #     dockerfile: Dockerfile.dev
-  #   volumes:
-  #     - ../mav/src:/usr/src/app/src
-  #   networks:
-  #     - back-net
-  #   ports:
-  #     - "8020:8020"
-  #   environment:
-  #     - MAIN_API_URL=${MAIN_API_URL:-http://api:8080}
-  #     - LOGGER_ENABLED=${LOGGER_ENABLED:-true}
-  #     - PORT=${MAV_PORT:-8020}
-  #     - DOCKER_ENV=true
+
+  mav:
+    container_name: mav
+    build:
+      context: ../mav
+      dockerfile: Dockerfile.m1
+    volumes:
+      - ../mav/src:/usr/src/app/src
+    networks:
+      - back-net
+    ports:
+      - "8020:8020"
+    environment:
+      - MAIN_API_URL=${MAIN_API_URL:-http://api:8080}
+      - LOGGER_ENABLED=${LOGGER_ENABLED:-true}
+      - PORT=${MAV_PORT:-8020}
+      - DOCKER_ENV=true
 
   logger:
     container_name: logger
