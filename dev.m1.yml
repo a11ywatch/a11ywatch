@@ -8,6 +8,7 @@ services:
     volumes:
       - ../a11ywatch-web/src:/app/src
       - ../a11ywatch-web/next.config.js:/app/next.config.js
+      - ../a11ywatch-web/tailwind.config.js:/app/tailwind.config.js
       - ../a11ywatch-web/public:/app/public
     networks:
       - front-net
@@ -60,6 +61,7 @@ services:
       - ADMIN_ORIGIN=${ADMIN_ORIGIN}
       - BACKGROUND_CRAWL=${BACKGROUND_CRAWL:-false}
       - DOCKER_ENV=true
+      - DOMAIN=localhost:3000
 
   pagemind:
     container_name: pagemind

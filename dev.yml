@@ -8,6 +8,7 @@ services:
     volumes:
       - ../a11ywatch-web/src:/app/src
       - ../a11ywatch-web/next.config.js:/app/next.config.js
+      - ../a11ywatch-web/tailwind.config.js:/app/tailwind.config.js
       - ../a11ywatch-web/public:/app/public
     networks:
       - front-net
