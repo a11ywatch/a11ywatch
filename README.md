@@ -12,9 +12,13 @@ See the documentation at [https://docs.a11ywatch.com](https://docs.a11ywatch.com
 
 This repo hosts all information about
 building A11yWatch from source, how to contribute code
-and documentation, who to contact about what, and etc. If you are using the apple silicon chip or m1 you need to run the `dev.m1.yml` instead of `dev.yml` and setup tensorflow from source locally and start the `mav` container [local][https://developer.apple.com/metal/tensorflow-plugin] via `npm run dev`. We are working on getting this universal across all builds.
+and documentation, who to contact about what, and etc.
 
 `docker compose --file dev.yml up`
+
+or if on silicon chip
+
+`docker compose --file dev.m1.yml up`
 
 ##### [Docker environment].
 
