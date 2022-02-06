@@ -14,18 +14,14 @@ This repo hosts all information about
 building A11yWatch from source, how to contribute code
 and documentation, who to contact about what, and etc.
 
-`docker compose --file dev.yml up`
-
-or if on silicon chip
-
-`docker compose --file dev.m1.yml up`
-
 ##### [Docker environment].
 
-```
+```sh
 git clone https://github.com/a11ywatch/a11ywatch
 cd a11ywatch
-docker-compose up
+# develop
+`./scripts/dev.sh`
+# production simply run docker compose up
 ```
 
 ## Contributing
