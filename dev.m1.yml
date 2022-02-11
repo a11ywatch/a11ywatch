@@ -62,6 +62,7 @@ services:
       - BACKGROUND_CRAWL=${BACKGROUND_CRAWL:-false}
       - DOCKER_ENV=true
       - DOMAIN=localhost:3000
+      - SUPER_MODE=${SUPER_MODE:-true}
 
   pagemind:
     container_name: pagemind
