@@ -8,22 +8,6 @@ web accessibility automation.
 
 See the documentation at [https://docs.a11ywatch.com](https://docs.a11ywatch.com)
 
-## Develop
-
-This repo hosts all information about
-building A11yWatch from source, how to contribute code
-and documentation, who to contact about what, and etc.
-
-##### [Docker environment].
-
-```sh
-git clone https://github.com/a11ywatch/a11ywatch
-cd a11ywatch
-# develop
-`./scripts/dev.sh`
-# production simply run docker compose up
-```
-
 ## Contributing
 
 Read the [contributing guide](/CONTRIBUTING.md) to learn about our development process, how to propose bugfixes and improvements, and how to build and test your changes to A11yWatch.
