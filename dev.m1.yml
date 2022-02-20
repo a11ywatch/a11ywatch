@@ -18,6 +18,7 @@ services:
       - API=${API:-http://localhost:8080/graphql}
       - WEB_SOCKET_URL=${WEB_SOCKET_URL:-ws://localhost:8080/graphql}
       - NODE_ENV=${NODE_ENV:-development}
+      - STRIPE_KEY=${STRIPE_KEY_WEB}
 
   api:
     container_name: api
@@ -85,7 +86,7 @@ services:
       - BACKUP_IMAGES=${BACKUP_IMAGES:-true}
       - PUPPET_POOL_MAX=${PUPPET_POOL_MAX:-4}
       - ASSETS_CDN=${ASSETS_CDN:-http://localhost:8090}
-
+      - DISPLAY=${DISPLAY:-1.0}
   mav:
     container_name: mav
     build:

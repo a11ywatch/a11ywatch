@@ -10,6 +10,7 @@ services:
     environment:
       - API=${API:-http://localhost:8080/graphql}
       - WEB_SOCKET_URL=${WEB_SOCKET_URL:-ws://localhost:8080/graphql}
+      - STRIPE_KEY=${STRIPE_KEY_WEB}
 
   api:
     container_name: api
