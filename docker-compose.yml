@@ -11,6 +11,8 @@ services:
       - API=${API:-http://localhost:8080/graphql}
       - WEB_SOCKET_URL=${WEB_SOCKET_URL:-ws://localhost:8080/graphql}
       - STRIPE_KEY=${STRIPE_KEY_WEB}
+      - INTERCOM_APPID=${INTERCOM_APPID}
+      - INTERCOM_ENABLED=${INTERCOM_ENABLED}
 
   api:
     container_name: api
