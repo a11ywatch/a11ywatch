@@ -1,11 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
-./scripts/build.sh
+mkdir -p -m 777 ./terraform/uploads
 
-docker push a11ywatch/a11ywatch-core &
-docker push a11ywatch/pagemind &
-wait
-docker push a11ywatch/mav &
-docker push a11ywatch/crawler &
-wait
-docker push a11ywatch/elastic-cdn
+sh ./cgi/copy-files.sh
+
+cd terraform
+
+terraform apply -auto-approve
+
+ssh -oStrictHostKeyChecking=no terraform@$(terraform output -raw public_ip) -i ./tf-cloud-init "sh /home/terraform/build/boot.sh"
+
+cd ../

@@ -9,3 +9,4 @@ dist
 coverage
 Dockerfile
 .terraform
+cli/terraform

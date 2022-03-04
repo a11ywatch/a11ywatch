@@ -1,9 +1,6 @@
 # testing
 /coverage
 
-# production
-/build
-
 # misc
 .DS_Store
 
@@ -46,3 +43,20 @@ npm-debug.log
 # a11ywatch cli
 
 cli/target
+**/terraform/uploads/
+.terraform/*
+.terraform.tfstate.lock.info
+terraform.tfstate
+terraform.tfstate.backup
+tf-cloud-init
+tf-cloud-init.pub
+terraform/.terraform/*
+# google service
+gc-service.json
+*-gc-service.json
+kompose
+# dockerhub
+my_password.txt
+# macos amd64 binary
+cli/terraform/terraform
+terraform/terraform
