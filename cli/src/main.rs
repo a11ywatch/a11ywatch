@@ -9,19 +9,13 @@ fn main() {
     if options.contains_key("build") {
         println!("build: starting the application via docker...");
         // TODO: GENERATE compose.yml and check if exist
-        
         Command::new("docker-compose")
             .args(["up", "-d"])
             .status()
             .expect("Failed to execute command");
     }
 
-    // launch deploy via terraform
-    if options.contains_key("deploy") {
-        println!("deploy: deploying infrastructure running");
-    }
-
-    // start a container
+    // start a one off container
     if options.contains_key("run") {
         let run_command = options["run"].to_string();
 
@@ -34,6 +28,28 @@ fn main() {
                 .expect("Failed to execute command");
         }
 
+    }
+    
+
+    // INFRASTRURE COMMANDS
+
+    // start deploy via terraform
+    if options.contains_key("deploy") {
+        println!("deploy: deploying infrastructure running...");
+
+        Command::new("./scripts/deploy.sh")
+        .status()
+        .expect("Failed to execute command. Make sure to be in the root of the a11ywatch project. Full deployment via binary WIP.");
+    }
+
+    // launch deploy via terraform
+    if options.contains_key("destroy") {
+        println!("destroy: destroying infrastructure running...");
+
+        // TODO: ADD CONFIRM PROMPT AND CHECK FOR OPTIONAL SKIP FLAG
+        Command::new("./scripts/destroy.sh")
+        .status()
+        .expect("Failed to execute command. Make sure to be in the root of the a11ywatch project. Full deployment via binary WIP.");
     }
 
 }

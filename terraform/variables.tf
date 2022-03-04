@@ -21,6 +21,7 @@ variable "zone" {
 variable "managed_zone" {
   default = "terrasaurus-net"
 }
+
 variable "ssl_policy" {
   type        = string
   description = "Selfink to SSL Policy"

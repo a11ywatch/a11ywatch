@@ -6,13 +6,11 @@ services:
     networks:
       - front-net
     ports:
-      - "3000:3000"
+      - "80:3000"
     environment:
       - API=${API:-http://localhost:8080/graphql}
       - WEB_SOCKET_URL=${WEB_SOCKET_URL:-ws://localhost:8080/graphql}
       - STRIPE_KEY=${STRIPE_KEY_WEB}
-      - INTERCOM_APPID=${INTERCOM_APPID}
-      - INTERCOM_ENABLED=${INTERCOM_ENABLED}
 
   api:
     container_name: api
@@ -21,7 +19,7 @@ services:
       - back-net
       - front-net
     ports:
-      - "80:8080"
+      - "8080:8080"
     depends_on:
       - mongodb
     environment:
@@ -126,18 +124,6 @@ services:
       - mongodb:/data/db
     environment:
       - MONGO_INITDB_DATABASE=${DB_NAME:-a11ywatch}
-
-  mongoclient:
-    container_name: mongoclient
-    networks:
-      - back-net
-    image: huggingface/mongoku
-    ports:
-      - "3100:3100"
-    environment:
-      - MONGOKU_DEFAULT_HOST=${HOST:-mongodb://mongodb:27017/?compressors=zlib&gssapiServiceName=mongodb}
-    depends_on:
-      - mongodb
 
   redis:
     container_name: redis

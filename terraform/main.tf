@@ -1,12 +1,13 @@
 resource "google_compute_instance" "vm_instance" {
   name         = "terraform-instance"
-  machine_type = "e2-micro"
+  machine_type = "e2-medium"
   tags         = ["web", "dev", "http-server", "https-server"]
 
 
   boot_disk {
     initialize_params {
       image = data.google_compute_image.os.self_link
+      size = 20
     }
   }
 
@@ -33,7 +34,7 @@ resource "google_compute_instance" "vm_instance" {
   }
 
   metadata = {
-    # user-data = data.template_file.user_data.rendered
+    user-data = data.template_file.user_data.rendered
     ssh-keys  = "terraform:${file("tf-cloud-init.pub")}"
   }
 }

@@ -1,6 +1,6 @@
 resource "google_compute_url_map" "default" {
   name        = "url-map"
-  description = "the app url map"
+  description = "the dns url map"
   default_service = google_compute_backend_service.backend.id
 
   host_rule {

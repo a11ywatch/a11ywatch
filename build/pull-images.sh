@@ -6,3 +6,4 @@ docker pull a11ywatch/pagemind
 docker pull a11ywatch/mav
 docker pull a11ywatch/crawler
 docker pull a11ywatch/elastic-cdn
+docker pull a11ywatch/web
