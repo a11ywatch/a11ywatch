@@ -40,6 +40,8 @@ fn main() {
         Command::new("./scripts/deploy.sh")
         .status()
         .expect("Failed to execute command. Make sure to be in the root of the a11ywatch project. Full deployment via binary WIP.");
+
+        // TODO: DEPLOY WEB APP VIA GCR
     }
 
     // launch deploy via terraform

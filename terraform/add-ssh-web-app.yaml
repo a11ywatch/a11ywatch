@@ -28,7 +28,6 @@ cloud_final_modules:
 runcmd:
   - sudo su terraform
   - sudo chown -R terraform:hashicorp /home/terraform
-  - bash /home/terraform/build/start.sh
-
+  - chmod +x /home/terraform/build/boot.sh
 bootcmd:
   - bash /home/terraform/build/boot.sh

@@ -4,5 +4,5 @@ data "google_compute_image" "os" {
 }
 
 data "template_file" "user_data" {
-  template = file("../scripts/add-ssh-web-app.yaml")
+  template = file("./add-ssh-web-app.yaml")
 }
