@@ -1,0 +1,17 @@
+[package]
+name = "a11ywatch_cli"
+version = "0.0.1"
+authors = ["j-mendez <jeff@a11ywatch.com>"]
+description = "A11yWatch CLI to build, deploy, and manage all things."
+repository = "https://github.com/a11ywatch/a11ywatch"
+readme = "README.md"
+keywords = ["a11ywatch", "accessibility", "website_improvement"]
+categories = ["accessibility", "suite", "ai"]
+license = "MIT"
+documentation = "https://docs.rs/a11ywatch"
+include = ["src/*", "LICENSE", "README.md"]
+
+[[bin]]
+name = "a11ywatch"
+path = "src/main.rs"
+doc = false

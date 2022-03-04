@@ -42,3 +42,7 @@ npm-debug.log
 # bin
 .bin
 .vscode
+
+# a11ywatch cli
+
+cli/target
