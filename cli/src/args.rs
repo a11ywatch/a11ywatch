@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-// simple parse basic args
+// simple parse basic args replace with CLAP
 pub fn parse_args(mut args: impl Iterator<Item = String>) -> HashMap<String, String> {
     let mut flags = HashMap::new();
     

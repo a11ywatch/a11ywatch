@@ -8,12 +8,12 @@ fn main() {
 
     if options.contains_key("build") {
         println!("build: starting the application via docker...");
-        let output = Command::new("docker-compose")
+        // TODO: GENERATE compose.yml and check if exist
+        
+        Command::new("docker-compose")
             .args(["up", "-d"])
-            .output()
+            .status()
             .expect("Failed to execute command");
-
-        println!("{:?}. Docker containers started", output);
     }
 
     // launch deploy via terraform
@@ -21,14 +21,19 @@ fn main() {
         println!("deploy: deploying infrastructure running");
     }
 
-    // start application
+    // start a container
     if options.contains_key("run") {
-        let output = Command::new("docker-compose")
-            .args(["run", &options["run"].to_string()])
-            .output()
-            .expect("Failed to execute command");
+        let run_command = options["run"].to_string();
 
-        println!("{:?}. Ran command to docker container", output);
+        if run_command.is_empty() {
+            println!("Run command not specified, please target a container. (web, api, mav, pagemind, crawler, cdn-server, or logger");
+        } else {
+            Command::new("docker-compose")
+                .args(["run", &run_command])
+                .status()
+                .expect("Failed to execute command");
+        }
+
     }
 
 }
