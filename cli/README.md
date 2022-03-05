@@ -1,6 +1,6 @@
 # a11ywatch-cli
 
-CLI tool to manage all things required.
+CLI tool to manage all things required BETA.
 
 ## Build
 
@@ -12,12 +12,20 @@ cargo install a11ywatch_cli
 
 ### Commands
 
-exact options comming soon and `--deploy` command WIP. At the moment after installing the cli, please clone the project and navigate to the folder to run the commands ( This will be removed soon ). Run `a11ywatch --help` to get all options and arguements.
+At the moment after installing the cli, clone the project and navigate to the folder to run the commands ( This will be removed soon ). Run `a11ywatch --help` to get all options and arguements.
+
+local commands
 
 ```sh
-a11ywatch --build
-a11ywatch --deploy
-a11ywatch --run
+a11ywatch build
+a11ywatch start
+```
+
+remote commands
+
+```sh
+a11ywatch deploy
+a11ywatch terminate
 ```
 
 ### Supported Architectures
