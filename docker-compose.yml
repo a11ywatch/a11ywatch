@@ -32,7 +32,6 @@ services:
       - MAV_CLIENT_URL=${MAV_CLIENT_URL:-http://127.0.0.1:8020}
       - PRIVATE_KEY=${PRIVATE_KEY}
       - PUBLIC_KEY=${PUBLIC_KEY}
-      - LOGGER_ENABLED=${LOGGER_ENABLED:-true}
       - LOGGER_URL=${LOGGER_URL:-logger}
       - ADMIN_ORIGIN=${ADMIN_ORIGIN}
       - BACKGROUND_CRAWL=${BACKGROUND_CRAWL:-true}
@@ -51,7 +50,6 @@ services:
       - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
       - AI_SERVICE_URL=${SCRIPTS_CDN_URL:-http://127.0.0.1:8020}
       - PORT=${PAGEMIND_PORT:-8040}
-      - LOGGER_ENABLED=${LOGGER_ENABLED:-true}
       - BACKUP_IMAGES=${BACKUP_IMAGES:-true}
       - PUPPET_POOL_MAX=${PUPPET_POOL_MAX:-4}
 
@@ -64,7 +62,6 @@ services:
       - "8020:8020"
     environment:
       - MAIN_API_URL=${MAIN_API_URL:-http://127.0.0.1:8080}
-      - LOGGER_ENABLED=${LOGGER_ENABLED:-true}
       - PORT=${MAV_PORT:-8020}
       - DOCKER_ENV=true
 
@@ -89,7 +86,6 @@ services:
       - "8090:8090"
     environment:
       - PORT=${ELASTIC_CDN_PORT:-8090}
-      - LOGGER_ENABLED=${LOGGER_ENABLED:-true}
 
   crawler:
     container_name: crawler
