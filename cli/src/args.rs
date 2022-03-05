@@ -4,37 +4,38 @@ use clap::{Parser, Subcommand};
 pub enum Commands {
     /// Build the project on the local machine [defaults to docker runtime].
     BUILD {
-        /// target machine local.
+        /// create target local machine non docker if true.
         #[clap(short, long)]
         local: bool,
     },
+    /// Start the application on the local machine [defaults to docker runtime].
     START {
-        /// start the local machine.
+        /// start the local machine non docker if true.
         #[clap(short, long)]
         local: bool,
     },
-    // DEPLOY {
-    //     /// deploy backend and frontend service.
-    //     #[clap(short, long)]
-    //     all: bool,
-    //     /// deploy frontend service.
-    //     #[clap(short, long)]
-    //     frontend: bool,
-    //     /// deploy backend service.
-    //     #[clap(short, long)]
-    //     backend: bool,
-    // },
-    // TERMINATE {
-    //     /// terminate backend and frontend service.
-    //     #[clap(short, long)]
-    //     all: bool,
-    //     /// terminate frontend service.
-    //     #[clap(short, long)]
-    //     frontend: bool,
-    //     /// terminate backend service.
-    //     #[clap(short, long)]
-    //     backend: bool,
-    // },
+    DEPLOY {
+        /// deploy backend and frontend service.
+        #[clap(short, long)]
+        all: bool,
+        /// deploy frontend service.
+        #[clap(short, long)]
+        frontend: bool,
+        /// deploy backend service.
+        #[clap(short, long)]
+        backend: bool,
+    },
+    TERMINATE {
+        /// terminate backend and frontend service.
+        #[clap(short, long)]
+        all: bool,
+        /// terminate frontend service.
+        #[clap(short, long)]
+        frontend: bool,
+        /// terminate backend service.
+        #[clap(short, long)]
+        backend: bool,
+    },
 }
 
 /// program to build, deploy, and run a11ywatch.

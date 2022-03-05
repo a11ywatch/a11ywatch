@@ -14,7 +14,7 @@ pub fn start_backend() {
     println!("up: starting the application via docker...");
 
     Command::new("docker-compose")
-        .args(["up", "-d"])
+        .args(["up", "-d", "-f", "a11ywatch.yml"])
         .status()
         .expect("Failed to execute command");
 }
