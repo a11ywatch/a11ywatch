@@ -14,8 +14,9 @@ pub enum Commands {
         #[clap(short, long)]
         local: bool,
     },
+    /// Deploy the build on remote infrastructure
     DEPLOY {
-        /// deploy backend and frontend service.
+        /// deploy backend and frontend service. [Default: GCP]
         #[clap(short, long)]
         all: bool,
         /// deploy frontend service.
@@ -25,6 +26,7 @@ pub enum Commands {
         #[clap(short, long)]
         backend: bool,
     },
+    /// Destroy the build on remote infrastructure. [Default: GCP]
     TERMINATE {
         /// terminate backend and frontend service.
         #[clap(short, long)]
@@ -45,7 +47,4 @@ pub struct Cli {
     /// Build sub commands
     #[clap(subcommand)]
     pub command: Option<Commands>,
-    // /// Run a one off container on the local machine.
-    // #[clap(short, long, default_value = "", required = false)]
-    // pub run: String,
 }

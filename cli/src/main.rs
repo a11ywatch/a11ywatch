@@ -4,6 +4,7 @@ pub mod args;
 pub mod generators;
 pub mod commands;
 pub mod runtime;
+pub mod builders;
 
 use clap::{Parser};
 use args::{Cli, Commands};

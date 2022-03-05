@@ -42,6 +42,7 @@ npm-debug.log
 
 # a11ywatch cli
 
+a11ywatch.yml
 cli/target
 **/terraform/uploads/
 .terraform/*

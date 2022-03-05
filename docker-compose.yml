@@ -1,4 +1,3 @@
-version: "3.0"
 services:
   api:
     container_name: api
@@ -6,7 +5,7 @@ services:
     networks:
       - back-net
     ports:
-      - "80:8080"
+      - 80:8080
     depends_on:
       - mongodb
     environment:
@@ -44,7 +43,7 @@ services:
     networks:
       - back-net
     ports:
-      - "8040:8040"
+      - 8040:8040
     environment:
       - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://127.0.0.1:8090/api}
       - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
@@ -59,7 +58,7 @@ services:
     networks:
       - back-net
     ports:
-      - "8020:8020"
+      - 8020:8020
     environment:
       - MAIN_API_URL=${MAIN_API_URL:-http://127.0.0.1:8080}
       - PORT=${MAV_PORT:-8020}
@@ -73,7 +72,7 @@ services:
     networks:
       - back-net
     ports:
-      - "8022:8022"
+      - 8022:8022
     environment:
       - PORT=${LOGGER_PORT:-8022}
 
@@ -83,7 +82,7 @@ services:
     networks:
       - back-net
     ports:
-      - "8090:8090"
+      - 8090:8090
     environment:
       - PORT=${ELASTIC_CDN_PORT:-8090}
 
@@ -93,7 +92,7 @@ services:
     networks:
       - back-net
     ports:
-      - "8000:8000"
+      - 8000:8000
 
   mongodb:
     container_name: mongodb
@@ -101,7 +100,7 @@ services:
       - back-net
     image: mongo
     ports:
-      - "27017:27017"
+      - 27017:27017
     volumes:
       - mongodb:/data/db
     environment:

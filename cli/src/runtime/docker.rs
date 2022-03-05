@@ -2,8 +2,7 @@ use std::process::Command;
 
 // TODO: DETECT IF COMPOSE NEEDS TO BE GENERATED
 pub fn build_backend() {
-    println!("build: starting the application via docker...");
-
+    println!("build: creating the application via docker...");
     Command::new("docker-compose")
     .args(["build"])
     .status()
@@ -11,10 +10,10 @@ pub fn build_backend() {
 }
 
 pub fn start_backend() {
-    println!("up: starting the application via docker...");
+    println!("up: running the application via docker...");
 
     Command::new("docker-compose")
-        .args(["up", "-d", "-f", "a11ywatch.yml"])
+        .args(["-f", "a11ywatch.yml", "up", "-d"])
         .status()
         .expect("Failed to execute command");
 }
