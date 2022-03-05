@@ -1,51 +1,59 @@
+
+extern crate clap;
 pub mod args;
 
-use args::parse_args;
+use clap::{Parser};
+
+use args::Cli;
 use std::process::Command;
 
 fn main() {
-    let options = parse_args(std::env::args());
+    let args = Cli::parse();
 
-    if options.contains_key("build") {
-        println!("build: starting the application via docker...");
-        // TODO: GENERATE compose.yml and check if exist
-        Command::new("docker-compose")
-            .args(["up", "-d"])
-            .status()
-            .expect("Failed to execute command");
-    }
+    // local
+    let build_target = &args.build;
+    let start_target = &args.up;
+    let options_run = String::from(&args.run);
+    // remote
+    let options_deploy = &args.deploy;
+    let options_terminate = &args.terminate;
 
-    // start a one off container
-    if options.contains_key("run") {
-        let run_command = options["run"].to_string();
-
-        if run_command.is_empty() {
-            println!("Run command not specified, please target a container. (web, api, mav, pagemind, crawler, cdn-server, or logger");
-        } else {
+    // // TODO: DETECT IF COMPOSE NEEDS TO BE GENERATED
+    if build_target | start_target {
+        if *build_target {
+            println!("build: starting the application via docker...");    
             Command::new("docker-compose")
-                .args(["run", &run_command])
+                .args(["build"])
+                .status()
+                .expect("Failed to execute command");
+        }
+    
+        if *start_target {
+            println!("up: starting the application via docker...");
+            Command::new("docker-compose")
+                .args(["up", "-d"])
                 .status()
                 .expect("Failed to execute command");
         }
 
+        if !options_run.is_empty() {        
+            Command::new("docker-compose")
+            .args(["up", "-d", &options_run])
+            .status()
+            .expect("Failed to execute command");
+        }
     }
-    
 
-    // INFRASTRURE COMMANDS
-
-    // start deploy via terraform
-    if options.contains_key("deploy") {
+    if *options_deploy {
         println!("deploy: deploying infrastructure running...");
 
         Command::new("./scripts/deploy.sh")
         .status()
         .expect("Failed to execute command. Make sure to be in the root of the a11ywatch project. Full deployment via binary WIP.");
-
         // TODO: DEPLOY WEB APP VIA GCR
     }
 
-    // launch deploy via terraform
-    if options.contains_key("destroy") {
+    if *options_terminate {
         println!("destroy: destroying infrastructure running...");
 
         // TODO: ADD CONFIRM PROMPT AND CHECK FOR OPTIONAL SKIP FLAG
@@ -53,5 +61,6 @@ fn main() {
         .status()
         .expect("Failed to execute command. Make sure to be in the root of the a11ywatch project. Full deployment via binary WIP.");
     }
+
 
 }
