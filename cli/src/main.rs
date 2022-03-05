@@ -1,10 +1,15 @@
 
 extern crate clap;
+
 pub mod args;
+pub mod commands;
 
 use clap::{Parser};
 
 use args::Cli;
+
+use commands::docker;
+
 use std::process::Command;
 
 fn main() {
@@ -18,35 +23,22 @@ fn main() {
     let options_deploy = &args.deploy;
     let options_terminate = &args.terminate;
 
-    // // TODO: DETECT IF COMPOSE NEEDS TO BE GENERATED
     if build_target | start_target {
         if *build_target {
-            println!("build: starting the application via docker...");    
-            Command::new("docker-compose")
-                .args(["build"])
-                .status()
-                .expect("Failed to execute command");
+            docker::build_backend();
         }
     
         if *start_target {
-            println!("up: starting the application via docker...");
-            Command::new("docker-compose")
-                .args(["up", "-d"])
-                .status()
-                .expect("Failed to execute command");
+            docker::start_backend();
         }
 
         if !options_run.is_empty() {        
-            Command::new("docker-compose")
-            .args(["up", "-d", &options_run])
-            .status()
-            .expect("Failed to execute command");
+            docker::run_backend(&options_run);
         }
     }
 
     if *options_deploy {
         println!("deploy: deploying infrastructure running...");
-
         Command::new("./scripts/deploy.sh")
         .status()
         .expect("Failed to execute command. Make sure to be in the root of the a11ywatch project. Full deployment via binary WIP.");
@@ -55,7 +47,6 @@ fn main() {
 
     if *options_terminate {
         println!("destroy: destroying infrastructure running...");
-
         // TODO: ADD CONFIRM PROMPT AND CHECK FOR OPTIONAL SKIP FLAG
         Command::new("./scripts/destroy.sh")
         .status()

@@ -12,7 +12,7 @@ cargo install a11ywatch_cli
 
 ### Commands
 
-exact options comming soon and `--deploy` command WIP. At the moment after installing the cli, please clone the project and navigate to the folder to run the commands ( This will be removed soon ).
+exact options comming soon and `--deploy` command WIP. At the moment after installing the cli, please clone the project and navigate to the folder to run the commands ( This will be removed soon ). Run `a11ywatch --help` to get all options and arguements.
 
 ```sh
 a11ywatch --build
