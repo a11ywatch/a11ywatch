@@ -4,12 +4,18 @@ use clap::{Subcommand};
 pub enum Commands {
     /// Build the project on the local machine [defaults to docker runtime].
     BUILD {
+        /// create machine with frontend client.
+        #[clap(short, long)]
+        frontend: bool,
         /// create target local machine non docker if true.
         #[clap(short, long)]
         local: bool,
     },
     /// Start the application on the local machine [defaults to docker runtime].
     START {
+        /// start the local machine with frontend client.
+        #[clap(short, long)]
+        frontend: bool,
         /// start the local machine non docker if true.
         #[clap(short, long)]
         local: bool,

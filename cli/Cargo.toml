@@ -1,6 +1,6 @@
 [package]
 name = "a11ywatch_cli"
-version = "0.0.11"
+version = "0.0.12"
 authors = ["j-mendez <jeff@a11ywatch.com>"]
 description = "A11yWatch CLI to build, deploy, and manage all things."
 repository = "https://github.com/a11ywatch/a11ywatch"

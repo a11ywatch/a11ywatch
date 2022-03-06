@@ -15,7 +15,7 @@ pub fn start_backend() {
         .expect("Failed to execute command");
 }
 
-pub fn run_backend(options_run: &String) {
+pub fn run_backend(options_run: &str) {
     Command::new("docker-compose")
         .args(["up", "-d", &options_run])
         .status()

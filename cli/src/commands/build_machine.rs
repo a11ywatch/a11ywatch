@@ -1,5 +1,5 @@
 use crate::runtime::docker;
-use crate::builders::temp;
+use crate::builders::temp::{create_compose_frontend_file};
 
 #[derive(Debug, Default)]
 pub(crate) struct Build {}
@@ -9,7 +9,7 @@ impl Build {
         if *local {
             println!("TODO: build all services on local machine...");
         } else {
-            temp::create_compose_file().unwrap();
+            create_compose_frontend_file().unwrap();
             docker::build_backend();
         }
     

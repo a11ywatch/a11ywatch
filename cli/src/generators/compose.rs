@@ -1,5 +1,4 @@
-// generate compose file to sys and return true if created
-pub fn generate_compose() -> &'static str {
+pub fn generate_compose_backend() -> &'static str {
     &"
 services:
   api:
@@ -119,9 +118,25 @@ services:
 
 networks:
   back-net:
+  front-net:
 volumes:
   mongodb:
   logger:
 
   "
+}
+
+pub fn generate_compose_frontend() -> &'static str {
+  &"
+services:
+  web:
+  container_name: web
+  image: a11ywatch/web
+  networks:
+    - front-net
+
+networks:
+  front-net:
+
+"
 }
