@@ -1,13 +1,13 @@
 
 extern crate clap;
-pub mod args;
+pub mod options;
 pub mod generators;
 pub mod commands;
 pub mod runtime;
 pub mod builders;
 
 use clap::{Parser};
-use args::{Cli, Commands};
+use options::{Cli, Commands};
 use commands::{Build, Start, Deploy};
 
 fn main() {
