@@ -17,11 +17,11 @@ impl Start {
             println!("TODO: build all services on local machine...");
         } else {
             if frontend {
-                println!("include frontend...");
                 temp::create_compose_frontend_file().unwrap();
             }
+            // TODO: OPTIONAL OR CLIENT BE
             temp::create_compose_backend_file().unwrap();
-            docker::start_backend();
+            docker::start_backend(&frontend);
         }
 
         &local

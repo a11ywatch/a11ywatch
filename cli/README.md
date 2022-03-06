@@ -10,6 +10,8 @@ build a11ywatch via docker on any machine. Get started by making sure you have R
 cargo install a11ywatch_cli
 ```
 
+Then run `a11ywatch -h` to get all options.
+
 ### Supported Architectures
 
 Supported archs are amd64 and arm64.

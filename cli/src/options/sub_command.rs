@@ -16,7 +16,7 @@ pub enum Commands {
         /// start the local machine with frontend client.
         #[clap(short, long)]
         frontend: bool,
-        /// start the local machine non docker if true.
+        /// start the local machine non docker if true [todo].
         #[clap(short, long)]
         local: bool,
     },

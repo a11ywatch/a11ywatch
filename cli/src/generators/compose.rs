@@ -6,8 +6,9 @@ services:
     image: a11ywatch/a11ywatch-core
     networks:
       - back-net
+      - front-net
     ports:
-      - 80:8080
+      - 3280:8080
     depends_on:
       - mongodb
     environment:
@@ -115,6 +116,7 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
       - back-net
+      - front-net
 
 networks:
   back-net:
@@ -130,11 +132,16 @@ pub fn generate_compose_frontend() -> &'static str {
   &"
 services:
   web:
-  container_name: web
-  image: a11ywatch/web
-  networks:
-    - front-net
-
+    container_name: web
+    image: a11ywatch/web
+    ports:
+      - 3270:3000
+    networks:
+      - front-net
+    environment:
+      - PORT=3000
+      - API=${API:-http://localhost:3280/graphql}
+      - WEB_SOCKET_URL=${WEB_SOCKET_URL:-ws://localhost:3280/graphql}
 networks:
   front-net:
 
