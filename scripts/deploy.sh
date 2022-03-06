@@ -6,6 +6,7 @@ mkdir -p -m 775 ./terraform/uploads
 
 cd terraform
 
+# local terraform provisioner
 if [[ `uname -m` == 'arm64' ]]; then
     FILE=./terraform
     if [ -f "$FILE" ]; then

@@ -5,8 +5,5 @@ if ! [ -x "$(command -v docker)" ]; then
     exit 1
 fi
 
-if [[ `uname -m` == 'arm64' ]]; then
-  docker compose --file dev.m1.yml up -d --build
-else 
-  docker compose --file dev.yml up -d --build
-fi
+
+docker compose --file dev.yml up -d --build
