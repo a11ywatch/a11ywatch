@@ -1,15 +1,15 @@
-
-extern crate clap;
 pub mod options;
 pub mod generators;
 pub mod commands;
 pub mod runtime;
 pub mod builders;
+pub mod shapes;
 
 use clap::{Parser};
 use options::{Cli, Commands};
-use commands::{Build, Start, Deploy};
+use commands::{Build, Start, Deploy, ApiClient};
 use std::env;
+use serde_json::json;
 
 const INCLUDE_FRONTEND: &str = "INCLUDE_FRONTEND";
 
@@ -34,6 +34,10 @@ fn main() {
             if !frontend && !backend {
                 Deploy::process_terminate(&all);
             }
+        },
+        Some(Commands::SCAN { url }) => {
+            let result = ApiClient::scan_website(&url);
+            println!("{}", json!(result.unwrap()));
         },
         None => {}
     }

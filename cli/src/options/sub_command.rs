@@ -44,4 +44,10 @@ pub enum Commands {
         #[clap(short, long)]
         backend: bool,
     },
+    /// Scan a website url for issues [only one page]
+    SCAN {
+        /// target url to scan.
+        #[clap(short, long)]
+        url: String,
+    },
 }
