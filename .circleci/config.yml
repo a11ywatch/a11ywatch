@@ -23,6 +23,10 @@ jobs:
       - run:
           description: "Install the A11yWatch CLI"
           command: cargo install --path ./cli
+      - save_cache:
+          paths:
+            - ~/usr/local/lib/target
+          key: node-v1-{{ .Branch }}-{{ checksum "./cli/Cargo.lock" }}
       - run:
           description: "Start the backend instance"
           command: a11ywatch start
@@ -31,11 +35,39 @@ jobs:
           command: a11ywatch start -f
       - run:
           description: "Run a website basic scan"
-          command: a11ywatch scan --url ${WEBSITE_SCAN_URL}
-      - save_cache:
-          paths:
-            - ~/usr/local/lib/target
-          key: node-v1-{{ .Branch }}-{{ checksum "./cli/Cargo.lock" }}
+          command: a11ywatch scan --url ${WEBSITE_SCAN_URL} > /tmp/a11ywatch/results.json
+      - run:
+          name: Post Stats to GitHub PR
+          command: |
+            sudo apt update
+            sudo apt install -y jq
+
+            pr_response=$(curl --location --request GET "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
+            -u $GH_USER:$GH_TOKEN)
+
+            if [ $(echo $pr_response | jq length) -eq 0 ]; then
+              echo "No PR found to update"
+            else
+              pr_comment_url=$(echo $pr_response | jq -r ".[]._links.comments.href")
+              website_results=$(jq '.website.issue | length' /tmp/a11ywatch/results.json)
+
+              start_body='{
+                            "body":'
+
+
+              end_body='   }'
+              
+              body_message=$(echo "Issues Found: $website_results on $WEBSITE_SCAN_URL")
+
+              body=$(echo $start_body '"'$body_message'"' $end_body)
+
+              curl --location --request POST "$pr_comment_url" \
+              -u $GH_USER:$GH_TOKEN \
+              --header 'Content-Type: application/json' \
+              --data-raw "$body"
+              
+            fi
+
 workflows:
   build_and_test:
     jobs:

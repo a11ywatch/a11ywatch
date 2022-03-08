@@ -4,7 +4,8 @@ use reqwest;
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct ApiResult {
-    website: Website,
+    #[serde(rename = "website")]
+    data: Website,
     code: u32,
     success: bool,
     message: String,
@@ -40,6 +41,6 @@ mod tests {
         let results = ApiClient::scan_website(&"http://a11ywatch.com");
         let status = results.unwrap();
         
-        assert_eq!(status.website.url, "http://a11ywatch.com");
+        assert_eq!(status.data.url, "http://a11ywatch.com");
     }
 }
