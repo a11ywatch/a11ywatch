@@ -7,19 +7,27 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - node-v1-{{ .Branch }}-{{ checksum "Cargo.lock" }}
+            - node-v1-{{ .Branch }}-{{ checksum "./cli/Cargo.lock" }}
             - node-v1-{{ .Branch }}-
             - node-v1-
       - run:
+          description: "Install the A11yWatch CLI"
           command: cargo install --path ./cli
+      - setup_remote_docker:
+          version: 19.03.13
       - run:
+          description: "Start the backend instance"
+          command: a11ywatch start
+      - run:
+          description: "Start the frontend instance"
           command: a11ywatch start -f
-      - run:
-          command: a11ywatch scan --url https://a11ywatch.com
+      # - run:
+      #     description: "Run a website basic scan"
+      #     command: a11ywatch scan --url https://a11ywatch.com
       - save_cache:
           paths:
             - ~/usr/local/lib/target
-          key: node-v1-{{ .Branch }}-{{ checksum "Cargo.lock" }}
+          key: node-v1-{{ .Branch }}-{{ checksum "./cli/Cargo.lock" }}
 workflows:
   build_and_test:
     jobs:
