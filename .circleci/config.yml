@@ -1,0 +1,26 @@
+version: 2.1
+jobs:
+  cli:
+    docker:
+      - image: cimg/rust:1.59.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-v1-{{ .Branch }}-{{ checksum "Cargo.lock" }}
+            - node-v1-{{ .Branch }}-
+            - node-v1-
+      - run:
+          command: cargo install --path ./cli
+      - run:
+          command: a11ywatch start -f
+      - run:
+          command: a11ywatch scan --url https://a11ywatch.com
+      - save_cache:
+          paths:
+            - ~/usr/local/lib/target
+          key: node-v1-{{ .Branch }}-{{ checksum "Cargo.lock" }}
+workflows:
+  build_and_test:
+    jobs:
+      - cli
