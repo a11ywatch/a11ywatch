@@ -23,6 +23,10 @@ jobs:
       - run:
           description: "Install the A11yWatch CLI"
           command: cargo install --path ./cli
+      - save_cache:
+          paths:
+            - ~/usr/local/lib/target
+          key: node-v1-{{ .Branch }}-{{ checksum "./cli/Cargo.lock" }}
       - run:
           description: "Start the backend instance"
           command: a11ywatch start
@@ -32,10 +36,27 @@ jobs:
       - run:
           description: "Run a website basic scan"
           command: a11ywatch scan --url ${WEBSITE_SCAN_URL}
-      - save_cache:
-          paths:
-            - ~/usr/local/lib/target
-          key: node-v1-{{ .Branch }}-{{ checksum "./cli/Cargo.lock" }}
+      - run:
+          name: Post Stats to GitHub PR
+          command: |
+            sudo apt update
+            sudo apt install -y jq
+
+            pr_response=$(curl --location --request GET "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
+            -u $GH_USER:$GH_TOKEN)
+
+            if [ $(echo $pr_response | jq length) -eq 0 ]; then
+              echo "No PR found to update"
+            else
+              pr_comment_url=$(echo $pr_response | jq -r ".[]._links.comments.href")
+            fi
+
+            curl --location --request POST "$pr_comment_url" \
+            -u $GH_USER:$GH_TOKEN \
+            --header 'Content-Type: application/json' \
+            --data-raw '{
+            "body": "This would be the data to add"
+            }'
 workflows:
   build_and_test:
     jobs:
