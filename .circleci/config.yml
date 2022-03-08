@@ -1,8 +1,9 @@
 version: 2.1
 jobs:
   cli:
-    docker:
-      - image: cimg/rust:1.59.0
+    machine:
+      image: ubuntu-2004:current
+    resource_class: large
     steps:
       - checkout
       - restore_cache:
@@ -11,19 +12,26 @@ jobs:
             - node-v1-{{ .Branch }}-
             - node-v1-
       - run:
+          name: Install Docker Compose and Rust
+          environment:
+            COMPOSE_VERSION: "1.29.2"
+          command: |
+            curl https://sh.rustup.rs -sSf | sh -s -- -y
+            curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - run:
           description: "Install the A11yWatch CLI"
           command: cargo install --path ./cli
-      - setup_remote_docker:
-          version: 19.03.13
       - run:
           description: "Start the backend instance"
           command: a11ywatch start
       - run:
           description: "Start the frontend instance"
           command: a11ywatch start -f
-      # - run:
-      #     description: "Run a website basic scan"
-      #     command: a11ywatch scan --url https://a11ywatch.com
+      - run:
+          description: "Run a website basic scan"
+          command: a11ywatch scan --url ${WEBSITE_SCAN_URL}
       - save_cache:
           paths:
             - ~/usr/local/lib/target
