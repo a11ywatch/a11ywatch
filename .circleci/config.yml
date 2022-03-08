@@ -35,7 +35,7 @@ jobs:
           command: a11ywatch start -f
       - run:
           description: "Run a website basic scan"
-          command: a11ywatch scan --url ${WEBSITE_SCAN_URL}
+          command: a11ywatch scan --url ${WEBSITE_SCAN_URL} > /tmp/a11ywatch/results.json
       - run:
           name: Post Stats to GitHub PR
           command: |
@@ -49,14 +49,25 @@ jobs:
               echo "No PR found to update"
             else
               pr_comment_url=$(echo $pr_response | jq -r ".[]._links.comments.href")
+              website_results=$(jq '.website.issue | length' /tmp/a11ywatch/results.json)
+
+              start_body='{
+                            "body":'
+
+
+              end_body='   }'
+              
+              body_message=$(echo "Issues Found: $website_results on $WEBSITE_SCAN_URL")
+
+              body=$(echo $start_body '"'$body_message'"' $end_body)
+
+              curl --location --request POST "$pr_comment_url" \
+              -u $GH_USER:$GH_TOKEN \
+              --header 'Content-Type: application/json' \
+              --data-raw "$body"
+              
             fi
 
-            curl --location --request POST "$pr_comment_url" \
-            -u $GH_USER:$GH_TOKEN \
-            --header 'Content-Type: application/json' \
-            --data-raw '{
-            "body": "This would be the data to add"
-            }'
 workflows:
   build_and_test:
     jobs:

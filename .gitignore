@@ -61,3 +61,5 @@ my_password.txt
 # macos amd64 binary
 cli/terraform/terraform
 terraform/terraform
+results.json
+build/test.sh
