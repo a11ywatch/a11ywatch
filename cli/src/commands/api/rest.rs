@@ -1,14 +1,6 @@
-use error_chain::error_chain;
 use serde::{Deserialize, Serialize};
 use crate::shapes::Website;
 use reqwest;
-
-error_chain! {
-    foreign_links {
-        Io(std::io::Error);
-        HttpRequest(reqwest::Error);
-    }
-}
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct ApiResult {
