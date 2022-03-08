@@ -1,6 +1,9 @@
 version: 2.1
+orbs:
+  orb-tools: circleci/orb-tools@10
 jobs:
   cli:
+    executor: orb-tools/ubuntu
     machine:
       image: ubuntu-2004:current
     resource_class: large
@@ -67,8 +70,32 @@ jobs:
               --data-raw "$body"
               
             fi
-
 workflows:
-  build_and_test:
+  integration-test_deploy:
     jobs:
       - cli
+      - orb-tools/dev-promote-prod-from-commit-subject:
+          add-pr-comment: false
+          fail-if-semver-not-indicated: false
+          filters:
+            branches:
+              only: main
+          orb-name: a11ywatch/a11ywatch
+          publish-version-tag: false
+          requires:
+            - cli
+    when: << pipeline.parameters.run-integration-tests >>
+  test-pack:
+    jobs:
+      - orb-tools/lint
+      - orb-tools/pack
+      - orb-tools/publish-dev:
+          orb-name: a11ywatch/a11ywatch
+          requires:
+            - orb-tools/lint
+            - orb-tools/pack
+      - orb-tools/trigger-integration-tests-workflow:
+          name: trigger-integration-dev
+          requires:
+            - orb-tools/publish-dev
+    unless: << pipeline.parameters.run-integration-tests >>
