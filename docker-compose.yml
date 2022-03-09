@@ -75,18 +75,6 @@ services:
       - PORT=${MAV_PORT:-8020}
       - DOCKER_ENV=true
 
-  logger:
-    container_name: logger
-    image: a11ywatch/logger
-    volumes:
-      - /usr/src/app/dist/logs
-    networks:
-      - back-net
-    ports:
-      - 8022:8022
-    environment:
-      - PORT=${LOGGER_PORT:-8022}
-
   cdn-server:
     container_name: cdn-server
     image: a11ywatch/cdn-server
