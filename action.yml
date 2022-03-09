@@ -1,0 +1,39 @@
+name: "A11yWatch Bot"
+on: push
+branding:
+  icon: "eye"
+  color: "green"
+description: "A11yWatch Project Bot scans your website url to make sure its fully inclusive"
+inputs:
+  REPO_URL:
+    description: "REPO_URL: Repository URL"
+    required: true
+  PROJECT_URL:
+    description: "PROJECT_URL: Project URL"
+    required: true
+  WEBSITE_URL:
+    description: "Website url domain to scan."
+    required: true
+  ACCESS_TOKEN:
+    description: "ACCESS_TOKEN: Access Token to post status to PR"
+    required: true
+runs-on: ubuntu-latest
+  steps:
+    - name: Check out repository code
+      uses: actions/checkout@v2
+    - name: Install Docker and Rust
+      shell: pwsh
+      run: |
+        curl https://sh.rustup.rs -sSf | sh -s -- -y
+        curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
+        chmod +x ~/docker-compose
+        sudo mv ~/docker-compose /usr/local/bin/docker-compose
+    - name: Install the A11yWatch CLI
+      shell: pwsh
+      run: cargo install a11ywatch_cli
+    - name: Start A11yWatch Service
+      shell: pwsh
+      run: a11ywatch start
+    - name: Scan Website
+      shell: pwsh
+      run: a11ywatch scan --url $WEBSITE_URL > resultsfile.log | Should -Be $true
