@@ -20,6 +20,15 @@ pub enum Commands {
         #[clap(short, long)]
         local: bool,
     },
+    /// Stop the project on the local machine [defaults to docker runtime].
+    STOP {
+        /// stop the local machine with frontend client.
+        #[clap(short, long)]
+        frontend: bool,
+        /// create target local machine non docker if true.
+        #[clap(short, long)]
+        local: bool,
+    },
     /// Deploy the build on remote infrastructure
     DEPLOY {
         /// deploy backend and frontend service. [defaults: GCP]

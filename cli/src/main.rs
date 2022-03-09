@@ -7,7 +7,7 @@ pub mod shapes;
 
 use clap::{Parser};
 use options::{Cli, Commands};
-use commands::{Build, Start, Deploy, ApiClient};
+use commands::{Build, Start, Stop, Deploy, ApiClient};
 use std::env;
 use serde_json::json;
 
@@ -24,6 +24,10 @@ fn main() {
         Some(Commands::START { frontend, local }) => {
             env::set_var(INCLUDE_FRONTEND, frontend.to_string());
             Start::process(&local);
+        },
+        Some(Commands::STOP { frontend, local }) => {
+            env::set_var(INCLUDE_FRONTEND, frontend.to_string());
+            Stop::process(&local);
         },
         Some(Commands::DEPLOY { frontend, all, backend }) => {
             if !frontend && !backend {

@@ -8,10 +8,9 @@ pub fn build_backend() {
         .expect("Failed to execute command");
 }
 
-pub fn start_backend(frontend: &bool) {
+pub fn start_service(frontend: &bool) {
     let mut cmd = Command::new("docker-compose");
 
-    // TODO: RUN ONLY CLIENT OR BACKEND (ATM ONLY CLIENT IS SPLIT)
     if *frontend {
         cmd
         .args(["-f", "/tmp/a11ywatch/compose.yml", "-f", "/tmp/a11ywatch/compose.frontend.yml", "up", "-d"])
@@ -25,9 +24,25 @@ pub fn start_backend(frontend: &bool) {
     }
 }
 
+pub fn stop_service(frontend: &bool) {
+    let mut cmd = Command::new("docker-compose");
+
+    if *frontend {
+        cmd
+        .args(["-f", "/tmp/a11ywatch/compose.yml", "-f", "/tmp/a11ywatch/compose.frontend.yml", "down"])
+        .status()
+        .expect("Failed to execute command");
+    } else {
+        cmd
+        .args(["-f", "/tmp/a11ywatch/compose.yml", "down"])
+        .status()
+        .expect("Failed to execute command");
+    }
+}
+
 pub fn run_backend(options_run: &str) {
     Command::new("docker-compose")
-        .args(["up", "-d", &options_run])
+        .args(["-f", "/tmp/a11ywatch/compose.yml", "-f", "/tmp/a11ywatch/compose.frontend.yml", "up", "-d", &options_run])
         .status()
         .expect("Failed to execute command");
 }
