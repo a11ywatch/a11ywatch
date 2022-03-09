@@ -35,7 +35,7 @@ jobs:
           command: a11ywatch start -f
       - run:
           description: "Run a website basic scan"
-          command: a11ywatch scan --url ${WEBSITE_SCAN_URL} > /tmp/a11ywatch/results.json
+          command: a11ywatch scan --url $WEBSITE_SCAN_URL > /tmp/a11ywatch/results.json
       - run:
           name: Post Stats to GitHub PR
           command: |

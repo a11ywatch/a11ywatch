@@ -1,7 +1,7 @@
 pub mod options;
 pub mod generators;
 pub mod commands;
-pub mod runtime;
+pub mod launchers;
 pub mod builders;
 pub mod shapes;
 
@@ -12,6 +12,7 @@ use std::env;
 use serde_json::json;
 
 const INCLUDE_FRONTEND: &str = "INCLUDE_FRONTEND";
+const EXTERNAL: &str = "EXTERNAL";
 
 fn main() {
     let cli = Cli::parse();
@@ -39,7 +40,9 @@ fn main() {
                 Deploy::process_terminate(&all);
             }
         },
-        Some(Commands::SCAN { url }) => {
+        Some(Commands::SCAN { url, external }) => {
+            env::set_var(EXTERNAL, external.to_string());
+
             let result = ApiClient::scan_website(&url);
             println!("{}", json!(result.unwrap()));
         },

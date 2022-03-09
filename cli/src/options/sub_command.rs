@@ -58,5 +58,8 @@ pub enum Commands {
         /// target url to scan.
         #[clap(short, long)]
         url: String,
+        /// whether to use the a11ywatch external api.
+        #[clap(short, long)]
+        external: bool,
     },
 }
