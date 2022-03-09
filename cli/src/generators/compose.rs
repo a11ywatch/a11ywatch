@@ -14,15 +14,12 @@ services:
     environment:
       - DB_URL=${DB_URL:-mongodb://mongodb:27017/?compressors=zlib&gssapiServiceName=mongodb}
       - DB_NAME=${DB_NAME:-a11ywatch}
-      - ENGINE_API_KEY=${ENGINE_API_KEY}
       - APOLLO_GRAPH_VARIANT=${APOLLO_GRAPH_VARIANT:-current}
       - APOLLO_SCHEMA_REPORTING=${APOLLO_SCHEMA_REPORTING:-false}
       - CLIENT_URL=${CLIENT_URL:-http://localhost:3000}
       - WATCHER_CLIENT_URL=${WATCHER_CLIENT_URL:-http://crawler:8000}
       - GRAPHQL_PORT=${GRAPHQL_PORT:-8080}
       - EMAIL_SERVICE_URL=${EMAIL_SERVICE_URL}
-      - EMAIL_MAIN_LEAD=${EMAIL_MAIN_LEAD}
-      - EMAIL_SERVICE_PASSWORD=${EMAIL_SERVICE_PASSWORD:-SomePassword}
       - EMAIL_CLIENT_ID=${EMAIL_CLIENT_ID}
       - EMAIL_CLIENT_KEY=${EMAIL_CLIENT_KEY}
       - STRIPE_KEY=${STRIPE_KEY}
