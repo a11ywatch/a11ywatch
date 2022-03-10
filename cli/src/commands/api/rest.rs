@@ -1,8 +1,8 @@
-use serde::{Deserialize, Serialize};
 use crate::shapes::Website;
-use std::env;
+use serde::{Deserialize, Serialize};
 use crate::EXTERNAL;
-use reqwest;
+use std::env;
+use ureq::{Error};
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct ApiResult {
@@ -17,8 +17,7 @@ pub struct ApiResult {
 pub(crate) struct ApiClient {}
 
 impl ApiClient {
-    #[tokio::main]
-    pub async fn scan_website(url: &str) -> reqwest::Result<ApiResult> {
+    pub fn scan_website(url: &str) -> Result<ApiResult, Error> {
         let target_destination: String = match env::var(EXTERNAL) {
             Ok(_) => "https://api.a11ywatch.com",
             Err(_) => "http://127.0.0.1:3280",
@@ -26,18 +25,15 @@ impl ApiClient {
 
         let request_destination = format!("{}/api/scan-simple", target_destination);
 
-        let mut map = std::collections::HashMap::new();
-        map.insert("websiteUrl", url);
-        
-        let client = reqwest::Client::new();
-        let res = client.post(request_destination)
-            .json(&map)
-            .send()
-            .await?;
+        let resp: String = ureq::post(&request_destination)
+        .send_json(ureq::json!({
+            "websiteUrl": url
+        }))?
+        .into_string()?;
 
-        let body: ApiResult = res.json().await?;
+        let result: ApiResult = serde_json::from_str(&resp).unwrap();
 
-        Ok(body)
+        Ok(result)
     }
 }
 

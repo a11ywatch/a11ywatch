@@ -1,6 +1,6 @@
 [package]
 name = "a11ywatch_cli"
-version = "0.0.25"
+version = "0.0.27"
 authors = ["j-mendez <jeff@a11ywatch.com>"]
 description = "A11yWatch CLI to build, deploy, and manage all things."
 repository = "https://github.com/a11ywatch/a11ywatch"
@@ -14,8 +14,7 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "3.1.5", features = ["derive"] }
-reqwest = { version = "0.11.9", features = ["json"] }
-tokio = { version = "1.17.0", features = ["macros", "rt-multi-thread"] }
+ureq = { version = "2.4.0", features = ["json"] }
 serde = { version = "1.0.136", features = ["derive"] }
 serde_json =  { version = "1.0" }
 

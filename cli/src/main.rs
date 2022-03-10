@@ -42,7 +42,6 @@ fn main() {
         },
         Some(Commands::SCAN { url, external }) => {
             env::set_var(EXTERNAL, external.to_string());
-
             let result = ApiClient::scan_website(&url);
             println!("{}", json!(result.unwrap()));
         },
