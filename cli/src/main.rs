@@ -1,15 +1,15 @@
-pub mod options;
-pub mod generators;
-pub mod commands;
-pub mod launchers;
-pub mod builders;
-pub mod shapes;
-
 use clap::{Parser};
 use options::{Cli, Commands};
 use commands::{Build, Start, Stop, Deploy, ApiClient};
 use std::env;
 use serde_json::json;
+
+pub mod options;
+pub mod generators;
+pub mod commands;
+pub mod launchers;
+pub mod fs;
+pub mod utils;
 
 const INCLUDE_FRONTEND: &str = "INCLUDE_FRONTEND";
 const EXTERNAL: &str = "EXTERNAL";

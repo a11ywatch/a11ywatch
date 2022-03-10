@@ -4,8 +4,6 @@ use std::io::prelude::*;
 use std::path::Path;
 use serde_json::{json, Value, from_reader};
 
-// os_imp::temp_dir()
-
 const CONFIG_FILE: &str = "/tmp/a11ywatch/config.json";
 const APP_DIRECTORY: &str = "/tmp/a11ywatch";
 
