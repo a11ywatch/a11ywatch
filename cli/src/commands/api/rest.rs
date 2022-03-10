@@ -2,7 +2,7 @@ use crate::shapes::Website;
 use serde::{Deserialize, Serialize};
 use crate::EXTERNAL;
 use std::env;
-use ureq::{Error};
+use ureq::{Error, post, json};
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct ApiResult {
@@ -25,8 +25,8 @@ impl ApiClient {
 
         let request_destination = format!("{}/api/scan-simple", target_destination);
 
-        let resp: String = ureq::post(&request_destination)
-        .send_json(ureq::json!({
+        let resp: String = post(&request_destination)
+        .send_json(json!({
             "websiteUrl": url
         }))?
         .into_string()?;
