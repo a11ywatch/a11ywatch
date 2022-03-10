@@ -1,12 +1,12 @@
 use crate::launchers::docker;
-use crate::fs::temp::{init, create_compose_frontend_file, create_compose_backend_file};
+use crate::fs::temp::{sync, create_compose_frontend_file, create_compose_backend_file};
 
 #[derive(Debug, Default)]
 pub(crate) struct Build {}
 
 impl Build {
     pub(crate) fn process(local: &bool) -> &bool {
-        init().unwrap();
+        sync().unwrap();
 
         if *local {
             println!("TODO: build all services on local machine...");

@@ -37,7 +37,7 @@ pub fn create_compose_frontend_file() -> std::io::Result<()> {
 }
 
 /// determine whether the temp dir needs to re-init from a new version change
-pub fn init() -> std::io::Result<()> {
+pub fn sync() -> std::io::Result<()> {
     let version: &'static str = env!("CARGO_PKG_VERSION");
 
     if Path::new(CONFIG_FILE).exists() {
@@ -46,18 +46,15 @@ pub fn init() -> std::io::Result<()> {
         let current_version = json.get("version").expect("file should have version key");
         
         if version != current_version {
-            // TODO: CAPTURE PRIOR CONFIGS AND REPLACE
-            let json = json!({
-                "version": version
-            });
-            
             // reset app directory contents
             remove_dir_all(APP_DIRECTORY).unwrap();
             create_dir(APP_DIRECTORY).unwrap();
 
             let mut file = File::create(CONFIG_FILE)?;
-            
-            // update configuration
+            let json = json!({
+                "version": version
+            });    
+
             file.write_all(&json.to_string().as_bytes())?;
         }
     } else {
