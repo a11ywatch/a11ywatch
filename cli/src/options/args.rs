@@ -1,7 +1,7 @@
 use clap::{Parser};
 use crate::options::sub_command::Commands;
 
-/// program to build, deploy, and run a11ywatch.
+/// program to build, deploy, integrate, and run a11ywatch.
 #[derive(Parser)]
 #[clap(author, version, about, long_about = None)]
 pub struct Cli {
@@ -11,4 +11,7 @@ pub struct Cli {
     /// Log file results path
     #[clap(short, long)]
     pub find_results: bool,
+    /// Get github API endpoint of project
+    #[clap(short, long)]
+    pub github_api_url: bool,
 }

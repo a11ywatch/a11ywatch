@@ -41,10 +41,10 @@ jobs:
           command: |
             sudo apt update
             sudo apt install -y jq
-
             results_dir="$(a11ywatch --find-results)"
+            gh_dir="$(a11ywatch --github-api-url)"
 
-            pr_response=$(curl --location --request GET "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
+            pr_response=$(curl --location --request GET $gh_dir \
             -u $GH_USER:$GH_TOKEN)
 
             if [ $(echo $pr_response | jq length) -eq 0 ]; then
@@ -59,7 +59,7 @@ jobs:
 
               end_body='   }'
               
-              body_message=$(echo "$website_results found on $WEBSITE_SCAN_URL")
+              body_message=$(echo "$website_results issues on $WEBSITE_SCAN_URL")
 
               body=$(echo $start_body '"'$body_message'"' $end_body)
 

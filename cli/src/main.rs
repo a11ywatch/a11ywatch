@@ -17,11 +17,17 @@ const EXTERNAL: &str = "EXTERNAL";
 
 fn main() {
     let cli = Cli::parse();
+    let mut file_manager = TempFs::new();
 
     if cli.find_results {
-        let file_manager = TempFs::new();
         println!("{}", &file_manager.results_file);
     }
+
+    if cli.github_api_url {
+        use self::utils::get_api;
+        println!("{}", &get_api());
+    }
+
 
     match &cli.command {
         Some(Commands::BUILD { frontend, local }) => {
@@ -52,7 +58,6 @@ fn main() {
             let json_results = json!(result.unwrap());
 
             if *save {
-                let mut file_manager = TempFs::new();
                 file_manager.save_results(&json_results).unwrap();
             }
             println!("{}", &json_results);
