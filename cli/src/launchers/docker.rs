@@ -1,48 +1,51 @@
 use std::process::Command;
+use crate::fs::TempFs;
 
 // TODO: TARGET COMPOSE LOCATION OF FILE
-pub fn build_backend() {
+pub(crate) fn build_backend(file_manager: &TempFs) {
     Command::new("docker-compose")
-        .args(["build"])
-        .status()
-        .expect("Failed to execute command");
+    .args(["-f", &file_manager.backend_compose, "-f", &file_manager.frontend_compose, "build"])
+    .status()
+    .expect("Failed to execute command");
 }
 
-pub fn start_service(frontend: &bool) {
+pub(crate) fn start_service(frontend: &bool, file_manager: &TempFs) {
     let mut cmd = Command::new("docker-compose");
 
     if *frontend {
         cmd
-        .args(["-f", "/tmp/a11ywatch/compose.yml", "-f", "/tmp/a11ywatch/compose.frontend.yml", "up", "-d"])
+        .args(["-f", &file_manager.backend_compose, "-f", &file_manager.frontend_compose, "up", "-d"])
         .status()
         .expect("Failed to execute command");
     } else {
         cmd
-        .args(["-f", "/tmp/a11ywatch/compose.yml", "up", "-d"])
+        .args(["-f", &file_manager.backend_compose, "up", "-d"])
         .status()
         .expect("Failed to execute command");
     }
 }
 
-pub fn stop_service(frontend: &bool) {
+// /// run a command to the docker container
+// pub(crate) fn run_backend(options_run: &str, file_manager: &TempFs) {
+//     Command::new("docker-compose")
+//         .args(["-f", &file_manager.backend_compose, "-f", &file_manager.frontend_compose, "up", "-d", &options_run])
+//         .status()
+//         .expect("Failed to execute command");
+// }
+
+/// shut down the local instance and remove containers
+pub(crate) fn stop_service(frontend: &bool, file_manager: &TempFs) {
     let mut cmd = Command::new("docker-compose");
 
     if *frontend {
         cmd
-        .args(["-f", "/tmp/a11ywatch/compose.yml", "-f", "/tmp/a11ywatch/compose.frontend.yml", "down"])
+        .args(["-f", &file_manager.backend_compose, "-f", &file_manager.frontend_compose, "down"])
         .status()
         .expect("Failed to execute command");
     } else {
         cmd
-        .args(["-f", "/tmp/a11ywatch/compose.yml", "down"])
+        .args(["-f", &file_manager.backend_compose, "down"])
         .status()
         .expect("Failed to execute command");
     }
-}
-
-pub fn run_backend(options_run: &str) {
-    Command::new("docker-compose")
-        .args(["-f", "/tmp/a11ywatch/compose.yml", "-f", "/tmp/a11ywatch/compose.frontend.yml", "up", "-d", &options_run])
-        .status()
-        .expect("Failed to execute command");
 }

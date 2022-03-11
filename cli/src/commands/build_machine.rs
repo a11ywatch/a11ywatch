@@ -1,19 +1,19 @@
 use crate::launchers::docker;
-use crate::fs::temp::{sync, create_compose_frontend_file, create_compose_backend_file};
+use crate::fs::temp::{TempFs};
 
 #[derive(Debug, Default)]
 pub(crate) struct Build {}
 
 impl Build {
     pub(crate) fn process(local: &bool) -> &bool {
-        sync().unwrap();
+        let mut file_manager = TempFs::new();
 
         if *local {
             println!("TODO: build all services on local machine...");
         } else {
-            create_compose_backend_file().unwrap();
-            create_compose_frontend_file().unwrap();
-            docker::build_backend();
+            file_manager.create_compose_backend_file().unwrap();
+            file_manager.create_compose_frontend_file().unwrap();
+            docker::build_backend(&file_manager);
         }
     
         &local

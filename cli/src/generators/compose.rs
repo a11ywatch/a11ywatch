@@ -31,11 +31,11 @@ services:
       - MAV_CLIENT_URL=${MAV_CLIENT_URL:-http://127.0.0.1:8020}
       - PRIVATE_KEY=${PRIVATE_KEY}
       - PUBLIC_KEY=${PUBLIC_KEY}
-      - LOGGER_URL=${LOGGER_URL:-logger}
       - ADMIN_ORIGIN=${ADMIN_ORIGIN}
       - BACKGROUND_CRAWL=${BACKGROUND_CRAWL:-true}
-      - DOCKER_ENV=true
       - REDIS_CLIENT=${REDIS_CLIENT:-redis://redis:6379}
+      - REDIS_HOST=redis
+      - DOCKER_ENV=true
 
   pagemind:
     container_name: pagemind
@@ -108,7 +108,6 @@ networks:
   front-net:
 volumes:
   mongodb:
-  logger:
 
   "
 }

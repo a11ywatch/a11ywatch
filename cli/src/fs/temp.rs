@@ -4,67 +4,119 @@ use std::io::prelude::*;
 use std::path::Path;
 use serde_json::{json, Value, from_reader};
 
-const CONFIG_FILE: &str = "/tmp/a11ywatch/config.json";
-const APP_DIRECTORY: &str = "/tmp/a11ywatch";
-
-fn ensure_temp_dir() -> std::io::Result<()> {
-    if !Path::new("/tmp").exists() {
-        create_dir("/tmp")?;
-    }
-    if !Path::new(APP_DIRECTORY).exists() {
-        create_dir(APP_DIRECTORY)?;
-    }
-    Ok(())
+/// Manage file paths and contents for system
+#[derive(Debug, Default)]
+pub(crate) struct TempFs {
+    // backend infra compose file
+    pub backend_compose: String,
+    // // frontend infra compose file
+    pub frontend_compose: String,
+    // // app directory root
+    // pub app_dir: String,
+    // // infra config file
+    // pub config_file: String
 }
 
-// return true if created a new compose file
-pub fn create_compose_backend_file() -> std::io::Result<()> {
-    ensure_temp_dir()?;
-    if !Path::new("/tmp/a11ywatch/compose.yml").exists() {
-        let mut file = File::create("/tmp/a11ywatch/compose.yml")?;
-        file.write_all(&generate_compose_backend().as_bytes())?;
-    }
-    Ok(())
+pub(crate)
+trait Fs {
+    fn new () -> Self;
+    fn ensure_temp_dir(&self);
+    fn create_compose_backend_file(&self);
+    fn create_compose_frontend_file(&self);
+    fn sync();
 }
+  
+impl TempFs {
+    pub fn new() -> Self {
+        let tmp_dir = std::env::temp_dir().display().to_string();
+        let app_dir = &format!("{}/a11ywatch", &tmp_dir);
+        let config_file = &format!("{}/config.json", app_dir);
 
-pub fn create_compose_frontend_file() -> std::io::Result<()> {
-    ensure_temp_dir()?;
-    if !Path::new("/tmp/a11ywatch/compose.frontend.yml").exists() {
-        let mut file = File::create("/tmp/a11ywatch/compose.frontend.yml")?;
-        file.write_all(&generate_compose_frontend().as_bytes())?;
+        TempFs::ensure_temp_dir(&tmp_dir, &app_dir).unwrap();
+        TempFs::sync(&app_dir, &config_file).unwrap();
+
+        Self {
+            backend_compose: format!("{}/compose.yml", app_dir),
+            frontend_compose: format!("{}/compose.frontend.yml", app_dir)
+            // app_dir: format!("{}", app_dir),
+            // config_file: format!("{}", config_file),
+         }
     }
-    Ok(())
-}
+    
+    /// make sure the tmp directory is created for the app
+    fn ensure_temp_dir(tmp_dir: &str, app_dir: &str) -> std::io::Result<()> {    
+        if !Path::new(tmp_dir).exists() {
+            create_dir(tmp_dir)?;
+        }
+        if !Path::new(&app_dir).exists() {
+            create_dir(app_dir)?;
+        }
+        Ok(())
+    }
+    
+    /// create compose backend file is does not exist
+    pub fn create_compose_backend_file(&mut self) -> std::io::Result<()> {
+        if !Path::new(&self.backend_compose).exists() {
+            let mut file = File::create(&self.backend_compose)?;
+            file.write_all(&generate_compose_backend().as_bytes())?;
+        }
+        Ok(())
+    }
+    
+    /// create compose frontend file is does not exist
+    pub fn create_compose_frontend_file(&mut self) -> std::io::Result<()> {
+        if !Path::new(&self.frontend_compose).exists() {
+            let mut file = File::create(&self.frontend_compose)?;
+            file.write_all(&generate_compose_frontend().as_bytes())?;
+        }
+        Ok(())
+    }
+    
+    /// determine whether the temp dir needs to re-init from a new version change
+    fn sync(app_dir: &str, config_file: &str) -> std::io::Result<()> {
+        let version: &'static str = env!("CARGO_PKG_VERSION");
 
-/// determine whether the temp dir needs to re-init from a new version change
-pub fn sync() -> std::io::Result<()> {
-    let version: &'static str = env!("CARGO_PKG_VERSION");
-
-    if Path::new(CONFIG_FILE).exists() {
-        let file = File::open(CONFIG_FILE).expect("file should open");
-        let json: Value = from_reader(file).expect("file should be proper JSON");
-        let current_version = json.get("version").expect("file should have version key");
-        
-        if version != current_version {
-            // reset app directory contents
-            remove_dir_all(APP_DIRECTORY).unwrap();
-            create_dir(APP_DIRECTORY).unwrap();
-
-            let mut file = File::create(CONFIG_FILE)?;
+        if Path::new(&config_file).exists() {
+            let file = File::open(&config_file).expect("file should open");
+            let json: Value = from_reader(file).expect("file should be proper JSON");
+            let current_version = json.get("version").expect("file should have version key");
+            
+            if version != current_version {
+                // reset app directory contents
+                remove_dir_all(&app_dir).unwrap();
+                create_dir(&app_dir).unwrap();
+    
+                let mut file = File::create(&config_file)?;
+                let json = json!({
+                    "version": version
+                });    
+    
+                file.write_all(&json.to_string().as_bytes())?;
+            }
+        } else {
+            let mut file = File::create(&config_file)?;
             let json = json!({
                 "version": version
-            });    
-
+            });
+    
             file.write_all(&json.to_string().as_bytes())?;
         }
-    } else {
-        let mut file = File::create(CONFIG_FILE)?;
-        let json = json!({
-            "version": version
-        });
-
-        file.write_all(&json.to_string().as_bytes())?;
+    
+        Ok(())
     }
-
-    Ok(())
 }
+
+impl Fs for TempFs {
+    fn new() -> Self {
+        Self {
+            backend_compose: "/tmp/a11ywatch/compose.yml".to_string(),
+            frontend_compose: "/tmp/a11ywatch/frontend.compose.yml".to_string(),
+            // app_dir: "/tmp/a11ywatch".to_string(),
+            // config_file: "/tmp/a11ywatch/config.json".to_string(),
+        }
+    }
+    fn ensure_temp_dir(&self) {}
+    fn create_compose_backend_file(&self) {}
+    fn create_compose_frontend_file(&self) {}
+    fn sync() {}
+  }
