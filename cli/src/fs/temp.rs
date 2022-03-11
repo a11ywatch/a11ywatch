@@ -5,7 +5,7 @@ use std::path::Path;
 use serde_json::{json, Value, from_reader};
 
 /// Manage file paths and contents for system
-#[derive(Debug, Default)]
+#[derive(Debug, Clone)]
 pub(crate) struct TempFs {
     // backend infra compose file
     pub backend_compose: String,
@@ -65,6 +65,17 @@ impl TempFs {
         Ok(())
     }
     
+    /// read results from scan to string
+    pub fn read_results(self) -> String {
+        let mut file = File::open(self.results_file).unwrap();
+        let mut data = String::new();
+        file.read_to_string(&mut data).unwrap();
+    
+        println!("{}", &data);
+        
+        data
+    }
+
     /// create compose frontend file is does not exist
     pub fn save_results(&mut self, json: &serde_json::Value) -> std::io::Result<()> {
         let mut file = File::create(&self.results_file)?;

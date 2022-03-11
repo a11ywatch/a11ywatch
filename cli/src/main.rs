@@ -4,6 +4,7 @@ pub mod commands;
 pub mod launchers;
 pub mod fs;
 pub mod utils;
+pub mod formatters;
 
 use clap::{Parser};
 use std::env;
@@ -17,7 +18,7 @@ const EXTERNAL: &str = "EXTERNAL";
 
 fn main() {
     let cli = Cli::parse();
-    let mut file_manager = TempFs::new();
+    let file_manager = TempFs::new();
 
     if cli.find_results {
         println!("{}", &file_manager.results_file);
@@ -28,6 +29,10 @@ fn main() {
         println!("{}", &get_api());
     }
 
+    if cli.results_parsed {
+        use self::formatters::format_body;
+        println!("{}", &format_body(file_manager));
+    }
 
     match &cli.command {
         Some(Commands::BUILD { frontend, local }) => {
@@ -58,8 +63,9 @@ fn main() {
             let json_results = json!(result.unwrap());
 
             if *save {
-                file_manager.save_results(&json_results).unwrap();
+                TempFs::new().save_results(&json_results).unwrap();
             }
+
             println!("{}", &json_results);
         },
         Some(Commands::EXTRACT { platform }) => {

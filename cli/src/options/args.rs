@@ -14,4 +14,7 @@ pub struct Cli {
     /// Get github API endpoint of project
     #[clap(short, long)]
     pub github_api_url: bool,
+    /// Get results file parsed to json
+    #[clap(short, long)]
+    pub results_parsed: bool,
 }
