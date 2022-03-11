@@ -19,9 +19,6 @@ services:
       - CLIENT_URL=${CLIENT_URL:-http://localhost:3000}
       - WATCHER_CLIENT_URL=${WATCHER_CLIENT_URL:-http://crawler:8000}
       - GRAPHQL_PORT=${GRAPHQL_PORT:-8080}
-      - EMAIL_SERVICE_URL=${EMAIL_SERVICE_URL}
-      - EMAIL_CLIENT_ID=${EMAIL_CLIENT_ID}
-      - EMAIL_CLIENT_KEY=${EMAIL_CLIENT_KEY}
       - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://localhost:8090/api}
       - PUPPET_SERVICE=${PUPPET_SERVICE:-http://pagemind:8040}
       - ROOT_URL=${ROOT_URL:-http://localhost:8080}

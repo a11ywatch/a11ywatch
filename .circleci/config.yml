@@ -41,10 +41,8 @@ jobs:
           command: |
             sudo apt update
             sudo apt install -y jq
-            results_path="$(a11ywatch --find-results)"
+            results_dir="$(a11ywatch --find-results)"
             gh_api_url="$(a11ywatch --github-api-url)"
-
-            echo "gh path $gh_api_url"
 
             pr_response=$(curl --location --request GET $gh_api_url \
             -u $GH_USER:$GH_TOKEN)
@@ -53,7 +51,7 @@ jobs:
               echo "No PR found to update"
             else
               pr_comment_url=$(echo $pr_response | jq -r ".[]._links.comments.href")
-              website_results=$(jq '.website.issue | length' $results_path)
+              website_results=$(jq '.website.issue | length' $results_dir)
 
               start_body='{
                             "body":'
