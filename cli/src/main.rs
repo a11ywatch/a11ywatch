@@ -1,15 +1,16 @@
-use clap::{Parser};
-use options::{Cli, Commands};
-use commands::{Build, Start, Stop, Deploy, ApiClient};
-use std::env;
-use serde_json::json;
-
 pub mod options;
 pub mod generators;
 pub mod commands;
 pub mod launchers;
 pub mod fs;
 pub mod utils;
+
+use clap::{Parser};
+use std::env;
+use serde_json::json;
+use options::{Cli, Commands};
+use commands::{Build, Start, Stop, Deploy, ApiClient};
+use fs::temp::{TempFs};
 
 const INCLUDE_FRONTEND: &str = "INCLUDE_FRONTEND";
 const EXTERNAL: &str = "EXTERNAL";
@@ -40,10 +41,16 @@ fn main() {
                 Deploy::process_terminate(&all);
             }
         },
-        Some(Commands::SCAN { url, external }) => {
+        Some(Commands::SCAN { url, external, save }) => {
             env::set_var(EXTERNAL, external.to_string());
             let result = ApiClient::scan_website(&url);
-            println!("{}", json!(result.unwrap()));
+            let json_results = json!(result.unwrap());
+
+            if *save {
+                let mut file_manager = TempFs::new();
+                file_manager.save_results(&json_results).unwrap();
+            }
+            println!("{}", &json_results);
         },
         None => {}
     }

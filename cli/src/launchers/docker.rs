@@ -1,7 +1,6 @@
 use std::process::Command;
 use crate::fs::TempFs;
 
-// TODO: TARGET COMPOSE LOCATION OF FILE
 pub(crate) fn build_backend(file_manager: &TempFs) {
     Command::new("docker-compose")
     .args(["-f", &file_manager.backend_compose, "-f", &file_manager.frontend_compose, "build"])

@@ -61,5 +61,8 @@ pub enum Commands {
         /// whether to use the a11ywatch external api.
         #[clap(short, long)]
         external: bool,
+        /// save the results of the scan to tmp.
+        #[clap(short, long)]
+        save: bool,
     },
 }

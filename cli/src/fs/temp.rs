@@ -11,8 +11,8 @@ pub(crate) struct TempFs {
     pub backend_compose: String,
     // // frontend infra compose file
     pub frontend_compose: String,
-    // // app directory root
-    // pub app_dir: String,
+    // app directory root
+    pub app_dir: String,
     // // infra config file
     // pub config_file: String
 }
@@ -37,21 +37,10 @@ impl TempFs {
 
         Self {
             backend_compose: format!("{}/compose.yml", app_dir),
-            frontend_compose: format!("{}/compose.frontend.yml", app_dir)
-            // app_dir: format!("{}", app_dir),
+            frontend_compose: format!("{}/compose.frontend.yml", app_dir),
+            app_dir: format!("{}", app_dir),
             // config_file: format!("{}", config_file),
          }
-    }
-    
-    /// make sure the tmp directory is created for the app
-    fn ensure_temp_dir(tmp_dir: &str, app_dir: &str) -> std::io::Result<()> {    
-        if !Path::new(tmp_dir).exists() {
-            create_dir(tmp_dir)?;
-        }
-        if !Path::new(&app_dir).exists() {
-            create_dir(app_dir)?;
-        }
-        Ok(())
     }
     
     /// create compose backend file is does not exist
@@ -72,6 +61,27 @@ impl TempFs {
         Ok(())
     }
     
+    /// create compose frontend file is does not exist
+    pub fn save_results(&mut self, json: &serde_json::Value) -> std::io::Result<()> {
+        let results_file = format!("{}/results.json", &self.app_dir);
+        let mut file = File::create(&results_file)?;
+        file.write_all(&json.to_string().as_bytes())?;
+        println!("Results saved to {}\n", &results_file);
+
+        Ok(())
+    }
+
+    /// make sure the tmp directory is created for the app
+    fn ensure_temp_dir(tmp_dir: &str, app_dir: &str) -> std::io::Result<()> {    
+        if !Path::new(tmp_dir).exists() {
+            create_dir(tmp_dir)?;
+        }
+        if !Path::new(&app_dir).exists() {
+            create_dir(app_dir)?;
+        }
+        Ok(())
+    }
+
     /// determine whether the temp dir needs to re-init from a new version change
     fn sync(app_dir: &str, config_file: &str) -> std::io::Result<()> {
         let version: &'static str = env!("CARGO_PKG_VERSION");
@@ -108,10 +118,14 @@ impl TempFs {
 
 impl Fs for TempFs {
     fn new() -> Self {
+        let tmp_dir = std::env::temp_dir().display().to_string();
+        let app_dir = &format!("{}/a11ywatch", &tmp_dir);
+        // let config_file = &format!("{}/config.json", app_dir);
+
         Self {
-            backend_compose: "/tmp/a11ywatch/compose.yml".to_string(),
-            frontend_compose: "/tmp/a11ywatch/frontend.compose.yml".to_string(),
-            // app_dir: "/tmp/a11ywatch".to_string(),
+            backend_compose: format!("{}/compose.yml", app_dir),
+            frontend_compose: format!("{}/compose.frontend.yml", app_dir),
+            app_dir: format!("{}", app_dir),
             // config_file: "/tmp/a11ywatch/config.json".to_string(),
         }
     }
