@@ -65,4 +65,10 @@ pub enum Commands {
         #[clap(short, long)]
         save: bool,
     },
+    /// Extract results in formats for platforms
+    EXTRACT {
+        /// platform to use like github.
+        #[clap(short, long)]
+        platform: String,
+    },
 }

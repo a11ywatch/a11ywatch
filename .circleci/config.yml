@@ -42,8 +42,7 @@ jobs:
             sudo apt update
             sudo apt install -y jq
 
-            tmpdir="${TEMP:-/tmp}"
-            echo "tmp dir at ${tmpdir}/a11ywatch/results.json"
+            results_dir="$(a11ywatch --find-results)"
 
             pr_response=$(curl --location --request GET "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
             -u $GH_USER:$GH_TOKEN)
@@ -52,7 +51,7 @@ jobs:
               echo "No PR found to update"
             else
               pr_comment_url=$(echo $pr_response | jq -r ".[]._links.comments.href")
-              website_results=$(jq '.website.issue | length' /tmp/a11ywatch/results.json)
+              website_results=$(jq '.website.issue | length' $results_dir)
 
               start_body='{
                             "body":'
@@ -60,7 +59,7 @@ jobs:
 
               end_body='   }'
               
-              body_message=$(echo "Issues Found: $website_results on $WEBSITE_SCAN_URL")
+              body_message=$(echo "$website_results found on $WEBSITE_SCAN_URL")
 
               body=$(echo $start_body '"'$body_message'"' $end_body)
 

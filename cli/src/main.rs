@@ -18,6 +18,11 @@ const EXTERNAL: &str = "EXTERNAL";
 fn main() {
     let cli = Cli::parse();
 
+    if cli.find_results {
+        let file_manager = TempFs::new();
+        println!("{}", &file_manager.results_file);
+    }
+
     match &cli.command {
         Some(Commands::BUILD { frontend, local }) => {
             env::set_var(INCLUDE_FRONTEND, frontend.to_string());
@@ -51,6 +56,11 @@ fn main() {
                 file_manager.save_results(&json_results).unwrap();
             }
             println!("{}", &json_results);
+        },
+        Some(Commands::EXTRACT { platform }) => {
+            if platform == "github" {
+                println!("format message for github");
+            }
         },
         None => {}
     }

@@ -5,7 +5,10 @@ use crate::options::sub_command::Commands;
 #[derive(Parser)]
 #[clap(author, version, about, long_about = None)]
 pub struct Cli {
-    /// Build sub commands
+    /// Build main sub commands
     #[clap(subcommand)]
     pub command: Option<Commands>,
+    /// Log file results path
+    #[clap(short, long)]
+    pub find_results: bool,
 }

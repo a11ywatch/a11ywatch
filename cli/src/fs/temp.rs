@@ -11,8 +11,10 @@ pub(crate) struct TempFs {
     pub backend_compose: String,
     // // frontend infra compose file
     pub frontend_compose: String,
-    // app directory root
-    pub app_dir: String,
+    // // app directory root
+    // pub app_dir: String,
+    // results of scan file location
+    pub results_file: String,
     // // infra config file
     // pub config_file: String
 }
@@ -25,20 +27,22 @@ trait Fs {
     fn create_compose_frontend_file(&self);
     fn sync();
 }
-  
+
 impl TempFs {
     pub fn new() -> Self {
         let tmp_dir = std::env::temp_dir().display().to_string();
         let app_dir = &format!("{}/a11ywatch", &tmp_dir);
-        let config_file = &format!("{}/config.json", app_dir);
+        let config_file = &format!("{}/config.json", &app_dir);
+        let results_file = format!("{}/results.json", &app_dir);
 
         TempFs::ensure_temp_dir(&tmp_dir, &app_dir).unwrap();
         TempFs::sync(&app_dir, &config_file).unwrap();
-
+        
         Self {
             backend_compose: format!("{}/compose.yml", app_dir),
             frontend_compose: format!("{}/compose.frontend.yml", app_dir),
-            app_dir: format!("{}", app_dir),
+            // app_dir: format!("{}", app_dir),
+            results_file: format!("{}", results_file),
             // config_file: format!("{}", config_file),
          }
     }
@@ -63,10 +67,9 @@ impl TempFs {
     
     /// create compose frontend file is does not exist
     pub fn save_results(&mut self, json: &serde_json::Value) -> std::io::Result<()> {
-        let results_file = format!("{}/results.json", &self.app_dir);
-        let mut file = File::create(&results_file)?;
+        let mut file = File::create(&self.results_file)?;
         file.write_all(&json.to_string().as_bytes())?;
-        println!("Results saved to {}\n", &results_file);
+        println!("Results saved to {}\n", &self.results_file);
 
         Ok(())
     }
@@ -120,12 +123,14 @@ impl Fs for TempFs {
     fn new() -> Self {
         let tmp_dir = std::env::temp_dir().display().to_string();
         let app_dir = &format!("{}/a11ywatch", &tmp_dir);
+        let results_file = format!("{}/results.json", &app_dir);
         // let config_file = &format!("{}/config.json", app_dir);
 
         Self {
             backend_compose: format!("{}/compose.yml", app_dir),
             frontend_compose: format!("{}/compose.frontend.yml", app_dir),
-            app_dir: format!("{}", app_dir),
+            // app_dir: format!("{}", app_dir),
+            results_file: format!("{}", results_file),
             // config_file: "/tmp/a11ywatch/config.json".to_string(),
         }
     }
