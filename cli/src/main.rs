@@ -8,10 +8,12 @@ pub mod formatters;
 
 use clap::{Parser};
 use std::env;
-use serde_json::json;
 use options::{Cli, Commands};
 use commands::{Build, Start, Stop, Deploy, ApiClient};
 use fs::temp::{TempFs};
+use self::formatters::format_body;
+use self::utils::{Website};
+use serde_json::{json, Value, from_value, from_str};
 
 const INCLUDE_FRONTEND: &str = "INCLUDE_FRONTEND";
 const EXTERNAL: &str = "EXTERNAL";
@@ -30,7 +32,6 @@ fn main() {
     }
 
     if cli.results_parsed {
-        use self::formatters::format_body;
         println!("{}", &format_body(file_manager));
     }
 
@@ -70,7 +71,24 @@ fn main() {
         },
         Some(Commands::EXTRACT { platform }) => {
             if platform == "github" {
-                println!("format message for github");
+                let json_data = format_body(TempFs::new());
+                let v: Value = from_str(&json_data).unwrap();
+                let w = &v["website"];
+                let website: Website = from_value(w.to_owned()).unwrap();
+                let website_url = &website.url;
+                let issues_length = website.issue.len();
+
+                let seperator = if issues_length == 1 {
+                    ""
+                } else {
+                    "s"
+                }.to_string();
+
+                let j = json!({
+                    "body": format!("{} issue{} found for {}", &issues_length, seperator, &website_url).to_string(),
+                });
+
+                println!("{}", j);
             }
         },
         None => {}

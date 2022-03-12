@@ -70,9 +70,7 @@ impl TempFs {
         let mut file = File::open(self.results_file).unwrap();
         let mut data = String::new();
         file.read_to_string(&mut data).unwrap();
-    
-        println!("{}", &data);
-        
+            
         data
     }
 
