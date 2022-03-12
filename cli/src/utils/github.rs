@@ -1,37 +1,28 @@
 use std::env;
 
+/// a small function to get the projects github api url across CircleCI or Github Actions
 pub fn get_api() -> String {
-    // determine which ci by default
-    let mut github_repo_name: String = "".to_string();
-    let mut circleci_repo_name: String = String::from("");
-
-    let mut project_user_name: String = String::from("");
-    let mut project_branch_name: String = String::from("");
+    let mut github_repo_name = String::new();
+    let mut circleci_repo_name = String::new();
+    let mut project_user_name = String::new();
+    let mut project_branch_name = String::new();
 
     for (n,v) in env::vars() {
-        // CIRCLE CI
-        if n == "CIRCLE_PROJECT_USERNAME" {
+        if n == "CIRCLE_PROJECT_USERNAME" || n == "GITHUB_REPOSITORY_OWNER" {
             project_user_name = v.to_string();
+        }
+        if n == "CIRCLE_BRANCH" || n == "GITHUB_HEAD_REF"{
+            project_branch_name = v.to_string();
         }
         if n == "CIRCLE_PROJECT_REPONAME" {
             circleci_repo_name = v.to_string();
-        }
-        if n == "CIRCLE_BRANCH" {
-            project_branch_name = v.to_string();
-        }
-        // GITHUB
-        if n == "GITHUB_REPOSITORY_OWNER" {
-            project_user_name = v.to_string();
-        }
-        if n == "GITHUB_HEAD_REF" {
-            project_branch_name = v.to_string();
         }
         if n == "GITHUB_REPOSITORY" {
             github_repo_name = v.to_string();
         }
     }
     
-    let project_repo_name: String = if !github_repo_name.is_empty() {
+    let project_repo_name = if !github_repo_name.is_empty() {
         github_repo_name
     } else {
         format!("{}/{}", project_user_name, circleci_repo_name)

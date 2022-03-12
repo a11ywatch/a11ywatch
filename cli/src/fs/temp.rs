@@ -41,10 +41,9 @@ impl TempFs {
         Self {
             backend_compose: format!("{}/compose.yml", app_dir),
             frontend_compose: format!("{}/compose.frontend.yml", app_dir),
-            // app_dir: format!("{}", app_dir),
             results_file: format!("{}", results_file),
             // config_file: format!("{}", config_file),
-         }
+        }
     }
     
     /// create compose backend file is does not exist
@@ -78,7 +77,6 @@ impl TempFs {
     pub fn save_results(&mut self, json: &serde_json::Value) -> std::io::Result<()> {
         let mut file = File::create(&self.results_file)?;
         file.write_all(&json.to_string().as_bytes())?;
-        println!("Results saved to {}\n", &self.results_file);
 
         Ok(())
     }

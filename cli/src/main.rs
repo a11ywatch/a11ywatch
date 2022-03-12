@@ -11,9 +11,8 @@ use std::env;
 use options::{Cli, Commands};
 use commands::{Build, Start, Stop, Deploy, ApiClient};
 use fs::temp::{TempFs};
-use self::formatters::format_body;
-use self::utils::{Website};
-use serde_json::{json, Value, from_value, from_str};
+use self::formatters::{format_body, results_to_string};
+use serde_json::{json};
 
 const INCLUDE_FRONTEND: &str = "INCLUDE_FRONTEND";
 const EXTERNAL: &str = "EXTERNAL";
@@ -32,7 +31,7 @@ fn main() {
     }
 
     if cli.results_parsed {
-        println!("{}", &format_body(file_manager));
+        println!("{}", &results_to_string(file_manager));
     }
 
     match &cli.command {
@@ -72,23 +71,8 @@ fn main() {
         Some(Commands::EXTRACT { platform }) => {
             if platform == "github" {
                 let json_data = format_body(TempFs::new());
-                let v: Value = from_str(&json_data).unwrap();
-                let w = &v["website"];
-                let website: Website = from_value(w.to_owned()).unwrap();
-                let website_url = &website.url;
-                let issues_length = website.issue.len();
-
-                let seperator = if issues_length == 1 {
-                    ""
-                } else {
-                    "s"
-                }.to_string();
-
-                let j = json!({
-                    "body": format!("{} issue{} found for {}", &issues_length, seperator, &website_url).to_string(),
-                });
-
-                println!("{}", j);
+  
+                println!("{}", json_data);
             }
         },
         None => {}
