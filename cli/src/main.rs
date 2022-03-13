@@ -6,13 +6,14 @@ pub mod fs;
 pub mod utils;
 pub mod formatters;
 
+use self::formatters::{format_body, results_to_string};
 use clap::{Parser};
 use std::env;
 use options::{Cli, Commands};
 use commands::{Build, Start, Stop, Deploy, ApiClient};
 use fs::temp::{TempFs};
-use self::formatters::{format_body, results_to_string};
 use serde_json::{json};
+use std::io::{self, Write};
 
 const INCLUDE_FRONTEND: &str = "INCLUDE_FRONTEND";
 const EXTERNAL: &str = "EXTERNAL";
@@ -20,6 +21,13 @@ const EXTERNAL: &str = "EXTERNAL";
 fn main() {
     let cli = Cli::parse();
     let file_manager = TempFs::new();
+
+    let api_token = cli.set_token.unwrap_or_default();
+
+    if !api_token.is_empty() {
+        file_manager.set_token(&api_token).unwrap();
+        io::stdout().write_all(&"api token saved".as_bytes()).unwrap();
+    }
 
     if cli.find_results {
         println!("{}", &file_manager.results_file);
@@ -31,7 +39,7 @@ fn main() {
     }
 
     if cli.results_parsed {
-        println!("{}", &results_to_string(file_manager));
+       println!("{}", results_to_string(&file_manager));
     }
 
     match &cli.command {
@@ -59,22 +67,31 @@ fn main() {
         },
         Some(Commands::SCAN { url, external, save }) => {
             env::set_var(EXTERNAL, external.to_string());
-            let result = ApiClient::scan_website(&url);
+            let result = ApiClient::scan_website(&url, &file_manager);
             let json_results = json!(result.unwrap());
 
             if *save {
-                TempFs::new().save_results(&json_results).unwrap();
+                file_manager.save_results(&json_results).unwrap();
             }
 
-            println!("{}", &json_results);
+            println!("{}", json_results);
         },
         Some(Commands::EXTRACT { platform }) => {
             if platform == "github" {
-                let json_data = format_body(TempFs::new());
-  
+                let json_data = format_body(&file_manager);
                 println!("{}", json_data);
             }
         },
+        // Some(Commands::CRAWL { url, external, save }) => {
+        //     env::set_var(EXTERNAL, external.to_string());
+        //     // TODO: START FEEDBACK SERVER
+        //     let result = ApiClient::crawl_website(&url);
+        //     let json_results = json!(result.unwrap());
+
+        //     if *save {
+        //         TempFs::new().save_results(&json_results).unwrap();
+        //     }
+        // },
         None => {}
     }
 }

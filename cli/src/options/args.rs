@@ -8,6 +8,9 @@ pub struct Cli {
     /// Build main sub commands
     #[clap(subcommand)]
     pub command: Option<Commands>,
+    ///Set the API token to use for request
+    #[clap(short, long)]
+    pub set_token: Option<String>,
     /// Log file results path
     #[clap(short, long)]
     pub find_results: bool,

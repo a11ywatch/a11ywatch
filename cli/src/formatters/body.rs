@@ -5,14 +5,14 @@ use crate::utils::{Website};
 use std::io::{Write};
 use std::str;
 
-pub(crate) fn results_to_string(file_manager: TempFs) -> String {
+pub(crate) fn results_to_string(file_manager: &TempFs) -> String {
     let file_results: String = file_manager.read_results();
     let v: Value = from_str(&file_results).unwrap();
 
     v.to_string()
 }
 
-pub(crate) fn format_body(file_manager: TempFs) -> Value {
+pub(crate) fn format_body(file_manager: &TempFs) -> Value {
     let file_results: String = file_manager.read_results();
     let v: Value = from_str(&file_results).unwrap();
     let w = &v["website"];
