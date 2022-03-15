@@ -43,10 +43,11 @@ impl ApiClient {
 #[cfg(test)]
 mod tests {
     use super::ApiClient;
-
+    use super::TempFs;
+    
     #[test]
     fn scan_website() {
-        let results = ApiClient::scan_website(&"http://a11ywatch.com");
+        let results = ApiClient::scan_website(&"http://a11ywatch.com", &TempFs::new());
         let status = results.unwrap();
         
         assert_eq!(status.data.url, "http://a11ywatch.com");
