@@ -94,6 +94,31 @@ services:
       - back-net
       - front-net
 
+  chrome:
+    image: ghcr.io/drpayyne/chrome
+    container_name: chromium-browser
+    command:
+      [
+        chromium-browser,
+        '--headless',
+        '--disable-gpu',
+        '--no-sandbox',
+        '--remote-debugging-address=0.0.0.0',
+        '--remote-debugging-port=9222',
+        '--max-wait-for-load=2500',
+        '--disable-storage-reset',
+        '--disable-dev-shm-usage',
+        '--disable-http2',
+        '--disable-accelerated-2d-canvas,
+        '--disable-setuid-sandbox,
+        '--no-zygote',
+        '--no-first-run',
+      ]
+    ports:
+      - 9222:9222
+    networks:
+      - back-net
+
 networks:
   back-net:
   front-net:
