@@ -162,7 +162,7 @@ services:
 
   redis:
     container_name: redis
-    image: bitnami/redis:6.0
+    image: redis:7.0-rc2-alpine
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
