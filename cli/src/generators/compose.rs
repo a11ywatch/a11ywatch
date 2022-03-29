@@ -113,6 +113,7 @@ services:
         '--disable-setuid-sandbox,
         '--no-zygote',
         '--no-first-run',
+        '--disable-features=TranslateUI,BlinkGenPropertyTrees',
       ]
     ports:
       - 9222:9222
