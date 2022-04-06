@@ -33,6 +33,7 @@ services:
       - front-net
     ports:
       - "8080:8080"
+      - 8099
     depends_on:
       - mongodb
     environment:
@@ -55,8 +56,6 @@ services:
       - MAV_CLIENT_URL=${MAV_CLIENT_URL:-http://mav:8020}
       - PRIVATE_KEY=${PRIVATE_KEY}
       - PUBLIC_KEY=${PUBLIC_KEY}
-      - LOGGER_ENABLED=${LOGGER_ENABLED:-true}
-      - LOGGER_URL=${LOGGER_URL:-logger}
       - ADMIN_ORIGIN=${ADMIN_ORIGIN}
       - BACKGROUND_CRAWL=${BACKGROUND_CRAWL:-true}
       - DOCKER_ENV=true
@@ -74,13 +73,12 @@ services:
     networks:
       - back-net
     ports:
-      - "8040:8040"
+      - "8040"
     environment:
       - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://cdn-server:8090/api}
       - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
       - AI_SERVICE_URL=${SCRIPTS_CDN_URL:-http://mav:8020}
       - PORT=${PAGEMIND_PORT:-8040}
-      - LOGGER_ENABLED=${LOGGER_ENABLED:-true}
       - BACKUP_IMAGES=${BACKUP_IMAGES:-true}
       - PUPPET_POOL_MAX=${PUPPET_POOL_MAX:-4}
       - ASSETS_CDN=${ASSETS_CDN:-http://localhost:8090}
@@ -101,7 +99,6 @@ services:
       - "8020:8020"
     environment:
       - MAIN_API_URL=${MAIN_API_URL:-http://api:8080}
-      - LOGGER_ENABLED=${LOGGER_ENABLED:-true}
       - PORT=${MAV_PORT:-8020}
       - DOCKER_ENV=true
 
@@ -119,7 +116,6 @@ services:
       - "8090:8090"
     environment:
       - PORT=${ELASTIC_CDN_PORT:-8090}
-      - LOGGER_ENABLED=${LOGGER_ENABLED:-true}
 
   crawler:
     container_name: crawler
@@ -131,10 +127,12 @@ services:
     networks:
       - back-net
     ports:
-      - "8000:8000"
+      - "8000"
     environment:
-      - CRAWL_URL=${CRAWL_URL:-http://api:8080/api/website-crawl}
-      - CRAWL_URL_BACKGROUND=${CRAWL_URL_BACKGROUND:-http://api:8080/api/website-crawl-background}
+      - CRAWL_URL=${CRAWL_URL:-http://api:8099/api/website-crawl}
+      - CRAWL_URL_BACKGROUND=${CRAWL_URL_BACKGROUND:-http://api:8099/api/website-crawl-background}
+      - SCAN_URL_COMPLETE=${SCAN_URL_COMPLETE:-http://api:8099/api/website-crawl-background-complete}
+      - SCAN_URL_START=${SCAN_URL_START:-http://api:8099/api/website-crawl-background-start}
 
   mongodb:
     container_name: mongodb

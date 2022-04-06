@@ -9,6 +9,7 @@ services:
       - front-net
     ports:
       - 3280:8080
+      - 8099
     depends_on:
       - mongodb
     environment:
@@ -72,6 +73,11 @@ services:
       - back-net
     ports:
       - 8000:8000
+    environment:
+      - CRAWL_URL=${CRAWL_URL:-http://api:8099/api/website-crawl}
+      - CRAWL_URL_BACKGROUND=${CRAWL_URL_BACKGROUND:-http://api:8099/api/website-crawl-background}
+      - SCAN_URL_COMPLETE=${SCAN_URL_COMPLETE:-http://api:8099/api/website-crawl-background-complete}
+      - SCAN_URL_START=${SCAN_URL_START:-http://api:8099/api/website-crawl-background-start}
 
   mongodb:
     container_name: mongodb
