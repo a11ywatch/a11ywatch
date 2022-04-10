@@ -10,6 +10,7 @@ services:
     ports:
       - 3280:8080
       - 8099
+      - 50051
     depends_on:
       - mongodb
     environment:
@@ -35,14 +36,14 @@ services:
     networks:
       - back-net
     ports:
-      - 8040:8040
+      - 8040
+      - 50052
     environment:
       - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://127.0.0.1:8090/api}
       - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
       - AI_SERVICE_URL=${SCRIPTS_CDN_URL:-http://127.0.0.1:8020}
       - PORT=${PAGEMIND_PORT:-8040}
       - BACKUP_IMAGES=${BACKUP_IMAGES:-true}
-      - PUPPET_POOL_MAX=${PUPPET_POOL_MAX:-4}
 
   mav:
     container_name: mav
