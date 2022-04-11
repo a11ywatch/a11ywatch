@@ -63,8 +63,10 @@ services:
     image: a11ywatch/cdn-server
     networks:
       - back-net
+      - front-net
     ports:
       - 8090:8090
+      - 50054
     environment:
       - PORT=${ELASTIC_CDN_PORT:-8090}
 
@@ -75,6 +77,7 @@ services:
       - back-net
     ports:
       - 8000:8000
+      - 50055
     environment:
       - CRAWL_URL=${CRAWL_URL:-http://api:8099/api/website-crawl}
       - CRAWL_URL_BACKGROUND=${CRAWL_URL_BACKGROUND:-http://api:8099/api/website-crawl-background}

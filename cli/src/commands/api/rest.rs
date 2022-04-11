@@ -27,16 +27,14 @@ impl ApiClient {
         let request_destination = format!("{}/api/scan-simple", target_destination);
         let token = file_manager.get_token();
 
-        let resp: String = post(&request_destination)
+        let resp: ApiResult = post(&request_destination)
         .set("Authorization", &token)
         .send_json(json!({
             "websiteUrl": url
         }))?
-        .into_string()?;
+        .into_json()?;
 
-        let result: ApiResult = serde_json::from_str(&resp).unwrap();
-
-        Ok(result)
+        Ok(resp)
     }
 }
 

@@ -5,8 +5,7 @@ pub struct Issue {
     #[serde(rename = "type")]
     pub issue_type: String,
     #[serde(rename = "typeCode")]
-    pub type_code: i32,
-    // the error code ex WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Alpha 
+    pub type_code: String,
     pub code: String,
     pub context: String,
     pub message: String,
