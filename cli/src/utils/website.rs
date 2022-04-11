@@ -8,7 +8,7 @@ pub struct Website {
     #[serde(rename = "issuesInfo")]
     pub issues_info: IssueInfo,
     #[serde(rename = "adaScore")]
-    pub ada_score: u32,
+    pub ada_score: i32,
     pub issue: Vec<Issue>,
     pub screenshot: String,
     #[serde(rename = "screenshotStill")]

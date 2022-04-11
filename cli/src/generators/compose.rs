@@ -51,7 +51,8 @@ services:
     networks:
       - back-net
     ports:
-      - 8020:8020
+      - 8020
+      - 50053
     environment:
       - MAIN_API_URL=${MAIN_API_URL:-http://127.0.0.1:8080}
       - PORT=${MAV_PORT:-8020}
