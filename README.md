@@ -1,7 +1,6 @@
 # A11yWatch
 
 [![CircleCI](https://circleci.com/gh/A11yWatch/a11ywatch/tree/main.svg?style=svg)](https://circleci.com/gh/A11yWatch/a11ywatch/tree/main)
-![A11yWatch](https://raw.githubusercontent.com/A11yWatch/Project-Screenshots/master/banner.jpeg?raw=true "A11yWatch Logo")
 
 The website inclusion suite.
 

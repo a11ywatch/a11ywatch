@@ -76,13 +76,7 @@ services:
     networks:
       - back-net
     ports:
-      - 8000:8000
       - 50055
-    environment:
-      - CRAWL_URL=${CRAWL_URL:-http://api:8099/api/website-crawl}
-      - CRAWL_URL_BACKGROUND=${CRAWL_URL_BACKGROUND:-http://api:8099/api/website-crawl-background}
-      - SCAN_URL_COMPLETE=${SCAN_URL_COMPLETE:-http://api:8099/api/website-crawl-background-complete}
-      - SCAN_URL_START=${SCAN_URL_START:-http://api:8099/api/website-crawl-background-start}
 
   mongodb:
     container_name: mongodb
@@ -141,7 +135,7 @@ volumes:
 }
 
 pub fn generate_compose_frontend() -> &'static str {
-  &"
+    &"
 services:
   web:
     container_name: web
