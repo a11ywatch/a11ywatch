@@ -9,7 +9,6 @@ services:
       - front-net
     ports:
       - 3280:8080
-      - 8099
       - 50051
     depends_on:
       - mongodb
