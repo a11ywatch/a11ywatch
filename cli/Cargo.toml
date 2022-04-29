@@ -1,6 +1,6 @@
 [package]
 name = "a11ywatch_cli"
-version = "0.0.64"
+version = "0.0.65"
 authors = ["j-mendez <jeff@a11ywatch.com>"]
 description = "A11yWatch CLI to build, deploy, run, and manage all things."
 repository = "https://github.com/a11ywatch/a11ywatch"
@@ -10,7 +10,7 @@ categories = ["accessibility", "command-line-utilities", "development-tools::bui
 license = "MIT"
 documentation = "https://docs.rs/a11ywatch_cli"
 include = ["src/*", "LICENSE", "README.md"]
-edition = "2021"
+edition = "2018"
 
 [dependencies]
 clap = { version = "3.1.5", features = ["derive"] }
