@@ -20,6 +20,7 @@ services:
       - STRIPE_KEY=${STRIPE_KEY_WEB}
       - INTERCOM_APPID=${INTERCOM_APPID}
       - INTERCOM_ENABLED=${INTERCOM_ENABLED}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
 
   api:
     container_name: api
