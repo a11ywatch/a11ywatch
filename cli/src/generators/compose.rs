@@ -28,6 +28,7 @@ services:
       - REDIS_CLIENT=${REDIS_CLIENT:-redis://redis:6379}
       - REDIS_HOST=redis
       - DOCKER_ENV=true
+      - SUPER_MODE=${SUPER_MODE:-true}
 
   pagemind:
     container_name: pagemind
@@ -42,7 +43,6 @@ services:
       - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
       - AI_SERVICE_URL=${SCRIPTS_CDN_URL:-http://127.0.0.1:8020}
       - PORT=${PAGEMIND_PORT:-8040}
-      - BACKUP_IMAGES=${BACKUP_IMAGES:-true}
 
   mav:
     container_name: mav

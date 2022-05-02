@@ -81,7 +81,6 @@ services:
       - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
       - AI_SERVICE_URL=${SCRIPTS_CDN_URL:-http://mav:8020}
       - PORT=${PAGEMIND_PORT:-8040}
-      - BACKUP_IMAGES=${BACKUP_IMAGES:-true}
       - ASSETS_CDN=${ASSETS_CDN:-http://localhost:8090}
     extra_hosts:
       - "host.docker.internal:host-gateway"

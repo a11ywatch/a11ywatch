@@ -1,8 +1,17 @@
-# A11yWatch
+<div align="center">
+  <h1>A11yWatch</h1>
+  <p>
+    <strong>A11yWatch is a powerful web accessibility toolkit made using Rust and Nodejs</strong>
+  </p>
+  <p>
 
-[![CircleCI](https://circleci.com/gh/A11yWatch/a11ywatch/tree/main.svg?style=svg)](https://circleci.com/gh/A11yWatch/a11ywatch/tree/main)
+[![crates.io](https://img.shields.io/crates/v/a11ywatch_cli?label=latest)](https://docs.rs/crate/a11ywatch_cli/latest)
+![MIT](https://img.shields.io/crates/l/a11ywatch_cli.svg)
+[![CI](https://circleci.com/gh/A11yWatch/a11ywatch/tree/main.svg?style=svg)](https://circleci.com/gh/A11yWatch/a11ywatch/tree/main)
+![downloads](https://img.shields.io/crates/d/a11ywatch_cli.svg)
 
-The website inclusion suite.
+  </p>
+</div>
 
 ## Getting Started
 
