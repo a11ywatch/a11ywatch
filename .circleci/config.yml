@@ -4,6 +4,9 @@ jobs:
     machine:
       image: ubuntu-2004:current
     resource_class: large
+    environment:
+      A11YWATCH_TOKEN: $A11YWATCH_TOKEN
+      COMPOSE_VERSION: "1.29.2"
     steps:
       - checkout
       - restore_cache:
@@ -13,8 +16,6 @@ jobs:
             - node-v1-
       - run:
           name: Install Docker Compose and Rust
-          environment:
-            COMPOSE_VERSION: "1.29.2"
           command: |
             curl https://sh.rustup.rs -sSf | sh -s -- -y
             curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
@@ -28,14 +29,11 @@ jobs:
             - ~/usr/local/lib/target
           key: node-v1-{{ .Branch }}-{{ checksum "./cli/Cargo.lock" }}
       - run:
-          description: "Start the backend instance"
-          command: a11ywatch start
-      - run:
-          description: "Start the frontend instance"
-          command: a11ywatch start -f
-      - run:
           description: "Run a website basic scan"
-          command: a11ywatch scan --url $WEBSITE_SCAN_URL --save
+          command: |
+            a11ywatch --set-token $A11YWATCH_TOKEN
+            sleep 1
+            a11ywatch scan --url $WEBSITE_SCAN_URL --save --external
       - run:
           name: Post Stats to GitHub PR
           command: |

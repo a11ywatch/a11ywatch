@@ -94,7 +94,7 @@ impl TempFs {
         let json: Value = from_reader(&file).unwrap();
         let token = &json["token"];
 
-        token.to_string()
+        serde_json::from_str(&*token.to_string()).unwrap_or_default()
     }
 
     /// set the api token to use for request

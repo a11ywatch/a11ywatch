@@ -9,5 +9,5 @@ pub struct Website {
     pub issues_info: IssueInfo,
     #[serde(rename = "adaScore")]
     pub ada_score: String,
-    pub issue: Vec<Issue>,
+    pub issue: Vec<Issue>, // TODO: rename to issues
 }

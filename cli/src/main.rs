@@ -66,7 +66,10 @@ fn main() {
             }
         },
         Some(Commands::SCAN { url, all, external, save }) => {
-            env::set_var(EXTERNAL, external.to_string());
+            // set external env default
+            if *external {
+                env::set_var(EXTERNAL, external.to_string());
+            }
             let result = if *all {
                 ApiClient::scan_website(&url, &file_manager, "scan-all")
             } else {

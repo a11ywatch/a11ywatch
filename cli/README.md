@@ -19,6 +19,15 @@ a11ywatch start
 a11ywatch scan --url https://a11ywatch.com > results.json
 ```
 
+If you are making request via in CI environments like CircleCI using the CLI you need to pass in the `--external` flag on crawls since connecting to docker is not an option. Make sure to set the API token first using `a11ywatch --set-token $MY_TOKEN` command before running the scan. You can get your token from the `/api-info` page on the website.
+
+```sh
+# External example: set api key that is stored between runs
+a11ywatch --set-token $MY_TOKEN
+# scan a website with external flag and pipe the stdout to a file
+a11ywatch scan --external --url https://a11ywatch.com > results.json
+```
+
 ### Supported Architectures
 
 Supported archs are amd64 and arm64.
