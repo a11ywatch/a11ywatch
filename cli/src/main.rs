@@ -65,9 +65,13 @@ fn main() {
                 Deploy::process_terminate(&all);
             }
         },
-        Some(Commands::SCAN { url, external, save }) => {
+        Some(Commands::SCAN { url, all, external, save }) => {
             env::set_var(EXTERNAL, external.to_string());
-            let result = ApiClient::scan_website(&url, &file_manager);
+            let result = if *all {
+                ApiClient::scan_website(&url, &file_manager, "scan-all")
+            } else {
+                ApiClient::scan_website(&url, &file_manager, "scan-simple")
+            };
             let json_results = json!(result.unwrap());
 
             if *save {

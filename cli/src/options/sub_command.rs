@@ -55,15 +55,18 @@ pub enum Commands {
     },
     /// Scan a website url for issues [only one page]
     SCAN {
-        /// target url to scan.
+        /// run site-wide scan: Must use API_KEY and Front-End Client to view results. [WIP].
         #[clap(short, long)]
-        url: String,
+        all: bool,
         /// whether to use the a11ywatch external api.
         #[clap(short, long)]
         external: bool,
         /// save the results of the scan to tmp.
         #[clap(short, long)]
         save: bool,
+        /// target url to scan.
+        #[clap(short, long)]
+        url: String,
     },
     /// Extract results in formats for platforms
     EXTRACT {

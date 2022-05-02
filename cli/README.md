@@ -4,7 +4,7 @@ CLI tool to manage all things required BETA. View the [cli-docs](https://docs.a1
 
 ## Build
 
-Launch A11yWatch using docker on any machine. Get started by making sure you have [Rust](https://www.rust-lang.org/tools/install) installed and running the command below.
+Launch A11yWatch using docker on any machine. Get started by making sure you have [Rust](https://www.rust-lang.org/tools/install) installed and running the command below. By default all paid features are enabled for all users when running on your own instance locally.
 
 ```sh
 cargo install a11ywatch_cli

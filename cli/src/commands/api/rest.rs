@@ -18,13 +18,14 @@ pub struct ApiResult {
 pub(crate) struct ApiClient {}
 
 impl ApiClient {
-    pub fn scan_website(url: &str, file_manager: &TempFs) -> Result<ApiResult, Error> {
+    /// single page scan
+    pub fn scan_website(url: &str, file_manager: &TempFs, target_path: &str) -> Result<ApiResult, Error> {
         let target_destination: String = match env::var(EXTERNAL) {
             Ok(_) => "https://api.a11ywatch.com",
             Err(_) => "http://127.0.0.1:3280",
         }.to_string();
 
-        let request_destination = format!("{}/api/scan-simple", target_destination);
+        let request_destination = format!("{}/api/{}", target_destination, target_path);
         let token = file_manager.get_token();
 
         let resp: ApiResult = post(&request_destination)
