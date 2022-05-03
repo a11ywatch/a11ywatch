@@ -1,0 +1,81 @@
+version: 2.1
+jobs:
+  cli:
+    machine:
+      image: ubuntu-2004:current
+    resource_class: large
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-v1-{{ .Branch }}-{{ checksum "./cli/Cargo.lock" }}
+            - node-v1-{{ .Branch }}-
+            - node-v1-
+      - run:
+          name: Install Docker Compose and Rust
+          environment:
+            COMPOSE_VERSION: "1.29.2"
+          command: |
+            curl https://sh.rustup.rs -sSf | sh -s -- -y
+            curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - run:
+          description: "Install the A11yWatch CLI"
+          command: cargo install --path ./cli
+      - save_cache:
+          paths:
+            - ~/usr/local/lib/target
+          key: node-v1-{{ .Branch }}-{{ checksum "./cli/Cargo.lock" }}
+      - run:
+          description: "Start the backend instance"
+          command: a11ywatch start
+
+      - run:
+          description: "Wait for Service to start"
+          command: |
+            #!/bin/sh
+            attempt=0
+
+            while [ $attempt -le 15 ]; do
+                attempt=$(( $attempt + 1 ))
+                echo "Waiting for server to be up (attempt: $attempt)..."
+                result=$(docker logs api)
+                if grep -q 'Server ready' /</</< $result ; then
+                  echo "A11yWatch ready!"
+                  break
+                fi
+                sleep 0.3
+            done
+      - run:
+          description: "Run a website basic scan"
+          command: a11ywatch scan --url $WEBSITE_SCAN_URL --save
+      - run:
+          name: Post Stats to GitHub PR
+          command: |
+            sudo apt update
+            sudo apt install -y jq
+            results_dir="$(a11ywatch --find-results)"
+            gh_api_url="$(a11ywatch --github-api-url)"
+
+            pr_response=$(curl --location --request GET $gh_api_url \
+            -u $GH_USER:$GH_TOKEN)
+
+            if [ $(echo $pr_response | jq length) -eq 0 ]; then
+              echo "No PR found to update"
+            else
+              pr_comment_url=$(echo $pr_response | jq -r ".[]._links.comments.href")
+
+              body="$(a11ywatch extract -p github)"
+
+              curl --location --request POST "$pr_comment_url" \
+              -u $GH_USER:$GH_TOKEN \
+              --header 'Content-Type: application/json' \
+              --data-raw "$body"
+              
+            fi
+
+workflows:
+  build_and_test:
+    jobs:
+      - cli

@@ -69,8 +69,8 @@ fn main() {
             if *external {
                 env::set_var(EXTERNAL, external.to_string());
             }
-            let result = ApiClient::scan_website(&url, &file_manager);
-            let json_results = json!(result.unwrap());
+            let result = ApiClient::scan_website(&url, &file_manager).unwrap_or_default();
+            let json_results = json!(result);
 
             if *save {
                 file_manager.save_results(&json_results).unwrap();
