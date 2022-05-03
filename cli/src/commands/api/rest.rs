@@ -5,7 +5,7 @@ use std::env;
 use ureq::{Error, post, json};
 use crate::fs::temp::{TempFs};
 
-#[derive(Deserialize, Serialize, Debug)]
+#[derive(Deserialize, Serialize, Debug, Default)]
 pub struct ApiResult {
     #[serde(rename = "website")]
     data: Website,
@@ -27,12 +27,14 @@ impl ApiClient {
         let request_destination = format!("{}/api/scan-simple", target_destination);
         let token = file_manager.get_token();
 
-        let resp: ApiResult = post(&request_destination)
-        .set("Authorization", &token)
-        .send_json(json!({
+        let resp: ApiResult = if !token.is_empty() {
+            post(&request_destination)
+            .set("Authorization", &token)
+        } else {
+            post(&request_destination)
+        }.send_json(json!({
             "websiteUrl": url
-        }))?
-        .into_json()?;
+        }))?.into_json()?;
 
         Ok(resp)
     }
