@@ -1,3 +1,4 @@
+/// generate central backend services
 pub fn generate_compose_backend() -> &'static str {
     &"
 services:
@@ -133,6 +134,7 @@ volumes:
   "
 }
 
+/// generate front end client
 pub fn generate_compose_frontend() -> &'static str {
     &"
 services:
@@ -149,6 +151,19 @@ services:
       - WEB_SOCKET_URL=${WEB_SOCKET_URL:-ws://localhost:3280/graphql}
 networks:
   front-net:
+
+"
+}
+
+/// runner to exec commands against containers
+pub fn generate_compose_runner() -> &'static str {
+  &"
+services:
+runner:
+  container_name: runner
+  image: a11ywatch/runner
+  networks:
+    - back-net
 
 "
 }
