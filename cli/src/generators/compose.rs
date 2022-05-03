@@ -1,6 +1,7 @@
 /// generate central backend services
 pub fn generate_compose_backend() -> &'static str {
-    &"
+    &r#"
+version: '3.9'
 services:
   api:
     container_name: api
@@ -131,12 +132,13 @@ networks:
 volumes:
   mongodb:
 
-  "
+  "#
 }
 
 /// generate front end client
 pub fn generate_compose_frontend() -> &'static str {
     &"
+version: '3.9'
 services:
   web:
     container_name: web
@@ -156,14 +158,18 @@ networks:
 }
 
 /// runner to exec commands against containers
-pub fn generate_compose_runner() -> &'static str {
-  &"
-services:
-runner:
-  container_name: runner
-  image: a11ywatch/runner
+pub fn generate_compose_runner(url: &str) -> String {
+  format!("
+  version: '3.9'
+  services:
+    runner:
+      container_name: runner
+      image: a11ywatch/runner
+      networks:
+        - back-net
+      environment:
+        - WEBSITE_URL={url}
   networks:
-    - back-net
-
-"
+    back-net:
+  ")
 }

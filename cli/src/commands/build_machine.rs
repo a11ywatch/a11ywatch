@@ -9,7 +9,7 @@ impl Build {
         let mut file_manager = TempFs::new();
 
         if *local {
-            println!("TODO: build all services on local machine...");
+            println!("Error: API not implemented. CLI interface holding entry as stub.");
         } else {
             file_manager.create_compose_backend_file().unwrap();
             file_manager.create_compose_frontend_file().unwrap();

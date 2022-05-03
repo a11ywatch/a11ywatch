@@ -24,6 +24,16 @@ pub(crate) fn start_service(frontend: &bool, file_manager: &TempFs) {
     }
 }
 
+/// start the runner in docker
+pub(crate) fn start_runner(file_manager: &TempFs) {
+    let mut cmd = Command::new("docker-compose");
+
+    cmd
+        .args(["-f", &file_manager.backend_compose, "-f", &file_manager.runner_compose, "up", "-d"])
+        .status()
+        .expect("Failed to execute command");
+}
+
 // /// run a command to the docker container
 // pub(crate) fn run_backend(options_run: &str, file_manager: &TempFs) {
 //     Command::new("docker-compose")

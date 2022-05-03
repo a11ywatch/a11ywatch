@@ -1,21 +1,22 @@
-use crate::generators::compose::{generate_compose_backend, generate_compose_frontend};
+use crate::generators::compose::{generate_compose_backend, generate_compose_frontend, generate_compose_runner};
 use std::fs::{File, create_dir, remove_dir_all};
 use std::io::prelude::*;
 use std::path::Path;
 use serde_json::{json, Value, from_reader};
 
 /// Manage file paths and contents for system
-#[derive(Debug, Clone)]
 pub(crate) struct TempFs {
-    // backend infra compose file
+    /// temp app directory for a11ywatch
+    pub app_dir: String,
+    /// backend infra compose file
     pub backend_compose: String,
-    // // frontend infra compose file
+    /// frontend compose file
     pub frontend_compose: String,
-    // // app directory root
-    // pub app_dir: String,
-    // results of scan file location
+    /// runner compose file
+    pub runner_compose: String,
+    /// results of scan file location
     pub results_file: String,
-    // // infra config file
+    /// infra config file
     pub config_file: String
 }
 
@@ -40,13 +41,14 @@ trait Fs {
     fn ensure_temp_dir(&self);
     fn create_compose_backend_file(&self);
     fn create_compose_frontend_file(&self);
+    fn create_compose_runner_file(&self);
     fn sync();
 }
 
 impl TempFs {
     pub fn new() -> Self {
         let tmp_dir = std::env::temp_dir().display().to_string();
-        let app_dir = &format!("{}/a11ywatch", &tmp_dir);
+        let app_dir = format!("{}/a11ywatch", &tmp_dir);
         let config_file = &format!("{}/config.json", &app_dir);
         let results_file = format!("{}/results.json", &app_dir);
 
@@ -56,8 +58,10 @@ impl TempFs {
         Self {
             backend_compose: format!("{}/compose.yml", app_dir),
             frontend_compose: format!("{}/compose.frontend.yml", app_dir),
+            runner_compose: format!("{}/compose.runner.yml", app_dir),
             results_file: format!("{}", results_file),
             config_file: format!("{}", config_file),
+            app_dir,
         }
     }
     
@@ -78,7 +82,16 @@ impl TempFs {
         }
         Ok(())
     }
-    
+
+    /// create compose runner file is does not exist
+    pub fn create_compose_runner_file(&mut self, url: &str) -> std::io::Result<()> {
+        if !Path::new(&self.runner_compose).exists() {
+            let mut file = File::create(&self.runner_compose)?;
+            file.write_all(&generate_compose_runner(&url).as_bytes())?;
+        }
+        Ok(())
+    }
+
     /// read results from scan to string
     pub fn read_results(&self) -> String {
         let mut file = File::open(&self.results_file).unwrap();
@@ -88,13 +101,13 @@ impl TempFs {
         data
     }
 
-    // /// set the api token to use for request
+    /// set the api token to use for request
     pub fn get_token(&self) -> String {
         let file = File::open(&self.config_file).unwrap();
         let json: Value = from_reader(&file).unwrap();
         let token = &json["token"];
 
-        token.to_string()
+        token.as_str().unwrap_or_default().into()
     }
 
     /// set the api token to use for request
@@ -174,21 +187,24 @@ impl TempFs {
 impl Fs for TempFs {
     fn new() -> Self {
         let tmp_dir = std::env::temp_dir().display().to_string();
-        let app_dir = &format!("{}/a11ywatch", &tmp_dir);
+        let app_dir = format!("{}/a11ywatch", &tmp_dir);
         let results_file = format!("{}/results.json", &app_dir);
         // let config_file = &format!("{}/config.json", app_dir);
 
         Self {
             backend_compose: format!("{}/compose.yml", app_dir),
             frontend_compose: format!("{}/compose.frontend.yml", app_dir),
+            runner_compose: format!("{}/compose.runner.yml", app_dir),
             // app_dir: format!("{}", app_dir),
             results_file: format!("{}", results_file),
             config_file :format!("{}/compose.json", app_dir),
+            app_dir,
         }
     }
     fn ensure_temp_dir(&self) {}
     fn set_token(&self) {}
     fn create_compose_backend_file(&self) {}
     fn create_compose_frontend_file(&self) {}
+    fn create_compose_runner_file(&self) {}
     fn sync() {}
   }

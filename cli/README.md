@@ -1,10 +1,10 @@
 # a11ywatch-cli
 
-CLI tool to manage all things required BETA. View the [cli-docs](https://docs.a11ywatch.com/documentation/cli/) for more complete info.
+The A11yWatch Command Line Interface. View the [cli-docs](https://docs.a11ywatch.com/documentation/cli/) for more complete info.
 
 ## Build
 
-Launch A11yWatch using docker on any machine. Get started by making sure you have [Rust](https://www.rust-lang.org/tools/install) installed and running the command below.
+Get the CLI by running the command below.
 
 ```sh
 cargo install a11ywatch_cli
@@ -23,7 +23,17 @@ a11ywatch scan --url https://a11ywatch.com > results.json
 
 Supported archs are amd64 and arm64.
 
-### Deploy
+### BETA
+
+The following commands are currently in BETA and may not work on all platforms.
+
+1. deploy (TERRAFORM)
+1. destroy (TERRAFORM)
+1. scan -r (with runner option)
+
+The scan sub command with the runner option and the remote deployment commands are a work in progress. You may experience issues with the sub commands, feel free to leave an issue when found.
+
+#### Deploy
 
 The deployment infra is handled via terraform. The terraform code will be installed seperate outside of the crate.
 If you cloned the repo make sure to adjust the `variables.tf` file in the terraform folder with your [GCP](https://cloud.google.com/) creds.

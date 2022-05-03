@@ -1,8 +1,8 @@
 [package]
 name = "a11ywatch_cli"
-version = "0.0.71"
+version = "0.0.89"
 authors = ["j-mendez <jeff@a11ywatch.com>"]
-description = "A11yWatch CLI to build, deploy, run, and manage all things."
+description = "A11yWatch accessibility CLI."
 repository = "https://github.com/a11ywatch/a11ywatch"
 readme = "README.md"
 keywords = ["a11ywatch", "accessibility", "web", "website_improvement"]

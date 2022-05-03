@@ -7,7 +7,7 @@ use crate::INCLUDE_FRONTEND;
 pub struct Start {}
 
 impl Start {
-    pub fn process(local: &bool) -> &bool {
+    pub fn process(local: &bool) -> bool {
         let mut file_manager = TempFs::new();
 
         let frontend: bool = match env::var(INCLUDE_FRONTEND) {
@@ -16,7 +16,7 @@ impl Start {
         };
 
         if *local {
-            println!("TODO: start all services on local machine...");
+            println!("Error: API not implemented. CLI interface holding entry as stub.");
         } else {
             if frontend {
                 file_manager.create_compose_frontend_file().unwrap();
@@ -26,26 +26,6 @@ impl Start {
             docker::start_service(&frontend, &file_manager);
         }
 
-        &local
-    }
-}
-
-#[derive(Debug, Default)]
-pub struct Stop {}
-
-impl Stop {
-    pub(crate) fn process(local: &bool) -> &bool {
-        let file_manager = TempFs::new();
-        let frontend: bool = match env::var(INCLUDE_FRONTEND) {
-            Ok(val) => val == "true",
-            Err(_) => false,
-        };
-        if *local {
-            println!("TODO: stop all services on local machine...");
-        } else {
-            docker::stop_service(&frontend, &file_manager);
-        }
-
-        &local
+        *local
     }
 }
