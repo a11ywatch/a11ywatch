@@ -1,3 +1,4 @@
+version: "3.4"
 services:
   web:
     container_name: web
@@ -9,8 +10,6 @@ services:
       - ../a11ywatch-web/next.config.js:/app/next.config.js
       - ../a11ywatch-web/tailwind.config.js:/app/tailwind.config.js
       - ../a11ywatch-web/public:/app/public
-    networks:
-      - front-net
     ports:
       - "3000:3000"
     environment:
@@ -29,9 +28,6 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ../a11ywatch-core/src:/usr/src/app/src
-    networks:
-      - back-net
-      - front-net
     ports:
       - "8080:8080"
       - 50051
@@ -71,8 +67,6 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ../pagemind/src:/usr/src/app/src
-    networks:
-      - back-net
     ports:
       - "8040"
       - 50052
@@ -82,8 +76,6 @@ services:
       - AI_SERVICE_URL=${SCRIPTS_CDN_URL:-http://mav:8020}
       - PORT=${PAGEMIND_PORT:-8040}
       - ASSETS_CDN=${ASSETS_CDN:-http://localhost:8090}
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
 
   mav:
     container_name: mav
@@ -92,10 +84,8 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ../mav/src:/usr/src/app/src
-    networks:
-      - back-net
     ports:
-      - "8020"
+      - 8020
       - 50053
     environment:
       - MAIN_API_URL=${MAIN_API_URL:-http://api:8080}
@@ -109,9 +99,6 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ../elastic-cdn/src:/usr/src/app/src
-    networks:
-      - back-net
-      - front-net
     ports:
       - "8090:8090"
       - 50054
@@ -125,19 +112,14 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ../crawler/src:/usr/src/app/src
-    networks:
-      - back-net
+    network_mode: host
     ports:
       - 50055
     environment:
       - GRPC_HOST=0.0.0.0:50055
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
 
   mongodb:
     container_name: mongodb
-    networks:
-      - back-net
     image: mongo
     ports:
       - "27017:27017"
@@ -148,8 +130,6 @@ services:
 
   mongoclient:
     container_name: mongoclient
-    networks:
-      - back-net
     image: huggingface/mongoku
     ports:
       - "3100:3100"
@@ -163,12 +143,10 @@ services:
     image: redis:7.0-rc2-alpine
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
-    networks:
-      - back-net
 
   chrome:
-    image: ghcr.io/drpayyne/chrome
     container_name: chromium-browser
+    image: ghcr.io/drpayyne/chrome
     command:
       [
         chromium-browser,
@@ -189,12 +167,7 @@ services:
       ]
     ports:
       - "9222:9222"
-    networks:
-      - back-net
 
-networks:
-  front-net:
-  back-net:
 volumes:
   mongodb:
   logger:
