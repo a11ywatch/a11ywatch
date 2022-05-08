@@ -7,7 +7,7 @@
 
 [![crates.io](https://img.shields.io/crates/v/a11ywatch_cli?label=latest)](https://docs.rs/crate/a11ywatch_cli/latest)
 ![MIT](https://img.shields.io/crates/l/a11ywatch_cli.svg)
-[![CI](https://circleci.com/gh/A11yWatch/a11ywatch/tree/main.svg?style=svg)](https://circleci.com/gh/A11yWatch/a11ywatch/tree/main)
+[![A11yWatchBot](https://github.com/A11yWatch/a11ywatch/actions/workflows/build-test.yml/badge.svg)](https://github.com/A11yWatch/a11ywatch/actions/workflows/build-test.yml)
 ![downloads](https://img.shields.io/crates/d/a11ywatch_cli.svg)
 
   </p>

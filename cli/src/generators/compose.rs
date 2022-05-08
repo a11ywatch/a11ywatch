@@ -92,6 +92,7 @@ services:
         '--headless',
         '--disable-gpu',
         '--no-sandbox',
+        '--disable-extensions',
         '--remote-debugging-address=0.0.0.0',
         '--remote-debugging-port=9222',
         '--max-wait-for-load=2500',

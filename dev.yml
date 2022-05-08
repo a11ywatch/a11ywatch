@@ -156,6 +156,7 @@ services:
         "--remote-debugging-port=9222",
         "--max-wait-for-load=2500",
         "--disable-storage-reset",
+        "--disable-extensions",
         "--disable-dev-shm-usage",
         "--disable-http2",
         "--disable-accelerated-2d-canvas",
