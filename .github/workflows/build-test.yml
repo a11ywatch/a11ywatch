@@ -1,0 +1,15 @@
+name: A11yWatchBot
+on: [pull_request, push]
+jobs:
+  run-container:
+    name: End to End
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: A11yWatch website scan
+        uses: a11ywatch/github-action@v1.2.45
+        with:
+          WEBSITE_URL: ${{ secrets.WEBSITE_URL }}
+          A11YWATCH_TOKEN: ${{ secrets.A11YWATCH_TOKEN }}
+          FAIL_ERROR_COUNT: 250
+          EXTERNAL: true
