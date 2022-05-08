@@ -27,7 +27,7 @@ services:
       - REDIS_CLIENT=${REDIS_CLIENT:-redis://redis:6379}
       - REDIS_HOST=redis
       - DOCKER_ENV=true
-      - SUPER_MODE=${SUPER_MODE:-true}
+      - SUPER_MODE=true
 
   pagemind:
     container_name: pagemind
@@ -85,7 +85,7 @@ services:
 
   chrome:
     image: ghcr.io/drpayyne/chrome
-    container_name: chromium-browser
+    container_name: chrome
     command:
       [
         chromium-browser,

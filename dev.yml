@@ -1,4 +1,3 @@
-version: "3.4"
 services:
   web:
     container_name: web
@@ -112,7 +111,6 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ../crawler/src:/usr/src/app/src
-    network_mode: host
     ports:
       - 50055
     environment:
