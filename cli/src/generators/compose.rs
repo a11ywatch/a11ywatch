@@ -6,9 +6,6 @@ services:
   api:
     container_name: api
     image: a11ywatch/a11ywatch-core
-    networks:
-      - back-net
-      - front-net
     ports:
       - 3280:8080
       - 50051
@@ -35,8 +32,6 @@ services:
   pagemind:
     container_name: pagemind
     image: a11ywatch/pagemind
-    networks:
-      - back-net
     ports:
       - 8040
       - 50052
@@ -49,8 +44,6 @@ services:
   mav:
     container_name: mav
     image: a11ywatch/mav
-    networks:
-      - back-net
     ports:
       - 8020
       - 50053
@@ -62,9 +55,6 @@ services:
   cdn-server:
     container_name: cdn-server
     image: a11ywatch/cdn-server
-    networks:
-      - back-net
-      - front-net
     ports:
       - 8090:8090
       - 50054
@@ -74,15 +64,11 @@ services:
   crawler:
     container_name: crawler
     image: a11ywatch/crawler
-    networks:
-      - back-net
     ports:
       - 50055
 
   mongodb:
     container_name: mongodb
-    networks:
-      - back-net
     image: mongo
     ports:
       - 27017:27017
@@ -96,9 +82,6 @@ services:
     image: redis:7.0-rc2-alpine
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
-    networks:
-      - back-net
-      - front-net
 
   chrome:
     image: ghcr.io/drpayyne/chrome
@@ -123,12 +106,7 @@ services:
       ]
     ports:
       - 9222:9222
-    networks:
-      - back-net
 
-networks:
-  back-net:
-  front-net:
 volumes:
   mongodb:
 
@@ -151,8 +129,6 @@ services:
       - PORT=3000
       - API=${API:-http://localhost:3280/graphql}
       - WEB_SOCKET_URL=${WEB_SOCKET_URL:-ws://localhost:3280/graphql}
-networks:
-  front-net:
 
 "
 }
@@ -165,11 +141,8 @@ pub fn generate_compose_runner(url: &str) -> String {
     runner:
       container_name: runner
       image: a11ywatch/runner
-      networks:
-        - back-net
       environment:
         - WEBSITE_URL={url}
-  networks:
-    back-net:
+
   ")
 }

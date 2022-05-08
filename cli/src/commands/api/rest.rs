@@ -21,7 +21,7 @@ impl ApiClient {
     pub fn scan_website(url: &str, file_manager: &TempFs) -> Result<ApiResult, Error> {
         let target_destination: String = match env::var(EXTERNAL) {
             Ok(_) => "https://api.a11ywatch.com",
-            Err(_) => "http://localhost:3280",
+            Err(_) => "http://127.0.0.1:3280",
         }.to_string();
 
         let request_destination = format!("{}/api/scan-simple", target_destination);
