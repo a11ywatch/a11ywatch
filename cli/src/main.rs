@@ -34,6 +34,10 @@ fn main() {
         println!("{}", &file_manager.results_file);
     }
 
+    if cli.find_tmp_dir {
+        println!("{}", &file_manager.get_temp_dir());
+    }
+
     if cli.github_api_url {
         use self::utils::get_api;
         println!("{}", &get_api());

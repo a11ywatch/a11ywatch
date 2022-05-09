@@ -7,7 +7,7 @@ use serde_json::{json, Value, from_reader};
 /// Manage file paths and contents for system
 pub(crate) struct TempFs {
     /// temp app directory for a11ywatch
-    pub app_dir: String,
+    app_dir: String,
     /// backend infra compose file
     pub backend_compose: String,
     /// frontend compose file
@@ -34,6 +34,7 @@ fn merge(a: &mut Value, b: &Value) {
 }
 
 
+/// standard file system handling methods
 pub(crate)
 trait Fs {
     fn new () -> Self;
@@ -45,6 +46,7 @@ trait Fs {
     fn sync();
 }
 
+/// temporary file system
 impl TempFs {
     pub fn new() -> Self {
         let tmp_dir = std::env::temp_dir().display().to_string();
@@ -63,6 +65,11 @@ impl TempFs {
             config_file: format!("{}", config_file),
             app_dir,
         }
+    }
+
+    /// get the apps temp directory location
+    pub fn get_temp_dir(&mut self) -> &String {
+       &self.app_dir
     }
     
     /// create compose backend file is does not exist

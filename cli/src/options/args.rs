@@ -20,4 +20,7 @@ pub struct Cli {
     /// Get results file parsed to json
     #[clap(short, long)]
     pub results_parsed: bool,
+    /// Get the apps tmp directory location
+    #[clap(long)]
+    pub find_tmp_dir: bool,
 }
