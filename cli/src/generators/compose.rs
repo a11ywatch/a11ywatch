@@ -89,7 +89,7 @@ services:
     command:
       [
         chromium-browser,
-        '--headless',
+        '--headless=chrome',
         '--disable-gpu',
         '--no-sandbox',
         '--disable-extensions',
