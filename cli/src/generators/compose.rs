@@ -35,7 +35,6 @@ services:
     environment:
       - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://127.0.0.1:8090/api}
       - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
-      - AI_SERVICE_URL=${SCRIPTS_CDN_URL:-http://127.0.0.1:8020}
       - PORT=${PAGEMIND_PORT:-8040}
 
   mav:
@@ -86,7 +85,7 @@ services:
     command:
       [
         chromium-browser,
-        '--headless=chrome',
+        '--headless',
         '--disable-gpu',
         '--no-sandbox',
         '--disable-extensions',
