@@ -44,7 +44,6 @@ services:
       - 8020
       - 50053
     environment:
-      - MAIN_API_URL=${MAIN_API_URL:-http://127.0.0.1:8080}
       - PORT=${MAV_PORT:-8020}
       - DOCKER_ENV=true
 
@@ -88,7 +87,6 @@ services:
         '--headless',
         '--disable-gpu',
         '--no-sandbox',
-        '--disable-extensions',
         '--remote-debugging-address=0.0.0.0',
         '--remote-debugging-port=9222',
         '--max-wait-for-load=2500',
