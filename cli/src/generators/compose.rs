@@ -101,6 +101,8 @@ services:
         '--disable-http2',
         '--disable-accelerated-2d-canvas',
         '--disable-setuid-sandbox',
+        '--hide-scrollbars',
+        '--mute-audio',
         '--no-zygote',
         '--no-first-run',
         '--disable-features=TranslateUI,BlinkGenPropertyTrees',
