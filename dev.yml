@@ -20,6 +20,8 @@ services:
       - INTERCOM_APPID=${INTERCOM_APPID}
       - INTERCOM_ENABLED=${INTERCOM_ENABLED}
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+    networks:
+      - front-net
 
   api:
     container_name: api
@@ -56,6 +58,9 @@ services:
       - SUPER_MODE=${SUPER_MODE:-true}
       - REDIS_CLIENT=${REDIS_CLIENT:-redis://redis:6379}
       - REDIS_HOST=redis
+    networks:
+      - back-net
+      - front-net
 
   pagemind:
     container_name: pagemind
@@ -72,6 +77,9 @@ services:
       - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
       - PORT=${PAGEMIND_PORT:-8040}
       - ASSETS_CDN=${ASSETS_CDN:-http://localhost:8090}
+      - DOCKER=true
+    networks:
+      - back-net
 
   mav:
     container_name: mav
@@ -86,6 +94,8 @@ services:
     environment:
       - PORT=${MAV_PORT:-8020}
       - DOCKER_ENV=true
+    networks:
+      - back-net
 
   cdn-server:
     container_name: cdn-server
@@ -99,6 +109,8 @@ services:
       - 50054
     environment:
       - PORT=${ELASTIC_CDN_PORT:-8090}
+    networks:
+      - back-net
 
   crawler:
     container_name: crawler
@@ -111,6 +123,8 @@ services:
       - 50055
     environment:
       - GRPC_HOST=0.0.0.0:50055
+    networks:
+      - back-net
 
   mongodb:
     container_name: mongodb
@@ -121,6 +135,8 @@ services:
       - mongodb:/data/db
     environment:
       - MONGO_INITDB_DATABASE=${DB_NAME:-a11ywatch}
+    networks:
+      - back-net
 
   mongoclient:
     container_name: mongoclient
@@ -131,12 +147,16 @@ services:
       - MONGOKU_DEFAULT_HOST=${HOST:-mongodb://mongodb:27017/?compressors=zlib&gssapiServiceName=mongodb}
     depends_on:
       - mongodb
+    networks:
+      - back-net
 
   redis:
     container_name: redis
     image: redis:7.0-rc2-alpine
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - back-net
 
   chrome:
     container_name: chrome
@@ -163,7 +183,13 @@ services:
       ]
     ports:
       - "9222:9222"
+    networks:
+      - back-net
 
 volumes:
   mongodb:
   logger:
+
+networks:
+  front-net:
+  back-net:

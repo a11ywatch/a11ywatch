@@ -1,4 +1,4 @@
-/// generate central backend services
+/// generate central backend services [TODO: ALLOW DEFAULT PORT]
 pub fn generate_compose_backend() -> &'static str {
     &r#"
 version: '3.9'
@@ -25,6 +25,8 @@ services:
       - REDIS_HOST=redis
       - DOCKER_ENV=true
       - SUPER_MODE=${SUPER_MODE:-true}
+    networks:
+      - back-net
 
   pagemind:
     container_name: pagemind
@@ -36,6 +38,9 @@ services:
       - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://127.0.0.1:8090/api}
       - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
       - PORT=${PAGEMIND_PORT:-8040}
+      - DOCKER=true
+    networks:
+      - back-net
 
   mav:
     container_name: mav
@@ -46,6 +51,8 @@ services:
     environment:
       - PORT=${MAV_PORT:-8020}
       - DOCKER_ENV=true
+    networks:
+      - back-net
 
   cdn-server:
     container_name: cdn-server
@@ -55,12 +62,16 @@ services:
       - 50054
     environment:
       - PORT=${ELASTIC_CDN_PORT:-8090}
+    networks:
+      - back-net
 
   crawler:
     container_name: crawler
     image: a11ywatch/crawler
     ports:
       - 50055
+    networks:
+      - back-net
 
   mongodb:
     container_name: mongodb
@@ -71,16 +82,20 @@ services:
       - mongodb:/data/db
     environment:
       - MONGO_INITDB_DATABASE=${DB_NAME:-a11ywatch}
+    networks:
+      - back-net
 
   redis:
     container_name: redis
     image: redis:7.0-rc2-alpine
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - back-net
 
   chrome:
     image: ghcr.io/drpayyne/chrome
-    container_name: chromium-browser
+    container_name: chrome
     command:
       [
         chromium-browser,
@@ -103,9 +118,15 @@ services:
       ]
     ports:
       - 9222:9222
+    networks:
+      - back-net
 
 volumes:
   mongodb:
+
+networks:
+  front-net:
+  back-net:
 
   "#
 }
@@ -126,7 +147,12 @@ services:
       - PORT=3000
       - API=${API:-http://localhost:3280/graphql}
       - WEB_SOCKET_URL=${WEB_SOCKET_URL:-ws://localhost:3280/graphql}
+    networks:
+      - front-net
 
+networks:
+  front-net:
+  
 "
 }
 
@@ -140,6 +166,11 @@ pub fn generate_compose_runner(url: &str) -> String {
       image: a11ywatch/runner
       environment:
         - WEBSITE_URL={url}
+      networks:
+        - back-net
+
+  networks:
+    back-net:
 
   ")
 }
