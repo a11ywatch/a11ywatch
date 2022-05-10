@@ -140,11 +140,11 @@ services:
 
   mongoclient:
     container_name: mongoclient
-    image: huggingface/mongoku
+    image: mongo-express
     ports:
-      - "3100:3100"
+      - "3100:8081"
     environment:
-      - MONGOKU_DEFAULT_HOST=${HOST:-mongodb://mongodb:27017/?compressors=zlib&gssapiServiceName=mongodb}
+      - ME_CONFIG_MONGODB_URL=${HOST:-mongodb://mongodb:27017/?compressors=zlib&gssapiServiceName=mongodb}
     depends_on:
       - mongodb
     networks:
@@ -188,7 +188,6 @@ services:
 
 volumes:
   mongodb:
-  logger:
 
 networks:
   front-net:

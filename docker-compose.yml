@@ -144,4 +144,3 @@ networks:
 
 volumes:
   mongodb:
-  logger:
