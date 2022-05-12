@@ -121,8 +121,6 @@ services:
       - ../crawler/src:/usr/src/app/src
     ports:
       - 50055
-    environment:
-      - GRPC_HOST=0.0.0.0:50055
     networks:
       - back-net
 

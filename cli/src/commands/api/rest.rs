@@ -7,7 +7,6 @@ use crate::fs::temp::{TempFs};
 
 #[derive(Deserialize, Serialize, Debug, Default)]
 pub struct ApiResult {
-    #[serde(rename = "website")]
     data: Website,
     code: u32,
     success: bool,

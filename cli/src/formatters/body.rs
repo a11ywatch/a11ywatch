@@ -15,10 +15,10 @@ pub(crate) fn results_to_string(file_manager: &TempFs) -> String {
 pub(crate) fn format_body(file_manager: &TempFs) -> Value {
     let file_results: String = file_manager.read_results();
     let v: Value = from_str(&file_results).unwrap();
-    let w = &v["website"];
+    let w = &v["data"];
     let website: Website = from_value(w.to_owned()).unwrap();
     let website_url = &website.url;
-    let issues_length = website.issue.len();
+    let issues_length = website.issues.len();
 
     let seperator = if issues_length == 1 {
         ""
@@ -35,7 +35,7 @@ pub(crate) fn format_body(file_manager: &TempFs) -> Value {
     writeln!(&mut w, "</summary>").unwrap();
     writeln!(&mut w, "").unwrap();
 
-    for issue in website.issue {
+    for issue in website.issues {
         writeln!(&mut w, "<strong>{}</strong> <em>{}</em>", issue.issue_type.to_uppercase(), issue.code).unwrap();
         writeln!(&mut w, "").unwrap();
         writeln!(&mut w, "```html").unwrap();
