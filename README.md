@@ -15,7 +15,9 @@
 
 ## Getting Started
 
-See the documentation at [https://docs.a11ywatch.com](https://docs.a11ywatch.com)
+`docker compose up`
+
+See the documentation at [https://docs.a11ywatch.com](https://docs.a11ywatch.com) for more information.
 
 ## Contributing
 
