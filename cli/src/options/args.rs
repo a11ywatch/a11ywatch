@@ -20,6 +20,9 @@ pub struct Cli {
     /// Get results file parsed to json
     #[clap(short, long)]
     pub results_parsed: bool,
+    /// Get amount of issues occured for the results.
+    #[clap(long)]
+    pub results_issues: bool,
     /// Get the apps tmp directory location
     #[clap(long)]
     pub find_tmp_dir: bool,

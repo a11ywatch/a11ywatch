@@ -6,7 +6,7 @@ pub mod fs;
 pub mod utils;
 pub mod formatters;
 
-use self::formatters::{format_body, results_to_string};
+use self::formatters::{format_body, results_to_string, results_to_value};
 use clap::{Parser};
 use std::env;
 use options::{Cli, Commands};
@@ -46,6 +46,35 @@ fn main() {
     if cli.results_parsed {
        println!("{}", results_to_string(&file_manager));
     }
+
+    // get the amount of issues for the scan either across all pages or single page.
+    if cli.results_issues {
+        let json_data = results_to_value(&file_manager);
+        let data = &json_data["data"];
+        let mut count: usize = 0;
+
+        if data.is_array() {
+            let pages = data.as_array().unwrap();
+
+            for page in pages {
+                let issues = &page["issues"];
+                if issues.is_array() {
+                    let issues = issues.as_array().unwrap();
+                    count += issues.len();
+                }
+            }
+        }
+        if data.is_object() {
+            let issues = &data["issues"];
+
+            if issues.is_array() {
+                let issues = issues.as_array().unwrap();
+                count += issues.len();
+            }
+        }
+
+        println!("{}", count);
+     }
 
     match &cli.command {
         Some(Commands::BUILD { frontend, local }) => {
@@ -96,16 +125,17 @@ fn main() {
                 println!("{}", json_data);
             }
         },
-        // Some(Commands::CRAWL { url, external, save }) => {
-        //     env::set_var(EXTERNAL, external.to_string());
-        //     // TODO: START FEEDBACK SERVER
-        //     let result = ApiClient::crawl_website(&url);
-        //     let json_results = json!(result.unwrap());
+        Some(Commands::CRAWL { url, external, save }) => {
+            env::set_var(EXTERNAL, external.to_string());
+            let result = ApiClient::crawl_website(&url, &file_manager).unwrap_or_default();
+            let json_results = json!(result);
 
-        //     if *save {
-        //         TempFs::new().save_results(&json_results).unwrap();
-        //     }
-        // },
+            if *save {
+                TempFs::new().save_results(&json_results).unwrap();
+            }
+
+            println!("{}", json_results);
+        },
         None => {}
     }
 }

@@ -53,7 +53,7 @@ pub enum Commands {
         #[clap(short, long)]
         backend: bool,
     },
-    /// Scan a website url for issues [only one page]
+    /// Single page scan a website url for issues.
     SCAN {
         /// target url to scan
         #[clap(short, long)]
@@ -67,6 +67,18 @@ pub enum Commands {
         /// use a docker image to execute the command
         #[clap(short, long)]
         runner: bool,
+    },
+    /// Site wide scan a website url for issues.
+    CRAWL {
+        /// target url to scan
+        #[clap(short, long)]
+        url: String,
+        /// whether to use the a11ywatch external api
+        #[clap(short, long)]
+        external: bool,
+        /// save the results of the scan to tmp
+        #[clap(short, long)]
+        save: bool,
     },
     /// Extract results in formats for platforms
     EXTRACT {

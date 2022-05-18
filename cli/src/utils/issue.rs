@@ -10,4 +10,5 @@ pub struct Issue {
     pub context: String,
     pub message: String,
     pub selector: String,
+    pub runner: String,
 }
