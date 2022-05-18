@@ -16,6 +16,8 @@ pub(crate) struct TempFs {
     pub runner_compose: String,
     /// results of scan file location
     pub results_file: String,
+    /// results of github html file location
+    pub results_github_file: String,
     /// infra config file
     pub config_file: String
 }
@@ -51,8 +53,9 @@ impl TempFs {
     pub fn new() -> Self {
         let tmp_dir = std::env::temp_dir().display().to_string();
         let app_dir = format!("{}/a11ywatch", &tmp_dir);
-        let config_file = &format!("{}/config.json", &app_dir);
+        let config_file = format!("{}/config.json", &app_dir);
         let results_file = format!("{}/results.json", &app_dir);
+        let results_github_file = format!("{}/results_github.json", &app_dir);
 
         TempFs::ensure_temp_dir(&tmp_dir, &app_dir).unwrap();
         TempFs::sync(&app_dir, &config_file).unwrap();
@@ -61,9 +64,10 @@ impl TempFs {
             backend_compose: format!("{}/compose.yml", app_dir),
             frontend_compose: format!("{}/compose.frontend.yml", app_dir),
             runner_compose: format!("{}/compose.runner.yml", app_dir),
-            results_file: format!("{}", results_file),
-            config_file: format!("{}", config_file),
+            results_file,
+            config_file,
             app_dir,
+            results_github_file
         }
     }
 
@@ -108,6 +112,15 @@ impl TempFs {
         data
     }
 
+    /// read results from scan to string
+    pub fn read_results_github(&self) -> String {
+        let mut file = File::open(&self.results_github_file).unwrap();
+        let mut data = String::new();
+        file.read_to_string(&mut data).unwrap();
+            
+        data
+    }
+
     /// set the api token to use for request
     pub fn get_token(&self) -> String {
         let file = File::open(&self.config_file).unwrap();
@@ -138,6 +151,14 @@ impl TempFs {
     /// create compose frontend file is does not exist
     pub fn save_results(&self, json: &serde_json::Value) -> std::io::Result<()> {
         let mut file = File::create(&self.results_file)?;
+        file.write_all(&json.to_string().as_bytes())?;
+
+        Ok(())
+    }
+
+    /// create compose frontend file is does not exist
+    pub fn save_github_results(&self, json: &serde_json::Value) -> std::io::Result<()> {
+        let mut file = File::create(&self.results_github_file)?;
         file.write_all(&json.to_string().as_bytes())?;
 
         Ok(())
@@ -196,16 +217,19 @@ impl Fs for TempFs {
         let tmp_dir = std::env::temp_dir().display().to_string();
         let app_dir = format!("{}/a11ywatch", &tmp_dir);
         let results_file = format!("{}/results.json", &app_dir);
+        let results_github_file = format!("{}/results_github.json", &app_dir);
+
         // let config_file = &format!("{}/config.json", app_dir);
 
         Self {
             backend_compose: format!("{}/compose.yml", app_dir),
             frontend_compose: format!("{}/compose.frontend.yml", app_dir),
             runner_compose: format!("{}/compose.runner.yml", app_dir),
-            // app_dir: format!("{}", app_dir),
-            results_file: format!("{}", results_file),
             config_file :format!("{}/compose.json", app_dir),
+            // app_dir: format!("{}", app_dir),
+            results_file,
             app_dir,
+            results_github_file
         }
     }
     fn ensure_temp_dir(&self) {}

@@ -7,8 +7,7 @@ use crate::fs::temp::{TempFs};
 
 #[derive(Deserialize, Serialize, Debug, Default)]
 pub struct ApiResult {
-    data: Website,
-    code: u32,
+    data: Option<Website>,
     success: bool,
     message: String,
 }
@@ -16,8 +15,7 @@ pub struct ApiResult {
 // site wide crawl long job handling
 #[derive(Deserialize, Serialize, Debug, Default)]
 pub struct CrawlApiResult {
-    data: Vec<Website>,
-    code: u32,
+    data: Option<Vec<Website>>,
     success: bool,
     message: String,
 }

@@ -14,12 +14,18 @@ pub struct Cli {
     /// Log file results path
     #[clap(short, long)]
     pub find_results: bool,
+    /// Log file results github path
+    #[clap(long)]
+    pub github_results_path: bool,
     /// Get github API endpoint of project
     #[clap(short, long)]
     pub github_api_url: bool,
     /// Get results file parsed to json
     #[clap(short, long)]
     pub results_parsed: bool,
+    /// Get results of the github html message
+    #[clap(long)]
+    pub results_parsed_github: bool,
     /// Get amount of issues occured for the results.
     #[clap(long)]
     pub results_issues: bool,

@@ -6,7 +6,7 @@ pub mod fs;
 pub mod utils;
 pub mod formatters;
 
-use self::formatters::{format_body, results_to_string, results_to_value};
+use self::formatters::{format_body, results_to_string, results_to_string_github, results_issues_count};
 use clap::{Parser};
 use std::env;
 use options::{Cli, Commands};
@@ -27,11 +27,15 @@ fn main() {
 
     if !api_token.is_empty() {
         file_manager.set_token(&api_token).unwrap();
-        io::stdout().write_all(&"api token saved".as_bytes()).unwrap();
+        io::stdout().write_all(&"API token saved".as_bytes()).unwrap();
     }
 
     if cli.find_results {
         println!("{}", &file_manager.results_file);
+    }
+
+    if cli.github_results_path {
+        println!("{}", &file_manager.results_github_file);
     }
 
     if cli.find_tmp_dir {
@@ -47,31 +51,13 @@ fn main() {
        println!("{}", results_to_string(&file_manager));
     }
 
+    if cli.results_parsed_github {
+        println!("{}", results_to_string_github(&file_manager));
+    }
+
     // get the amount of issues for the scan either across all pages or single page.
     if cli.results_issues {
-        let json_data = results_to_value(&file_manager);
-        let data = &json_data["data"];
-        let mut count: usize = 0;
-
-        if data.is_array() {
-            let pages = data.as_array().unwrap();
-
-            for page in pages {
-                let issues = &page["issues"];
-                if issues.is_array() {
-                    let issues = issues.as_array().unwrap();
-                    count += issues.len();
-                }
-            }
-        }
-        if data.is_object() {
-            let issues = &data["issues"];
-
-            if issues.is_array() {
-                let issues = issues.as_array().unwrap();
-                count += issues.len();
-            }
-        }
+        let count = results_issues_count(&file_manager);
 
         println!("{}", count);
      }
@@ -121,12 +107,14 @@ fn main() {
         },
         Some(Commands::EXTRACT { platform }) => {
             if platform == "github" {
-                let json_data = format_body(&file_manager);
+                let json_data = format_body(&file_manager, cli.github_results_path);
                 println!("{}", json_data);
             }
         },
         Some(Commands::CRAWL { url, external, save }) => {
-            env::set_var(EXTERNAL, external.to_string());
+            if *external {
+                env::set_var(EXTERNAL, external.to_string());
+            }
             let result = ApiClient::crawl_website(&url, &file_manager).unwrap_or_default();
             let json_results = json!(result);
 
