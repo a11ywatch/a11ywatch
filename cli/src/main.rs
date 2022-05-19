@@ -6,7 +6,14 @@ pub mod fs;
 pub mod utils;
 pub mod formatters;
 
-use self::formatters::{format_body, results_to_string, results_to_string_github, results_issues_count};
+use self::formatters::{
+    format_body, 
+    results_to_string, 
+    results_to_string_github, 
+    results_issues_count,
+    results_issues_errors_count,
+    results_issues_warnings_count
+};
 use clap::{Parser};
 use std::env;
 use options::{Cli, Commands};
@@ -55,12 +62,22 @@ fn main() {
         println!("{}", results_to_string_github(&file_manager));
     }
 
-    // get the amount of issues for the scan either across all pages or single page.
     if cli.results_issues {
         let count = results_issues_count(&file_manager);
 
         println!("{}", count);
-     }
+    }
+    if cli.results_issues_errors {
+        let count = results_issues_errors_count(&file_manager);
+
+        println!("{}", count);
+    }
+
+    if cli.results_issues_warnings {
+        let count = results_issues_warnings_count(&file_manager);
+
+        println!("{}", count);
+    }
 
     match &cli.command {
         Some(Commands::BUILD { frontend, local }) => {

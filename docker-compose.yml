@@ -39,7 +39,6 @@ services:
       - PRIVATE_KEY=${PRIVATE_KEY}
       - PUBLIC_KEY=${PUBLIC_KEY}
       - ADMIN_ORIGIN=${ADMIN_ORIGIN}
-      - BACKGROUND_CRAWL=${BACKGROUND_CRAWL:-true}
       - DOCKER_ENV=true
       - REDIS_CLIENT=${REDIS_CLIENT:-redis://redis:6379}
       - REDIS_HOST=redis

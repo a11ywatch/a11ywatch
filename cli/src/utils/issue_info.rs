@@ -1,13 +1,13 @@
 use serde::{Deserialize, Serialize};
 
 
-#[derive(Deserialize, Serialize, Debug, Default)]
+#[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct IssueMeta {
     #[serde(rename = "skipContentIncluded")]
     pub skip_content_included: bool,
 }
 
-#[derive(Deserialize, Serialize, Debug, Default)]
+#[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct IssueInfo {
     #[serde(rename = "adaScore")]
     pub ada_score: i32,

@@ -28,58 +28,87 @@ pub(crate) fn results_to_value(file_manager: &TempFs) -> Value {
     v
 }
 
-// the amount of issues for the page from previus scan
-pub(crate) fn results_issues_count(file_manager: &TempFs) -> usize {
+/// returns the total errors,warnings combined and seperate as a tuple (total,errors,warnings). [notices type not current used]
+pub(crate) fn extract_issues_count(file_manager: &TempFs) -> (usize, usize, usize) {
     let json_data = results_to_value(&file_manager);
     let data = &json_data["data"];
-    let mut count: usize = 0;
+    let mut error_count: usize = 0;
+    let mut warning_count: usize = 0;
     
+    // loop through stream until and extract all valid content.
     if data.is_array() {
         let pages = data.as_array().unwrap();
     
         for page in pages {
-            let issues = &page["issues"];
-            if issues.is_array() {
-                let issues = issues.as_array().unwrap();
-                count += issues.len();
-            }
-        }
-    }
-    if data.is_object() {
-        let issues = &data["issues"];
-    
-        if issues.is_array() {
-            let issues = issues.as_array().unwrap();
-            count += issues.len();
+            let errors = &page["issuesInfo"]["errorCount"];
+            let errors: usize = format!("{}", errors).parse().unwrap();
+            let warnings = &page["issuesInfo"]["warningCount"];
+            let warnings: usize = format!("{}", warnings).parse().unwrap();
+            
+            error_count += errors;
+            warning_count += warnings;
         }
     }
 
-    count
+    if data.is_object() {
+        let errors = &data["issuesInfo"]["errorCount"];
+        let errors: usize = format!("{}", errors).parse().unwrap();
+        let warnings = &data["issuesInfo"]["warningCount"];
+        let warnings: usize = format!("{}", warnings).parse().unwrap();
+        
+        error_count += errors;
+        warning_count += warnings;
+    }
+
+    (error_count + warning_count, error_count, warning_count)
+}
+
+// the amount of total errors and warnings for the page from prev scan
+pub(crate) fn results_issues_count(file_manager: &TempFs) -> usize {
+    let (total, _errors, _warnings): (usize, usize, usize) = extract_issues_count(&file_manager);
+    
+    total
+}
+
+// the amount of total errors and warnings for the page from prev scan
+pub(crate) fn results_issues_errors_count(file_manager: &TempFs) -> usize {
+    let (_total, errors, _warnings): (usize, usize, usize) = extract_issues_count(&file_manager);
+    
+    errors
+}
+
+// the amount of total warnings and warnings for the page from prev scan
+pub(crate) fn results_issues_warnings_count(file_manager: &TempFs) -> usize {
+    let (_total, _errors, warnings): (usize, usize, usize) = extract_issues_count(&file_manager);
+    
+    warnings
 }
 
 // format the body for sending to github. Handles multi page and single page reports.
 pub(crate) fn format_body(file_manager: &TempFs, save: bool) -> Value {
     let v: Value = results_to_value(file_manager);
     let data = &v["data"];
-
     let title: String;
+    let (count, errors, warnings) = extract_issues_count(file_manager);
+
+    let seperator = |v| {
+        if v == 1 {
+            ""
+        } else {
+            "s"
+        }.to_string()
+    };
 
     if data.is_array() {
         let pages = data.as_array().unwrap();
         let mut w = Vec::new();
-        let count = results_issues_count(file_manager);
         
-        let seperator = if count == 1 {
-            ""
-        } else {
-            "s"
-        }.to_string();
 
         let first_page: Website = from_value(pages[0].clone()).unwrap();
 
         // get the top level domain for the pages
         let domain = &first_page.domain;
-        title = format!("# {} issue{} found for {}", &count, seperator, &domain);
+        title = format!("# {} total issue{}, {} error{}, and {} warning{} found for {}", &count, seperator(count), &errors, seperator(errors), &warnings, seperator(warnings), &domain);
 
         writeln!(&mut w).unwrap();
         writeln!(&mut w, "{}", title).unwrap();
@@ -105,12 +134,11 @@ pub(crate) fn format_body(file_manager: &TempFs, save: bool) -> Value {
             writeln!(&mut w).unwrap();
             writeln!(&mut w, "<details>").unwrap();
             writeln!(&mut w, "<summary>").unwrap();
-            writeln!(&mut w, "#{} - {} issue{}", &website_url, &issues_length, seperator).unwrap();
+            writeln!(&mut w, "{} - {} issue{}", &website_url, &issues_length, seperator).unwrap();
             writeln!(&mut w, "</summary>").unwrap();
-            writeln!(&mut w, "").unwrap();
+            writeln!(&mut w, "<br>").unwrap();    
 
             for issue in issues {
-                writeln!(&mut w, "").unwrap();    
                 writeln!(&mut w, "<strong>{}</strong> <em>{}</em>", issue.issue_type.to_uppercase(), issue.code).unwrap();
                 writeln!(&mut w, "").unwrap();    
                 writeln!(&mut w, "```html").unwrap();
@@ -167,16 +195,8 @@ pub(crate) fn format_body(file_manager: &TempFs, save: bool) -> Value {
         let website: Website = from_value(data.to_owned()).unwrap();
         let domain = &website.domain;
         let issues = website.issues.unwrap_or_default();
-
-        let issues_length = issues.len();
     
-        let seperator = if issues_length == 1 {
-            ""
-        } else {
-            "s"
-        }.to_string();
-    
-        title = format!("# {} issue{} found for {}", &issues_length, seperator, &domain);
+        title = format!("# {} total issue{}, {} error{}, and {} warning{} found for {}", &count, seperator(count), &errors, seperator(errors), &warnings, seperator(warnings), &domain);
 
         let mut w = Vec::new();
         writeln!(&mut w).unwrap();
@@ -188,7 +208,7 @@ pub(crate) fn format_body(file_manager: &TempFs, save: bool) -> Value {
         writeln!(&mut w, "<br>").unwrap();    
     
         for issue in issues {
-            writeln!(&mut w, "").unwrap();    
+            writeln!(&mut w, "<br>").unwrap();    
             writeln!(&mut w, "<strong>{}</strong> <em>{}</em>", issue.issue_type.to_uppercase(), issue.code).unwrap();
             writeln!(&mut w, "").unwrap();    
             writeln!(&mut w, "```html").unwrap();

@@ -20,7 +20,6 @@ services:
       - GRAPHQL_PORT=${GRAPHQL_PORT:-8080}
       - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://localhost:8090/api}
       - ROOT_URL=${ROOT_URL:-http://localhost:8080}
-      - BACKGROUND_CRAWL=${BACKGROUND_CRAWL:-true}
       - REDIS_CLIENT=${REDIS_CLIENT:-redis://redis:6379}
       - REDIS_HOST=redis
       - DOCKER_ENV=true

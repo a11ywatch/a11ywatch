@@ -1,8 +1,8 @@
-use crate::utils::{Website};
 use serde::{Deserialize, Serialize};
-use crate::EXTERNAL;
 use std::env;
 use ureq::{Error, post, json};
+use crate::utils::{Website};
+use crate::EXTERNAL;
 use crate::fs::temp::{TempFs};
 
 #[derive(Deserialize, Serialize, Debug, Default)]
@@ -10,14 +10,16 @@ pub struct ApiResult {
     data: Option<Website>,
     success: bool,
     message: String,
+    code: i32
 }
 
 // site wide crawl long job handling
-#[derive(Deserialize, Serialize, Debug, Default)]
+#[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct CrawlApiResult {
     data: Option<Vec<Website>>,
     success: bool,
     message: String,
+    code: i32
 }
 
 #[derive(Debug, Default)]
@@ -33,19 +35,19 @@ impl ApiClient {
 
         let request_destination = format!("{}/api/scan-simple", target_destination);
         let token = file_manager.get_token();
-        
+
         let resp: ApiResult = if !token.is_empty() {
             post(&request_destination)
             .set("Authorization", &token)
         } else {
-            post(&request_destination)
+           post(&request_destination)
         }.send_json(json!({
             "websiteUrl": url
         }))?.into_json()?;
 
         Ok(resp)
     }
-    // Site wide scan
+    // Site wide scan [Stream]
     pub fn crawl_website(url: &str, file_manager: &TempFs) -> Result<CrawlApiResult, Error> {
         let target_destination: String = match env::var(EXTERNAL) {
             Ok(_) => "https://api.a11ywatch.com",
@@ -54,7 +56,7 @@ impl ApiClient {
 
         let request_destination = format!("{}/api/crawl", target_destination);
         let token = file_manager.get_token();
-        
+            
         let resp: CrawlApiResult = if !token.is_empty() {
             post(&request_destination)
             .set("Authorization", &token)

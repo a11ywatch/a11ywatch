@@ -10,4 +10,4 @@ jobs:
         uses: a11ywatch/github-action@v1.3.1
         with:
           WEBSITE_URL: ${{ secrets.WEBSITE_URL }}
-          FAIL_ERROR_COUNT: 250
+          FAIL_TOTAL_COUNT: 250

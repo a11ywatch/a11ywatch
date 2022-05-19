@@ -26,9 +26,15 @@ pub struct Cli {
     /// Get results of the github html message
     #[clap(long)]
     pub results_parsed_github: bool,
-    /// Get amount of issues occured for the results.
+    /// Get the total amount of issues between errors,warning,notice that occured for the result set.
     #[clap(long)]
     pub results_issues: bool,
+    /// Get the total amount of issues of type error from result set.
+    #[clap(long)]
+    pub results_issues_errors: bool,
+    /// Get the total amount of issues of type warning from result set.
+    #[clap(long)]
+    pub results_issues_warnings: bool,
     /// Get the apps tmp directory location
     #[clap(long)]
     pub find_tmp_dir: bool,
