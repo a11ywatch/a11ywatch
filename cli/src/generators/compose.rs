@@ -93,7 +93,7 @@ services:
       - back-net
 
   chrome:
-    image: ghcr.io/drpayyne/chrome
+    image: a11ywatch/chrome
     container_name: chrome
     command:
       [

@@ -157,7 +157,7 @@ services:
 
   chrome:
     container_name: chrome
-    image: ghcr.io/drpayyne/chrome
+    image: a11ywatch/chrome
     command:
       [
         chromium-browser,
