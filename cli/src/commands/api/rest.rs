@@ -48,27 +48,6 @@ impl ApiClient {
 
         Ok(resp)
     }
-    // /// Site wide scan
-    // pub fn _walk_website(url: &str, file_manager: &TempFs) -> Result<CrawlApiResult, Error> {
-    //     let target_destination: String = match env::var(EXTERNAL) {
-    //         Ok(_) => "https://api.a11ywatch.com",
-    //         Err(_) => "http://127.0.0.1:3280",
-    //     }.to_string();
-
-    //     let request_destination = format!("{}/api/crawl", target_destination);
-    //     let token = file_manager.get_token();
-            
-    //     let resp: CrawlApiResult = if !token.is_empty() {
-    //         post(&request_destination)
-    //         .set("Authorization", &token)
-    //     } else {
-    //         post(&request_destination)
-    //     }.send_json(json!({
-    //         "websiteUrl": url
-    //     }))?.into_json()?;
-
-    //     Ok(resp)
-    // }
 
     /// Site wide scan [Stream]
     pub fn crawl_website(url: &str, file_manager: &TempFs) -> Result<CrawlApiResult, Error> {
@@ -81,7 +60,7 @@ impl ApiClient {
         let token = file_manager.get_token();
         
         let agent = ureq::builder()
-            .timeout(Duration::from_secs(500))
+            .timeout(Duration::from_secs(1800)) // 30 min timeout TODO: make optional.
             .build();
             
         let resp: Vec<CrawlApiResult> = if !token.is_empty() {
