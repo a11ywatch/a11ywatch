@@ -1,4 +1,4 @@
-use crate::generators::compose::{generate_compose_backend, generate_compose_frontend, generate_compose_runner};
+use crate::generators::compose::{generate_compose_backend, generate_compose_frontend};
 use std::fs::{File, create_dir, remove_dir_all};
 use std::io::prelude::*;
 use std::path::Path;
@@ -12,8 +12,6 @@ pub(crate) struct TempFs {
     pub backend_compose: String,
     /// frontend compose file
     pub frontend_compose: String,
-    /// runner compose file
-    pub runner_compose: String,
     /// results of scan file location
     pub results_file: String,
     /// results of github html file location
@@ -44,7 +42,6 @@ trait Fs {
     fn ensure_temp_dir(&self);
     fn create_compose_backend_file(&self);
     fn create_compose_frontend_file(&self);
-    fn create_compose_runner_file(&self);
     fn sync();
 }
 
@@ -63,7 +60,6 @@ impl TempFs {
         Self {
             backend_compose: format!("{}/compose.yml", app_dir),
             frontend_compose: format!("{}/compose.frontend.yml", app_dir),
-            runner_compose: format!("{}/compose.runner.yml", app_dir),
             results_file,
             config_file,
             app_dir,
@@ -90,15 +86,6 @@ impl TempFs {
         if !Path::new(&self.frontend_compose).exists() {
             let mut file = File::create(&self.frontend_compose)?;
             file.write_all(&generate_compose_frontend().as_bytes())?;
-        }
-        Ok(())
-    }
-
-    /// create compose runner file is does not exist
-    pub fn create_compose_runner_file(&mut self, url: &str) -> std::io::Result<()> {
-        if !Path::new(&self.runner_compose).exists() {
-            let mut file = File::create(&self.runner_compose)?;
-            file.write_all(&generate_compose_runner(&url).as_bytes())?;
         }
         Ok(())
     }
@@ -224,7 +211,6 @@ impl Fs for TempFs {
         Self {
             backend_compose: format!("{}/compose.yml", app_dir),
             frontend_compose: format!("{}/compose.frontend.yml", app_dir),
-            runner_compose: format!("{}/compose.runner.yml", app_dir),
             config_file :format!("{}/compose.json", app_dir),
             // app_dir: format!("{}", app_dir),
             results_file,
@@ -236,6 +222,5 @@ impl Fs for TempFs {
     fn set_token(&self) {}
     fn create_compose_backend_file(&self) {}
     fn create_compose_frontend_file(&self) {}
-    fn create_compose_runner_file(&self) {}
     fn sync() {}
   }

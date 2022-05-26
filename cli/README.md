@@ -4,7 +4,7 @@ The A11yWatch Command Line Interface. View the [cli-docs](https://docs.a11ywatch
 
 ## Build
 
-Get the CLI by running the command below.
+Get the CLI by running the command below. Run `rustup update stable` to make sure your cargo version is up to date.
 
 ```sh
 cargo install a11ywatch_cli
@@ -25,7 +25,7 @@ Supported archs are amd64 and arm64.
 
 ### BETA
 
-The following commands are currently in BETA and may not work on all platforms. 
+The following commands are currently in BETA and may not work on all platforms.
 
 1. deploy (TERRAFORM)
 1. destroy (TERRAFORM)

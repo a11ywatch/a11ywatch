@@ -21,7 +21,6 @@ use commands::{Build, Start, Stop, Deploy, ApiClient};
 use fs::temp::{TempFs};
 use serde_json::{json};
 use std::io::{self, Write};
-use self::launchers::docker;
 
 const INCLUDE_FRONTEND: &str = "INCLUDE_FRONTEND";
 const EXTERNAL: &str = "EXTERNAL";
@@ -102,25 +101,19 @@ fn main() {
                 Deploy::process_terminate(&all);
             }
         },
-        Some(Commands::SCAN { url, external, save, runner }) => {
+        Some(Commands::SCAN { url, external, save }) => {
             if *external {
                 env::set_var(EXTERNAL, external.to_string());
             }
 
-            if *runner {
-                file_manager.create_compose_backend_file().unwrap();
-                file_manager.create_compose_runner_file(&url).unwrap();
-                docker::start_runner(&file_manager);
-            } else {
-                let result = ApiClient::scan_website(&url, &file_manager).unwrap_or_default();
-                let json_results = json!(result);
-    
-                if *save {
-                    file_manager.save_results(&json_results).unwrap();
-                }
-    
-                println!("{}", json_results);
+            let result = ApiClient::scan_website(&url, &file_manager).unwrap_or_default();
+            let json_results = json!(result);
+
+            if *save {
+                file_manager.save_results(&json_results).unwrap();
             }
+
+            println!("{}", json_results);
         },
         Some(Commands::EXTRACT { platform }) => {
             if platform == "github" {

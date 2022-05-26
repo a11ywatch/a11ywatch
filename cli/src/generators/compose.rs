@@ -168,22 +168,3 @@ networks:
   
 "
 }
-
-/// runner to exec commands against containers
-pub fn generate_compose_runner(url: &str) -> String {
-  format!("
-  version: '3.9'
-  services:
-    runner:
-      container_name: runner
-      image: a11ywatch/runner
-      environment:
-        - WEBSITE_URL={url}
-      networks:
-        - back-net
-
-  networks:
-    back-net:
-
-  ")
-}

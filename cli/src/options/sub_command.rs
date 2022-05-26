@@ -64,9 +64,6 @@ pub enum Commands {
         /// save the results of the scan to tmp
         #[clap(short, long)]
         save: bool,
-        /// use a docker image to execute the command
-        #[clap(short, long)]
-        runner: bool,
     },
     /// Site wide scan a website url for issues.
     CRAWL {
