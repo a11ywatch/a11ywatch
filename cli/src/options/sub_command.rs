@@ -19,6 +19,9 @@ pub enum Commands {
         /// start the local machine non docker if true [TODO]
         #[clap(short, long)]
         local: bool,
+        /// Ugrade docker images for container on start.
+        #[clap(short, long)]
+        upgrade: bool,
     },
     /// Stop the project on the local machine [defaults to docker runtime]
     STOP {

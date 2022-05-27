@@ -83,8 +83,11 @@ fn main() {
             env::set_var(INCLUDE_FRONTEND, frontend.to_string());
             Build::process(&local);
         },
-        Some(Commands::START { frontend, local }) => {
+        Some(Commands::START { frontend, local, upgrade }) => {
             env::set_var(INCLUDE_FRONTEND, frontend.to_string());
+            if *upgrade {
+                Build::upgrade(&local);
+            }
             Start::process(&local);
         },
         Some(Commands::STOP { frontend, local }) => {
