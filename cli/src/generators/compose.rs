@@ -19,7 +19,7 @@ services:
       - CLIENT_URL=${CLIENT_URL:-http://localhost:3000}
       - GRAPHQL_PORT=${GRAPHQL_PORT:-8080}
       - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://localhost:8090/api}
-      - ROOT_URL=${ROOT_URL:-http://localhost:8080}
+      - ROOT_URL=${ROOT_URL:-http://localhost:3280}
       - REDIS_CLIENT=${REDIS_CLIENT:-redis://redis:6379}
       - REDIS_HOST=redis
       - DOCKER_ENV=true
@@ -37,7 +37,7 @@ services:
       - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://127.0.0.1:8090/api}
       - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
       - PORT=${PAGEMIND_PORT:-8040}
-      - DOCKER=true
+      - PAGESPEED_API_KEY=${PAGESPEED_API_KEY}
     networks:
       - back-net
 
@@ -122,12 +122,17 @@ services:
         '--disable-accelerated-2d-canvas',
         '--disable-accelerated-video-decode',
         '--disable-extensions',
+        '--ignore-certificate-errors',
         '--disable-popup-blocking',
         '--disable-renderer-backgrounding',
         '--disable-client-side-phishing-detection',
         '--disable-setuid-sandbox',
         '--disable-hang-monitor',
         '--disable-features=ScriptStreaming,TranslateUI,BlinkGenPropertyTrees',
+        '--disable-backgrounding-occluded-windows',
+        '--no-default-browser-check',
+        '--metrics-recording-only',
+        '--disable-component-extensions-with-background-pages',
       ]
     ports:
       - 9222:9222

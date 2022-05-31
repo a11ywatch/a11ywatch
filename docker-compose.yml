@@ -33,7 +33,7 @@ services:
       - EMAIL_CLIENT_KEY=${EMAIL_CLIENT_KEY}
       - STRIPE_KEY=${STRIPE_KEY}
       - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://localhost:8090/api}
-      - ROOT_URL=${ROOT_URL:-http://localhost:8080}
+      - ROOT_URL=${ROOT_URL:-http://localhost:3280}
       - STRIPE_BASIC_PLAN=${STRIPE_BASIC_PLAN}
       - STRIPE_PREMIUM_PLAN=${STRIPE_PREMIUM_PLAN}
       - PRIVATE_KEY=${PRIVATE_KEY}
@@ -55,6 +55,7 @@ services:
       - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://127.0.0.1:8090/api}
       - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
       - PORT=${PAGEMIND_PORT:-8040}
+      - PAGESPEED_API_KEY=${PAGESPEED_API_KEY}
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
@@ -145,8 +146,13 @@ services:
         "--disable-renderer-backgrounding",
         "--disable-client-side-phishing-detection",
         "--disable-setuid-sandbox",
+        "--ignore-certificate-errors",
         "--disable-hang-monitor",
         "--disable-features=ScriptStreaming,TranslateUI,BlinkGenPropertyTrees",
+        "--disable-backgrounding-occluded-windows",
+        "--no-default-browser-check",
+        "--metrics-recording-only",
+        "--disable-component-extensions-with-background-pages",
       ]
     ports:
       - "9222:9222"

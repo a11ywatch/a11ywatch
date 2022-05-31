@@ -9,7 +9,5 @@ pub struct Website {
     pub cdn_connected: bool,
     #[serde(rename = "issuesInfo")]
     pub issues_info: IssueInfo,
-    #[serde(rename = "adaScore")]
-    pub ada_score: String,
     pub issues: Option<Vec<Issue>>,
 }

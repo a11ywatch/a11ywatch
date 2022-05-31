@@ -48,7 +48,7 @@ services:
       - EMAIL_SERVICE_PASSWORD=${EMAIL_SERVICE_PASSWORD}
       - STRIPE_KEY=${STRIPE_KEY}
       - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://localhost:8090/api}
-      - ROOT_URL=${ROOT_URL:-http://localhost:8080}
+      - ROOT_URL=${ROOT_URL:-http://localhost:3280}
       - STRIPE_BASIC_PLAN=${STRIPE_BASIC_PLAN}
       - STRIPE_PREMIUM_PLAN=${STRIPE_PREMIUM_PLAN}
       - PRIVATE_KEY=${PRIVATE_KEY}
@@ -77,7 +77,7 @@ services:
       - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
       - PORT=${PAGEMIND_PORT:-8040}
       - ASSETS_CDN=${ASSETS_CDN:-http://localhost:8090}
-      - DOCKER=true
+      - PAGESPEED_API_KEY=${PAGESPEED_API_KEY}
     networks:
       - back-net
 
@@ -173,6 +173,7 @@ services:
         "--max-wait-for-load=2500",
         "--allow-running-insecure-content",
         "--autoplay-policy=user-gesture-required",
+        "--force-fieldtrials=*BackgroundTracing/default/",
         "--disable-default-apps",
         "--disable-storage-reset",
         "--disable-dev-shm-usage",
@@ -191,7 +192,15 @@ services:
         "--disable-client-side-phishing-detection",
         "--disable-setuid-sandbox",
         "--disable-hang-monitor",
-        "--disable-features=ScriptStreaming,TranslateUI,BlinkGenPropertyTrees",
+        "--ignore-certificate-errors",
+        "--disable-features=ScriptStreaming,TranslateUI,Translate,BlinkGenPropertyTrees",
+        "--disable-backgrounding-occluded-windows",
+        "--no-default-browser-check",
+        "--metrics-recording-only",
+        "--disable-component-extensions-with-background-pages",
+        "--disable-gpu",
+        "--disable-ipc-flooding-protection",
+        "--enable-chrome-tracing-computation-false",
       ]
     ports:
       - "9222:9222"
