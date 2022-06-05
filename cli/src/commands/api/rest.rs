@@ -1,10 +1,10 @@
 use serde::{Deserialize, Serialize};
 use std::env;
 use ureq::{Error, post, json};
-use std::time::Duration;
 use crate::utils::{Website};
 use crate::EXTERNAL;
 use crate::fs::temp::{TempFs};
+use std::time::{Instant};
 
 #[derive(Deserialize, Serialize, Debug, Default)]
 pub struct ApiResult {
@@ -58,12 +58,10 @@ impl ApiClient {
 
         let request_destination = format!("{}/api/crawl-stream", target_destination);
         let token = file_manager.get_token();
-        
-        let agent = ureq::builder()
-            .timeout(Duration::from_secs(1800)) // 30 min timeout TODO: make optional.
-            .build();
-            
-        let resp: Vec<CrawlApiResult> = if !token.is_empty() {
+        let agent = ureq::agent();
+
+        let start = Instant::now();
+        let resp = if !token.is_empty() {
             agent.post(&request_destination)
             .set("Transfer-Encoding", "chunked")
             .set("Authorization", &token)
@@ -72,20 +70,40 @@ impl ApiClient {
             .set("Transfer-Encoding", "chunked")
         }.send_json(json!({
             "websiteUrl": url
-        }))?.into_json()?;
+        }))?;
+        let duration = start.elapsed();
+        let mut resp = resp.into_string().unwrap();
+        let len = resp.len();
+        let contains_trailing_comma = &resp[len-2..];
+
+        // remove trailing comma from string
+        if !contains_trailing_comma.is_empty() {
+            resp.pop();
+            resp.pop();
+            resp.push(']');
+        }
+
+        let resp: Vec<ApiResult> = serde_json::from_str(&resp).unwrap();
 
         let mut results: CrawlApiResult = CrawlApiResult::default();
+        let mut data_container: Vec<Website> = Vec::new();
 
-        // Get the first valid results. TODO: use real time stream endpoint for results.
         for r in &resp {
-            let default_data: Vec<Website> = Vec::new();
-            let data = r.data.as_ref().unwrap_or(&default_data);
-
-            if !data.is_empty() {
-                results = r.to_owned();
-            };
+            let default_data: Website = Default::default();
+            let data = r.data.as_ref().unwrap_or(&default_data).to_owned();
+            data_container.push(data);
         };
 
+        let res_len = data_container.len();
+        let mut res_end = "s";
+        if res_len == 1 {
+            res_end = "";
+        }
+
+        results.data = Some(data_container);
+        results.message = format!("Crawled {} page{} in {:?}", res_len, res_end, duration);
+        results.success = true;
+        
         Ok(results)
     }
 }
