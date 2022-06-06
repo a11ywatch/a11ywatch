@@ -23,7 +23,7 @@ If you experience issues the `cargo install a11ywatch_cli` command, try running 
 
 ### Supported Architectures
 
-Supported archs are amd64 and arm64.
+Mac, linux, and Windows.
 
 ### BETA
 

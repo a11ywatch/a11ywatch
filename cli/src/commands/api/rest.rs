@@ -71,8 +71,8 @@ impl ApiClient {
         }.send_json(json!({
             "websiteUrl": url
         }))?;
-        let duration = start.elapsed();
         let mut resp = resp.into_string().unwrap();
+        let duration = start.elapsed();
         let len = resp.len();
         let contains_trailing_comma = &resp[len-2..];
 
