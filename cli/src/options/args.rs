@@ -8,9 +8,15 @@ pub struct Cli {
     /// Build main sub commands
     #[clap(subcommand)]
     pub command: Option<Commands>,
-    ///Set the API token to use for request
+    /// Set the API token to use for request
     #[clap(short, long)]
     pub set_token: Option<String>,
+    /// Set the Computer Vision API token to use for request
+    #[clap(long)]
+    pub set_cv_token: Option<String>,
+    /// Set the Computer Vision API endpoint to use for request
+    #[clap(long)]
+    pub set_cv_url: Option<String>,
     /// Log file results path
     #[clap(short, long)]
     pub find_results: bool,

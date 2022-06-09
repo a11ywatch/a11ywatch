@@ -30,12 +30,22 @@ fn main() {
     let mut file_manager = TempFs::new();
 
     let api_token = cli.set_token.unwrap_or_default();
+    let cv_token = cli.set_cv_token.unwrap_or_default();
+    let cv_url = cli.set_cv_url.unwrap_or_default();
 
     if !api_token.is_empty() {
         file_manager.set_token(&api_token).unwrap();
         io::stdout().write_all(&"API token saved".as_bytes()).unwrap();
     }
 
+    if !cv_token.is_empty() {
+        file_manager.set_cv_token(&cv_token).unwrap();
+    }
+
+    if !cv_url.is_empty() {
+        file_manager.set_cv_url(&cv_url).unwrap();
+    }
+    
     if cli.find_results {
         println!("{}", &file_manager.results_file);
     }

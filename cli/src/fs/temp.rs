@@ -39,6 +39,8 @@ pub(crate)
 trait Fs {
     fn new () -> Self;
     fn set_token(&self) {}
+    fn set_cv_url(&self) {}
+    fn set_cv_token(&self) {}
     fn ensure_temp_dir(&self);
     fn create_compose_backend_file(&self);
     fn create_compose_frontend_file(&self);
@@ -135,6 +137,62 @@ impl TempFs {
         Ok(())
     }
 
+
+    /// set the Computer Vision api token to use for request
+    pub fn set_cv_token(&self, token: &String) -> std::io::Result<()> {
+        let file = File::open(&self.config_file)?;
+        let mut prev_json: Value = from_reader(&file)?;
+                
+        let json = json!({
+            "cv_token": &token
+        });
+        
+        merge(&mut prev_json, &json);
+        
+        let mut file = File::create(&self.config_file)?;
+
+        file.write_all(&prev_json.to_string().as_bytes())?;
+
+        self.create_env_file().unwrap();
+
+        Ok(())
+    }
+
+    /// set the Computer Vision url to use for request
+    pub fn set_cv_url(&self, u: &String) -> std::io::Result<()> {
+        let file = File::open(&self.config_file)?;
+        let mut prev_json: Value = from_reader(&file)?;
+                
+        let json = json!({
+            "cv_url": &u
+        });    
+        
+        merge(&mut prev_json, &json);
+        
+        let mut file = File::create(&self.config_file)?;
+
+        file.write_all(&prev_json.to_string().as_bytes())?;
+
+        self.create_env_file().unwrap();
+
+        Ok(())
+    }
+
+
+    /// create an env file from the config
+    pub fn create_env_file(&self) -> std::io::Result<()> {
+        let file = File::open(&self.config_file)?;
+        let prev_json: Value = from_reader(&file)?;       
+        let mut file = File::create(&format!("{}/.env", self.app_dir))?;
+
+        file.write_all(format!("COMPUTER_VISION_SUBSCRIPTION_KEY={}", prev_json["cv_token"].as_str().unwrap()).to_string().as_bytes())?;
+        file.write_all(format!("\nCOMPUTER_VISION_ENDPOINT={}", prev_json["cv_token"].as_str().unwrap()).to_string().as_bytes())?;
+        file.sync_all()?;
+
+        Ok(())
+    }
+
+
     /// create compose frontend file is does not exist
     pub fn save_results(&self, json: &serde_json::Value) -> std::io::Result<()> {
         let mut file = File::create(&self.results_file)?;
@@ -219,8 +277,10 @@ impl Fs for TempFs {
         }
     }
     fn ensure_temp_dir(&self) {}
-    fn set_token(&self) {}
     fn create_compose_backend_file(&self) {}
     fn create_compose_frontend_file(&self) {}
+    fn set_token(&self) {}
+    fn set_cv_url(&self) {}
+    fn set_cv_token(&self) {}
     fn sync() {}
   }
