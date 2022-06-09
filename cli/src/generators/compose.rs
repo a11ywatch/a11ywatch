@@ -22,7 +22,6 @@ services:
       - ROOT_URL=${ROOT_URL:-http://localhost:3280}
       - REDIS_CLIENT=${REDIS_CLIENT:-redis://redis:6379}
       - REDIS_HOST=redis
-      - DOCKER_ENV=true
       - SUPER_MODE=${SUPER_MODE:-true}
     networks:
       - back-net
@@ -49,7 +48,8 @@ services:
       - 50053
     environment:
       - PORT=${MAV_PORT:-8020}
-      - DOCKER_ENV=true
+      - COMPUTER_VISION_ENDPOINT=${COMPUTER_VISION_ENDPOINT}
+      - COMPUTER_VISION_SUBSCRIPTION_KEY=${COMPUTER_VISION_SUBSCRIPTION_KEY}
     networks:
       - back-net
 

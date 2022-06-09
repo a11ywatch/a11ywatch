@@ -21,6 +21,16 @@ a11ywatch scan --url https://a11ywatch.com > results.json
 
 If you experience issues the `cargo install a11ywatch_cli` command, try running `rustup update stable` to make sure your cargo version is up to date.
 
+## ENV
+
+In order to use [Computer Vision](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/) for gathering alt tags you need to create an env file with the following vars.
+
+```sh
+COMPUTER_VISION_SUBSCRIPTION_KEY=
+COMPUTER_VISION_ENDPOINT=
+
+```
+
 ### Supported Architectures
 
 Mac, linux, and Windows.

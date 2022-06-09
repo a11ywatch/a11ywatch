@@ -39,7 +39,6 @@ services:
       - PRIVATE_KEY=${PRIVATE_KEY}
       - PUBLIC_KEY=${PUBLIC_KEY}
       - ADMIN_ORIGIN=${ADMIN_ORIGIN}
-      - DOCKER_ENV=true
       - REDIS_CLIENT=${REDIS_CLIENT:-redis://redis:6379}
       - REDIS_HOST=redis
 
@@ -69,7 +68,8 @@ services:
       - 50053
     environment:
       - PORT=${MAV_PORT:-8020}
-      - DOCKER_ENV=true
+      - COMPUTER_VISION_ENDPOINT=${COMPUTER_VISION_ENDPOINT}
+      - COMPUTER_VISION_SUBSCRIPTION_KEY=${COMPUTER_VISION_SUBSCRIPTION_KEY}
 
   cdn-server:
     container_name: cdn-server
