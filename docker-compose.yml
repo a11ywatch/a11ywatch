@@ -3,7 +3,7 @@ services:
     container_name: web
     image: a11ywatch/web
     ports:
-      - 80:3000
+      - "${WEB_PORT:-80}:3000"
     networks:
       - front-net
     environment:
@@ -41,6 +41,7 @@ services:
       - ADMIN_ORIGIN=${ADMIN_ORIGIN}
       - REDIS_CLIENT=${REDIS_CLIENT:-redis://redis:6379}
       - REDIS_HOST=redis
+      - SUPER_MODE=${SUPER_MODE:-true}
 
   pagemind:
     container_name: pagemind

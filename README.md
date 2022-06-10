@@ -15,7 +15,12 @@
 
 ## Getting Started
 
-`docker compose up`
+The web application starts on port 80 when running `docker compose up` and the API entry port is `3280`.
+
+```sh
+docker compose up # view http://localhost:3280 or http://localhost:3280/graphql
+WEB_PORT=3000 docker compose up # start front-end on different port
+```
 
 See the documentation at [https://docs.a11ywatch.com](https://docs.a11ywatch.com) for more information.
 
@@ -32,8 +37,8 @@ Support us with a monthly donation and help us continue our activities. [[Become
 
 ## Support
 
-If you need support, start with the [troubleshooting guide](https://a11ywatch.github.io/docs/troubleshooting),
-if you still need help please contact us [contact](https://a11ywatch.github.io/docs/blog).
+If you need support, start with the [troubleshooting guide](https://docs.a11ywatch.com/documentation/troubleshooting),
+if you still need help please contact us [contact](https://docs.a11ywatch.com/documentation/contact/).
 
 ## LICENSE
 
