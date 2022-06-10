@@ -10,7 +10,9 @@ services:
       - PORT=3000
       - API=${API:-http://localhost:3280/graphql}
       - WEB_SOCKET_URL=${WEB_SOCKET_URL:-ws://localhost:3280/graphql}
-
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+      - CRISP_WEBSITE_ID=${CRISP_WEBSITE_ID}
   api:
     container_name: api
     image: a11ywatch/a11ywatch-core
@@ -22,23 +24,25 @@ services:
     depends_on:
       - mongodb
     environment:
-      - DB_URL=${DB_URL:-mongodb://mongodb:27017/?compressors=zlib&gssapiServiceName=mongodb}
-      - DB_NAME=${DB_NAME:-a11ywatch}
+      - ADMIN_ORIGIN=${ADMIN_ORIGIN}
       - APOLLO_GRAPH_VARIANT=${APOLLO_GRAPH_VARIANT:-current}
       - APOLLO_SCHEMA_REPORTING=${APOLLO_SCHEMA_REPORTING:-false}
       - CLIENT_URL=${CLIENT_URL:-http://localhost:3000}
-      - GRAPHQL_PORT=${GRAPHQL_PORT:-8080}
+      - DB_URL=${DB_URL:-mongodb://mongodb:27017/?compressors=zlib&gssapiServiceName=mongodb}
+      - DB_NAME=${DB_NAME:-a11ywatch}
       - EMAIL_SERVICE_URL=${EMAIL_SERVICE_URL}
       - EMAIL_CLIENT_ID=${EMAIL_CLIENT_ID}
       - EMAIL_CLIENT_KEY=${EMAIL_CLIENT_KEY}
-      - STRIPE_KEY=${STRIPE_KEY}
-      - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://localhost:8090/api}
+      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
+      - GRAPHQL_PORT=${GRAPHQL_PORT:-8080}
       - ROOT_URL=${ROOT_URL:-http://localhost:3280}
+      - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://localhost:8090/api}
+      - STRIPE_KEY=${STRIPE_KEY}
       - STRIPE_BASIC_PLAN=${STRIPE_BASIC_PLAN}
       - STRIPE_PREMIUM_PLAN=${STRIPE_PREMIUM_PLAN}
       - PRIVATE_KEY=${PRIVATE_KEY}
       - PUBLIC_KEY=${PUBLIC_KEY}
-      - ADMIN_ORIGIN=${ADMIN_ORIGIN}
       - REDIS_CLIENT=${REDIS_CLIENT:-redis://redis:6379}
       - REDIS_HOST=redis
       - SUPER_MODE=${SUPER_MODE:-true}

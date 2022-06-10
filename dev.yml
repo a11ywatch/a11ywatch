@@ -20,6 +20,8 @@ services:
       - INTERCOM_APPID=${INTERCOM_APPID}
       - INTERCOM_ENABLED=${INTERCOM_ENABLED}
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+      - CRISP_WEBSITE_ID=${CRISP_WEBSITE_ID}
     networks:
       - front-net
 
@@ -56,6 +58,8 @@ services:
       - ADMIN_ORIGIN=${ADMIN_ORIGIN}
       - SUPER_MODE=${SUPER_MODE:-true}
       - REDIS_CLIENT=${REDIS_CLIENT:-redis://redis:6379}
+      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
       - REDIS_HOST=redis
     networks:
       - back-net
