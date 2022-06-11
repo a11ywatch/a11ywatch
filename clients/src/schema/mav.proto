@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+// Define image descriptions from base64 strings or urls
+service MavService {
+   rpc ParseImg (ScanParams) returns (Img) {}
+}
+
+message ScanParams {
+   string img = 1; // the base64 string of the image
+   int64 width = 2; // image approx width
+   int64 height = 3; // image approx height
+   string url = 4; // the url of the image
+   bool cv = 5; // can perform with Computer Vision
+}
+
+message Img {
+   string className = 1; // the name of the image
+   float probability = 2; // the accuracy of the image being true
+}

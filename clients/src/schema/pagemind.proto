@@ -1,0 +1,119 @@
+syntax = "proto3";
+
+import "google/protobuf/struct.proto";
+
+// gather accessibility issues and other metrics
+service PagemindService {
+   rpc Scan (ScanParams) returns (Web) {} // run page scan across url
+   rpc SetScript (ScriptParams) returns (Script) {} // define custom an accessibility script
+}
+
+// send nothing for triggering events
+message Empty {}
+
+// whatg http headers
+message Headers {
+   string key = 1;
+   string value = 2;
+}
+
+message ScanParams {
+   uint32 userId = 1; // user identifier.
+   string url = 2; // the page url to run tests on.
+   repeated Headers pageHeaders = 3; // heads to include when running.
+   bool pageInsights = 4; // Run lighthouse reports.
+   bool noStore = 5;  // Do not store to AWS script changes.
+   bool scriptsEnabled = 6; // Add js fix script.
+   bool mobile = 7; // Run as mobile view port.
+   repeated string actions = 8; // List of actions to run on page.
+   string ua = 9; // User agent to use for request.
+   string standard = 10; // The WCAG standard to use WCAG2A, WCAG2AA, or WCAG2AAA.
+   string hideElements = 11; // CSS selector to hide elements from testing, selectors can be comma separated.
+   bool cv = 12; // can perform with Computer Vision
+}
+
+// upsert script params
+message ScriptParams {
+   bool editScript = 1;
+   string url = 2;
+   Script script = 3; // pass in script object
+   string newScript = 4; // new script to replace content
+}
+
+// meta details for the page to include extra supportive features. 
+message IssueMeta {
+   bool skipContentIncluded = 1; // add a skip content button onto the script if not found.
+}
+
+// script meta adjustments
+message ScriptMeta {
+   bool skipContentEnabled = 1; // is skip content enabled for the page
+}
+
+// info to use to gather all stats for the issues on the page.
+message IssuesInfo {
+   int32 possibleIssuesFixedByCdn = 1;
+   int32 totalIssues = 2;
+   int32 issuesFixedByCdn = 3;
+   int32 errorCount = 4;
+   int32 warningCount = 5;
+   int32 noticeCount = 6;
+   int32 adaScore = 7;
+   IssueMeta issueMeta = 8;
+}
+
+// how fast the page loaded.
+message PageLoadTime {
+   int64 duration = 1;
+   string durationFormated = 2;
+   string color = 3;
+}
+
+// page model of all helpful insight
+message Page {
+   string domain = 1;
+   string url = 2;  
+   bool cdnConnected = 3;
+   PageLoadTime pageLoadTime = 4;
+   google.protobuf.Struct insight = 5; // the json details from lighthouse
+   IssuesInfo issuesInfo = 6;
+   string lastScanDate = 7;  
+}
+
+// the issue that occured, either of type error, notice, warning in desc order.
+message Problem {
+   string code = 1;
+   string type = 2;
+   int32 typeCode = 3; // TODO convert to int32.
+   string message = 4;
+   string context = 5;
+   string selector = 6;
+   string runner = 7;
+   int32 recurrence = 8;
+}
+
+message Issues {
+   string documentTitle = 1; // document page title
+   string pageUrl = 2; // the page url for the issue report
+   repeated Problem issues = 3; // all of the issues that occured on the page
+   string domain = 4; // the domain of the page.
+}
+
+message Script {
+   string pageUrl = 1;
+   string domain = 2;
+   string script = 3;
+   string cdnUrlMinified = 4;
+   string cdnUrl = 5;
+   bool cdnConnected = 6;
+   IssueMeta issueMeta = 7;
+   ScriptMeta scriptMeta = 8;
+}
+
+// fields that build that Website that is treated as a Page.
+message Web {
+   Page webPage = 1;
+   Issues issues = 2;
+   Script script = 3;
+   uint32 userId = 4;
+}

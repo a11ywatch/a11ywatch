@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package crawler;
+
+// The crawler instance that gathers all possible pages.
+service CrawlerService {
+    rpc Scan (ScanRequest) returns (ScanReply) {} // sends feedback async as links found.
+    rpc Crawl (ScanRequest) returns (ScanReply) {} // waits for all links to be found before returning.
+}
+
+message ScanReply {
+    string message = 1;
+}
+
+message ScanRequest {
+    string url = 1; // the base request to start crawling/indexing pages.
+    uint32 id = 2; // the user id or identifier to track crawl subs.
+    bool norobots = 3; // ignore respect robots txt file rules.
+    string agent = 4; // User agent to use when crawling.
+}

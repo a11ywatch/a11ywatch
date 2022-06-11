@@ -1,0 +1,21 @@
+[package]
+name = "a11ywatch_clients"
+version = "0.1.0"
+edition = "2021"
+license-file = "../LICENSE"
+build = "build.rs"
+
+[lib]
+name = "api_client_generator"
+path = "src/api_client_generator/lib.rs"
+
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+[build-dependencies]
+
+[[bin]]
+name = "force-build"
+path = "build.rs"
