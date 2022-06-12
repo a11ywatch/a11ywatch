@@ -9,12 +9,15 @@ build = "build.rs"
 name = "api_client_generator"
 path = "src/api_client_generator/lib.rs"
 
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
+convert_case = "0.5.0"
+serde = { version = "1.0.137", features = ["derive"] }
+serde_json = "1.0.81"
 
 [build-dependencies]
+convert_case = "0.5.0"
+serde = { version = "1.0.137", features = ["derive"] }
+serde_json = "1.0.81"
 
 [[bin]]
 name = "force-build"

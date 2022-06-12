@@ -1,37 +1,41 @@
 {
   "version": "0.1.0",
   "endpoint": "https://api.a11ywatch.com/",
-  "rest": {
-    "routes": [
-      {
-        "path": "crawl-stream"
-      },
-      {
-        "path": "login",
-        "params": [
-          {
-            "name": "email",
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "path": "register",
-        "params": [
-          {
-            "name": "email",
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "type": "string"
-          }
-        ]
+  "routes": [
+    {
+      "method": "POST",
+      "path": "crawl-stream",
+      "headers": {
+        "Transfer-Encoding": "chunked"
       }
-    ]
-  }
+    },
+    {
+      "method": "POST",
+      "path": "login",
+      "params": [
+        {
+          "name": "email",
+          "type": "string"
+        },
+        {
+          "name": "password",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "register",
+      "params": [
+        {
+          "name": "email",
+          "type": "string"
+        },
+        {
+          "name": "password",
+          "type": "string"
+        }
+      ]
+    }
+  ]
 }

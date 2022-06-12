@@ -15,7 +15,7 @@
 
 ## Getting Started
 
-The web application starts on port 80 when running `docker compose up` and the API entry port is `3280`.
+The web application starts on port 80 when running `docker-compose up` and the API entry port is `3280`.
 
 ```sh
 docker-compose up # view http://localhost:3280 or http://localhost:3280/graphql
@@ -28,7 +28,7 @@ If you are hosting the system you can make [gRPC](./clients/src/schema/) calls t
 
 ## Contributing
 
-Read the [contributing guide](/CONTRIBUTING.md) to learn about our development process, how to propose bugfixes and improvements, and how to build and test your changes to A11yWatch.
+Read the [contributing guide](/CONTRIBUTING.md) to learn about our development process, how to propose bug fixes and improvements, how to build and test your changes to A11yWatch.
 
 Notice that contributions go far beyond pull requests and commits.
 Although we love giving you the opportunity to put your stamp on A11yWatch, we also are thrilled to receive a variety of [other contributions](https://a11ywatch.com/faq).
@@ -40,7 +40,7 @@ Support us with a monthly donation and help us continue our activities. [[Become
 ## Support
 
 If you need support, start with the [troubleshooting guide](https://docs.a11ywatch.com/documentation/troubleshooting),
-if you still need help please contact us [contact](https://docs.a11ywatch.com/documentation/contact/).
+if you still need help please contact us [contact](https://docs.a11ywatch.com/documentation/contact).
 
 ## LICENSE
 
