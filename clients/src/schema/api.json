@@ -1,0 +1,974 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "The web accessibility API built for scale.  For this sample, you can use the api key \"special-key\" to test the authorization filters",
+    "version": "0.1.0",
+    "title": "A11ywatch Client",
+    "license": {
+      "name": "MIT",
+      "url": "https://github.com/A11yWatch/a11ywatch/blob/main/LICENSE"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.a11ywatch.com/api",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/website": {
+      "get": {
+        "tags": ["websites"],
+        "summary": "Find website by Domain",
+        "description": "Returns a website when DOMAIN == website.domain.  Empty strings will simulate API error conditions",
+        "operationId": "getWebsiteByDomain",
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "query",
+            "description": "Domain of website that needs to be fetched",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Websites not found"
+          },
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Websites"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid domain supplied"
+          }
+        }
+      },
+      "post": {
+        "tags": ["websites"],
+        "summary": "Add a website in the collection with form data",
+        "description": "",
+        "operationId": "addWebsite",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Websites"
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Websites"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["websites"],
+        "summary": "Deletes a website",
+        "description": "",
+        "operationId": "deleteWebsite",
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "query",
+            "description": "Websites domain to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Websites"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid website value"
+          }
+        }
+      }
+    },
+    "/list/website": {
+      "get": {
+        "tags": ["collection"],
+        "summary": "Returns websites for the user in alphabetical order",
+        "description": "Returns a map of websites",
+        "operationId": "getWebsites",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "The page offset for the next set",
+            "required": false,
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Websites"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/list/issue": {
+      "get": {
+        "tags": ["collection"],
+        "summary": "List the issues for a website",
+        "description": "",
+        "operationId": "getIssues",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "The page offset for the next set",
+            "required": false,
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Issues"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Issues"
+          }
+        }
+      }
+    },
+    "/list/pages": {
+      "get": {
+        "tags": ["collection"],
+        "summary": "List the pages in order for a website",
+        "description": "",
+        "operationId": "getPages",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "The page offset for the next set",
+            "required": false,
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Pages"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Pages"
+          }
+        }
+      }
+    },
+    "/list/analytics": {
+      "get": {
+        "tags": ["collection"],
+        "summary": "Get the analytics for a website",
+        "description": "",
+        "operationId": "getAnalytics",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "The page offset for the next set",
+            "required": false,
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Analytics"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Analytics"
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": ["user"],
+        "summary": "Get user",
+        "description": "Retrieve the current user.",
+        "operationId": "getUsers",
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "tags": ["user"],
+        "summary": "Register user into the system",
+        "description": "Adds a new user not created yet into the system",
+        "operationId": "createUser",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/AuthInput"
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Users"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": ["user"],
+        "summary": "Logs user into the system",
+        "description": "",
+        "operationId": "loginUser",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/AuthInput"
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Users"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/logout": {
+      "post": {
+        "tags": ["user"],
+        "summary": "Logs out current logged in user session",
+        "description": "",
+        "operationId": "logoutUser",
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/scan-simple": {
+      "post": {
+        "tags": ["reports"],
+        "summary": "Scan a website for issues",
+        "description": "",
+        "operationId": "scanWebsite",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Websites"
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Report"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/crawl": {
+      "post": {
+        "tags": ["reports"],
+        "summary": "Multi-page crawl a website for issues",
+        "description": "",
+        "operationId": "crawlWebsite",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Websites"
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Report"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/crawl-stream": {
+      "post": {
+        "tags": ["reports"],
+        "summary": "Multi-page crawl a website streaming issues on found",
+        "description": "",
+        "operationId": "crawlWebsiteStream",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Websites"
+        },
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Transfer-Encoding",
+            "schema": {
+              "type": "string",
+              "default": "Chunked"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Report"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/report": {
+      "get": {
+        "tags": ["reports"],
+        "summary": "Get the report from a previus scan",
+        "description": "",
+        "operationId": "getReport",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "url",
+            "description": "The page url or domain for the report",
+            "required": false,
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Report"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AuthInput": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "WebsiteInput": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string"
+          }
+        }
+      },
+      "CrawlInput": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "Users": {
+        "properties": {
+          "_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "email": {
+            "type": "string"
+          },
+          "jwt": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "alertEnabled": {
+            "type": "boolean"
+          }
+        },
+        "xml": {
+          "name": "Users"
+        }
+      },
+      "Websites": {
+        "properties": {
+          "_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "url": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "crawlDuration": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "cdnConnected": {
+            "type": "boolean"
+          },
+          "pageInsights": {
+            "type": "boolean"
+          },
+          "online": {
+            "type": "boolean"
+          },
+          "mobile": {
+            "type": "boolean"
+          },
+          "robots": {
+            "type": "boolean"
+          },
+          "insight": {
+            "type": "object",
+            "properties": {
+              "json": {
+                "type": "string"
+              }
+            }
+          },
+          "pageHeaders": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "pageLoadTime": {
+            "$ref": "#/components/schemas/PageLoadTime"
+          },
+          "issuesInfo": {
+            "$ref": "#/components/schemas/IssuesInfo"
+          }
+        },
+        "xml": {
+          "name": "Websites"
+        }
+      },
+      "Issues": {
+        "properties": {
+          "_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "pageUrl": {
+            "type": "string"
+          },
+          "issues": {
+            "$ref": "#/components/schemas/PageIssue"
+          }
+        },
+        "xml": {
+          "name": "Issues"
+        }
+      },
+      "PageIssue": {
+        "properties": {
+          "recurrence": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "typeCode": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "context": {
+            "type": "string"
+          },
+          "selector": {
+            "type": "string"
+          },
+          "runner": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "PageIssue"
+        }
+      },
+      "Report": {
+        "properties": {
+          "_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "pageUrl": {
+            "type": "string"
+          },
+          "issues": {
+            "$ref": "#/components/schemas/PageIssue"
+          },
+          "issuesInfo": {
+            "$ref": "#/components/schemas/IssuesInfo"
+          }
+        },
+        "xml": {
+          "name": "Report"
+        }
+      },
+      "IssuesInfo": {
+        "properties": {
+          "adaScoreAverage": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "possibleIssuesFixedByCdn": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalIssues": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "issuesFixedByCdn": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "errorCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "warningCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "noticeCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pageCount": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "Pages": {
+        "properties": {
+          "_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "cdnConnected": {
+            "type": "boolean"
+          },
+          "online": {
+            "type": "boolean"
+          },
+          "pageLoadTime": {
+            "$ref": "#/components/schemas/PageLoadTime"
+          },
+          "insight": {
+            "type": "object",
+            "properties": {
+              "json": {
+                "type": "string"
+              }
+            }
+          },
+          "issuesInfo": {
+            "$ref": "#/components/schemas/IssuesInfo"
+          },
+          "lastScanDate": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "Issues"
+        }
+      },
+      "Analytics": {
+        "properties": {
+          "_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "pageUrl": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "adaScore": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "possibleIssuesFixedByCdn": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalIssues": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "issuesFixedByCdn": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "errorCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "warningCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "noticeCount": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "xml": {
+          "name": "Issues"
+        }
+      },
+      "History": {
+        "properties": {
+          "_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "insight": {
+            "type": "object",
+            "properties": {
+              "json": {
+                "type": "string"
+              }
+            }
+          },
+          "pageHeaders": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "issuesInfo": {
+            "$ref": "#/components/schemas/IssuesInfo"
+          }
+        },
+        "xml": {
+          "name": "Issues"
+        }
+      },
+      "PageLoadTime": {
+        "properties": {
+          "duration": {
+            "type": "string"
+          },
+          "durationFormated": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "PageLoadTime"
+        }
+      },
+      "GenericInput": {
+        "properties": {
+          "domain": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "GenericInput"
+        }
+      }
+    },
+    "parameters": {
+      "offset": {
+        "name": "offset",
+        "in": "query",
+        "description": "number of items to skip",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "domain": {
+        "name": "domain",
+        "in": "query",
+        "description": "The domain name of the website",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "url": {
+        "name": "url",
+        "in": "query",
+        "description": "The target page url of the website",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "pageUrl": {
+        "name": "pageUrl",
+        "in": "query",
+        "description": "The target page url of the website",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "requestBodies": {
+      "AuthInput": {
+        "description": "The auth standard body",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AuthInput"
+            }
+          }
+        }
+      },
+      "Websites": {
+        "description": "The website standard body",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WebsiteInput"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [{ "bearerAuth": [] }]
+}

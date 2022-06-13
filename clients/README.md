@@ -5,18 +5,18 @@ You can also use the [protobuf](./src/schema) files to generate your clients to 
 
 [CLI](../cli)
 
-[Javascript - WIP](./src/api_client_generator/javascript)
+<!-- [Javascript - WIP](./src/api_client_generator/javascript)
 
 [Go - WIP](./src/api_client_generator/go)
 
-[Rust - WIP](./src/api_client_generator/rust)
+[Rust - WIP](./src/api_client_generator/rust) -->
 
 ## WIP
 
 All clients are a work in progress, the most complete client is the CLI. The only available client at the moment is the [CLI](../cli).
 The [schema](./src/schema/rest.json) defines the routes and params for the request.
 Rust is used to generate the langauge templates. The gRPC calls only work on self hosted systems and enterprise accounts. In order to run the client gen run `cargo run --bin force-build`.
-The current examples are going to switch to [OpenAPI](https://github.com/OpenAPITools/openapi-generator) for generating the clients.
+The current examples are going to switch to [OpenAPI](https://github.com/OpenAPITools/openapi-generator) for generating the clients. The clients generated will not be pushed up into this repo and will only be available to by either cloning the repo or installing the indivual dependency.
 
 ## OpenAPI
 

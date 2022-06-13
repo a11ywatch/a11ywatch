@@ -41,7 +41,6 @@ npm-debug.log
 .vscode
 
 # a11ywatch cli
-
 a11ywatch.yml
 cli/target
 **/terraform/uploads/
@@ -63,3 +62,9 @@ cli/terraform/terraform
 terraform/terraform
 results.json
 build/test.sh
+# clients
+clients/target
+clients/src/**/dist
+# ignore all generated api clients
+clients/libs/*_api_client/
+!clients/libs/*_api_client/*.md

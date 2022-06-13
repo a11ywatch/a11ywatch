@@ -4,9 +4,6 @@ mod a11ywatch_clients {
 }
 
 fn main() {
-    // Tell cargo to invalidate the built crate whenever the wrapper changes
-    println!("cargo:rerun-if-changed=schema.json");
-    a11ywatch_clients::build_javascript();
-    a11ywatch_clients::build_go();
-    a11ywatch_clients::build_rust();
+    println!("cargo:rerun-if-changed=./src/schema/rest.json");
+    a11ywatch_clients::generate_clients();
 }
