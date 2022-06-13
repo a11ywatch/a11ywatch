@@ -64,7 +64,7 @@ results.json
 build/test.sh
 # clients
 clients/target
-clients/src/**/dist
 # ignore all generated api clients
-clients/libs/*_api_client/
-!clients/libs/*_api_client/*.md
+clients/libs/*_api_client/*
+!clients/libs/*_api_client/README.md
+!clients/libs/*_api_client/docs

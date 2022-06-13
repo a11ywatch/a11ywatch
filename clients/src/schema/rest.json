@@ -5,6 +5,9 @@
       "name": "javascript"
     },
     {
+      "name": "typescript"
+    },
+    {
       "name": "rust"
     },
     {
@@ -12,6 +15,33 @@
     },
     {
       "name": "php"
+    },
+    {
+      "name": "elixir"
+    },
+    {
+      "name": "c++"
+    },
+    {
+      "name": "lua"
+    },
+    {
+      "name": "ruby"
+    },
+    {
+      "name": "python"
+    },
+    {
+      "name": "swift5"
+    },
+    {
+      "name": "csharp"
+    },
+    {
+      "name": "csharp-netcore"
+    },
+    {
+      "name": "java"
     }
   ]
 }

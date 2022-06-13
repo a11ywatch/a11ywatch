@@ -24,7 +24,7 @@ WEB_PORT=3000 docker-compose up # start front-end on different port
 
 See the [documentation](https://docs.a11ywatch.com) for more information.
 The [CLI](./cli/README.md) can be used to test and build your own A11yWatch instance.
-If you are hosting the system you can make [gRPC](./clients/src/schema/) calls to increase performance.
+We have [Clients](./clients) in multiple languages and protocols to integrate with your app easier.
 
 ## Contributing
 
