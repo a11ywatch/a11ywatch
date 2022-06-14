@@ -18,9 +18,9 @@ services:
       - NODE_ENV=${NODE_ENV:-development}
       - STRIPE_KEY=${STRIPE_KEY_WEB}
       - INTERCOM_APPID=${INTERCOM_APPID}
-      - INTERCOM_ENABLED=${INTERCOM_ENABLED}
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
       - CRISP_WEBSITE_ID=${CRISP_WEBSITE_ID}
     networks:
       - front-net
