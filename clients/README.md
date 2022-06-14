@@ -6,48 +6,48 @@ The clients with shell code at the bottom are published and can be installed wit
 
 ## Clients
 
+You can view all of the clients source code [here](https://gitlab.com/j-mendez/a11ywatch-clients) on GitLab to build from.
+
+- [C](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/c_api_client)
+
 - [CLI](../cli)
 
-  ```shell
-  cargo install a11ywatch_cli
-  ```
+- [C++](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/cpp-restsdk_api_client)
 
-- [C#](./libs/csharp_api_client)
+- [C#](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/csharp_api_client)
 
-- [C#-NetCore](./libs/csharp-netcore_api_client)
+- [C#-NetCore](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/csharp-netcore_api_client)
 
-- [Elixir](./libs/elixir_api_client)
+- [Elixir](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/elixir_api_client)
 
-- [Go](./libs/go_api_client)
+- [Go](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/go_api_client)
 
-- [Java](./libs/java_api_client)
+- [Java](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/java_api_client)
 
-- [Javascript](./libs/javascript_api_client)
+- [Javascript](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/javascript_api_client)
 
-  ```shell
-  npm install a11ywatch_client --save
-  ```
+- [Lua](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/lua_api_client)
 
-- [Lua](./libs/lua_api_client)
+- [Rust](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/rust_api_client)
 
-- [Rust](./libs/rust_api_client)
+- [Ruby](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/ruby_api_client)
 
-- [Ruby](./libs/ruby_api_client)
+- [Swift](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/swift5_api_client)
 
-- [Swift](./libs/swift5_api_client)
+- [Typescript](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/typescript_api_client)
 
-- [Typescript](./libs/typescript_api_client)
+- [Obj-C](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/objc_api_client)
 
-- [PHP](./libs/php_api_client)
+- [PHP](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/php_api_client)
 
-- [Python](./libs/python_api_client)
+- [Python](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/python_api_client)
 
 ## OpenAPI
 
 To get started with the OpenAPI generator follow the [instructions](https://github.com/OpenAPITools/openapi-generator#openapi-generator) in the github repo.
 
 All clients are a work in progress, the most complete client is the [CLI](../cli).
-In order to run the client gen run `cargo run --bin force-build` and navigate into the language of choice to utilize the client.
+In order to run the client gen run `cargo run` and navigate into the language of choice to utilize the client.
 The clients generated will not be pushed up into this repo except the markdown files for instructions and will only be available by either cloning the repo or installing the dependency.
 
 ## gRPC

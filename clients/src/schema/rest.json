@@ -13,6 +13,7 @@
     {
       "name": "go"
     },
+    { "name": "objc" },
     {
       "name": "php"
     },
@@ -20,8 +21,9 @@
       "name": "elixir"
     },
     {
-      "name": "c++"
+      "name": "c"
     },
+    { "name": "cpp-restsdk" },
     {
       "name": "lua"
     },

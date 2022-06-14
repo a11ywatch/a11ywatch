@@ -3,22 +3,11 @@ name = "a11ywatch_clients"
 version = "0.1.0"
 edition = "2021"
 license-file = "../LICENSE"
-build = "build.rs"
-
-[lib]
-name = "api_client_generator"
-path = "src/api_client_generator/lib.rs"
 
 [dependencies]
-convert_case = "0.5.0"
 serde = { version = "1.0.137", features = ["derive"] }
 serde_json = "1.0.81"
 
 [build-dependencies]
-convert_case = "0.5.0"
 serde = { version = "1.0.137", features = ["derive"] }
 serde_json = "1.0.81"
-
-[[bin]]
-name = "force-build"
-path = "build.rs"
