@@ -22,9 +22,9 @@ docker-compose up # view http://localhost:3280 or http://localhost:3280/graphql
 WEB_PORT=3000 docker-compose up # start front-end on different port
 ```
 
+The [CLI](./cli/README.md) can be used to test and build your own A11yWatch instance anywhere.<br>
+We have [Clients](./clients) in multiple languages and protocols to integrate with your app easier.<br>
 See the [documentation](https://docs.a11ywatch.com) for more information.
-The [CLI](./cli/README.md) can be used to test and build your own A11yWatch instance.
-We have [Clients](./clients) in multiple languages and protocols to integrate with your app easier.
 
 ## Contributing
 

@@ -3,6 +3,8 @@ use std::path::Path;
 use serde::Deserialize;
 use std::process::Command;
 use std::thread;
+use std::path::PathBuf;
+use std::fs;
 
 /// individual coding language from the rest schema
 #[derive(Debug, Deserialize)]
@@ -21,22 +23,33 @@ struct Rest {
 /// build the javascript src files and distrubition
 pub fn generate_clients() {
     println!("building js client...");
+    let srcdir = PathBuf::from("./src");
+    // schema abs path to string
+    let schema_dir = format!("{}/schema/", fs::canonicalize(&srcdir).unwrap().to_string_lossy());
     let dist_dir = "../../a11ywatch_clients/";
-    let schema_dir = "./src/schema/";
-
+    
     // make sure a11ywatch_clients folder exist
     if !Path::new(&dist_dir).exists() {
-        create_dir(dist_dir).unwrap();
+        create_dir(&dist_dir).unwrap();
     }
 
+    let dist_dir = PathBuf::from(dist_dir);
+    let dist_dir = fs::canonicalize(&dist_dir).unwrap();
+    // dist abs path to string
+    let dist_dir = &dist_dir.to_string_lossy();
+    
     let file = File::open(format!("{}/rest.json", schema_dir)).unwrap();
     let rest: Rest = serde_json::from_reader(file).expect("JSON not formatted correctly");
 
-    for lang in rest.languages.iter() {
-        let language_dir = format!("{}/{}_api_client", dist_dir, &lang.name);
+    let api_file_loc = format!("{}api.json", schema_dir);
 
-        Command::new("openapi-generator")
-            .args(["generate", "-i", "src/schema/api.json", "-g", &lang.name, "-o", &language_dir])
+    println!("OpenAPI spec file location {}", &api_file_loc);
+
+    for lang in rest.languages.iter() {
+        let language_dir = format!("{}/{}_api_client", &dist_dir, &lang.name);
+
+        Command::new("openapi-generator-cli")
+            .args(["generate", "-i",  &api_file_loc, "-g", &lang.name, "-o", &language_dir])
             .status()
             .expect("Failed to execute command - openapi-generator");
 
