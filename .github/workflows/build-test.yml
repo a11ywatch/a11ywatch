@@ -1,5 +1,5 @@
 name: A11yWatchBot
-on: [pull_request, push]
+on: [pull_request]
 jobs:
   run-container:
     name: End to End
@@ -7,7 +7,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: A11yWatch website scan
-        uses: a11ywatch/github-action@v1.3.1
+        uses: a11ywatch/github-action@v1.6.2
         with:
           WEBSITE_URL: ${{ secrets.WEBSITE_URL }}
           FAIL_TOTAL_COUNT: 250
