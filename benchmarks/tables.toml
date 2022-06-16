@@ -1,0 +1,10 @@
+[top_comments]
+Overview = """
+This is a benchmark comparison report.
+"""
+
+[table_comments]
+crawl = """
+Since `crawl` is not tail recursive or iterative (CLI), all the function calls 
+are not inlined which makes the version very slow.
+"""

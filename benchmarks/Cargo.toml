@@ -1,0 +1,14 @@
+[package]
+name = "benches"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[dependencies]
+criterion = { version = "0.3.5", features = ["html_reports"] }
+criterion-table = "0.4"
+
+[[bench]]
+name = "crawl"
+path = "crawl.rs"
+harness = false

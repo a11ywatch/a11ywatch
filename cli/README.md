@@ -13,23 +13,40 @@ cargo install a11ywatch_cli
 Then run `a11ywatch -h` to get all options.
 
 ```sh
-# start the instance. If you need the front-end client passing the -f option [min of 2.25 gb of memory required alloc to docker resource]
+# start the instance. If you need the front-end client passing the -f option [min of 2gb of memory required alloc to docker resource]
 a11ywatch start
-# scan a website and pipe the stdout to a file
+# scan a url and pipe the stdout to a file
 a11ywatch scan --url https://a11ywatch.com > results.json
+# scan a website multi page and pipe the stdout to a file
+a11ywatch crawl --url https://a11ywatch.com > results.json
 # if you need to upgrade the instance to new images run with the upgrade flag.
 a11ywatch start --upgrade
+# start the instance with the front-end on port 3270.
+a11ywatch start -f
 ```
 
 If you experience issues the `cargo install a11ywatch_cli` command, try running `rustup update stable` to make sure your cargo version is up to date.
 
 ## ENV
 
-In order to use [Computer Vision](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/) for gathering alt tags you need to create an env file with the following vars.
+Here are env vars that you can configure to enhance the system abilities.
+You can get your [Computer Vision](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/) API key here.
+Grab your [PageSpeed](https://developers.google.com/speed/docs/insights/v5/get-started#APIKey) API key to speed up lighthouse parallel runs.
+
+Example of a `.env` file below:
+
+```
+COMPUTER_VISION_SUBSCRIPTION_KEY="REPLACE_WITH_KEY"
+COMPUTER_VISION_ENDPOINT="REPLACE_WITH_ENDPOINT"
+PAGESPEED_API_KEY="REPLACE_WITH_PAGESPEED_API_KEY"
+```
+
+You can also use the CLI to configure your Computer Vision creditials.
 
 ```sh
-COMPUTER_VISION_SUBSCRIPTION_KEY=
-COMPUTER_VISION_ENDPOINT=
+# replace $mycv_token and $myvcvname with your project name and CV API url
+a11ywatch --set-cv-token $mycv_token
+a11ywatch --set-cv-url https://$myvcvname.cognitiveservices.azure.com/
 ```
 
 ### Supported Architectures

@@ -69,3 +69,7 @@ clients/libs/*_api_client/*
 !clients/libs/*_api_client/README.md
 !clients/libs/*_api_client/docs
 clients/openapitools.json
+
+#benches
+benchmarks/target
+benchmarks/node_modules
