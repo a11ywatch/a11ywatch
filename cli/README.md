@@ -13,7 +13,7 @@ cargo install a11ywatch_cli
 Then run `a11ywatch -h` to get all options.
 
 ```sh
-# start the instance. If you need the front-end client passing the -f option [min of 2gb of memory required alloc to docker resource]
+# start the instance. If you need the front-end client passing the -f option [min of 1.25gb of memory required alloc to docker resource]
 a11ywatch start
 # scan a url and pipe the stdout to a file
 a11ywatch scan --url https://a11ywatch.com > results.json
