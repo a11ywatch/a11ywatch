@@ -73,12 +73,10 @@ services:
     volumes:
       - ../pagemind/src:/usr/src/app/src
     ports:
-      - "8040"
       - 50052
     environment:
       - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://cdn-server:8090/api}
       - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
-      - PORT=${PAGEMIND_PORT:-8040}
       - ASSETS_CDN=${ASSETS_CDN:-http://localhost:8090}
       - PAGESPEED_API_KEY=${PAGESPEED_API_KEY}
     networks:
@@ -92,10 +90,8 @@ services:
     volumes:
       - ../mav/src:/usr/src/app/src
     ports:
-      - 8020
       - 50053
     environment:
-      - PORT=${MAV_PORT:-8020}
       - COMPUTER_VISION_ENDPOINT=${COMPUTER_VISION_ENDPOINT}
       - COMPUTER_VISION_SUBSCRIPTION_KEY=${COMPUTER_VISION_SUBSCRIPTION_KEY}
     networks:
@@ -109,10 +105,7 @@ services:
     volumes:
       - ../elastic-cdn/src:/usr/src/app/src
     ports:
-      - "8090:8090"
       - 50054
-    environment:
-      - PORT=${ELASTIC_CDN_PORT:-8090}
     networks:
       - back-net
 

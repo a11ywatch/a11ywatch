@@ -30,12 +30,10 @@ services:
     container_name: pagemind
     image: a11ywatch/pagemind
     ports:
-      - 8040
       - 50052
     environment:
       - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://127.0.0.1:8090/api}
       - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
-      - PORT=${PAGEMIND_PORT:-8040}
       - PAGESPEED_API_KEY=${PAGESPEED_API_KEY}
     networks:
       - back-net
@@ -44,10 +42,8 @@ services:
     container_name: mav
     image: a11ywatch/mav
     ports:
-      - 8020
       - 50053
     environment:
-      - PORT=${MAV_PORT:-8020}
       - COMPUTER_VISION_ENDPOINT=${COMPUTER_VISION_ENDPOINT}
       - COMPUTER_VISION_SUBSCRIPTION_KEY=${COMPUTER_VISION_SUBSCRIPTION_KEY}
     networks:
@@ -57,10 +53,7 @@ services:
     container_name: cdn-server
     image: a11ywatch/cdn-server
     ports:
-      - 8090:8090
       - 50054
-    environment:
-      - PORT=${ELASTIC_CDN_PORT:-8090}
     networks:
       - back-net
 
