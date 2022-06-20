@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml -o kubernetes
+    kompose.version: 1.26.1 (a9d05d509)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: chrome
+  name: chrome
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: chrome
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml -o kubernetes
+        kompose.version: 1.26.1 (a9d05d509)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/back-net: "true"
+        io.kompose.service: chrome
+    spec:
+      containers:
+        - args:
+            - chromium-browser
+            - --headless
+            - --no-sandbox
+            - --hide-scrollbars
+            - --mute-audio
+            - --no-zygote
+            - --no-first-run
+            - --remote-debugging-address=0.0.0.0
+            - --remote-debugging-port=9222
+            - --max-wait-for-load=2500
+            - --allow-running-insecure-content
+            - --autoplay-policy=user-gesture-required
+            - --disable-default-apps
+            - --disable-storage-reset
+            - --disable-dev-shm-usage
+            - --disable-http2
+            - --disable-domain-reliability
+            - --disable-component-update
+            - --disable-sync
+            - --disable-background-networking
+            - --disable-background-timer-throttling
+            - --disable-notifications
+            - --disable-accelerated-2d-canvas
+            - --disable-accelerated-video-decode
+            - --disable-extensions
+            - --disable-popup-blocking
+            - --disable-renderer-backgrounding
+            - --disable-client-side-phishing-detection
+            - --disable-setuid-sandbox
+            - --ignore-certificate-errors
+            - --disable-hang-monitor
+            - --disable-features=ScriptStreaming,TranslateUI,BlinkGenPropertyTrees
+            - --disable-backgrounding-occluded-windows
+            - --no-default-browser-check
+            - --metrics-recording-only
+            - --disable-component-extensions-with-background-pages
+          image: a11ywatch/chrome
+          name: chromium-browser
+          ports:
+            - containerPort: 9222
+          resources: {}
+      restartPolicy: Always
+status: {}

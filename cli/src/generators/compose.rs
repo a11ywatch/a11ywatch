@@ -84,6 +84,8 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
       - back-net
+    ports:
+      - 6379
 
   chrome:
     image: a11ywatch/chrome

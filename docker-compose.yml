@@ -1,3 +1,4 @@
+version: "3"
 services:
   web:
     container_name: web
@@ -112,6 +113,8 @@ services:
     networks:
       - back-net
       - front-net
+    ports:
+      - 6379
 
   chrome:
     image: a11ywatch/chrome

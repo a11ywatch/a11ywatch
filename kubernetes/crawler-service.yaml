@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml -o kubernetes
+    kompose.version: 1.26.1 (a9d05d509)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: crawler
+  name: crawler
+spec:
+  ports:
+    - name: "50055"
+      port: 50055
+      targetPort: 50055
+  selector:
+    io.kompose.service: crawler
+status:
+  loadBalancer: {}

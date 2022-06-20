@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml -o kubernetes
+    kompose.version: 1.26.1 (a9d05d509)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web
+  name: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: web
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml -o kubernetes
+        kompose.version: 1.26.1 (a9d05d509)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/front-net: "true"
+        io.kompose.service: web
+    spec:
+      containers:
+        - env:
+            - name: API
+              value: http://localhost:3280/graphql
+            - name: CRISP_WEBSITE_ID
+            - name: GITHUB_CLIENT_ID
+            - name: GITHUB_TOKEN
+            - name: GOOGLE_CLIENT_ID
+            - name: PORT
+              value: "3000"
+            - name: STRIPE_KEY
+            - name: WEB_SOCKET_URL
+              value: ws://localhost:3280/graphql
+          image: a11ywatch/web
+          name: web
+          ports:
+            - containerPort: 3000
+          resources: {}
+      restartPolicy: Always
+status: {}

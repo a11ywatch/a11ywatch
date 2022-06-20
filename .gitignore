@@ -62,6 +62,7 @@ cli/terraform/terraform
 terraform/terraform
 results.json
 build/test.sh
+kubernetes/minikube-darwin-*
 # clients
 clients/target
 # ignore all generated api clients
