@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package crawler;
 
-// The web indexer to find links async.
+// The web indexer to find links async. Default port starts on [50055].
 service Crawler {
     rpc Scan (ScanRequest) returns (ScanReply) {} // sends feedback async as links found
     rpc Crawl (ScanRequest) returns (ScanReply) {} // waits for all links to be found before returning
@@ -10,7 +10,7 @@ service Crawler {
 
 // basic reply message.
 message ScanReply {
-    string message = 1;
+    string message = 1; // message of the scan success.
 }
 
 // Request params for crawling generically.

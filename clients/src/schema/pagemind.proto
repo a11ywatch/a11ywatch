@@ -2,8 +2,8 @@ syntax = "proto3";
 
 import "google/protobuf/struct.proto";
 
-// accessibility service
-service WebsiteService {
+// Accessibility and page metrics [50052].
+service Pagemind {
    rpc Scan (ScanParams) returns (Web) {} // scan a page to get accessiblity issues
    rpc SetScript (ScriptParams) returns (Script) {} // update or create script with accessibility fixes.
 }
@@ -65,32 +65,32 @@ message IssuesInfo {
 
 // how fast the page loaded.
 message PageLoadTime {
-   int64 duration = 1;
-   string durationFormated = 2;
-   string color = 3;
+   int64 duration = 1; // duration in ms
+   string durationFormated = 2; // durations formatted to a readable message.
+   string color = 3; // color indicator for the message.
 }
 
 // page model of all helpful insight
 message Page {
-   string domain = 1;
-   string url = 2;  
-   bool cdnConnected = 3;
-   PageLoadTime pageLoadTime = 4;
+   string domain = 1; // the domain for the reqeust [example.com]
+   string url = 2; // the url of the request with http or https
+   bool cdnConnected = 3; // is the cdn for accessibility fixes connected on the page.
+   PageLoadTime pageLoadTime = 4; // page load time.
    google.protobuf.Struct insight = 5; // the json details from lighthouse
-   IssuesInfo issuesInfo = 6;
-   string lastScanDate = 7;  
+   IssuesInfo issuesInfo = 6; // issues on the page.
+   string lastScanDate = 7; // the last date of the scan.
 }
 
 // the issue that occured, either of type error, notice, warning in desc order.
 message Problem {
-   string code = 1;
-   string type = 2;
-   int32 typeCode = 3; // TODO convert to int32.
-   string message = 4;
-   string context = 5;
-   string selector = 6;
-   string runner = 7;
-   int32 recurrence = 8;
+   string code = 1; // wcag error code
+   string type = 2; // warning, error, or notice
+   int32 typeCode = 3; // error code
+   string message = 4; // the issue with possible recommendations.
+   string context = 5; // the element of the issue.
+   string selector = 6; // the html selector.
+   string runner = 7; // the runner type for the scan.
+   int32 recurrence = 8; // how many times the issue appeared.
 }
 
 // the generic issues structure
@@ -101,13 +101,13 @@ message Issues {
    string domain = 4; // the domain of the page.
 }
 
-// javascript that runs to attempt to fix the page
+// javascript that runs to attempt to fix the page.
 message Script {
-   string pageUrl = 1; // the page url that ran the request
-   string domain = 2; // the domain of the page
-   string script = 3;
-   string cdnUrlMinified = 4;
-   string cdnUrl = 5;
+   string pageUrl = 1; // the page url that ran the request.
+   string domain = 2; // the domain of the page.
+   string script = 3; // the fix script body contents without <script></script>.
+   string cdnUrlMinified = 4; //  the cdn url for accessibility fixes custom to the page minified.
+   string cdnUrl = 5; // the cdn url for accessibility fixes custom to the page.
    bool cdnConnected = 6; // determine if accessibility cdn is connected
    IssueMeta issueMeta = 7; // extra info to determine stats on the issues
    ScriptMeta scriptMeta = 8;
@@ -115,8 +115,8 @@ message Script {
 
 // fields that build that Website that is treated as a Page.
 message Web {
-   Page webPage = 1; // the website information or stats
-   Issues issues = 2; // all of the issues that relate to the page
-   Script script = 3; // the page script 
-   uint32 userId = 4; // the user that made the request
+   Page webPage = 1; // the website information or stats.
+   Issues issues = 2; // all of the issues that relate to the page.
+   Script script = 3; // the page script.
+   uint32 userId = 4; // the user that made the request.
 }

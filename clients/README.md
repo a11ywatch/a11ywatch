@@ -1,7 +1,7 @@
 # a11ywatch-clients
 
 Clients to use to interact with the API.
-You can also use the [protobuf](./src/schema) files to generate your clients to make gRPC request.
+You can also use the [protobuf](./src/schema) files to generate your clients to make gRPC request or run `npm i @a11ywatch/protos`.
 This repo is only used to handle the code to generate the clients.
 
 ## Clients

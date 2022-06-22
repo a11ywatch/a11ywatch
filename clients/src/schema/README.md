@@ -20,6 +20,14 @@ Create a client for accessibility scans with [pagemind-protobuf](./pagemind.prot
 
 Create a client for image AI recognition calls with [mav-protobuf](./mav.proto) on port `50053`.
 
+### Cdn
+
+Ccdn service backed by S3 [cdn-protobuf](./cdn.proto) on port `50054`.
+
 ### Crawler
 
 Create a client for full multi-site crawls with [crawler-protobuf](./crawler.proto) on port `50055`.
+
+### Health
+
+Attach health checks to a service [health-protobuf](./health.proto).
