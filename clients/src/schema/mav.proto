@@ -1,11 +1,12 @@
 syntax = "proto3";
 
-// Define image descriptions from base64 strings or urls
-service MavService {
-   rpc ParseImg (ScanParams) returns (Img) {}
+// image finding service
+service WebsiteService {
+   rpc ParseImg (ParseParams) returns (Img) {} // determine an image from a base64 string or url
 }
 
-message ScanParams {
+// params to use on image parsing
+message ParseParams {
    string img = 1; // the base64 string of the image
    int64 width = 2; // image approx width
    int64 height = 3; // image approx height
@@ -13,6 +14,7 @@ message ScanParams {
    bool cv = 5; // can perform with Computer Vision
 }
 
+// the image returned as a readable text
 message Img {
    string className = 1; // the name of the image
    float probability = 2; // the accuracy of the image being true

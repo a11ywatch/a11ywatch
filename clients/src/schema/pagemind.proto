@@ -2,21 +2,22 @@ syntax = "proto3";
 
 import "google/protobuf/struct.proto";
 
-// gather accessibility issues and other metrics
-service PagemindService {
-   rpc Scan (ScanParams) returns (Web) {} // run page scan across url
-   rpc SetScript (ScriptParams) returns (Script) {} // define custom an accessibility script
+// accessibility service
+service WebsiteService {
+   rpc Scan (ScanParams) returns (Web) {} // scan a page to get accessiblity issues
+   rpc SetScript (ScriptParams) returns (Script) {} // update or create script with accessibility fixes.
 }
 
-// send nothing for triggering events
+// send nothing ( used for background task )
 message Empty {}
 
-// whatg http headers
+// crawl page headers to set per request
 message Headers {
-   string key = 1;
-   string value = 2;
+   string key = 1; // key of the header
+   string value = 2; // value of the key
 }
 
+/// the params to configure testing and output
 message ScanParams {
    uint32 userId = 1; // user identifier.
    string url = 2; // the page url to run tests on.
@@ -34,10 +35,10 @@ message ScanParams {
 
 // upsert script params
 message ScriptParams {
-   bool editScript = 1;
-   string url = 2;
+   bool editScript = 1; // should this edit the script?
+   string url = 2; // page url for the request
    Script script = 3; // pass in script object
-   string newScript = 4; // new script to replace content
+   string newScript = 4; // new script to replace content?
 }
 
 // meta details for the page to include extra supportive features. 
@@ -52,14 +53,14 @@ message ScriptMeta {
 
 // info to use to gather all stats for the issues on the page.
 message IssuesInfo {
-   int32 possibleIssuesFixedByCdn = 1;
-   int32 totalIssues = 2;
-   int32 issuesFixedByCdn = 3;
-   int32 errorCount = 4;
-   int32 warningCount = 5;
-   int32 noticeCount = 6;
-   int32 adaScore = 7;
-   IssueMeta issueMeta = 8;
+   int32 possibleIssuesFixedByCdn = 1; // possible issues that may be fixed using the cdn
+   int32 totalIssues = 2; // all of the page issues
+   int32 issuesFixedByCdn = 3; // how many issues that are fixed using the cdn
+   int32 errorCount = 4; // errors on the page
+   int32 warningCount = 5; // warnings on the page
+   int32 noticeCount = 6; // notices on the page that mainly used for info purposes
+   int32 adaScore = 7; // rough accessibility score
+   IssueMeta issueMeta = 8; // extra data on the issue
 }
 
 // how fast the page loaded.
@@ -92,6 +93,7 @@ message Problem {
    int32 recurrence = 8;
 }
 
+// the generic issues structure
 message Issues {
    string documentTitle = 1; // document page title
    string pageUrl = 2; // the page url for the issue report
@@ -99,21 +101,22 @@ message Issues {
    string domain = 4; // the domain of the page.
 }
 
+// javascript that runs to attempt to fix the page
 message Script {
-   string pageUrl = 1;
-   string domain = 2;
+   string pageUrl = 1; // the page url that ran the request
+   string domain = 2; // the domain of the page
    string script = 3;
    string cdnUrlMinified = 4;
    string cdnUrl = 5;
-   bool cdnConnected = 6;
-   IssueMeta issueMeta = 7;
+   bool cdnConnected = 6; // determine if accessibility cdn is connected
+   IssueMeta issueMeta = 7; // extra info to determine stats on the issues
    ScriptMeta scriptMeta = 8;
 }
 
 // fields that build that Website that is treated as a Page.
 message Web {
-   Page webPage = 1;
-   Issues issues = 2;
-   Script script = 3;
-   uint32 userId = 4;
+   Page webPage = 1; // the website information or stats
+   Issues issues = 2; // all of the issues that relate to the page
+   Script script = 3; // the page script 
+   uint32 userId = 4; // the user that made the request
 }
