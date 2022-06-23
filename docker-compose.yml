@@ -16,6 +16,7 @@ services:
       - GITHUB_TOKEN=${GITHUB_TOKEN}
       - CRISP_WEBSITE_ID=${CRISP_WEBSITE_ID}
       - STRIPE_KEY=${STRIPE_KEY_WEB}
+      - DOCKER_CONTAINER=${DOCKER_CONTAINER:-true}
   api:
     container_name: api
     image: a11ywatch/a11ywatch-core

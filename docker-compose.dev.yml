@@ -22,6 +22,7 @@ services:
       - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
       - GITHUB_TOKEN=${GITHUB_TOKEN}
       - CRISP_WEBSITE_ID=${CRISP_WEBSITE_ID}
+      - DOCKER_CONTAINER=${DOCKER_CONTAINER:-true}
     networks:
       - front-net
 

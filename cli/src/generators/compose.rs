@@ -160,6 +160,7 @@ services:
       - PORT=3000
       - API=${API:-http://localhost:3280/graphql}
       - WEB_SOCKET_URL=${WEB_SOCKET_URL:-ws://localhost:3280/graphql}
+      - DOCKER_CONTAINER=${DOCKER_CONTAINER:-true}
     networks:
       - front-net
 
