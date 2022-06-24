@@ -158,7 +158,8 @@ services:
 
   chrome:
     container_name: chrome
-    image: a11ywatch/chrome
+    build:
+      dockerfile: ./docker-builds/chrome/Dockerfile
     command:
       [
         chromium-browser,

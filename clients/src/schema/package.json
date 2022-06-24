@@ -1,6 +1,6 @@
 {
   "name": "@a11ywatch/protos",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "proto files for the a11ywatch system",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
