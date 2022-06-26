@@ -32,30 +32,6 @@ pub enum Commands {
         #[clap(short, long)]
         local: bool,
     },
-    /// Deploy the build on remote infrastructure
-    DEPLOY {
-        /// deploy backend and frontend service. [defaults: GCP]
-        #[clap(short, long)]
-        all: bool,
-        /// deploy frontend service
-        #[clap(short, long)]
-        frontend: bool,
-        /// deploy backend service
-        #[clap(short, long)]
-        backend: bool,
-    },
-    /// Destroy the build on remote infrastructure [defaults: GCP]
-    TERMINATE {
-        /// terminate backend and frontend service
-        #[clap(short, long)]
-        all: bool,
-        /// terminate frontend service
-        #[clap(short, long)]
-        frontend: bool,
-        /// terminate backend service
-        #[clap(short, long)]
-        backend: bool,
-    },
     /// Single page scan a website url for issues.
     SCAN {
         /// target url to scan
@@ -79,11 +55,41 @@ pub enum Commands {
         /// save the results of the scan to tmp
         #[clap(short, long)]
         save: bool,
+        /// Include subdomains
+        #[clap(short = 'S', long)]
+        subdomains: bool,
+        /// Include different TLD extensions matching hostname
+        #[clap(short, long)]
+        tld: bool,
     },
     /// Extract results in formats for platforms
     EXTRACT {
         /// platform to use like github
         #[clap(short, long)]
         platform: String,
+    },
+    /// Deploy the build on remote infrastructure [BETA - defaults: GCP]
+    DEPLOY {
+        /// deploy backend and frontend service.
+        #[clap(short, long)]
+        all: bool,
+        /// deploy frontend service
+        #[clap(short, long)]
+        frontend: bool,
+        /// deploy backend service
+        #[clap(short, long)]
+        backend: bool,
+    },
+    /// Destroy the build on remote infrastructure [BETA - defaults: GCP]
+    TERMINATE {
+        /// terminate backend and frontend service
+        #[clap(short, long)]
+        all: bool,
+        /// terminate frontend service
+        #[clap(short, long)]
+        frontend: bool,
+        /// terminate backend service
+        #[clap(short, long)]
+        backend: bool,
     },
 }

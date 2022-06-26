@@ -1,0 +1,66 @@
+name: CLI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-container:
+    name: End to End
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        id: cache
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+      - name: Install the CLI
+        run: |
+          cargo install  --path ./cli --force
+
+      - name: Configure Emulation for crawler
+        shell: bash
+        run: |
+          # uname -m
+          sudo apt-get update -y
+          sudo apt-get install -y qemu gcc-aarch64-linux-gnu qemu-user-static
+          docker pull --platform linux/arm64 a11ywatch/crawler
+
+      - name: Run Server
+        run: a11ywatch start
+        shell: bash
+      - name: Wait for Healthy Container
+        shell: bash
+        run: |
+          attempt=0
+
+          while [ $attempt -le 30 ]; do
+              attempt=$(( $attempt + 1 ))
+              echo "Waiting for server to be up (attempt: $attempt)..."
+              result=$(docker logs api)
+              if grep "^Server ready" <<< $result; then
+                echo "A11yWatch ready!"
+                sleep 7
+                break
+              fi
+              sleep 0.3
+          done
+      - name: Run Scan Single page
+        run: a11ywatch scan -u https://a11ywatch.com
+      - name: Run Crawl Multi Page
+        run: a11ywatch crawl -u https://a11ywatch.com --save
+      - name: Run Crawl Multi Page with Subdomains
+        run: a11ywatch crawl -u https://a11ywatch.com --subdomains
+      - name: Run Crawl Multi Page with TLD
+        run: a11ywatch crawl -u https://a11ywatch.com  --tld
+      - name: Run Crawl Multi Page with Subdomains & TLD
+        run: a11ywatch crawl -u https://a11ywatch.com --subdomains --tld --save

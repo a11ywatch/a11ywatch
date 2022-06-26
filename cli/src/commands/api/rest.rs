@@ -27,7 +27,7 @@ pub struct CrawlApiResult {
 pub(crate) struct ApiClient {}
 
 impl ApiClient {
-    // Single page scan
+    /// Single page scan
     pub fn scan_website(url: &str, file_manager: &TempFs) -> Result<ApiResult, Error> {
         let target_destination: String = match env::var(EXTERNAL) {
             Ok(_) => "https://api.a11ywatch.com",
@@ -50,7 +50,7 @@ impl ApiClient {
     }
 
     /// Site wide scan [Stream]
-    pub fn crawl_website(url: &str, file_manager: &TempFs) -> Result<CrawlApiResult, Error> {
+    pub fn crawl_website(url: &str, subdomains: &bool, tld: &bool, file_manager: &TempFs) -> Result<CrawlApiResult, Error> {
         let target_destination: String = match env::var(EXTERNAL) {
             Ok(_) => "https://api.a11ywatch.com",
             Err(_) => "http://127.0.0.1:3280",
@@ -69,7 +69,9 @@ impl ApiClient {
             agent.post(&request_destination)
             .set("Transfer-Encoding", "chunked")
         }.send_json(json!({
-            "websiteUrl": url
+            "websiteUrl": url,
+            "tld": tld,
+            "subdomains": subdomains
         }))?;
         let mut resp = resp.into_string().unwrap();
         let duration = start.elapsed();
@@ -85,12 +87,12 @@ impl ApiClient {
 
         let resp: Vec<ApiResult> = serde_json::from_str(&resp).unwrap();
 
-        let mut results: CrawlApiResult = CrawlApiResult::default();
         let mut data_container: Vec<Website> = Vec::new();
 
         for r in &resp {
             let default_data: Website = Default::default();
             let data = r.data.as_ref().unwrap_or(&default_data).to_owned();
+
             data_container.push(data);
         };
 
@@ -99,6 +101,8 @@ impl ApiClient {
         if res_len == 1 {
             res_end = "";
         }
+
+        let mut results: CrawlApiResult = CrawlApiResult::default();
 
         results.data = Some(data_container);
         results.message = format!("Crawled {} page{} in {:?}", res_len, res_end, duration);
@@ -115,17 +119,17 @@ mod tests {
     
     #[test]
     fn scan_website() {
-        let results = ApiClient::scan_website(&"http://a11ywatch.com", &TempFs::new());
+        let results = ApiClient::scan_website(&"https://a11ywatch.com", &TempFs::new());
         let status = results.unwrap();
         
-        assert_eq!(status.data.url, "http://a11ywatch.com");
+        assert_eq!(status.data.unwrap().url, "https://a11ywatch.com");
     }
 
     #[test]
     fn crawl_website() {
-        let results = ApiClient::crawl_website(&"http://a11ywatch.com", &TempFs::new());
+        let results = ApiClient::crawl_website(&"https://a11ywatch.com", &false, &false, &TempFs::new());
         let status = results.unwrap();
         
-        assert_eq!(status.data.len() > 1, true);
+        assert_eq!(status.data.unwrap().len() > 1, true);
     }
 }
