@@ -41,7 +41,7 @@ jobs:
               result=$(docker logs api)
               if grep "^Server ready" <<< $result; then
                 echo "A11yWatch ready!"
-                sleep 5
+                sleep 7
                 break
               fi
               sleep 0.3
