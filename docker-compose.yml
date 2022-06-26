@@ -61,7 +61,6 @@ services:
     environment:
       - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://127.0.0.1:8090/api}
       - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
-      - PORT=${PAGEMIND_PORT:-8040}
       - PAGESPEED_API_KEY=${PAGESPEED_API_KEY}
     extra_hosts:
       - "host.docker.internal:host-gateway"

@@ -4,7 +4,7 @@ version = 3
 
 [[package]]
 name = "a11ywatch_cli"
-version = "0.3.1"
+version = "0.3.9"
 dependencies = [
  "clap",
  "serde",

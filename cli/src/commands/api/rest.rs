@@ -93,9 +93,7 @@ impl ApiClient {
             let default_data: Website = Default::default();
             let data = r.data.as_ref().unwrap_or(&default_data).to_owned();
 
-            if !data.url.is_empty() {
-                data_container.push(data);
-            }
+            data_container.push(data);
         };
 
         let res_len = data_container.len();
@@ -121,17 +119,17 @@ mod tests {
     
     #[test]
     fn scan_website() {
-        let results = ApiClient::scan_website(&"http://a11ywatch.com", &TempFs::new());
+        let results = ApiClient::scan_website(&"https://a11ywatch.com", &TempFs::new());
         let status = results.unwrap();
         
-        assert_eq!(status.data.url, "http://a11ywatch.com");
+        assert_eq!(status.data.unwrap().url, "https://a11ywatch.com");
     }
 
     #[test]
     fn crawl_website() {
-        let results = ApiClient::crawl_website(&"http://a11ywatch.com", &TempFs::new());
+        let results = ApiClient::crawl_website(&"https://a11ywatch.com", &false, &false, &TempFs::new());
         let status = results.unwrap();
         
-        assert_eq!(status.data.len() > 1, true);
+        assert_eq!(status.data.unwrap().len() > 1, true);
     }
 }

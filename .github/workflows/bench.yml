@@ -24,6 +24,6 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - name: Install the CLI
         run: |
-          cargo install  --path ./cli
+          cargo install  --path ./cli --force
       - name: Run Benchmarks
         run: cd benchmarks && cargo bench
