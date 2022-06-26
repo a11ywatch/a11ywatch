@@ -134,11 +134,11 @@ fn main() {
                 println!("{}", json_data);
             }
         },
-        Some(Commands::CRAWL { url, external, save }) => {
+        Some(Commands::CRAWL { url, external, save, subdomains, tld }) => {
             if *external {
                 env::set_var(EXTERNAL, external.to_string());
             }
-            let result = ApiClient::crawl_website(&url, &file_manager).unwrap_or_default();
+            let result = ApiClient::crawl_website(&url, subdomains, tld, &file_manager).unwrap_or_default();
             let json_results = json!(result);
 
             if *save {

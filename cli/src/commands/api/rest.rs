@@ -27,7 +27,7 @@ pub struct CrawlApiResult {
 pub(crate) struct ApiClient {}
 
 impl ApiClient {
-    // Single page scan
+    /// Single page scan
     pub fn scan_website(url: &str, file_manager: &TempFs) -> Result<ApiResult, Error> {
         let target_destination: String = match env::var(EXTERNAL) {
             Ok(_) => "https://api.a11ywatch.com",
@@ -50,7 +50,7 @@ impl ApiClient {
     }
 
     /// Site wide scan [Stream]
-    pub fn crawl_website(url: &str, file_manager: &TempFs) -> Result<CrawlApiResult, Error> {
+    pub fn crawl_website(url: &str, subdomains: &bool, tld: &bool, file_manager: &TempFs) -> Result<CrawlApiResult, Error> {
         let target_destination: String = match env::var(EXTERNAL) {
             Ok(_) => "https://api.a11ywatch.com",
             Err(_) => "http://127.0.0.1:3280",
@@ -69,7 +69,9 @@ impl ApiClient {
             agent.post(&request_destination)
             .set("Transfer-Encoding", "chunked")
         }.send_json(json!({
-            "websiteUrl": url
+            "websiteUrl": url,
+            "tld": tld,
+            "subdomains": subdomains
         }))?;
         let mut resp = resp.into_string().unwrap();
         let duration = start.elapsed();
