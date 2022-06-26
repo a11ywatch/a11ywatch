@@ -87,13 +87,15 @@ impl ApiClient {
 
         let resp: Vec<ApiResult> = serde_json::from_str(&resp).unwrap();
 
-        let mut results: CrawlApiResult = CrawlApiResult::default();
         let mut data_container: Vec<Website> = Vec::new();
 
         for r in &resp {
             let default_data: Website = Default::default();
             let data = r.data.as_ref().unwrap_or(&default_data).to_owned();
-            data_container.push(data);
+
+            if !data.url.is_empty() {
+                data_container.push(data);
+            }
         };
 
         let res_len = data_container.len();
@@ -101,6 +103,8 @@ impl ApiClient {
         if res_len == 1 {
             res_end = "";
         }
+
+        let mut results: CrawlApiResult = CrawlApiResult::default();
 
         results.data = Some(data_container);
         results.message = format!("Crawled {} page{} in {:?}", res_len, res_end, duration);
