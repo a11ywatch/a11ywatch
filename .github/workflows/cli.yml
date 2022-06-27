@@ -26,15 +26,6 @@ jobs:
       - name: Install the CLI
         run: |
           cargo install  --path ./cli --force
-
-      - name: Configure Emulation for crawler
-        shell: bash
-        run: |
-          # uname -m
-          sudo apt-get update -y
-          sudo apt-get install -y qemu gcc-aarch64-linux-gnu qemu-user-static
-          docker pull --platform linux/arm64 a11ywatch/crawler
-
       - name: Run Server
         run: a11ywatch start
         shell: bash
@@ -49,7 +40,7 @@ jobs:
               result=$(docker logs api)
               if grep "^Server ready" <<< $result; then
                 echo "A11yWatch ready!"
-                sleep 7
+                sleep 6.5
                 break
               fi
               sleep 0.3
