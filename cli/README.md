@@ -31,15 +31,11 @@ a11ywatch start -f
 
 If you experience issues the `cargo install a11ywatch_cli` command, try running `rustup update stable` to make sure your cargo version is up to date.
 
-If the `crawler` image fails to start on certain flavors of linux run via qemu emulation.
+If the `crawler` image fails to start on linux run via qemu emulation.
 
 ```sh
-  sudo apt-get update -y && apt-get install -y qemu gcc-aarch64-linux-gnu qemu-user-static
-  docker pull --platform linux/arm64 a11ywatch/crawler
-  # restart the crawler image
-  a11ywatch stop
-  a11ywatch build
-  a11ywatch start
+ sudo apt-get install -y qemu gcc-aarch64-linux-gnu qemu-user-static
+ a11ywatch start --upgrade # upgrade to install latest images
 ```
 
 ## ENV
