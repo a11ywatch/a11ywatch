@@ -5,6 +5,7 @@ pub mod launchers;
 pub mod fs;
 pub mod utils;
 pub mod formatters;
+extern crate home;
 
 use self::formatters::{
     format_body, 

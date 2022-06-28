@@ -3,6 +3,7 @@ use std::fs::{File, create_dir, remove_dir_all};
 use std::io::prelude::*;
 use std::path::Path;
 use serde_json::{json, Value, from_reader};
+use std::process::Command;
 
 /// Manage file paths and contents for system
 pub(crate) struct TempFs {
@@ -182,24 +183,64 @@ impl TempFs {
     /// create an env file from the config
     pub fn create_env_file(&self) -> std::io::Result<()> {
         let file = File::open(&self.config_file)?;
-        let prev_json: Value = from_reader(&file)?;       
-        let mut file = File::create(&format!("{}/.env", self.app_dir))?;
+        let prev_json: Value = from_reader(&file)?;    
+        let env_path = format!("{}/.env", self.app_dir);
+
+        if !Path::new(&env_path).exists() {
+            File::create(&format!("{}/.env", self.app_dir))?;
+        };
+
+        let home_directory: String = match home::home_dir() {
+            Some(path) => {
+                path.display().to_string()
+            },
+            None => {
+                println!("Home directory does not exist!");
+                String::new()
+            },
+        };
+
+        // make sure modenv cli is installed. Maybe cleanup afterwards.
+        if !Path::new(&format!("{}/.cargo/bin/modenv", home_directory)).exists() {
+            Command::new("cargo")
+                .arg("install")
+                .arg("modenv")
+                .arg("--no-track")
+                .output()
+                .expect("Failed to install modenv. Make sure cargo is installed, run cargo add modenv, and re-run the command the build command.");
+        };
 
         let cv_token =  prev_json["cv_token"].as_str().unwrap_or_default();
         let cv_url =  prev_json["cv_url"].as_str().unwrap_or_default();
 
         if !cv_token.is_empty() {
-            file.write_all(format!("COMPUTER_VISION_SUBSCRIPTION_KEY={}\n", cv_token).to_string().as_bytes())?;
+            Command::new("modenv")
+                .arg("add")
+                .arg(format!("COMPUTER_VISION_SUBSCRIPTION_KEY={}", cv_token))
+                .arg("-e")
+                .arg(&env_path)
+                .output()
+                .expect(&format!("failed to execute modenv process to create COMPUTER_VISION_SUBSCRIPTION_KEY={}. Manually set the key at {} as a work around.", &cv_token, &env_path));
         };
         if !cv_url.is_empty() {
-            file.write_all(format!("COMPUTER_VISION_ENDPOINT={}\n", cv_url).to_string().as_bytes())?;
+            Command::new("modenv")
+                .arg("add")
+                .arg(format!("COMPUTER_VISION_ENDPOINT={}", cv_url))
+                .arg("-e")
+                .arg(&env_path)
+                .output()
+                .expect(&format!("failed to execute modenv process to create COMPUTER_VISION_ENDPOINT={}.  Manually set the key at {} as a work around.", &cv_url, &env_path));
         };
         // m1 chip 
         if cfg!(all(target_os = "macos", target_pointer_width = "64")) {
-            file.write_all(format!("CRAWLER_IMAGE={}\n", "arm64").to_string().as_bytes())?;
+            Command::new("modenv")
+                .arg("add")
+                .arg(format!("CRAWLER_IMAGE={}", "darwin-arm64"))
+                .arg("-e")
+                .arg(&env_path)
+                .output()
+                .expect("failed to execute modenv process to create CRAWLER_IMAGE=darwin-arm64.");
         };
-
-        file.sync_all()?;
 
         Ok(())
     }
