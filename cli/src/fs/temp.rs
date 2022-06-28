@@ -1,9 +1,11 @@
 use crate::generators::compose::{generate_compose_backend, generate_compose_frontend};
-use std::fs::{File, create_dir, remove_dir_all};
+use std::fs::{File, create_dir, read_to_string, remove_dir_all, remove_file};
 use std::io::prelude::*;
 use std::path::Path;
+use std::io::LineWriter;
+use std::io::{BufRead, BufReader};
+use std::fs::OpenOptions;
 use serde_json::{json, Value, from_reader};
-use std::process::Command;
 
 /// Manage file paths and contents for system
 pub(crate) struct TempFs {
@@ -184,63 +186,79 @@ impl TempFs {
     pub fn create_env_file(&self) -> std::io::Result<()> {
         let file = File::open(&self.config_file)?;
         let prev_json: Value = from_reader(&file)?;    
-        let env_path = format!("{}/.env", self.app_dir);
+        let env_path = format!("{}/.env", &self.app_dir);
+        let env_path_tmp = format!("{}/env.txt", &self.app_dir);
+
+        let m1_chip = cfg!(all(target_os = "macos", target_pointer_width = "64"));
 
         if !Path::new(&env_path).exists() {
-            File::create(&format!("{}/.env", self.app_dir))?;
+            File::create(&env_path)?;
+        };
+        if !Path::new(&env_path_tmp).exists() {
+            File::create(&env_path_tmp)?;
         };
 
-        let home_directory: String = match home::home_dir() {
-            Some(path) => {
-                path.display().to_string()
-            },
-            None => {
-                println!("Home directory does not exist!");
-                String::new()
-            },
-        };
-
-        // make sure modenv cli is installed. Maybe cleanup afterwards.
-        if !Path::new(&format!("{}/.cargo/bin/modenv", home_directory)).exists() {
-            Command::new("cargo")
-                .arg("install")
-                .arg("modenv")
-                .arg("--no-track")
-                .output()
-                .expect("Failed to install modenv. Make sure cargo is installed, run cargo add modenv, and re-run the command the build command.");
-        };
+        let file = File::open(&env_path)?;
+        let file_tmp = OpenOptions::new()
+            .write(true)
+            .create(true)
+            .truncate(true)
+            .open(&env_path_tmp)
+            .unwrap();
 
         let cv_token =  prev_json["cv_token"].as_str().unwrap_or_default();
         let cv_url =  prev_json["cv_url"].as_str().unwrap_or_default();
 
-        if !cv_token.is_empty() {
-            Command::new("modenv")
-                .arg("add")
-                .arg(format!("COMPUTER_VISION_SUBSCRIPTION_KEY={}", cv_token))
-                .arg("-e")
-                .arg(&env_path)
-                .output()
-                .expect(&format!("failed to execute modenv process to create COMPUTER_VISION_SUBSCRIPTION_KEY={}. Manually set the key at {} as a work around.", &cv_token, &env_path));
+        // custom API keys
+        let c_v_s_k = "COMPUTER_VISION_SUBSCRIPTION_KEY";
+        let c_v_e = "COMPUTER_VISION_ENDPOINT";
+
+        // keep track of keys already wrote to file.
+        let mut wrote_c_v_s_k = false;
+        let mut wrote_c_v_e = false;
+        let mut wrote_m1 = false;
+
+        let mut writer: LineWriter<File> = LineWriter::new(file_tmp);
+
+        let reader = BufReader::new(&file);
+
+        // map allowed env keys to file
+        for line in reader.lines() {
+            if let Ok(item) = line {
+                if !cv_token.is_empty() && item.contains(&c_v_s_k) {
+                    writer.write_all(format!("{c_v_s_k}={}\n", cv_token).to_string().as_bytes())?;
+                    wrote_c_v_s_k = true;
+                } else if !cv_url.is_empty() && item.contains(&c_v_e) {
+                    writer.write_all(format!("{c_v_e}={}\n", cv_url).to_string().as_bytes())?;
+                    wrote_c_v_e = true;
+                } else if m1_chip && item.contains(&"CRAWLER_IMAGE=darwin-arm64") {
+                    writer.write_all("CRAWLER_IMAGE=darwin-arm64\n".to_string().as_bytes())?;
+                    wrote_m1 = true;
+                } else {
+                    writer.write_all(format!("{}\n", item).to_string().as_bytes())?;
+                };
+            }
+        }
+
+        if !cv_token.is_empty() && !wrote_c_v_s_k {
+            writer.write_all(format!("{c_v_s_k}={}\n", cv_token).to_string().as_bytes())?;
         };
-        if !cv_url.is_empty() {
-            Command::new("modenv")
-                .arg("add")
-                .arg(format!("COMPUTER_VISION_ENDPOINT={}", cv_url))
-                .arg("-e")
-                .arg(&env_path)
-                .output()
-                .expect(&format!("failed to execute modenv process to create COMPUTER_VISION_ENDPOINT={}.  Manually set the key at {} as a work around.", &cv_url, &env_path));
+        if !cv_url.is_empty() && !wrote_c_v_e {
+            writer.write_all(format!("COMPUTER_VISION_ENDPOINT={}\n", cv_url).to_string().as_bytes())?;
         };
-        // m1 chip 
-        if cfg!(all(target_os = "macos", target_pointer_width = "64")) {
-            Command::new("modenv")
-                .arg("add")
-                .arg(format!("CRAWLER_IMAGE={}", "darwin-arm64"))
-                .arg("-e")
-                .arg(&env_path)
-                .output()
-                .expect("failed to execute modenv process to create CRAWLER_IMAGE=darwin-arm64.");
+        if m1_chip && !wrote_m1 {
+            writer.write_all("CRAWLER_IMAGE=darwin-arm64\n".to_string().as_bytes())?;
         };
+
+        let mut file = OpenOptions::new()
+            .write(true)
+            .create(false)
+            .truncate(false)
+            .open(&env_path)?;
+
+        writer.flush()?;
+        file.write_all(read_to_string(Path::new(&env_path_tmp)).unwrap_or_default().to_string().as_bytes())?;
+        remove_file(Path::new(&env_path_tmp))?;
 
         Ok(())
     }

@@ -1,6 +1,6 @@
 [package]
 name = "a11ywatch_cli"
-version = "0.3.13"
+version = "0.3.14"
 authors = ["j-mendez <jeff@a11ywatch.com>"]
 description = "A11yWatch accessibility CLI."
 repository = "https://github.com/a11ywatch/a11ywatch"
@@ -17,7 +17,6 @@ clap = { version = "3.1.18", features = ["derive"] }
 ureq = { version = "2.4.0", features = ["json", "charset", "brotli"] }
 serde = { version = "1.0.136", features = ["derive"] }
 serde_json =  { version = "1.0.81" }
-home = "0.5.3"
 
 [[bin]]
 name = "a11ywatch"
