@@ -26,12 +26,6 @@ jobs:
       - name: Install the CLI
         run: |
           cargo install  --path ./cli --force
-      # - name: Configure Emulation for crawler
-      #   shell: bash
-      #   run: |
-      #     # uname -m
-      #     sudo apt-get update -y
-      #     sudo apt-get install -y qemu gcc-aarch64-linux-gnu qemu-user-static
       - name: Run Server
         run: a11ywatch start
         shell: bash

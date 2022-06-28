@@ -185,8 +185,20 @@ impl TempFs {
         let prev_json: Value = from_reader(&file)?;       
         let mut file = File::create(&format!("{}/.env", self.app_dir))?;
 
-        file.write_all(format!("COMPUTER_VISION_SUBSCRIPTION_KEY={}", prev_json["cv_token"].as_str().unwrap()).to_string().as_bytes())?;
-        file.write_all(format!("\nCOMPUTER_VISION_ENDPOINT={}", prev_json["cv_token"].as_str().unwrap()).to_string().as_bytes())?;
+        let cv_token =  prev_json["cv_token"].as_str().unwrap_or_default();
+        let cv_url =  prev_json["cv_url"].as_str().unwrap_or_default();
+
+        if !cv_token.is_empty() {
+            file.write_all(format!("COMPUTER_VISION_SUBSCRIPTION_KEY={}\n", cv_token).to_string().as_bytes())?;
+        };
+        if !cv_url.is_empty() {
+            file.write_all(format!("COMPUTER_VISION_ENDPOINT={}\n", cv_url).to_string().as_bytes())?;
+        };
+        // m1 chip 
+        if cfg!(all(target_os = "macos", target_pointer_width = "64")) {
+            file.write_all(format!("CRAWLER_IMAGE={}\n", "arm64").to_string().as_bytes())?;
+        };
+
         file.sync_all()?;
 
         Ok(())
