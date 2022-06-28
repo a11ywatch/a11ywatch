@@ -13,6 +13,8 @@ cargo install a11ywatch_cli
 Then run `a11ywatch -h` to get all options.
 
 ```sh
+# build the instance first, this allows configuring architecture specifics like m1 chips.
+a11ywatch build
 # start the instance. If you need the front-end client passing the -f option [min of 1.25gb of memory required alloc to docker resource].
 a11ywatch start
 # scan a url and pipe the stdout to a file.
@@ -30,17 +32,6 @@ a11ywatch start -f
 ```
 
 If you experience issues the `cargo install a11ywatch_cli` command, try running `rustup update stable` to make sure your cargo version is up to date.
-
-If the `crawler` image fails to start on certain flavors of linux run via qemu emulation.
-
-```sh
-  sudo apt-get update -y && apt-get install -y qemu gcc-aarch64-linux-gnu qemu-user-static
-  docker pull --platform linux/arm64 a11ywatch/crawler
-  # restart the crawler image
-  a11ywatch stop
-  a11ywatch build
-  a11ywatch start
-```
 
 ## ENV
 

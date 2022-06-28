@@ -12,6 +12,7 @@ impl Build {
         if *local {
             println!("Error: API not implemented. CLI interface holding entry as stub.");
         } else {
+            file_manager.create_env_file().unwrap();
             file_manager.create_compose_backend_file().unwrap();
             file_manager.create_compose_frontend_file().unwrap();
             docker::build_backend(&file_manager);

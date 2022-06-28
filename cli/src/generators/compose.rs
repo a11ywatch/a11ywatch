@@ -59,7 +59,7 @@ services:
 
   crawler:
     container_name: crawler
-    image: a11ywatch/crawler
+    image: "a11ywatch/crawler:${CRAWLER_IMAGE:-latest}"
     ports:
       - 50055
     networks:
