@@ -7,7 +7,10 @@ The A11yWatch Command Line Interface. View the [cli-docs](https://docs.a11ywatch
 Get the CLI by running the command below.
 
 ```sh
+# install via cargo
 cargo install a11ywatch_cli
+# install via npm
+npm i a11ywatch-cli -g
 ```
 
 Then run `a11ywatch -h` to get all options.

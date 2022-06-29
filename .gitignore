@@ -74,3 +74,9 @@ clients/openapitools.json
 #benches
 benchmarks/target
 benchmarks/node_modules
+
+# tmp store move to CI and rust generation
+pre-install.js
+package.json
+start.js
+uninstall.js
