@@ -23,7 +23,7 @@ services:
     networks:
       - back-net
     ports:
-      - 3280:8080
+      - 3280:3280
       - 50051
     depends_on:
       - mongodb
@@ -39,7 +39,7 @@ services:
       - EMAIL_CLIENT_KEY=${EMAIL_CLIENT_KEY}
       - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
       - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
-      - GRAPHQL_PORT=${GRAPHQL_PORT:-8080}
+      - GRAPHQL_PORT=${GRAPHQL_PORT:-3280}
       - ROOT_URL=${ROOT_URL:-http://localhost:3280}
       - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://localhost:8090/api}
       - STRIPE_KEY=${STRIPE_KEY}

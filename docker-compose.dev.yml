@@ -34,7 +34,7 @@ services:
     volumes:
       - ../a11ywatch-core/src:/usr/src/app/src
     ports:
-      - 3280:8080
+      - 3280:3280
       - 50051
     depends_on:
       - mongodb
@@ -44,7 +44,7 @@ services:
       - APOLLO_GRAPH_VARIANT=${APOLLO_GRAPH_VARIANT:-current}
       - APOLLO_SCHEMA_REPORTING=${APOLLO_SCHEMA_REPORTING:-false}
       - CLIENT_URL=${CLIENT_URL:-http://localhost:3000}
-      - GRAPHQL_PORT=${GRAPHQL_PORT:-8080}
+      - GRAPHQL_PORT=${GRAPHQL_PORT:-3280}
       - EMAIL_SERVICE_URL=${EMAIL_SERVICE_URL}
       - EMAIL_CLIENT_ID=${EMAIL_CLIENT_ID}
       - EMAIL_CLIENT_KEY=${EMAIL_CLIENT_KEY}

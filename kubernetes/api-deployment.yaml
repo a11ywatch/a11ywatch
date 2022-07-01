@@ -43,7 +43,7 @@ spec:
             - name: GITHUB_CLIENT_ID
             - name: GITHUB_CLIENT_SECRET
             - name: GRAPHQL_PORT
-              value: "8080"
+              value: "3280"
             - name: PRIVATE_KEY
             - name: PUBLIC_KEY
             - name: REDIS_CLIENT
@@ -62,7 +62,7 @@ spec:
           image: a11ywatch/a11ywatch-core
           name: api
           ports:
-            - containerPort: 8080
+            - containerPort: 3280
             - containerPort: 50051
           resources: {}
       restartPolicy: Always

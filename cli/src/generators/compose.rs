@@ -7,7 +7,7 @@ services:
     container_name: api
     image: a11ywatch/a11ywatch-core
     ports:
-      - 3280:8080
+      - 3280:3280
       - 50051
     depends_on:
       - mongodb
@@ -17,7 +17,7 @@ services:
       - APOLLO_GRAPH_VARIANT=${APOLLO_GRAPH_VARIANT:-current}
       - APOLLO_SCHEMA_REPORTING=${APOLLO_SCHEMA_REPORTING:-false}
       - CLIENT_URL=${CLIENT_URL:-http://localhost:3000}
-      - GRAPHQL_PORT=${GRAPHQL_PORT:-8080}
+      - GRAPHQL_PORT=${GRAPHQL_PORT:-3280}
       - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://localhost:8090/api}
       - ROOT_URL=${ROOT_URL:-http://localhost:3280}
       - REDIS_CLIENT=${REDIS_CLIENT:-redis://redis:6379}

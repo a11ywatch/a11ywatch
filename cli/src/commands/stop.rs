@@ -1,6 +1,7 @@
 use crate::launchers::docker;
 use crate::fs::{TempFs};
 use std::env;
+use std::process::Command;
 use crate::INCLUDE_FRONTEND;
 
 #[derive(Debug, Default)]
@@ -14,7 +15,10 @@ impl Stop {
             Err(_) => false,
         };
         if *local {
-            println!("Error: API not implemented. CLI interface holding entry as stub.");
+            Command::new("killall")
+                .args(["-9", "node"])
+                .status()
+                .expect("Failed to execute killall command.");
         } else {
             docker::stop_service(&frontend, &file_manager);
         }

@@ -2,11 +2,14 @@ use crate::launchers::docker;
 use crate::fs::{TempFs};
 use std::env;
 use crate::INCLUDE_FRONTEND;
+use std::process::{Command};
+use std::path::{Path};
 
 #[derive(Debug, Default)]
 pub struct Start {}
 
 impl Start {
+    /// start the a11ywatch application through docker or locally.
     pub fn process(local: &bool) -> bool {
         let mut file_manager = TempFs::new();
 
@@ -16,7 +19,21 @@ impl Start {
         };
 
         if *local {
-            println!("Error: API not implemented. CLI interface holding entry as stub.");
+            let npm_path = Command::new("npm")
+                .args(["root", "-g"])
+                .output()
+                .expect("Failed to execute npm root -g command!");
+            let stdout = String::from_utf8_lossy(&npm_path.stdout);
+            let stdout = stdout.clone().to_owned().to_string();
+            let stdout = &stdout.trim().replace("\n", "");
+            let node_dir = Path::new(&stdout);
+            let node_dir = node_dir.join("@a11ywatch/a11ywatch");
+            let node_dir = node_dir.display();
+
+            Command::new("npm")
+                .args(["run", "start", "--prefix", &node_dir.to_string()])
+                .status()
+                .expect("Failed to execute @a11ywatch/a11ywatch command!");
         } else {
             if frontend {
                 file_manager.create_compose_frontend_file().unwrap();

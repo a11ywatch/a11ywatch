@@ -12,7 +12,7 @@ spec:
   ports:
     - name: "3280"
       port: 3280
-      targetPort: 8080
+      targetPort: 3280
     - name: "50051"
       port: 50051
       targetPort: 50051
