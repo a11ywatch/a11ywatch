@@ -43,6 +43,9 @@ pub enum Commands {
         /// save the results of the scan to tmp
         #[clap(short, long)]
         save: bool,
+        /// attempt to fix the code being applied with recommendations
+        #[clap(short, long)]
+        fix: bool,
     },
     /// Site wide scan a website url for issues.
     CRAWL {
@@ -61,6 +64,9 @@ pub enum Commands {
         /// Include different TLD extensions matching hostname
         #[clap(short, long)]
         tld: bool,
+        /// attempt to fix the code being applied with recommendations
+        #[clap(short, long)]
+        fix: bool,
     },
     /// Extract results in formats for platforms
     EXTRACT {
