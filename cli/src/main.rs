@@ -1,3 +1,5 @@
+extern crate dirs;
+
 pub mod options;
 pub mod generators;
 pub mod commands;
@@ -18,9 +20,10 @@ use clap::{Parser};
 use std::env;
 use options::{Cli, Commands};
 use commands::{Build, Start, Stop, Deploy, ApiClient};
-use fs::temp::{TempFs};
+use fs::{apply_fix, TempFs};
 use serde_json::{json};
 use std::io::{self, Write};
+use crate::utils::Issue;
 
 const INCLUDE_FRONTEND: &str = "INCLUDE_FRONTEND";
 const EXTERNAL: &str = "EXTERNAL";
@@ -114,19 +117,23 @@ fn main() {
                 Deploy::process_terminate(&all);
             }
         },
-        Some(Commands::SCAN { url, external, save }) => {
+        Some(Commands::SCAN { url, external, save, fix }) => {
             if *external {
                 env::set_var(EXTERNAL, external.to_string());
             }
 
             let result = ApiClient::scan_website(&url, &file_manager).unwrap_or_default();
-            let json_results = json!(result);
+            let json_results = json!(&result);
 
             if *save {
                 file_manager.save_results(&json_results).unwrap();
             }
 
-            println!("{}", json_results);
+            if *fix {
+                apply_fix(&json_results);
+            }
+
+            // println!("{}", json_results);
         },
         Some(Commands::EXTRACT { platform }) => {
             if platform == "github" {
@@ -134,7 +141,7 @@ fn main() {
                 println!("{}", json_data);
             }
         },
-        Some(Commands::CRAWL { url, external, save, subdomains, tld }) => {
+        Some(Commands::CRAWL { url, external, save, subdomains, tld, fix }) => {
             if *external {
                 env::set_var(EXTERNAL, external.to_string());
             }
@@ -145,7 +152,11 @@ fn main() {
                 TempFs::new().save_results(&json_results).unwrap();
             }
 
-            println!("{}", json_results);
+            if *fix {
+                apply_fix(&json_results);
+            }
+
+            // println!("{}", json_results);
         },
         None => {}
     }
