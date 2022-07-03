@@ -1,3 +1,5 @@
+extern crate dirs;
+
 pub mod options;
 pub mod generators;
 pub mod commands;
@@ -131,7 +133,7 @@ fn main() {
                 apply_fix(&json_results);
             }
 
-            println!("{}", json_results);
+            // println!("{}", json_results);
         },
         Some(Commands::EXTRACT { platform }) => {
             if platform == "github" {
@@ -154,7 +156,7 @@ fn main() {
                 apply_fix(&json_results);
             }
 
-            println!("{}", json_results);
+            // println!("{}", json_results);
         },
         None => {}
     }
