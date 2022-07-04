@@ -18,6 +18,17 @@ const PROPERTY_MATCHERS: [(&'static str, &'static str); 3] = [
     (MATCH_ALT, "alt")
 ];
 
+/// determine if project is react
+pub fn determine_react_project() -> bool{
+    let rg_command = Command::new("rg")
+        .args([r#""react":"#, "package.json"])
+        .output()
+        .expect("Failed to execute ripgrep replace");
+    let stdout = String::from_utf8(rg_command.stdout).unwrap();
+
+    stdout.is_empty()
+}
+
 /// determine actual fix for code. Returns empty string if no matchers found.
 pub fn establish_context(context: String, rec: &str) -> String {
     let replace_context: String;
@@ -76,13 +87,14 @@ pub fn establish_context(context: String, rec: &str) -> String {
 
 /// apply code fixes for the issues
 pub fn apply_fix(json_results: &Value) {
-    assure_module_exist("ripgrep");
     let data = &*json_results.get("data").unwrap();
 
     if data.is_object() {
         let issues = data.get("issues").unwrap();
 
         if issues.is_array() {
+            assure_module_exist("ripgrep");
+            let react_project = determine_react_project();
             for issue in issues.as_array() {
                 for item in issue.clone() {
                     let iss: Issue = serde_json::from_value(item).unwrap();
@@ -90,13 +102,30 @@ pub fn apply_fix(json_results: &Value) {
 
                     if message.contains(&RECCOMENDATION) {
                         let context = iss.context.to_string();
-                        // TODO: determine property to add or adjust based on recommendation.
                         let rec_index = message.find(&RECCOMENDATION).unwrap_or(0);
-                        // reccomendation exist, attempt to map code fix.
+                        // recommendation exist, attempt to map code fix.
                         if rec_index != 0 {
                             let rec = &message[rec_index..];
                             let rec: String = rec.to_owned().to_string(); // recommendation
-                            let context: String = context.clone();
+                            let mut context: String = context.clone();
+
+                            // TODO: use tocase crate and create list that handles all conversions from [https://reactjs.org/docs/dom-elements.html]
+                            if react_project {
+                                context = context.replace("class=", "className=");
+                                context = context.replace("tabindex=", "tabIndex=");
+                                context = context.replace("hreflang=", "hrefLang=");
+                                context = context.replace("for=", "htmlFor=");
+                                context = context.replace("crossorigin=", "crossOrigin=");
+                                context = context.replace("allowfullscreen=", "allowFullScreen=");
+                                context = context.replace("autocomplete=", "autoComplete=");
+                                context = context.replace("autofocus=", "autoFocus=");
+                                context = context.replace("frameborder=", "frameBorder=");
+                                context = context.replace("maxlength=", "maxLength=");
+                                context = context.replace("minlength=", "minLength=");
+                                context = context.replace("novalidate=", "noValidate=");
+                                context = context.replace("classid=", "classID=");
+                            }
+
                             let replace_end = if context.ends_with("/>") { "/>" } else { ">" };
                             // trim tags from start and end
                             let context = context.replace("<", "");
