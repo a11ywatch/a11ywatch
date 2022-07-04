@@ -10,22 +10,28 @@ use std::process::Command;
 const RECCOMENDATION: &str = "Recommendation:";
 const MATCH_ALT: &str = "Recommendation: set the alt prop to - ";
 
-/// get replace_context [TODO: pass in property]
+const MATCHERS: [(&'static str, &'static str); 1] = [(MATCH_ALT, "alt")];
+
+/// determine actual fix for code. Returns empty string if no matchers found.
 pub fn establish_context(context: String, rec: &str) -> String {
-    // Alt code fix
-    if rec.starts_with(MATCH_ALT) {
-        let rec = &rec.replace(MATCH_ALT, "");
-        let alt_index = context.find(r#"alt="""#).unwrap_or(0);
-        let replace_context = if alt_index != 0 {
-            context.replace(r#"alt="""#, &format!(r#"alt="{rec}""#))
-        } else {
-            format!(r#"{} alt="{}""#, context, rec)
-        };
+    let replace_context: String;
 
-        return replace_context;
+    match MATCHERS {
+        [.., (des, value)] if rec.starts_with(&(*des)) => {
+            let v = &rec.replace(des, "");
+            let prop_index = context.find(r#"{value}="""#).unwrap_or(0);
+            replace_context = if prop_index != 0 {
+                context.replace(r#"{value}="""#, &format!(r#"{value}="{rec}""#))
+            } else {
+                format!(r#"{} {value}="{}""#, context, v)
+            };    
+        }
+        _ => {
+            replace_context = String::from("")
+        }
     }
-
-    String::from("")
+    
+    replace_context
 }
 
 /// apply code fixes for the issues
