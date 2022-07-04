@@ -32,7 +32,17 @@ pub fn establish_context(context: String, rec: &str) -> String {
             if value_index != 0 {
                 for (i, c) in context[value_index..].chars().enumerate() {
                     exact_value.push(c);
-                    if i != 0 && c.to_string() == exact_value.get(..0).unwrap_or_default() {
+                    let mut string_index = if value == "alt" {
+                        0
+                    } else {
+                        1
+                    };
+                    let mut first_str = exact_value.get(..string_index).unwrap_or_default();
+                    while first_str.is_empty() {
+                        string_index = string_index + 1;
+                        first_str = exact_value.get(..string_index).unwrap_or_default();
+                    };
+                    if i != 0 && c.to_string() == first_str {
                         break;
                     }
                 }
@@ -40,9 +50,20 @@ pub fn establish_context(context: String, rec: &str) -> String {
 
             replace_context = if !exact_value.is_empty() {
                 let q = exact_value.chars().last().unwrap();
-                context.replace(&format!("{exact_value}"), &format!(r#"{value}={}{v}{}"#, q, q))
+                let target_value = if value == "alt" {
+                    format!(r#"{value}={q}{v}{q}"#)
+                } else {
+                    format!(r#"{value}:{q}{v}{q};"#)
+                };
+                context.replace(&format!("{exact_value}"), &target_value)
             } else {
-                format!(r#"{} {value}="{}""#, context, v)
+                let target_value = if value == "alt" {
+                    format!(r#"{context} {value}="{v}""#)
+                } else {
+                    format!(r#"{context} style="{value}: {v};""#)
+                };
+
+                target_value
             };
         }
         _ => {
