@@ -7,11 +7,14 @@ use std::io::Write;
 use std::path::Path;
 use std::process::Command;
 
+const RECCOMENDATION: &str = "Recommendation:";
+const MATCH_ALT: &str = "Recommendation: set the alt prop to - ";
+
 /// get replace_context [TODO: pass in property]
-pub fn establish_context(context: String, rec: &str, alt_matcher: &String) -> String {
+pub fn establish_context(context: String, rec: &str) -> String {
     // Alt code fix
-    if rec.starts_with(alt_matcher) {
-        let rec = &rec.replace(alt_matcher, "");
+    if rec.starts_with(MATCH_ALT) {
+        let rec = &rec.replace(MATCH_ALT, "");
         let alt_index = context.find(r#"alt="""#).unwrap_or(0);
         let replace_context = if alt_index != 0 {
             context.replace(r#"alt="""#, &format!(r#"alt="{rec}""#))
@@ -29,15 +32,11 @@ pub fn establish_context(context: String, rec: &str, alt_matcher: &String) -> St
 pub fn apply_fix(json_results: &Value) {
     assure_module_exist("ripgrep");
     let data = &*json_results.get("data").unwrap();
-    const RECCOMENDATION: &str = "Recommendation:";
 
     if data.is_object() {
         let issues = data.get("issues").unwrap();
 
         if issues.is_array() {
-            // TODO: move to lazy static.
-            let alt_matcher = format!("{RECCOMENDATION} set the alt prop to - ");
-
             for issue in issues.as_array() {
                 for item in issue.clone() {
                     let iss: Issue = serde_json::from_value(item).unwrap();
@@ -57,7 +56,7 @@ pub fn apply_fix(json_results: &Value) {
                             let context = context.replace("<", "");
                             let context = context.replace(replace_end, "");
                             let replace_context =
-                                establish_context(context.clone(), &rec, &alt_matcher);
+                                establish_context(context.clone(), &rec);
 
                             // apply code changes if recommendation exist.
                             if !replace_context.is_empty() {

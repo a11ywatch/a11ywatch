@@ -15,7 +15,7 @@ use self::formatters::{
 use crate::utils::Issue;
 use clap::Parser;
 use commands::{ApiClient, Build, Deploy, Start, Stop};
-use fs::{apply_fix, TempFs};
+use fs::{TempFs};
 use options::{Cli, Commands};
 use serde_json::json;
 use std::env;
@@ -145,7 +145,7 @@ fn main() {
             }
 
             if *fix {
-                apply_fix(&json_results);
+                fs::code_fix::apply_fix(&json_results);
             }
 
             println!("{}", json_results);
@@ -176,7 +176,7 @@ fn main() {
             }
 
             if *fix {
-                apply_fix(&json_results);
+                fs::code_fix::apply_fix(&json_results);
             }
 
             println!("{}", json_results);
