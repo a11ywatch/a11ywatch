@@ -1,11 +1,11 @@
 use crate::generators::compose::{generate_compose_backend, generate_compose_frontend};
-use std::fs::{File, create_dir, read_to_string, remove_dir_all, remove_file};
+use serde_json::{from_reader, json, Value};
+use std::fs::OpenOptions;
+use std::fs::{create_dir, read_to_string, remove_dir_all, remove_file, File};
 use std::io::prelude::*;
-use std::path::Path;
 use std::io::LineWriter;
 use std::io::{BufRead, BufReader};
-use std::fs::OpenOptions;
-use serde_json::{json, Value, from_reader};
+use std::path::Path;
 
 /// Manage file paths and contents for system
 pub(crate) struct TempFs {
@@ -20,9 +20,10 @@ pub(crate) struct TempFs {
     /// results of github html file location
     pub results_github_file: String,
     /// infra config file
-    pub config_file: String
+    pub config_file: String,
 }
 
+/// merge two values together from left-right.
 fn merge(a: &mut Value, b: &Value) {
     match (a, b) {
         (Value::Object(ref mut a), &Value::Object(ref b)) => {
@@ -36,11 +37,9 @@ fn merge(a: &mut Value, b: &Value) {
     }
 }
 
-
 /// standard file system handling methods
-pub(crate)
-trait Fs {
-    fn new () -> Self;
+pub(crate) trait Fs {
+    fn new() -> Self;
     fn set_token(&self) {}
     fn set_cv_url(&self) {}
     fn set_cv_token(&self) {}
@@ -61,22 +60,22 @@ impl TempFs {
 
         TempFs::ensure_temp_dir(&tmp_dir, &app_dir).unwrap();
         TempFs::sync(&app_dir, &config_file).unwrap();
-        
+
         Self {
             backend_compose: format!("{}/compose.yml", app_dir),
             frontend_compose: format!("{}/compose.frontend.yml", app_dir),
             results_file,
             config_file,
             app_dir,
-            results_github_file
+            results_github_file,
         }
     }
 
     /// get the apps temp directory location
     pub fn get_temp_dir(&mut self) -> &String {
-       &self.app_dir
+        &self.app_dir
     }
-    
+
     /// create compose backend file is does not exist
     pub fn create_compose_backend_file(&mut self) -> std::io::Result<()> {
         if !Path::new(&self.backend_compose).exists() {
@@ -85,7 +84,7 @@ impl TempFs {
         }
         Ok(())
     }
-    
+
     /// create compose frontend file is does not exist
     pub fn create_compose_frontend_file(&mut self) -> std::io::Result<()> {
         if !Path::new(&self.frontend_compose).exists() {
@@ -100,7 +99,7 @@ impl TempFs {
         let mut file = File::open(&self.results_file).unwrap();
         let mut data = String::new();
         file.read_to_string(&mut data).unwrap();
-            
+
         data
     }
 
@@ -109,7 +108,7 @@ impl TempFs {
         let mut file = File::open(&self.results_github_file).unwrap();
         let mut data = String::new();
         file.read_to_string(&mut data).unwrap();
-            
+
         data
     }
 
@@ -126,13 +125,11 @@ impl TempFs {
     pub fn set_token(&self, token: &String) -> std::io::Result<()> {
         let file = File::open(&self.config_file)?;
         let mut prev_json: Value = from_reader(&file)?;
-                
-        let json = json!({
-            "token": &token
-        });    
-        
+
+        let json = json!({ "token": &token });
+
         merge(&mut prev_json, &json);
-        
+
         let mut file = File::create(&self.config_file)?;
 
         file.write_all(&prev_json.to_string().as_bytes())?;
@@ -140,18 +137,15 @@ impl TempFs {
         Ok(())
     }
 
-
     /// set the Computer Vision api token to use for request
     pub fn set_cv_token(&self, token: &String) -> std::io::Result<()> {
         let file = File::open(&self.config_file)?;
         let mut prev_json: Value = from_reader(&file)?;
-                
-        let json = json!({
-            "cv_token": &token
-        });
-        
+
+        let json = json!({ "cv_token": &token });
+
         merge(&mut prev_json, &json);
-        
+
         let mut file = File::create(&self.config_file)?;
 
         file.write_all(&prev_json.to_string().as_bytes())?;
@@ -165,13 +159,11 @@ impl TempFs {
     pub fn set_cv_url(&self, u: &String) -> std::io::Result<()> {
         let file = File::open(&self.config_file)?;
         let mut prev_json: Value = from_reader(&file)?;
-                
-        let json = json!({
-            "cv_url": &u
-        });    
-        
+
+        let json = json!({ "cv_url": &u });
+
         merge(&mut prev_json, &json);
-        
+
         let mut file = File::create(&self.config_file)?;
 
         file.write_all(&prev_json.to_string().as_bytes())?;
@@ -181,11 +173,10 @@ impl TempFs {
         Ok(())
     }
 
-
     /// create an env file from the config
     pub fn create_env_file(&self) -> std::io::Result<()> {
         let file = File::open(&self.config_file)?;
-        let prev_json: Value = from_reader(&file)?;    
+        let prev_json: Value = from_reader(&file)?;
         let env_path = format!("{}/.env", &self.app_dir);
         let env_path_tmp = format!("{}/env.txt", &self.app_dir);
 
@@ -206,8 +197,8 @@ impl TempFs {
             .open(&env_path_tmp)
             .unwrap();
 
-        let cv_token =  prev_json["cv_token"].as_str().unwrap_or_default();
-        let cv_url =  prev_json["cv_url"].as_str().unwrap_or_default();
+        let cv_token = prev_json["cv_token"].as_str().unwrap_or_default();
+        let cv_url = prev_json["cv_url"].as_str().unwrap_or_default();
 
         // custom API keys
         let c_v_s_k = "COMPUTER_VISION_SUBSCRIPTION_KEY";
@@ -244,7 +235,11 @@ impl TempFs {
             writer.write_all(format!("{c_v_s_k}={}\n", cv_token).to_string().as_bytes())?;
         };
         if !cv_url.is_empty() && !wrote_c_v_e {
-            writer.write_all(format!("COMPUTER_VISION_ENDPOINT={}\n", cv_url).to_string().as_bytes())?;
+            writer.write_all(
+                format!("COMPUTER_VISION_ENDPOINT={}\n", cv_url)
+                    .to_string()
+                    .as_bytes(),
+            )?;
         };
         if m1_chip && !wrote_m1 {
             writer.write_all("CRAWLER_IMAGE=darwin-arm64\n".to_string().as_bytes())?;
@@ -257,12 +252,16 @@ impl TempFs {
             .open(&env_path)?;
 
         writer.flush()?;
-        file.write_all(read_to_string(Path::new(&env_path_tmp)).unwrap_or_default().to_string().as_bytes())?;
+        file.write_all(
+            read_to_string(Path::new(&env_path_tmp))
+                .unwrap_or_default()
+                .to_string()
+                .as_bytes(),
+        )?;
         remove_file(Path::new(&env_path_tmp))?;
 
         Ok(())
     }
-
 
     /// create compose frontend file is does not exist
     pub fn save_results(&self, json: &serde_json::Value) -> std::io::Result<()> {
@@ -281,7 +280,7 @@ impl TempFs {
     }
 
     /// make sure the tmp directory is created for the app
-    fn ensure_temp_dir(tmp_dir: &str, app_dir: &str) -> std::io::Result<()> {    
+    fn ensure_temp_dir(tmp_dir: &str, app_dir: &str) -> std::io::Result<()> {
         if !Path::new(tmp_dir).exists() {
             create_dir(tmp_dir)?;
         }
@@ -298,17 +297,17 @@ impl TempFs {
         if Path::new(&config_file).exists() {
             let file = File::open(&config_file)?;
             let mut prev_json: Value = from_reader(&file).expect("file should be proper JSON");
-            let current_version = prev_json.get("version").expect("file should have version key");
-            
+            let current_version = prev_json
+                .get("version")
+                .expect("file should have version key");
+
             if version != current_version {
                 // reset app directory contents
                 remove_dir_all(&app_dir).unwrap();
                 create_dir(&app_dir).unwrap();
-    
-                let json = json!({
-                    "version": version
-                });    
-    
+
+                let json = json!({ "version": version });
+
                 merge(&mut prev_json, &json);
 
                 let mut file = File::create(&config_file)?;
@@ -317,17 +316,16 @@ impl TempFs {
             }
         } else {
             let mut file = File::create(&config_file)?;
-            let json = json!({
-                "version": version
-            });
-    
+            let json = json!({ "version": version });
+
             file.write_all(&json.to_string().as_bytes())?;
         }
-    
+
         Ok(())
     }
 }
 
+/// generic file system handling for application.
 impl Fs for TempFs {
     fn new() -> Self {
         let tmp_dir = std::env::temp_dir().display().to_string();
@@ -335,16 +333,13 @@ impl Fs for TempFs {
         let results_file = format!("{}/results.json", &app_dir);
         let results_github_file = format!("{}/results_github.json", &app_dir);
 
-        // let config_file = &format!("{}/config.json", app_dir);
-
         Self {
             backend_compose: format!("{}/compose.yml", app_dir),
             frontend_compose: format!("{}/compose.frontend.yml", app_dir),
-            config_file :format!("{}/compose.json", app_dir),
-            // app_dir: format!("{}", app_dir),
+            config_file: format!("{}/compose.json", app_dir),
             results_file,
             app_dir,
-            results_github_file
+            results_github_file,
         }
     }
     fn ensure_temp_dir(&self) {}
@@ -354,4 +349,4 @@ impl Fs for TempFs {
     fn set_cv_url(&self) {}
     fn set_cv_token(&self) {}
     fn sync() {}
-  }
+}

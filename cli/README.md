@@ -13,8 +13,6 @@ cargo install a11ywatch_cli
 npm i a11ywatch-cli -g
 ```
 
-Then run `a11ywatch -h` to get all options.
-
 ```sh
 # build the instance first, this allows configuring architecture specifics like m1 chips.
 a11ywatch build
@@ -58,8 +56,10 @@ a11ywatch --set-cv-token $mycv_token
 a11ywatch --set-cv-url https://$myvcvname.cognitiveservices.azure.com/
 ```
 
+Example options and commands `a11ywatch -h`:
+
 ```sh
-a11ywatch_cli 0.3.1
+a11ywatch_cli 0.4.3
 j-mendez <jeff@a11ywatch.com>
 A11yWatch accessibility CLI.
 

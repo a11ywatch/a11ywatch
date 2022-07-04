@@ -1,9 +1,9 @@
+use crate::utils::{Issue, IssueInfo};
 use serde::{Deserialize, Serialize};
-use crate::utils::{IssueInfo, Issue};
 
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct LightHouse {
-    pub json: String
+    pub json: String,
 }
 
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
@@ -11,8 +11,7 @@ pub struct PageLoadTime {
     pub duration: String,
     #[serde(rename = "durationFormated")]
     pub duration_formated: String,
-    pub color: String
-
+    pub color: String,
 }
 
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
@@ -29,5 +28,5 @@ pub struct Website {
     pub last_scan_date: String,
     pub insight: Option<LightHouse>,
     #[serde(rename = "pageLoadTime")]
-    pub page_load_time: PageLoadTime
+    pub page_load_time: PageLoadTime,
 }

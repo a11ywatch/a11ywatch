@@ -8,7 +8,6 @@ pub fn deploy_all() {
         .expect("Failed to execute command");
 }
 
-
 pub fn destroy_all() {
     println!("build: destroying the application via terraform...");
 

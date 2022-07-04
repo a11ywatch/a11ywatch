@@ -1,4 +1,4 @@
-use clap::{Subcommand};
+use clap::Subcommand;
 
 #[derive(Subcommand)]
 pub enum Commands {

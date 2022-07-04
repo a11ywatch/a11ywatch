@@ -1,3 +1,3 @@
 mod rest;
 
-pub(crate) use self::rest::{ApiClient};
+pub(crate) use self::rest::ApiClient;

@@ -7,11 +7,11 @@ pub fn get_api() -> String {
     let mut project_user_name = String::new();
     let mut project_branch_name = String::new();
 
-    for (n,v) in env::vars() {
+    for (n, v) in env::vars() {
         if n == "CIRCLE_PROJECT_USERNAME" || n == "GITHUB_REPOSITORY_OWNER" {
             project_user_name = v.to_string();
         }
-        if n == "CIRCLE_BRANCH" || n == "GITHUB_HEAD_REF"{
+        if n == "CIRCLE_BRANCH" || n == "GITHUB_HEAD_REF" {
             project_branch_name = v.to_string();
         }
         if n == "CIRCLE_PROJECT_REPONAME" {
@@ -21,15 +21,16 @@ pub fn get_api() -> String {
             github_repo_name = v.to_string();
         }
     }
-    
+
     let project_repo_name = if !github_repo_name.is_empty() {
         github_repo_name
     } else {
         format!("{}/{}", project_user_name, circleci_repo_name)
-    }.to_string();
+    }
+    .to_string();
 
-    format!("https://api.github.com/repos/{}/pulls?head={}:{}&state=open", 
-        project_repo_name,
-        project_user_name, 
-        project_branch_name)
+    format!(
+        "https://api.github.com/repos/{}/pulls?head={}:{}&state=open",
+        project_repo_name, project_user_name, project_branch_name
+    )
 }

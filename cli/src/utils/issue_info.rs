@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
 
-
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct IssueMeta {
     #[serde(rename = "skipContentIncluded")]
@@ -24,5 +23,5 @@ pub struct IssueInfo {
     #[serde(rename = "noticeCount")]
     pub notice_count: i32,
     #[serde(rename = "issueMeta")]
-    pub issue_meta: IssueMeta
+    pub issue_meta: IssueMeta,
 }

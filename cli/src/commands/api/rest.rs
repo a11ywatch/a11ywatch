@@ -1,17 +1,17 @@
+use crate::fs::temp::TempFs;
+use crate::utils::Website;
+use crate::EXTERNAL;
 use serde::{Deserialize, Serialize};
 use std::env;
-use ureq::{Error, post, json};
-use crate::utils::{Website};
-use crate::EXTERNAL;
-use crate::fs::temp::{TempFs};
-use std::time::{Instant};
+use std::time::Instant;
+use ureq::{json, post, Error};
 
 #[derive(Deserialize, Serialize, Debug, Default)]
 pub struct ApiResult {
     data: Option<Website>,
     success: bool,
     message: String,
-    code: i32
+    code: i32,
 }
 
 // site wide crawl long job handling
@@ -20,7 +20,7 @@ pub struct CrawlApiResult {
     data: Option<Vec<Website>>,
     success: bool,
     message: String,
-    code: i32
+    code: i32,
 }
 
 #[derive(Debug, Default)]
@@ -32,29 +32,35 @@ impl ApiClient {
         let target_destination: String = match env::var(EXTERNAL) {
             Ok(_) => "https://api.a11ywatch.com",
             Err(_) => "http://127.0.0.1:3280",
-        }.to_string();
+        }
+        .to_string();
 
         let request_destination = format!("{}/api/scan-simple", target_destination);
         let token = file_manager.get_token();
 
         let resp: ApiResult = if !token.is_empty() {
-            post(&request_destination)
-            .set("Authorization", &token)
+            post(&request_destination).set("Authorization", &token)
         } else {
-           post(&request_destination)
-        }.send_json(json!({
-            "websiteUrl": url
-        }))?.into_json()?;
+            post(&request_destination)
+        }
+        .send_json(json!({ "websiteUrl": url }))?
+        .into_json()?;
 
         Ok(resp)
     }
 
     /// Site wide scan [Stream]
-    pub fn crawl_website(url: &str, subdomains: &bool, tld: &bool, file_manager: &TempFs) -> Result<CrawlApiResult, Error> {
+    pub fn crawl_website(
+        url: &str,
+        subdomains: &bool,
+        tld: &bool,
+        file_manager: &TempFs,
+    ) -> Result<CrawlApiResult, Error> {
         let target_destination: String = match env::var(EXTERNAL) {
             Ok(_) => "https://api.a11ywatch.com",
             Err(_) => "http://127.0.0.1:3280",
-        }.to_string();
+        }
+        .to_string();
 
         let request_destination = format!("{}/api/crawl-stream", target_destination);
         let token = file_manager.get_token();
@@ -62,13 +68,16 @@ impl ApiClient {
 
         let start = Instant::now();
         let resp = if !token.is_empty() {
-            agent.post(&request_destination)
-            .set("Transfer-Encoding", "chunked")
-            .set("Authorization", &token)
+            agent
+                .post(&request_destination)
+                .set("Transfer-Encoding", "chunked")
+                .set("Authorization", &token)
         } else {
-            agent.post(&request_destination)
-            .set("Transfer-Encoding", "chunked")
-        }.send_json(json!({
+            agent
+                .post(&request_destination)
+                .set("Transfer-Encoding", "chunked")
+        }
+        .send_json(json!({
             "websiteUrl": url,
             "tld": tld,
             "subdomains": subdomains
@@ -76,7 +85,7 @@ impl ApiClient {
         let mut resp = resp.into_string().unwrap();
         let duration = start.elapsed();
         let len = resp.len();
-        let contains_trailing_comma = &resp[len-2..];
+        let contains_trailing_comma = &resp[len - 2..];
 
         // remove trailing comma from string
         if !contains_trailing_comma.is_empty() {
@@ -94,7 +103,7 @@ impl ApiClient {
             let data = r.data.as_ref().unwrap_or(&default_data).to_owned();
 
             data_container.push(data);
-        };
+        }
 
         let res_len = data_container.len();
         let mut res_end = "s";
@@ -107,7 +116,7 @@ impl ApiClient {
         results.data = Some(data_container);
         results.message = format!("Crawled {} page{} in {:?}", res_len, res_end, duration);
         results.success = true;
-        
+
         Ok(results)
     }
 }
@@ -116,20 +125,21 @@ impl ApiClient {
 mod tests {
     use super::ApiClient;
     use super::TempFs;
-    
+
     #[test]
     fn scan_website() {
         let results = ApiClient::scan_website(&"https://a11ywatch.com", &TempFs::new());
         let status = results.unwrap();
-        
+
         assert_eq!(status.data.unwrap().url, "https://a11ywatch.com");
     }
 
     #[test]
     fn crawl_website() {
-        let results = ApiClient::crawl_website(&"https://a11ywatch.com", &false, &false, &TempFs::new());
+        let results =
+            ApiClient::crawl_website(&"https://a11ywatch.com", &false, &false, &TempFs::new());
         let status = results.unwrap();
-        
+
         assert_eq!(status.data.unwrap().len() > 1, true);
     }
 }

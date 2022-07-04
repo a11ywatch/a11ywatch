@@ -1,23 +1,41 @@
-use std::process::Command;
 use crate::fs::TempFs;
+use std::process::Command;
 
 /// Run docker compose build command with frontend and backend configuration.
 pub(crate) fn build_backend(file_manager: &TempFs) {
     Command::new("docker-compose")
-    .args(["-f", &file_manager.backend_compose, "-f", &file_manager.frontend_compose, "build"])
-    .status()
-    .expect("Failed to execute command");
+        .args([
+            "-f",
+            &file_manager.backend_compose,
+            "-f",
+            &file_manager.frontend_compose,
+            "build",
+        ])
+        .status()
+        .expect("Failed to execute command");
 }
 
 /// Run docker image upgrades across services.
 pub(crate) fn upgrade(file_manager: &TempFs) {
     Command::new("docker-compose")
-        .args(["-f", &file_manager.backend_compose, "-f", &file_manager.frontend_compose, "down"])
+        .args([
+            "-f",
+            &file_manager.backend_compose,
+            "-f",
+            &file_manager.frontend_compose,
+            "down",
+        ])
         .status()
         .expect("Failed to execute command - compose down command");
 
     Command::new("docker-compose")
-        .args(["-f", &file_manager.backend_compose, "-f", &file_manager.frontend_compose, "pull"])
+        .args([
+            "-f",
+            &file_manager.backend_compose,
+            "-f",
+            &file_manager.frontend_compose,
+            "pull",
+        ])
         .status()
         .expect("Failed to execute command - compose build --pull");
 }
@@ -27,15 +45,20 @@ pub(crate) fn start_service(frontend: &bool, file_manager: &TempFs) {
     let mut cmd = Command::new("docker-compose");
 
     if *frontend {
-        cmd
-        .args(["-f", &file_manager.backend_compose, "-f", &file_manager.frontend_compose, "up", "-d"])
+        cmd.args([
+            "-f",
+            &file_manager.backend_compose,
+            "-f",
+            &file_manager.frontend_compose,
+            "up",
+            "-d",
+        ])
         .status()
         .expect("Failed to execute command");
     } else {
-        cmd
-        .args(["-f", &file_manager.backend_compose, "up", "-d"])
-        .status()
-        .expect("Failed to execute command");
+        cmd.args(["-f", &file_manager.backend_compose, "up", "-d"])
+            .status()
+            .expect("Failed to execute command");
     }
 }
 
@@ -44,14 +67,18 @@ pub(crate) fn stop_service(frontend: &bool, file_manager: &TempFs) {
     let mut cmd = Command::new("docker-compose");
 
     if *frontend {
-        cmd
-        .args(["-f", &file_manager.backend_compose, "-f", &file_manager.frontend_compose, "down"])
+        cmd.args([
+            "-f",
+            &file_manager.backend_compose,
+            "-f",
+            &file_manager.frontend_compose,
+            "down",
+        ])
         .status()
         .expect("Failed to execute command");
     } else {
-        cmd
-        .args(["-f", &file_manager.backend_compose, "down"])
-        .status()
-        .expect("Failed to execute command");
+        cmd.args(["-f", &file_manager.backend_compose, "down"])
+            .status()
+            .expect("Failed to execute command");
     }
 }

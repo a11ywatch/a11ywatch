@@ -1,5 +1,5 @@
-use clap::{Parser};
 use crate::options::sub_command::Commands;
+use clap::Parser;
 
 /// program to build, deploy, integrate, and run a11ywatch.
 #[derive(Parser)]

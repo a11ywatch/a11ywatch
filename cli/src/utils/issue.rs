@@ -11,5 +11,5 @@ pub struct Issue {
     pub message: String,
     pub selector: String,
     pub runner: String,
-    pub recurrence: i32
+    pub recurrence: i32,
 }

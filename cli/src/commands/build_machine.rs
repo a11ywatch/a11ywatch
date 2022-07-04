@@ -1,5 +1,5 @@
+use crate::fs::temp::TempFs;
 use crate::launchers::docker;
-use crate::fs::temp::{TempFs};
 use std::process::Command;
 
 #[derive(Debug, Default)]
@@ -21,7 +21,7 @@ impl Build {
             file_manager.create_compose_frontend_file().unwrap();
             docker::build_backend(&file_manager);
         }
-    
+
         &local
     }
 
@@ -39,7 +39,7 @@ impl Build {
             file_manager.create_compose_frontend_file().unwrap();
             docker::upgrade(&file_manager);
         }
-    
+
         &local
     }
 }
