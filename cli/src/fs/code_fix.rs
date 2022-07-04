@@ -25,9 +25,22 @@ pub fn establish_context(context: String, rec: &str) -> String {
     match PROPERTY_MATCHERS {
         [.., (des, value)] if rec.starts_with(&(*des)) => {
             let v = &rec.replace(des, "");
-            let prop_index = context.find(r#"{value}="""#).unwrap_or(0);
-            replace_context = if prop_index != 0 {
-                context.replace(r#"{value}="""#, &format!(r#"{value}="{rec}""#))
+            let val = format!(r#"{value}="#);
+            let value_index = context.find(&val).unwrap_or(0);
+            let mut exact_value: String = String::from("");
+
+            if value_index != 0 {
+                for (i, c) in context[value_index..].chars().enumerate() {
+                    exact_value.push(c);
+                    if i != 0 && c.to_string() == exact_value.get(..0).unwrap_or_default() {
+                        break;
+                    }
+                }
+            }
+
+            replace_context = if !exact_value.is_empty() {
+                let q = exact_value.chars().last().unwrap();
+                context.replace(&format!("{exact_value}"), &format!(r#"{value}={}{v}{}"#, q, q))
             } else {
                 format!(r#"{} {value}="{}""#, context, v)
             };
@@ -35,7 +48,7 @@ pub fn establish_context(context: String, rec: &str) -> String {
         _ => {
             replace_context = String::from("");
         }
-    }
+    };
     
     replace_context
 }
