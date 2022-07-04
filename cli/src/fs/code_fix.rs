@@ -8,15 +8,21 @@ use std::path::Path;
 use std::process::Command;
 
 const RECCOMENDATION: &str = "Recommendation:";
-const MATCH_ALT: &str = "Recommendation: set the alt prop to - ";
+const MATCH_ALT: &str = "Recommendation: change alt to ";
+const MATCH_BACKGROUND: &str = "Recommendation: change background to ";
+const MATCH_TEXT_COLOR: &str = "Recommendation: change text colour to ";
 
-const MATCHERS: [(&'static str, &'static str); 1] = [(MATCH_ALT, "alt")];
+const PROPERTY_MATCHERS: [(&'static str, &'static str); 3] = [
+    (MATCH_BACKGROUND, "background"),
+    (MATCH_TEXT_COLOR, "color"),
+    (MATCH_ALT, "alt")
+];
 
 /// determine actual fix for code. Returns empty string if no matchers found.
 pub fn establish_context(context: String, rec: &str) -> String {
     let replace_context: String;
 
-    match MATCHERS {
+    match PROPERTY_MATCHERS {
         [.., (des, value)] if rec.starts_with(&(*des)) => {
             let v = &rec.replace(des, "");
             let prop_index = context.find(r#"{value}="""#).unwrap_or(0);
@@ -24,10 +30,10 @@ pub fn establish_context(context: String, rec: &str) -> String {
                 context.replace(r#"{value}="""#, &format!(r#"{value}="{rec}""#))
             } else {
                 format!(r#"{} {value}="{}""#, context, v)
-            };    
+            };
         }
         _ => {
-            replace_context = String::from("")
+            replace_context = String::from("");
         }
     }
     
