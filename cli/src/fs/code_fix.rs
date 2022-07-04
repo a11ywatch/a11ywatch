@@ -30,7 +30,7 @@ pub fn determine_react_project() -> bool{
 }
 
 /// determine actual fix for code. Returns empty string if no matchers found.
-pub fn establish_context(context: String, rec: &str) -> String {
+pub fn establish_context(context: String, rec: &str, react_project: bool) -> String {
     let replace_context: String;
 
     match PROPERTY_MATCHERS {
@@ -64,14 +64,23 @@ pub fn establish_context(context: String, rec: &str) -> String {
                 let target_value = if value == "alt" {
                     format!(r#"{value}={q}{v}{q}"#)
                 } else {
-                    format!(r#"{value}:{q}{v}{q};"#)
+                    if react_project {
+                        format!(r#"{value}:{q}{v}{q}"#)
+                    } else {
+                        format!(r#"{value}:{q}{v}{q};"#)
+                    }
                 };
                 context.replace(&format!("{exact_value}"), &target_value)
             } else {
                 let target_value = if value == "alt" {
                     format!(r#"{context} {value}="{v}""#)
                 } else {
-                    format!(r#"{context} style="{value}: {v};""#)
+                    if react_project {
+                        format!(r#"{context} style={{ "{value}": "{v}" }}"#)
+                    } else {
+                        // TODO: check if style in context to append.
+                        format!(r#"{context} style="{value}: {v};""#)
+                    }
                 };
 
                 target_value
@@ -131,7 +140,7 @@ pub fn apply_fix(json_results: &Value) {
                             let context = context.replace("<", "");
                             let context = context.replace(replace_end, "");
                             let replace_context =
-                                establish_context(context.clone(), &rec);
+                                establish_context(context.clone(), &rec, react_project);
 
                             // apply code changes if recommendation exist.
                             if !replace_context.is_empty() {
