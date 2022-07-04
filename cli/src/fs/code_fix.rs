@@ -7,7 +7,7 @@ use std::fs::File;
 use std::io::Read;
 
 /// make sure runtime module exist. License must be compatible.
-pub fn ensure_module_exist(module: &str) {
+pub fn assure_module_exist(module: &str) {
     let bin_name = if module == "ripgrep" {
         "rg"
     } else {
@@ -27,7 +27,7 @@ pub fn ensure_module_exist(module: &str) {
 
 /// apply code fixes for the issues
 pub fn apply_fix(json_results: &Value) {
-    ensure_module_exist("ripgrep");
+    assure_module_exist("ripgrep");
     let data = &*json_results.get("data").unwrap();
 
     if data.is_object() {
