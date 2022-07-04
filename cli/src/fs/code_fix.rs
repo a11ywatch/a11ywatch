@@ -26,7 +26,7 @@ pub fn determine_react_project() -> bool{
         .expect("Failed to execute ripgrep replace");
     let stdout = String::from_utf8(rg_command.stdout).unwrap();
 
-    stdout.is_empty()
+    !stdout.is_empty()
 }
 
 /// determine actual fix for code. Returns empty string if no matchers found.
@@ -94,6 +94,25 @@ pub fn establish_context(context: String, rec: &str, react_project: bool) -> Str
     replace_context
 }
 
+/// convert props to react
+pub fn convert_props_react(ctx: String) -> String {
+    let mut context = ctx.clone();
+    context = context.replace("class=", "className=");
+    context = context.replace("tabindex=", "tabIndex=");
+    context = context.replace("hreflang=", "hrefLang=");
+    context = context.replace("for=", "htmlFor=");
+    context = context.replace("crossorigin=", "crossOrigin=");
+    context = context.replace("allowfullscreen=", "allowFullScreen=");
+    context = context.replace("autocomplete=", "autoComplete=");
+    context = context.replace("autofocus=", "autoFocus=");
+    context = context.replace("frameborder=", "frameBorder=");
+    context = context.replace("maxlength=", "maxLength=");
+    context = context.replace("minlength=", "minLength=");
+    context = context.replace("novalidate=", "noValidate=");
+    context = context.replace("classid=", "classID=");
+    context
+}
+
 /// apply code fixes for the issues
 pub fn apply_fix(json_results: &Value) {
     let data = &*json_results.get("data").unwrap();
@@ -112,7 +131,7 @@ pub fn apply_fix(json_results: &Value) {
                     if message.contains(&RECCOMENDATION) {
                         let context = iss.context.to_string();
                         let rec_index = message.find(&RECCOMENDATION).unwrap_or(0);
-                        // recommendation exist, attempt to map code fix.
+
                         if rec_index != 0 {
                             let rec = &message[rec_index..];
                             let rec: String = rec.to_owned().to_string(); // recommendation
@@ -120,19 +139,7 @@ pub fn apply_fix(json_results: &Value) {
 
                             // TODO: use tocase crate and create list that handles all conversions from [https://reactjs.org/docs/dom-elements.html]
                             if react_project {
-                                context = context.replace("class=", "className=");
-                                context = context.replace("tabindex=", "tabIndex=");
-                                context = context.replace("hreflang=", "hrefLang=");
-                                context = context.replace("for=", "htmlFor=");
-                                context = context.replace("crossorigin=", "crossOrigin=");
-                                context = context.replace("allowfullscreen=", "allowFullScreen=");
-                                context = context.replace("autocomplete=", "autoComplete=");
-                                context = context.replace("autofocus=", "autoFocus=");
-                                context = context.replace("frameborder=", "frameBorder=");
-                                context = context.replace("maxlength=", "maxLength=");
-                                context = context.replace("minlength=", "minLength=");
-                                context = context.replace("novalidate=", "noValidate=");
-                                context = context.replace("classid=", "classID=");
+                                context = convert_props_react(context);
                             }
 
                             let replace_end = if context.ends_with("/>") { "/>" } else { ">" };
@@ -156,12 +163,78 @@ pub fn apply_fix(json_results: &Value) {
                                     let pfx = &stdout[..stdout.find(':').unwrap()];
                                     let path = Path::new(&pfx);
                                     let mut src = File::open(&path).unwrap();
-                                    let mut data = String::new();
-                                    src.read_to_string(&mut data).unwrap();
+                                    let mut ds = String::new();
+                                    src.read_to_string(&mut ds).unwrap();
                                     drop(src);
-                                    let new_data = data.replace(&*context, &*replace_context);
+                                    let new_data = ds.replace(&*context, &*replace_context);
                                     let mut s = File::create(&path).unwrap();
                                     s.write(new_data.as_bytes()).unwrap();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    else if data.is_array() {
+        let react_project = determine_react_project();
+        for d in data.as_array() {
+            for item in d.clone() {
+                let it = item.clone();
+                let issues = it.get("issues").unwrap();
+    
+                if issues.is_array() {
+                    assure_module_exist("ripgrep");
+                    for issue in issues.as_array() {
+                        for item in issue.clone() {
+                            let iss: Issue = serde_json::from_value(item).unwrap();
+                            let message = iss.message.to_string();
+                            
+                            if message.contains(&RECCOMENDATION) {
+                                let context = iss.context.to_string();
+                                let rec_index = message.find(&RECCOMENDATION).unwrap_or(0);
+                                // recommendation exist, attempt to map code fix.
+                                if rec_index != 0 {
+                                    let rec = &message[rec_index..];
+                                    let rec: String = rec.to_owned().to_string(); // recommendation
+                                    let mut context: String = context.clone();
+        
+                                    // TODO: use tocase crate and create list that handles all conversions from [https://reactjs.org/docs/dom-elements.html]
+                                    if react_project {
+                                        context = convert_props_react(context);
+                                    }
+
+                                    let replace_end = if context.ends_with("/>") { "/>" } else { ">" };
+                                    // trim tags from start and end
+                                    let context = context.replace("<", "");
+                                    let context = context.replace(replace_end, "");
+                                    let replace_context =
+                                        establish_context(context.clone(), &rec, react_project);
+        
+                                    // apply code changes if recommendation exist.
+                                    if !replace_context.is_empty() {
+                                        let rg_command = Command::new("rg")
+                                            .args([&context, &"-r".to_string(), &replace_context])
+                                            .output()
+                                            .expect("Failed to execute ripgrep replace");
+        
+                                        let stdout = String::from_utf8(rg_command.stdout).unwrap();
+        
+                                        //  TODO: get rg line number and jump to line.
+                                        if !stdout.is_empty() {
+                                            let pfx = &stdout[..stdout.find(':').unwrap()];
+                                            let path = Path::new(&pfx);
+                                            let mut src = File::open(&path).unwrap();
+                                            let mut ds = String::new();
+                                            src.read_to_string(&mut ds).unwrap();
+                                            drop(src);
+                                            let new_data = ds.replace(&*context, &*replace_context);
+                                            let mut s = File::create(&path).unwrap();
+                                            s.write(new_data.as_bytes()).unwrap();
+                                        }
+                                    }
                                 }
                             }
                         }
