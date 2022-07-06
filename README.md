@@ -14,16 +14,25 @@
 
 ## Getting Started
 
-The web application starts on port 80 when running `docker-compose up` and the API entry port is `3280`.
+The [CLI](./cli/README.md) can be used to test and build your own instance anywhere.<br>
+We have [clients](./clients) in multiple languages and protocols to integrate with your app easier.<br>
+See the [documentation](https://docs.a11ywatch.com) for more information.
+
+The web application starts on port 80 when running `docker-compose up` or [Kubernetes](./kubernetes/) and view the exposed core API at `3280`.
 
 ```sh
 docker-compose up # view http://localhost:3280 or http://localhost:3280/graphql
 WEB_PORT=3000 docker-compose up # start front-end on different port
 ```
 
-The [CLI](./cli/README.md) can be used to test and build your own instance anywhere.<br>
-We have [clients](./clients) in multiple languages and protocols to integrate with your app easier.<br>
-See the [documentation](https://docs.a11ywatch.com) for more information.
+You can also use the experimental [docker image](https://hub.docker.com/r/a11ywatch/a11ywatch) with all of the services combined into one container.
+
+```yml
+version: "3.9"
+services:
+  a11ywatch:
+    image: a11ywatch/a11ywatch
+```
 
 ## Contributing
 
@@ -31,10 +40,6 @@ Read the [contributing guide](/CONTRIBUTING.md) to learn about our development p
 
 Notice that contributions go far beyond pull requests and commits.
 Although we love giving you the opportunity to put your stamp on A11yWatch, we also are thrilled to receive a variety of [other contributions](https://a11ywatch.com/faq).
-
-## Backers
-
-Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/a11ywatch#backer)]
 
 ## Support
 
