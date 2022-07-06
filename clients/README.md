@@ -1,8 +1,10 @@
 # a11ywatch-clients
 
-Clients to use to interact with the API.
-You can also use the [protobuf](./src/schema) files to generate your clients to make gRPC request or run `npm i @a11ywatch/protos`.
-This repo is only used to handle the code to generate the clients.
+This folder is used to handle the code to generate the clients.
+
+Clients generated via [protobuf files](./src/schema) and [OpenAPI](./src/schema/api.json).
+
+You can also get the protobuf files by using `npm i @a11ywatch/protos`.
 
 ## Clients
 
@@ -48,7 +50,7 @@ To get started generating the clients run the commands:
 
 ```sh
 npm install @openapitools/openapi-generator-cli -g
-cargo run # generates the clients
+cargo run # generate all clients OpenAPI clients.
 ```
 
 ## gRPC
@@ -60,4 +62,4 @@ The gRC calls only work on self-hosted or enterprise accounts. None of the ports
 1. ~~Generate OpenAPI clients~~.
 2. ~~Configure auto generated between main clients~~.
 3. ~~Setup CI image to perform generation~~.
-4. Add Release based on tag version.
+4. ~~Add Release based on tag version~~.
