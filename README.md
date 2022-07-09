@@ -7,7 +7,6 @@
 
 [![crates.io](https://img.shields.io/crates/v/a11ywatch_cli?label=latest)](https://docs.rs/crate/a11ywatch_cli/latest)
 ![MIT](https://img.shields.io/crates/l/a11ywatch_cli.svg)
-[![A11yWatchBot](https://github.com/A11yWatch/a11ywatch/actions/workflows/build-test.yml/badge.svg)](https://github.com/A11yWatch/a11ywatch/actions/workflows/build-test.yml)
 
   </p>
 </div>
@@ -25,7 +24,7 @@ docker-compose up # view http://localhost:3280 or http://localhost:3280/graphql
 WEB_PORT=3000 docker-compose up # start front-end on different port
 ```
 
-You can also use the experimental [docker image](https://hub.docker.com/r/a11ywatch/a11ywatch) with all of the services combined into one container.
+You can also use the [docker image](https://hub.docker.com/r/a11ywatch/a11ywatch) with all of the services in one container.
 
 ```yml
 version: "3.9"
@@ -35,6 +34,8 @@ services:
     ports:
       - 3280:3280
 ```
+
+If you want to integrate your system with A11yWatch the simplest way is to use the nodejs [sidecar](https://github.com/A11yWatch/sidecar).
 
 ## Contributing
 
