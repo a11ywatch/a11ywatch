@@ -151,6 +151,7 @@ pub fn generate_compose_backend_sa() -> &'static str {
 version: '3.9'
 services:
   a11ywatch:
+    container_name: a11ywatch
     image: a11ywatch/a11ywatch
     ports:
       - 3280:3280
