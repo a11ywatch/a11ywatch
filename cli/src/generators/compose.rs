@@ -144,6 +144,25 @@ networks:
   "#
 }
 
+
+/// generate standalone backend
+pub fn generate_compose_backend_sa() -> &'static str {
+  &"
+version: '3.9'
+services:
+  a11ywatch:
+    image: a11ywatch/a11ywatch
+    ports:
+      - 3280:3280
+    networks:
+      - front-net
+  
+networks:
+  front-net:
+
+  "
+}
+
 /// generate front end client
 pub fn generate_compose_frontend() -> &'static str {
     &"
@@ -161,8 +180,6 @@ services:
       - API=${API:-http://localhost:3280/graphql}
       - WEB_SOCKET_URL=${WEB_SOCKET_URL:-ws://localhost:3280/graphql}
       - DOCKER_CONTAINER=${DOCKER_CONTAINER:-true}
-    networks:
-      - front-net
 
 networks:
   front-net:

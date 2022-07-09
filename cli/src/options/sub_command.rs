@@ -10,6 +10,12 @@ pub enum Commands {
         /// create target local machine non docker if true
         #[clap(short, long)]
         local: bool,
+        /// Ugrade docker images for container on start.
+        #[clap(short, long)]
+        upgrade: bool,
+        /// standalone container [defaults to true]
+        #[clap(short, long)]
+        standalone: bool,
     },
     /// Start the application on the local machine [defaults to docker runtime]
     START {
@@ -22,6 +28,9 @@ pub enum Commands {
         /// Ugrade docker images for container on start.
         #[clap(short, long)]
         upgrade: bool,
+        /// standalone container [defaults to true]
+        #[clap(short, long)]
+        standalone: bool
     },
     /// Stop the project on the local machine [defaults to docker runtime]
     STOP {

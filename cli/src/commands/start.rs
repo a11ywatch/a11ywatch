@@ -10,7 +10,7 @@ pub struct Start {}
 
 impl Start {
     /// start the a11ywatch application through docker or locally.
-    pub fn process(local: &bool) -> bool {
+    pub fn process(local: &bool, standalone: &bool) -> bool {
         let mut file_manager = TempFs::new();
 
         let frontend: bool = match env::var(INCLUDE_FRONTEND) {
@@ -38,8 +38,7 @@ impl Start {
             if frontend {
                 file_manager.create_compose_frontend_file().unwrap();
             }
-            // TODO: OPTIONAL BE CLIENT
-            file_manager.create_compose_backend_file().unwrap();
+            file_manager.create_compose_backend_file(standalone).unwrap();
             docker::start_service(&frontend, &file_manager);
         }
 

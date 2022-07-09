@@ -90,20 +90,24 @@ fn main() {
     }
 
     match &cli.command {
-        Some(Commands::BUILD { frontend, local }) => {
+        Some(Commands::BUILD { frontend, local, standalone, upgrade }) => {
             env::set_var(INCLUDE_FRONTEND, frontend.to_string());
-            Build::process(&local);
+            if *upgrade {
+                Build::upgrade(&local, &standalone);
+            }
+            Build::process(&local, &standalone);
         }
         Some(Commands::START {
             frontend,
             local,
             upgrade,
+            standalone
         }) => {
             env::set_var(INCLUDE_FRONTEND, frontend.to_string());
             if *upgrade {
-                Build::upgrade(&local);
+                Build::upgrade(&local, &standalone);
             }
-            Start::process(&local);
+            Start::process(&local, &standalone);
         }
         Some(Commands::STOP { frontend, local }) => {
             env::set_var(INCLUDE_FRONTEND, frontend.to_string());

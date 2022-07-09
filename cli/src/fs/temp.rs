@@ -1,4 +1,4 @@
-use crate::generators::compose::{generate_compose_backend, generate_compose_frontend};
+use crate::generators::compose::{generate_compose_backend, generate_compose_backend_sa, generate_compose_frontend};
 use serde_json::{from_reader, json, Value};
 use std::fs::OpenOptions;
 use std::fs::{create_dir, read_to_string, remove_dir_all, remove_file, File};
@@ -44,7 +44,7 @@ pub(crate) trait Fs {
     fn set_cv_url(&self) {}
     fn set_cv_token(&self) {}
     fn ensure_temp_dir(&self);
-    fn create_compose_backend_file(&self);
+    fn create_compose_backend_file(&self, standalone: &bool);
     fn create_compose_frontend_file(&self);
     fn sync();
 }
@@ -77,10 +77,16 @@ impl TempFs {
     }
 
     /// create compose backend file is does not exist
-    pub fn create_compose_backend_file(&mut self) -> std::io::Result<()> {
+    pub fn create_compose_backend_file(&mut self, standalone: &bool) -> std::io::Result<()> {
+        let sa = standalone == &true;
         if !Path::new(&self.backend_compose).exists() {
             let mut file = File::create(&self.backend_compose)?;
-            file.write_all(&generate_compose_backend().as_bytes())?;
+            let gfile = if sa {
+                generate_compose_backend_sa()
+            } else {
+                generate_compose_backend()
+            };
+            file.write_all(&gfile.as_bytes())?;
         }
         Ok(())
     }
@@ -343,7 +349,7 @@ impl Fs for TempFs {
         }
     }
     fn ensure_temp_dir(&self) {}
-    fn create_compose_backend_file(&self) {}
+    fn create_compose_backend_file(&self, _standalone: &bool) {}
     fn create_compose_frontend_file(&self) {}
     fn set_token(&self) {}
     fn set_cv_url(&self) {}
