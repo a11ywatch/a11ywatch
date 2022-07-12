@@ -8,7 +8,7 @@ version = "0.6.6"
 dependencies = [
  "clap",
  "dirs",
- "lazy_static",
+ "htmlprops-to-react",
  "serde",
  "serde_json",
  "ureq",
@@ -225,6 +225,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "62b467343b94ba476dcb2500d242dadbb39557df889310ac77c5d99100aaac33"
 dependencies = [
  "libc",
+]
+
+[[package]]
+name = "htmlprops-to-react"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9abcd96f4de322c18e1bc6359bf43edd71e3f250a3ec1cf2067539acca3f6bcc"
+dependencies = [
+ "lazy_static",
 ]
 
 [[package]]
