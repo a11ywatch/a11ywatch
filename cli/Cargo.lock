@@ -4,10 +4,11 @@ version = 3
 
 [[package]]
 name = "a11ywatch_cli"
-version = "0.4.3"
+version = "0.6.6"
 dependencies = [
  "clap",
  "dirs",
+ "lazy_static",
  "serde",
  "serde_json",
  "ureq",
