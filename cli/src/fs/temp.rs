@@ -288,10 +288,10 @@ impl TempFs {
     /// make sure the tmp directory is created for the app
     fn ensure_temp_dir(tmp_dir: &str, app_dir: &str) -> std::io::Result<()> {
         if !Path::new(tmp_dir).exists() {
-            create_dir(tmp_dir)?;
+            create_dir(tmp_dir).unwrap_or(println!("tmp a11ywatch directory create failed."));
         }
         if !Path::new(&app_dir).exists() {
-            create_dir(app_dir)?;
+            create_dir(app_dir).unwrap_or(println!("app directory create failed."));
         }
         Ok(())
     }
