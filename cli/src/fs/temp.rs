@@ -308,8 +308,10 @@ impl TempFs {
                 .expect("file should have version key");
 
             if version != current_version {
-                // reset app directory contents
-                remove_dir_all(&app_dir).unwrap();
+                // reset app directory contents [TODO: only clear certain contents instead entire dir]
+                if Path::new(&app_dir).exists() {
+                    remove_dir_all(&app_dir).unwrap();
+                }
                 create_dir(&app_dir).unwrap();
 
                 let json = json!({ "version": version });

@@ -6,6 +6,7 @@ use std::io::Read;
 use std::io::Write;
 use std::path::Path;
 use std::process::Command;
+use convert_case::{Case, Casing};
 
 const RECCOMENDATION: &str = "Recommendation:";
 const MATCH_ALT: &str = "Recommendation: change alt to ";
@@ -95,21 +96,304 @@ pub fn establish_context(context: String, rec: &str, react_project: bool) -> Str
 }
 
 /// convert props to react
-pub fn convert_props_react(ctx: String) -> String {
+pub fn convert_props_react(ctx: String) -> String {    
     let mut context = ctx.clone();
-    context = context.replace("class=", "className=");
-    context = context.replace("tabindex=", "tabIndex=");
-    context = context.replace("hreflang=", "hrefLang=");
-    context = context.replace("for=", "htmlFor=");
-    context = context.replace("crossorigin=", "crossOrigin=");
-    context = context.replace("allowfullscreen=", "allowFullScreen=");
-    context = context.replace("autocomplete=", "autoComplete=");
-    context = context.replace("autofocus=", "autoFocus=");
-    context = context.replace("frameborder=", "frameBorder=");
-    context = context.replace("maxlength=", "maxLength=");
-    context = context.replace("minlength=", "minLength=");
-    context = context.replace("novalidate=", "noValidate=");
-    context = context.replace("classid=", "classID=");
+
+    lazy_static! {
+        /// html static list of properties that convert to camel case
+        static ref HTML_PROPS: Vec<&'static str> = [
+            // special attributes
+            "for",
+            "class",
+            // end of special
+            "acceptcharset",
+            "accesskey",
+            "allowfullscreen",
+            "allowtransparency",
+            "autocomplete",
+            "autofocus",
+            "autoplay",
+            "cellpadding",
+            "cellspacing",
+            "charset",
+            "classid",
+            "classname",
+            "colspan",
+            "contenteditable",
+            "contextmenu",
+            "crossorigin",
+            "datetime",
+            "enctype",
+            "formaction",
+            "formenctype",
+            "formmethod",
+            "formnovalidate",
+            "formtarget",
+            "frameborder",
+            "hreflang",
+            "htmlfor",
+            "httpequiv",
+            "inputmode",
+            "keyparams",
+            "keytype",
+            "manifest",
+            "marginheight",
+            "marginwidth",
+            "maxlength",
+            "mediagroup",
+            "minlength",
+            "novalidate",
+            "radiogroup",
+            "readonly",
+            "rowspan",
+            "spellcheck",
+            "srcdoc",
+            "srclang",
+            "srcset",
+            "tabindex",
+            "usemap",
+            "accentheight",
+            "alignmentbaseline",
+            "allowreorder",
+            "arabicform",
+            "attributename",
+            "attributetype",
+            "autoreverse",
+            "azimuth",
+            "basefrequency",
+            "baseprofile",
+            "baselineshift",
+            "calcmode",
+            "capheight",
+            "clippath",
+            "clippathunits",
+            "cliprule",
+            "colorinterpolation",
+            "colorinterpolationfilters",
+            "colorprofile",
+            "colorrendering",
+            "contentscripttype",
+            "contentstyletype",
+            "diffuseconstant",
+            "dominantbaseline",
+            "edgemode",
+            "enablebackground",
+            "externalresourcesrequired",
+            "fillopacity",
+            "fillrule",
+            "filterres",
+            "filterunits",
+            "floodcolor",
+            "floodopacity",
+            "focusable",
+            "fontfamily",
+            "fontsize",
+            "fontsizeadjust",
+            "fontstretch",
+            "fontstyle",
+            "fontvariant",
+            "fontweight",
+            "glyphname",
+            "glyphorientationhorizontal",
+            "glyphorientationvertical",
+            "glyphref",
+            "gradienttransform",
+            "gradientunits",
+            "horizadvx",
+            "horizoriginx",
+            "ideographic",
+            "imagerendering",
+            "kernelmatrix",
+            "kernelunitlength",
+            "keypoints",
+            "keysplines",
+            "keytimes",
+            "lengthadjust",
+            "letterspacing",
+            "lightingcolor",
+            "limitingconeangle",
+            "markerend",
+            "markerheight",
+            "markermid",
+            "markerstart",
+            "markerunits",
+            "markerwidth",
+            "maskcontentunits",
+            "maskunits",
+            "mathematical",
+            "numoctaves",
+            "overlineposition",
+            "overlinethickness",
+            "paintorder",
+            "panose1",
+            "pathlength",
+            "patterncontentunits",
+            "patterntransform",
+            "patternunits",
+            "pointerevents",
+            "pointsatx",
+            "pointsaty",
+            "pointsatz",
+            "preservealpha",
+            "preserveaspectratio",
+            "primitiveunits",
+            "refx",
+            "refy",
+            "renderingintent",
+            "repeatcount",
+            "repeatdur",
+            "requiredextensions",
+            "requiredfeatures",
+            "shaperendering",
+            "specularconstant",
+            "specularexponent",
+            "spreadmethod",
+            "startoffset",
+            "stddeviation",
+            "stitchtiles",
+            "stopcolor",
+            "stopopacity",
+            "strikethroughposition",
+            "strikethroughthickness",
+            "strokedasharray",
+            "strokedashoffset",
+            "strokelinecap",
+            "strokelinejoin",
+            "strokemiterlimit",
+            "strokeopacity",
+            "strokewidth",
+            "surfacescale",
+            "systemlanguage",
+            "tablevalues",
+            "targetx",
+            "targety",
+            "textanchor",
+            "textdecoration",
+            "textlength",
+            "textrendering",
+            "underlineposition",
+            "underlinethickness",
+            "unicodebidi",
+            "unicoderange",
+            "unitsperem",
+            "valphabetic",
+            "vhanging",
+            "videographic",
+            "vmathematical",
+            "vectoreffect",
+            "vertadvy",
+            "vertoriginx",
+            "vertoriginy",
+            "viewbox",
+            "viewtarget",
+            "wordspacing",
+            "writingmode",
+            "xchannelselector",
+            "xheight",
+            "xlinkactuate",
+            "xlinkarcrole",
+            "xlinkhref",
+            "xlinkrole",
+            "xlinkshow",
+            "xlinktitle",
+            "xlinktype",
+            "xmlnsxlink",
+            "xmlbase",
+            "xmllang",
+            "xmlspace",
+            "ychannelselector",
+            "zoomandpan",
+            "onabort",
+            "onanimationend",
+            "onanimationiteration",
+            "onanimationstart",
+            "onblur",
+            "oncanplay",
+            "oncanplaythrough",
+            "onchange",
+            "onclick",
+            "oncompositionend",
+            "oncompositionstart",
+            "oncompositionupdate",
+            "oncontextmenu",
+            "oncopy",
+            "oncut",
+            "ondoubleclick",
+            "ondrag",
+            "ondragend",
+            "ondragenter",
+            "ondragexit",
+            "ondragleave",
+            "ondragover",
+            "ondragstart",
+            "ondrop",
+            "ondurationchange",
+            "onemptied",
+            "onencrypted",
+            "onended",
+            "onerror",
+            "onfocus",
+            "oninput",
+            "onkeydown",
+            "onkeypress",
+            "onkeyup",
+            "onload",
+            "onloadeddata",
+            "onloadedmetadata",
+            "onloadstart",
+            "onmousedown",
+            "onmouseenter",
+            "onmouseleave",
+            "onmousemove",
+            "onmouseout",
+            "onmouseover",
+            "onmouseup",
+            "onpaste",
+            "onpause",
+            "onplay",
+            "onplaying",
+            "onprogress",
+            "onratechange",
+            "onscroll",
+            "onseeked",
+            "onseeking",
+            "onselect",
+            "onstalled",
+            "onsubmit",
+            "onsuspend",
+            "ontimeupdate",
+            "ontouchcancel",
+            "ontouchend",
+            "ontouchmove",
+            "ontouchstart",
+            "ontransitionend",
+            "onvolumechange",
+            "onwaiting",
+            "onwheel"
+        ].to_vec();
+    };
+
+    // TODO: use duel hashset instead of iteration via list.
+    if HTML_PROPS.contains(&&context[..]) { 
+        for item in HTML_PROPS.iter() {
+            let v = format!("{}=", item);
+            if context.contains(&v) {
+                // special html attr
+                let vv: String = if item == &"class" {
+                    "className".to_string()
+                } else if item == &"for" {
+                    "htmlFor".to_string()
+                } else {
+                    item.clone().to_case(Case::Camel)
+                };
+
+                let rp = &format!("{}=", vv)[..];
+
+                context = context.replace(&v, &rp);
+            };
+        };
+    }
+
     context
 }
 
@@ -137,7 +421,6 @@ pub fn apply_fix(json_results: &Value) {
                             let rec: String = rec.to_owned().to_string(); // recommendation
                             let mut context: String = context.clone();
 
-                            // TODO: use tocase crate and create list that handles all conversions from [https://reactjs.org/docs/dom-elements.html]
                             if react_project {
                                 context = convert_props_react(context);
                             }
@@ -201,7 +484,6 @@ pub fn apply_fix(json_results: &Value) {
                                     let rec: String = rec.to_owned().to_string(); // recommendation
                                     let mut context: String = context.clone();
         
-                                    // TODO: use tocase crate and create list that handles all conversions from [https://reactjs.org/docs/dom-elements.html]
                                     if react_project {
                                         context = convert_props_react(context);
                                     }
