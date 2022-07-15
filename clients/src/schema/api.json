@@ -3,7 +3,7 @@
   "info": {
     "title": "A11ywatch Client",
     "description": "The web accessibility tool built for scale.  For this sample, you can use the api key \"special-key\" to test the authorization filters",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "termsOfService": "https://a11ywatch.com/terms-of-service",
     "contact": {
       "name": "API Support",
@@ -186,6 +186,15 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "domain",
+            "in": "query",
+            "description": "Domain of website that needs to be fetched",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -228,6 +237,15 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "domain",
+            "in": "query",
+            "description": "Domain of website that needs to be fetched",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -267,6 +285,66 @@
             "description": "The page offset for the next set",
             "required": false,
             "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "domain",
+            "in": "query",
+            "description": "Domain of website that needs to be fetched",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Analytics"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Analytics"
+          }
+        }
+      }
+    },
+    "/list/pagespeed": {
+      "get": {
+        "tags": ["collection"],
+        "summary": "Get the pagespeed for a website",
+        "description": "",
+        "operationId": "getPageSpeed",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "The page offset for the next set",
+            "required": false,
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "domain",
+            "in": "query",
+            "description": "Domain of website that needs to be fetched",
+            "required": false,
             "schema": {
               "type": "string"
             }
@@ -494,6 +572,15 @@
             "description": "The page url or domain for the report",
             "required": false,
             "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "domain",
+            "in": "query",
+            "description": "Domain of website that needs to be fetched",
+            "required": false,
             "schema": {
               "type": "string"
             }
