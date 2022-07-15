@@ -1,150 +1,109 @@
-version: "3.9"
+version: "3"
 services:
   web:
     container_name: web
-    build:
-      context: ../a11ywatch-web
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ../a11ywatch-web/src:/app/src
-      - ../a11ywatch-web/next.config.js:/app/next.config.js
-      - ../a11ywatch-web/tailwind.config.js:/app/tailwind.config.js
-      - ../a11ywatch-web/public:/app/public
+    image: a11ywatch/web
     ports:
-      - "3000:3000"
+      - "${WEB_PORT:-80}:3000"
+    networks:
+      - front-net
     environment:
+      - PORT=3000
       - API=${API:-http://localhost:3280/graphql}
       - WEB_SOCKET_URL=${WEB_SOCKET_URL:-ws://localhost:3280/graphql}
-      - NODE_ENV=${NODE_ENV:-development}
-      - STRIPE_KEY=${STRIPE_KEY_WEB}
-      - INTERCOM_APPID=${INTERCOM_APPID}
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
       - GITHUB_TOKEN=${GITHUB_TOKEN}
       - CRISP_WEBSITE_ID=${CRISP_WEBSITE_ID}
+      - STRIPE_KEY=${STRIPE_KEY_WEB}
       - DOCKER_CONTAINER=${DOCKER_CONTAINER:-true}
-    networks:
-      - front-net
-
   api:
     container_name: api
-    build:
-      context: ../a11ywatch-core
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ../a11ywatch-core/src:/usr/src/app/src
+    image: a11ywatch/a11ywatch-core
+    networks:
+      - back-net
     ports:
       - 3280:3280
       - 50051
     depends_on:
       - mongodb
     environment:
-      - DB_URL=${DB_URL:-mongodb://mongodb:27017/?compressors=zlib&gssapiServiceName=mongodb}
-      - DB_NAME=${DB_NAME:-a11ywatch}
+      - ADMIN_ORIGIN=${ADMIN_ORIGIN}
       - APOLLO_GRAPH_VARIANT=${APOLLO_GRAPH_VARIANT:-current}
       - APOLLO_SCHEMA_REPORTING=${APOLLO_SCHEMA_REPORTING:-false}
       - CLIENT_URL=${CLIENT_URL:-http://localhost:3000}
-      - GRAPHQL_PORT=${GRAPHQL_PORT:-3280}
+      - DB_URL=${DB_URL:-mongodb://mongodb:27017/?compressors=zlib&gssapiServiceName=mongodb}
+      - DB_NAME=${DB_NAME:-a11ywatch}
       - EMAIL_SERVICE_URL=${EMAIL_SERVICE_URL}
       - EMAIL_CLIENT_ID=${EMAIL_CLIENT_ID}
       - EMAIL_CLIENT_KEY=${EMAIL_CLIENT_KEY}
-      - EMAIL_SERVICE_PASSWORD=${EMAIL_SERVICE_PASSWORD}
-      - STRIPE_KEY=${STRIPE_KEY}
-      - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://localhost:8090/api}
+      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
+      - GRAPHQL_PORT=${GRAPHQL_PORT:-3280}
       - ROOT_URL=${ROOT_URL:-http://localhost:3280}
+      - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://localhost:8090/api}
+      - STRIPE_KEY=${STRIPE_KEY}
       - STRIPE_BASIC_PLAN=${STRIPE_BASIC_PLAN}
       - STRIPE_PREMIUM_PLAN=${STRIPE_PREMIUM_PLAN}
       - PRIVATE_KEY=${PRIVATE_KEY}
       - PUBLIC_KEY=${PUBLIC_KEY}
-      - ADMIN_ORIGIN=${ADMIN_ORIGIN}
-      - SUPER_MODE=${SUPER_MODE:-true}
       - REDIS_CLIENT=${REDIS_CLIENT:-redis://redis:6379}
-      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
-      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
       - REDIS_HOST=redis
-    networks:
-      - back-net
-      - front-net
+      - SUPER_MODE=${SUPER_MODE:-true}
 
   pagemind:
     container_name: pagemind
-    build:
-      context: ../pagemind
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ../pagemind/src:/usr/src/app/src
+    image: a11ywatch/pagemind
+    networks:
+      - back-net
     ports:
       - 50052
     environment:
-      - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://cdn-server:8090/api}
+      - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://127.0.0.1:8090/api}
       - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
-      - ASSETS_CDN=${ASSETS_CDN:-http://localhost:8090}
       - PAGESPEED_API_KEY=${PAGESPEED_API_KEY}
-    networks:
-      - back-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   mav:
     container_name: mav
-    build:
-      context: ../mav
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ../mav/src:/usr/src/app/src
+    image: a11ywatch/mav
+    networks:
+      - back-net
     ports:
       - 50053
     environment:
       - COMPUTER_VISION_ENDPOINT=${COMPUTER_VISION_ENDPOINT}
       - COMPUTER_VISION_SUBSCRIPTION_KEY=${COMPUTER_VISION_SUBSCRIPTION_KEY}
-    networks:
-      - back-net
 
   cdn-server:
     container_name: cdn-server
-    build:
-      context: ../elastic-cdn
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ../elastic-cdn/src:/usr/src/app/src
-    ports:
-      - 50054
+    image: a11ywatch/cdn-server
     networks:
       - back-net
+      - front-net
+    ports:
+      - 50054
 
   crawler:
     container_name: crawler
-    build:
-      context: ../crawler
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ../crawler/src:/usr/src/app/src
-    ports:
-      - 50055
+    image: "a11ywatch/crawler:${CRAWLER_IMAGE:-latest}"
     networks:
       - back-net
+    ports:
+      - 50055
 
   mongodb:
     container_name: mongodb
+    networks:
+      - back-net
     image: mongo
     ports:
-      - "27017:27017"
+      - 27017:27017
     volumes:
       - mongodb:/data/db
     environment:
       - MONGO_INITDB_DATABASE=${DB_NAME:-a11ywatch}
-    networks:
-      - back-net
-
-  mongoclient:
-    container_name: mongoclient
-    image: mongo-express
-    ports:
-      - "3100:8081"
-    environment:
-      - ME_CONFIG_MONGODB_URL=${HOST:-mongodb://mongodb:27017/?compressors=zlib&gssapiServiceName=mongodb}
-    depends_on:
-      - mongodb
-    networks:
-      - back-net
 
   redis:
     container_name: redis
@@ -153,13 +112,13 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
       - back-net
+      - front-net
     ports:
       - 6379
 
   chrome:
     container_name: chrome
-    build:
-      dockerfile: ./docker-builds/chrome/Dockerfile
+    image: a11ywatch/chrome
     command:
       [
         chromium-browser,
@@ -174,7 +133,6 @@ services:
         "--max-wait-for-load=2500",
         "--allow-running-insecure-content",
         "--autoplay-policy=user-gesture-required",
-        "--force-fieldtrials=*BackgroundTracing/default/",
         "--disable-default-apps",
         "--disable-storage-reset",
         "--disable-dev-shm-usage",
@@ -192,25 +150,22 @@ services:
         "--disable-renderer-backgrounding",
         "--disable-client-side-phishing-detection",
         "--disable-setuid-sandbox",
-        "--disable-hang-monitor",
         "--ignore-certificate-errors",
-        "--disable-features=ScriptStreaming,TranslateUI,Translate,BlinkGenPropertyTrees",
+        "--disable-hang-monitor",
+        "--disable-features=ScriptStreaming,TranslateUI,BlinkGenPropertyTrees",
         "--disable-backgrounding-occluded-windows",
         "--no-default-browser-check",
         "--metrics-recording-only",
         "--disable-component-extensions-with-background-pages",
-        "--disable-gpu",
-        "--disable-ipc-flooding-protection",
-        "--enable-chrome-tracing-computation-false",
       ]
     ports:
       - "9222:9222"
     networks:
       - back-net
 
+networks:
+  back-net:
+  front-net:
+
 volumes:
   mongodb:
-
-networks:
-  front-net:
-  back-net:

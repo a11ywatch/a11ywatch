@@ -15,16 +15,16 @@
 
 The [CLI](./cli/README.md) can be used to test and build your own instance anywhere.<br>
 We have [clients](./clients) in multiple languages and protocols to integrate with your app easier.<br>
-See the [documentation](https://docs.a11ywatch.com) for more information.
+See the [documentation](https://docs.a11ywatch.com) for more information on getting started with development and etc.
 
 The web application starts on port 80 when running `docker-compose up` or [Kubernetes](./kubernetes/) and view the exposed core API at `3280`.
 
 ```sh
-docker-compose up # view http://localhost:3280 or http://localhost:3280/graphql
-WEB_PORT=3000 docker-compose up # start front-end on different port
+docker-compose --file ./docker/docker-compose.yml up # view http://localhost:3280 or http://localhost:3280/graphql
+WEB_PORT=3000 docker-compose --file ./docker/docker-compose.yml up # start front-end on different port
 ```
 
-You can also use the [docker image](https://hub.docker.com/r/a11ywatch/a11ywatch) with all of the services in one container.
+You can also use the [docker image](https://hub.docker.com/r/a11ywatch/a11ywatch) with all of the services in one container except the web application.
 
 ```yml
 version: "3.9"
@@ -39,7 +39,7 @@ If you want to integrate your system with A11yWatch the simplest way is to use t
 
 ## Contributing
 
-Read the [contributing guide](/CONTRIBUTING.md) to learn about our development process, how to propose bug fixes and improvements, how to build and test your changes to A11yWatch.
+Read the [contributing guide](./CONTRIBUTING.md) to learn about our development process, how to propose bug fixes and improvements, how to build and test your changes to A11yWatch.
 
 Notice that contributions go far beyond pull requests and commits.
 Although we love giving you the opportunity to put your stamp on A11yWatch, we also are thrilled to receive a variety of [other contributions](https://a11ywatch.com/faq).
