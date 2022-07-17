@@ -8,9 +8,6 @@ service Pagemind {
    rpc SetScript (ScriptParams) returns (Script) {} // update or create script with accessibility fixes.
 }
 
-// send nothing ( used for background task ).
-message Empty {}
-
 // crawl page headers to set per request.
 message Headers {
    string key = 1; // key of the header.
@@ -66,7 +63,7 @@ message IssuesInfo {
 
 // how fast the page loaded.
 message PageLoadTime {
-   int64 duration = 1; // duration in ms.
+   int32 duration = 1; // duration in ms.
    string durationFormated = 2; // durations formatted to a readable message.
    string color = 3; // color indicator for the message.
 }

@@ -3,7 +3,7 @@
   "info": {
     "title": "A11ywatch Client",
     "description": "The web accessibility tool built for scale.  For this sample, you can use the api key \"special-key\" to test the authorization filters",
-    "version": "0.3.0",
+    "version": "0.4.1",
     "termsOfService": "https://a11ywatch.com/terms-of-service",
     "contact": {
       "name": "API Support",
@@ -29,6 +29,7 @@
     "/website": {
       "get": {
         "tags": ["websites"],
+        "title": "Get Website",
         "summary": "Find website by Domain",
         "description": "Returns a website when DOMAIN == website.domain.  Empty strings will simulate API error conditions",
         "operationId": "getWebsiteByDomain",
@@ -134,6 +135,7 @@
     "/list/website": {
       "get": {
         "tags": ["collection"],
+        "title": "Get Websites",
         "summary": "Returns websites for the user in alphabetical order",
         "description": "Returns a map of websites",
         "operationId": "getWebsites",
@@ -224,6 +226,7 @@
     "/list/pages": {
       "get": {
         "tags": ["collection"],
+        "title": "Get Pages",
         "summary": "List the pages in order for a website",
         "description": "",
         "operationId": "getPages",
@@ -275,6 +278,7 @@
     "/list/analytics": {
       "get": {
         "tags": ["collection"],
+        "title": "Get Analytics",
         "summary": "Get the analytics for a website",
         "description": "",
         "operationId": "getAnalytics",
@@ -326,6 +330,7 @@
     "/list/pagespeed": {
       "get": {
         "tags": ["collection"],
+        "title": "Get PageSpeed",
         "summary": "Get the pagespeed for a website",
         "description": "",
         "operationId": "getPageSpeed",
@@ -377,6 +382,7 @@
     "/user": {
       "get": {
         "tags": ["user"],
+        "title": "Get User",
         "summary": "Get user",
         "description": "Retrieve the current user.",
         "operationId": "getUsers",
@@ -1000,7 +1006,7 @@
       "PageLoadTime": {
         "properties": {
           "duration": {
-            "type": "string"
+            "type": "int32"
           },
           "durationFormated": {
             "type": "string"

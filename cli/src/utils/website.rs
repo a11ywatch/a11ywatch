@@ -8,7 +8,7 @@ pub struct LightHouse {
 
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct PageLoadTime {
-    pub duration: String,
+    pub duration: i32,
     #[serde(rename = "durationFormated")]
     pub duration_formated: String,
     pub color: String,

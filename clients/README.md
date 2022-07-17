@@ -2,7 +2,7 @@
 
 This folder is used to handle the code to generate the clients.
 
-Clients generated via [protobuf files](./src/schema) and [OpenAPI](./src/schema/api.json).
+Clients generated via [protobuf files](./src/proto) and [OpenAPI](./src/schema/api.json).
 
 You can also get the protobuf files by using `npm i @a11ywatch/protos`.
 
