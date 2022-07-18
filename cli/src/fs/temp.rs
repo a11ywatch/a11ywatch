@@ -79,15 +79,21 @@ impl TempFs {
     /// create compose backend file is does not exist
     pub fn create_compose_backend_file(&mut self, standalone: &bool) -> std::io::Result<()> {
         let sa = standalone == &true;
-        if !Path::new(&self.backend_compose).exists() {
-            let mut file = File::create(&self.backend_compose)?;
-            let gfile = if sa {
-                generate_compose_backend_sa()
-            } else {
-                generate_compose_backend()
-            };
-            file.write_all(&gfile.as_bytes())?;
-        }
+
+        let mut file = OpenOptions::new()
+            .write(true)
+            .create(true)
+            .truncate(true)
+            .open(&self.backend_compose)
+            .unwrap();
+
+        let gfile = if sa {
+            generate_compose_backend_sa()
+        } else {
+            generate_compose_backend()
+        };
+        file.write_all(&gfile.as_bytes())?;
+
         Ok(())
     }
 

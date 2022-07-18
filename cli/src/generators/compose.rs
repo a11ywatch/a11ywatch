@@ -147,21 +147,21 @@ networks:
 
 /// generate standalone backend
 pub fn generate_compose_backend_sa() -> &'static str {
-  &"
+  &r#"
 version: '3.9'
 services:
   a11ywatch:
     container_name: a11ywatch
     image: a11ywatch/a11ywatch
     ports:
-      - 3280:3280
+      - "3280:3280"
     networks:
       - front-net
   
 networks:
   front-net:
 
-  "
+  "#
 }
 
 /// generate front end client
