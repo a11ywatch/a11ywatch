@@ -26,6 +26,9 @@ jobs:
       - name: Install the CLI
         run: |
           cargo install  --path ./cli --force
+      - name: Upgrade Docker Images
+        run: a11ywatch build --upgrade
+        shell: bash
       - name: Run Server
         run: a11ywatch start
         shell: bash
@@ -74,6 +77,9 @@ jobs:
       - name: Install the CLI
         run: |
           cargo install  --path ./cli --force
+      - name: Upgrade Docker Images
+        run: a11ywatch build -s --upgrade
+        shell: bash
       - name: Run Server
         run: a11ywatch start --standalone
         shell: bash
