@@ -19,14 +19,16 @@ pub struct Website {
     pub url: String,
     pub domain: String,
     #[serde(rename = "cdnConnected")]
-    pub cdn_connected: bool,
+    pub cdn_connected: Option<bool>,
     #[serde(rename = "issuesInfo")]
-    pub issues_info: IssueInfo,
+    pub issues_info: Option<IssueInfo>,
     pub issues: Option<Vec<Issue>>,
-    pub online: bool,
+    pub online: Option<bool>,
     #[serde(rename = "lastScanDate")]
-    pub last_scan_date: String,
+    pub last_scan_date: Option<String>,
     pub insight: Option<LightHouse>,
     #[serde(rename = "pageLoadTime")]
-    pub page_load_time: PageLoadTime,
+    pub page_load_time: Option<PageLoadTime>,
+    /// page shutdown and did not complete crawl
+    pub shutdown: Option<bool>
 }

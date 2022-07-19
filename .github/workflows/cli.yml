@@ -7,10 +7,13 @@ on:
     branches:
       - main
 
+env:
+  RUST_LOG: "warn,test,debug"
+
 jobs:
   run-container:
     name: End to End
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v3
@@ -27,7 +30,7 @@ jobs:
         run: |
           cargo install  --path ./cli --force
       - name: Run Server
-        run: a11ywatch start --upgrade
+        run: a11ywatch start
         shell: bash
       - name: Wait for Healthy Container
         shell: bash
@@ -46,15 +49,22 @@ jobs:
               sleep 0.3
           done
       - name: Run Scan Single page
-        run: a11ywatch scan -u https://a11ywatch.com
-      - name: Run Crawl Multi Page
-        run: a11ywatch crawl -u https://a11ywatch.com --save
-      - name: Run Crawl Multi Page with Subdomains
-        run: a11ywatch crawl -u https://a11ywatch.com --subdomains
-      - name: Run Crawl Multi Page with TLD
-        run: a11ywatch crawl -u https://a11ywatch.com  --tld
-      - name: Run Crawl Multi Page with Subdomains & TLD
-        run: a11ywatch crawl -u https://a11ywatch.com --subdomains --tld --save
+        run: |
+          curl --location --request POST 'http://localhost:3280/api/crawl-stream' \
+          --header 'Content-Type: application/x-www-form-urlencoded' \
+          --data-urlencode 'websiteUrl=https://jeffmendez.com'
+      - name: Log test
+        run: docker logs api
+      # - name: Run Scan Single page
+      #   run: a11ywatch scan -u https://a11ywatch.com
+      # - name: Run Crawl Multi Page
+      #   run: a11ywatch crawl -u https://a11ywatch.com --save
+      # - name: Run Crawl Multi Page with Subdomains
+      #   run: a11ywatch crawl -u https://a11ywatch.com --subdomains
+      # - name: Run Crawl Multi Page with TLD
+      #   run: a11ywatch crawl -u https://a11ywatch.com  --tld
+      # - name: Run Crawl Multi Page with Subdomains & TLD
+      #   run: a11ywatch crawl -u https://a11ywatch.com --subdomains --tld --save
 
   run-container-sa:
     name: End to End Stand Alone
@@ -75,7 +85,7 @@ jobs:
         run: |
           cargo install  --path ./cli --force
       - name: Upgrade Docker Images
-        run: a11ywatch build -s --upgrade
+        run: a11ywatch build --standalone --upgrade
         shell: bash
       - name: Run Server
         run: a11ywatch start --standalone
