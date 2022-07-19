@@ -92,6 +92,7 @@ impl TempFs {
         } else {
             generate_compose_backend()
         };
+
         file.write_all(&gfile.as_bytes())?;
 
         Ok(())
@@ -293,7 +294,7 @@ impl TempFs {
 
     /// make sure the tmp directory is created for the app
     fn ensure_temp_dir(tmp_dir: &str, app_dir: &str) -> std::io::Result<()> {
-        if !Path::new(tmp_dir).exists() {
+        if !Path::new(&tmp_dir).exists() {
             create_dir(tmp_dir).unwrap_or(println!("tmp a11ywatch directory create failed skipping."));
         }
         if !Path::new(&app_dir).exists() {

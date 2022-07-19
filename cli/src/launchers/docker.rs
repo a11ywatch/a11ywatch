@@ -42,6 +42,11 @@ pub(crate) fn upgrade(file_manager: &TempFs) {
 
     let mut down_args = docker_args.clone();
     down_args.push("down");
+    down_args.push("--remove-orphans");
+
+    let mut remove_args = docker_args.clone();
+    remove_args.push("rm");
+    remove_args.push("-f");
 
     let mut pull_args = docker_args.clone();
     pull_args.push("pull");
@@ -49,7 +54,17 @@ pub(crate) fn upgrade(file_manager: &TempFs) {
     Command::new("docker-compose")
         .args(down_args)
         .status()
-        .expect("Failed to execute command - compose down command");
+        .expect("Failed to execute command - compose down");
+
+    Command::new("docker")
+        .args(["image", "prune", "-f", "-a"])
+        .status()
+        .expect("Failed to execute command - docker image prune");
+
+    Command::new("docker-compose")
+        .args(remove_args)
+        .status()
+        .expect("Failed to execute command - compose remove");
 
     Command::new("docker-compose")
         .args(pull_args)
@@ -69,11 +84,12 @@ pub(crate) fn start_service(frontend: &bool, file_manager: &TempFs) {
             &file_manager.frontend_compose,
             "up",
             "-d",
+            "--remove-orphans"
         ])
         .status()
         .expect("Failed to execute command");
     } else {
-        cmd.args(["-f", &file_manager.backend_compose, "up", "-d"])
+        cmd.args(["-f", &file_manager.backend_compose, "up", "-d", "--remove-orphans"])
             .status()
             .expect("Failed to execute command");
     }

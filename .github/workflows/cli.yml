@@ -26,11 +26,8 @@ jobs:
       - name: Install the CLI
         run: |
           cargo install  --path ./cli --force
-      - name: Upgrade Docker Images
-        run: a11ywatch build --upgrade
-        shell: bash
       - name: Run Server
-        run: a11ywatch start
+        run: a11ywatch start --upgrade
         shell: bash
       - name: Wait for Healthy Container
         shell: bash
