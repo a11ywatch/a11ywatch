@@ -1,5 +1,5 @@
-
 **SEMVER Update Type:**
+
 - [ ] Major
 - [ ] Minor
 - [ ] Patch
@@ -17,17 +17,17 @@
   Share any open issues this PR references or otherwise describe the motivation to submit this pull request.
  -->
 
- **Closes Issues:**
--  ISSUE URL
+**Closes Issues:**
+
+- ISSUE URL
 
 ## Checklist:
 
 <!--
-	Thank you for contributing to CircleCI Orbs!
+	Thank you for contributing to A11yWatch!
 	before submitting your a request, please go through the following
 	items and place an x in the [ ] if they have been completed
 -->
 
 - [ ] All new jobs, commands, executors, parameters have descriptions.
 - [ ] Usage Example version numbers have been updated.
-- [ ] Changelog has been updated.

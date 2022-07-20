@@ -25,6 +25,7 @@ services:
       - SUPER_MODE=${SUPER_MODE:-true}
     networks:
       - back-net
+      - front-net
 
   pagemind:
     container_name: pagemind
