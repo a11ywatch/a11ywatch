@@ -1,26 +1,22 @@
 ---
 name: "\U0001F41E  Bug report"
 about: Report any bugs encountered while using this orb.
-title: ''
+title: ""
 labels: bug
-assignees: ''
-
+assignees: ""
 ---
 
-## Orb version:
+## A11yWatch version:
 
 <!---
   e.g., 1.0.0
-  find this information in your config.yml file;
-  if the version is @volatile, check the top of your CircleCI-generated,
-  expanded configuration file, viewable from the "Configuration" tab of
-  any job page, for the orb's specific semantic version number
+  find this information by using the cli a11ywatch -V;
 -->
 
 ## What happened:
 
 <!---
-  please include any relevant links to CircleCI workflows or jobs
+  please include any relevant links to A11yWatch workflows or jobs
   where you saw this behavior
 -->
 
