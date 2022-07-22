@@ -23,6 +23,7 @@ services:
       - REDIS_CLIENT=${REDIS_CLIENT:-redis://redis:6379}
       - REDIS_HOST=redis
       - SUPER_MODE=${SUPER_MODE:-true}
+      - DOCKER_CONTAINER=true
     networks:
       - back-net
       - front-net
@@ -181,7 +182,7 @@ services:
       - PORT=3000
       - API=${API:-http://localhost:3280/graphql}
       - WEB_SOCKET_URL=${WEB_SOCKET_URL:-ws://localhost:3280/graphql}
-      - DOCKER_CONTAINER=${DOCKER_CONTAINER:-true}
+      - DOCKER_CONTAINER=true
 
 networks:
   front-net:
