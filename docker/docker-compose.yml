@@ -50,6 +50,7 @@ services:
       - REDIS_CLIENT=${REDIS_CLIENT:-redis://redis:6379}
       - REDIS_HOST=redis
       - SUPER_MODE=${SUPER_MODE:-true}
+      - DOCKER_CONTAINER=${DOCKER_CONTAINER:-true}
 
   pagemind:
     container_name: pagemind

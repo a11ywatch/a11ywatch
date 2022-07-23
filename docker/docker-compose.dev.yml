@@ -62,6 +62,7 @@ services:
       - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
       - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
       - REDIS_HOST=redis
+      - DOCKER_CONTAINER=true
     networks:
       - back-net
       - front-net
