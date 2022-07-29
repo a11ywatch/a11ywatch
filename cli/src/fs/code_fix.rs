@@ -121,7 +121,7 @@ pub fn apply_fix(json_results: &Value) {
                             let mut context: String = context.clone();
 
                             if react_project {
-                                context = convert_props_react(context);
+                                context = convert_props_react(&context);
                             }
 
                             let replace_end = if context.ends_with("/>") { "/>" } else { ">" };
@@ -184,7 +184,7 @@ pub fn apply_fix(json_results: &Value) {
                                     let mut context: String = context.clone();
         
                                     if react_project {
-                                        context = convert_props_react(context);
+                                        context = convert_props_react(&context);
                                     }
 
                                     let replace_end = if context.ends_with("/>") { "/>" } else { ">" };

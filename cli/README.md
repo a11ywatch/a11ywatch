@@ -13,11 +13,23 @@ cargo install a11ywatch_cli
 npm i a11ywatch-cli -g
 ```
 
+Startup:
+
 ```sh
 # build the instance first, this allows configuring architecture specifics like m1 chips.
 a11ywatch build
 # start the instance. If you need the front-end client passing the -f option [min of 1.25gb of memory required alloc to docker resource].
 a11ywatch start
+
+# if you need to upgrade the instance to new images run with the upgrade flag.
+a11ywatch start --upgrade
+# start the instance with the front-end on port 3270.
+a11ywatch start -f
+```
+
+Actions:
+
+```sh
 # scan a url and pipe the stdout to a file.
 a11ywatch scan --url https://a11ywatch.com > results.json
 # scan a url and attempt to fix code based on recommendations [installs the fast ripgrep crate for search].
@@ -28,10 +40,6 @@ a11ywatch crawl --url https://a11ywatch.com > results.json
 a11ywatch crawl --url https://a11ywatch.com -S > results.json
 # scan a website multi page and include subdomains and all TLD extensions.
 a11ywatch crawl --url https://a11ywatch.com -S -t > results.json
-# if you need to upgrade the instance to new images run with the upgrade flag.
-a11ywatch start --upgrade
-# start the instance with the front-end on port 3270.
-a11ywatch start -f
 ```
 
 If you experience issues the `cargo install a11ywatch_cli` command, try running `rustup update stable` to make sure your cargo version is up to date.
