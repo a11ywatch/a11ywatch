@@ -10,7 +10,7 @@ pub mod utils;
 
 use self::formatters::{
     format_body, results_issues_count, results_issues_errors_count, results_issues_warnings_count,
-    results_to_string, results_to_string_github,
+    results_to_string, results_to_string_github, get_report_url_errors
 };
 use crate::utils::Issue;
 use clap::Parser;
@@ -70,6 +70,10 @@ fn main() {
 
     if cli.results_parsed_github {
         println!("{}", results_to_string_github(&file_manager));
+    }
+
+    if cli.results_parsed_list {
+        println!("{}", get_report_url_errors(&file_manager));
     }
 
     if cli.results_issues {
