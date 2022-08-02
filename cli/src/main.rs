@@ -1,5 +1,5 @@
-extern crate htr;
 extern crate dirs;
+extern crate htr;
 pub mod commands;
 pub mod formatters;
 pub mod fs;
@@ -9,13 +9,14 @@ pub mod options;
 pub mod utils;
 
 use self::formatters::{
-    format_body, results_issues_count, results_issues_errors_count, results_issues_warnings_count,
-    results_to_string, results_to_string_github,
+    format_body, format_github_body, results_issues_count, results_issues_errors_count,
+    results_issues_warnings_count, results_list_to_string, results_to_string,
+    results_to_string_github,
 };
 use crate::utils::Issue;
 use clap::Parser;
 use commands::{ApiClient, Build, Deploy, Start, Stop};
-use fs::{TempFs};
+use fs::TempFs;
 use options::{Cli, Commands};
 use serde_json::json;
 use std::env;
@@ -72,11 +73,16 @@ fn main() {
         println!("{}", results_to_string_github(&file_manager));
     }
 
+    if cli.results_parsed_list {
+        println!("{}", results_list_to_string(&file_manager));
+    }
+
     if cli.results_issues {
         let count = results_issues_count(&file_manager);
 
         println!("{}", count);
     }
+
     if cli.results_issues_errors {
         let count = results_issues_errors_count(&file_manager);
 
@@ -90,7 +96,12 @@ fn main() {
     }
 
     match &cli.command {
-        Some(Commands::BUILD { frontend, local, standalone, upgrade }) => {
+        Some(Commands::BUILD {
+            frontend,
+            local,
+            standalone,
+            upgrade,
+        }) => {
             env::set_var(INCLUDE_FRONTEND, frontend.to_string());
             if *upgrade {
                 Build::upgrade(&local, &standalone);
@@ -101,7 +112,7 @@ fn main() {
             frontend,
             local,
             upgrade,
-            standalone
+            standalone,
         }) => {
             env::set_var(INCLUDE_FRONTEND, frontend.to_string());
             if *upgrade {
@@ -154,10 +165,35 @@ fn main() {
 
             println!("{}", json_results);
         }
-        Some(Commands::EXTRACT { platform }) => {
+        Some(Commands::EXTRACT { platform, list }) => {
             if platform == "github" {
-                let json_data = format_body(&file_manager, cli.github_results_path);
-                println!("{}", json_data);
+                // list report as a pass fail list
+                if *list {
+                    let mut report_message =
+                        String::from("<details><summary>A11yWatch testing results</summary><br>");
+                    let results = results_list_to_string(&file_manager);
+
+                    report_message.push_str(&format!(
+                        r#"
+
+```
+{}
+```
+
+"#,
+                        &results
+                    ));
+                    report_message.push_str("</details>");
+                    let json_data = format_github_body(&report_message, &report_message);
+                    file_manager
+                        .save_github_results(&json_data)
+                        .unwrap_or_default();
+
+                    println!("{}", json_data);
+                } else {
+                    let json_data = format_body(&file_manager, cli.github_results_path);
+                    println!("{}", json_data);
+                }
             }
         }
         Some(Commands::CRAWL {

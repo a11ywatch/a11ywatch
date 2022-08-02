@@ -1,12 +1,12 @@
 use super::install::assure_module_exist;
 use crate::Issue;
+use htr::convert_props_react;
 use serde_json::Value;
 use std::fs::File;
 use std::io::Read;
 use std::io::Write;
 use std::path::Path;
 use std::process::Command;
-use htr::convert_props_react;
 
 const RECCOMENDATION: &str = "Recommendation:";
 const MATCH_ALT: &str = "Recommendation: change alt to ";
@@ -16,11 +16,11 @@ const MATCH_TEXT_COLOR: &str = "Recommendation: change text colour to ";
 const PROPERTY_MATCHERS: [(&'static str, &'static str); 3] = [
     (MATCH_BACKGROUND, "background"),
     (MATCH_TEXT_COLOR, "color"),
-    (MATCH_ALT, "alt")
+    (MATCH_ALT, "alt"),
 ];
 
 /// determine if project is react
-pub fn determine_react_project() -> bool{
+pub fn determine_react_project() -> bool {
     let rg_command = Command::new("rg")
         .args([r#""react":"#, "package.json"])
         .output()
@@ -44,16 +44,12 @@ pub fn establish_context(context: String, rec: &str, react_project: bool) -> Str
             if value_index != 0 {
                 for (i, c) in context[value_index..].chars().enumerate() {
                     exact_value.push(c);
-                    let mut string_index = if value == "alt" {
-                        0
-                    } else {
-                        1
-                    };
+                    let mut string_index = if value == "alt" { 0 } else { 1 };
                     let mut first_str = exact_value.get(..string_index).unwrap_or_default();
                     while first_str.is_empty() {
                         string_index = string_index + 1;
                         first_str = exact_value.get(..string_index).unwrap_or_default();
-                    };
+                    }
                     if i != 0 && c.to_string() == first_str {
                         break;
                     }
@@ -91,10 +87,9 @@ pub fn establish_context(context: String, rec: &str, react_project: bool) -> Str
             replace_context = String::from("");
         }
     };
-    
+
     replace_context
 }
-
 
 /// apply code fixes for the issues
 pub fn apply_fix(json_results: &Value) {
@@ -158,22 +153,20 @@ pub fn apply_fix(json_results: &Value) {
                 }
             }
         }
-    }
-    
-    else if data.is_array() {
+    } else if data.is_array() {
         let react_project = determine_react_project();
         for d in data.as_array() {
             for item in d.clone() {
                 let it = item.clone();
                 let issues = it.get("issues").unwrap();
-    
+
                 if issues.is_array() {
                     assure_module_exist("ripgrep");
                     for issue in issues.as_array() {
                         for item in issue.clone() {
                             let iss: Issue = serde_json::from_value(item).unwrap();
                             let message = iss.message.to_string();
-                            
+
                             if message.contains(&RECCOMENDATION) {
                                 let context = iss.context.to_string();
                                 let rec_index = message.find(&RECCOMENDATION).unwrap_or(0);
@@ -182,27 +175,28 @@ pub fn apply_fix(json_results: &Value) {
                                     let rec = &message[rec_index..];
                                     let rec: String = rec.to_owned().to_string(); // recommendation
                                     let mut context: String = context.clone();
-        
+
                                     if react_project {
                                         context = convert_props_react(&context);
                                     }
 
-                                    let replace_end = if context.ends_with("/>") { "/>" } else { ">" };
+                                    let replace_end =
+                                        if context.ends_with("/>") { "/>" } else { ">" };
                                     // trim tags from start and end
                                     let context = context.replace("<", "");
                                     let context = context.replace(replace_end, "");
                                     let replace_context =
                                         establish_context(context.clone(), &rec, react_project);
-        
+
                                     // apply code changes if recommendation exist.
                                     if !replace_context.is_empty() {
                                         let rg_command = Command::new("rg")
                                             .args([&context, &"-r".to_string(), &replace_context])
                                             .output()
                                             .expect("Failed to execute ripgrep replace");
-        
+
                                         let stdout = String::from_utf8(rg_command.stdout).unwrap();
-        
+
                                         //  TODO: get rg line number and jump to line.
                                         if !stdout.is_empty() {
                                             let pfx = &stdout[..stdout.find(':').unwrap()];

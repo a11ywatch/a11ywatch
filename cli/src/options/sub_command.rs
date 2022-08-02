@@ -30,7 +30,7 @@ pub enum Commands {
         upgrade: bool,
         /// standalone container [defaults to true]
         #[clap(short, long)]
-        standalone: bool
+        standalone: bool,
     },
     /// Stop the project on the local machine [defaults to docker runtime]
     STOP {
@@ -82,6 +82,9 @@ pub enum Commands {
         /// platform to use like github
         #[clap(short, long)]
         platform: String,
+        /// pass fail list style
+        #[clap(short, long)]
+        list: bool,
     },
     /// Deploy the build on remote infrastructure [BETA - defaults: GCP]
     DEPLOY {

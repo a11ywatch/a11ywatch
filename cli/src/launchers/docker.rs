@@ -1,8 +1,8 @@
 use crate::fs::TempFs;
-use std::process::Command;
 use crate::INCLUDE_FRONTEND;
 use std::env;
 use std::path::Path;
+use std::process::Command;
 
 /// Run docker compose build command with frontend and backend configuration.
 pub(crate) fn build_backend(file_manager: &TempFs) {
@@ -11,7 +11,7 @@ pub(crate) fn build_backend(file_manager: &TempFs) {
         Err(_) => false,
     };
 
-    let mut docker_args = vec![ "-f", &file_manager.backend_compose];
+    let mut docker_args = vec!["-f", &file_manager.backend_compose];
 
     if frontend {
         docker_args.push("-f");
@@ -33,7 +33,7 @@ pub(crate) fn upgrade(file_manager: &TempFs) {
         Err(_) => false,
     };
 
-    let mut docker_args = vec![ "-f", &file_manager.backend_compose];
+    let mut docker_args = vec!["-f", &file_manager.backend_compose];
 
     if frontend {
         docker_args.push("-f");
@@ -80,7 +80,7 @@ pub(crate) fn start_service(frontend: &bool, file_manager: &TempFs) {
 }
 
 /// shut down the local instance and remove containers
-pub(crate) fn stop_service(frontend: &bool, file_manager: &TempFs) {    
+pub(crate) fn stop_service(frontend: &bool, file_manager: &TempFs) {
     if Path::new(&file_manager.backend_compose).exists() {
         let mut cmd = Command::new("docker-compose");
 
@@ -96,8 +96,8 @@ pub(crate) fn stop_service(frontend: &bool, file_manager: &TempFs) {
             .expect("Failed to execute command");
         } else {
             cmd.args(["-f", &file_manager.backend_compose, "down"])
-            .status()
-            .expect("Failed to execute command");
+                .status()
+                .expect("Failed to execute command");
         }
     }
 }

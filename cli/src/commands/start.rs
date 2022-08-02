@@ -38,7 +38,9 @@ impl Start {
             if frontend {
                 file_manager.create_compose_frontend_file().unwrap();
             }
-            file_manager.create_compose_backend_file(standalone).unwrap();
+            file_manager
+                .create_compose_backend_file(standalone)
+                .unwrap();
             docker::start_service(&frontend, &file_manager);
         }
 

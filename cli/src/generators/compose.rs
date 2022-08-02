@@ -37,6 +37,8 @@ services:
       - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://127.0.0.1:8090/api}
       - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
       - PAGESPEED_API_KEY=${PAGESPEED_API_KEY}
+      - GRPC_HOST_MAV=mav:50053
+      - GRPC_HOST_CDN=cdn-server:50054
     networks:
       - back-net
 
@@ -146,10 +148,9 @@ networks:
   "#
 }
 
-
 /// generate standalone backend
 pub fn generate_compose_backend_sa() -> &'static str {
-  &r#"
+    &r#"
 version: '3.9'
 services:
   a11ywatch:

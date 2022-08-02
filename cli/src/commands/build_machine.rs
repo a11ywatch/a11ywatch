@@ -1,8 +1,8 @@
 use crate::fs::temp::TempFs;
 use crate::launchers::docker;
 use crate::INCLUDE_FRONTEND;
-use std::process::Command;
 use std::env;
+use std::process::Command;
 
 #[derive(Debug, Default)]
 pub(crate) struct Build {}
@@ -23,7 +23,9 @@ impl Build {
                 .expect("Failed to execute command - compose down command");
         } else {
             file_manager.create_env_file().unwrap();
-            file_manager.create_compose_backend_file(standalone).unwrap();
+            file_manager
+                .create_compose_backend_file(standalone)
+                .unwrap();
             if frontend {
                 file_manager.create_compose_frontend_file().unwrap();
             }
@@ -45,7 +47,9 @@ impl Build {
                 Ok(val) => val == "true",
                 Err(_) => false,
             };
-            file_manager.create_compose_backend_file(standalone).unwrap();
+            file_manager
+                .create_compose_backend_file(standalone)
+                .unwrap();
             if frontend {
                 file_manager.create_compose_frontend_file().unwrap();
             }

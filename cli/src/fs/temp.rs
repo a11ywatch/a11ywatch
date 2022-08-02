@@ -1,4 +1,6 @@
-use crate::generators::compose::{generate_compose_backend, generate_compose_backend_sa, generate_compose_frontend};
+use crate::generators::compose::{
+    generate_compose_backend, generate_compose_backend_sa, generate_compose_frontend,
+};
 use serde_json::{from_reader, json, Value};
 use std::fs::OpenOptions;
 use std::fs::{create_dir, read_to_string, remove_dir_all, remove_file, File};
@@ -108,18 +110,24 @@ impl TempFs {
 
     /// read results from scan to string
     pub fn read_results(&self) -> String {
-        let mut file = File::open(&self.results_file).unwrap();
         let mut data = String::new();
-        file.read_to_string(&mut data).unwrap();
+
+        if Path::new(&self.results_file).exists() {
+            let mut file = File::open(&self.results_file).unwrap();
+            file.read_to_string(&mut data).unwrap();
+        }
 
         data
     }
 
     /// read results from scan to string
     pub fn read_results_github(&self) -> String {
-        let mut file = File::open(&self.results_github_file).unwrap();
         let mut data = String::new();
-        file.read_to_string(&mut data).unwrap();
+
+        if Path::new(&self.results_github_file).exists() {
+            let mut file = File::open(&self.results_github_file).unwrap();
+            file.read_to_string(&mut data).unwrap();
+        }
 
         data
     }
@@ -294,7 +302,8 @@ impl TempFs {
     /// make sure the tmp directory is created for the app
     fn ensure_temp_dir(tmp_dir: &str, app_dir: &str) -> std::io::Result<()> {
         if !Path::new(tmp_dir).exists() {
-            create_dir(tmp_dir).unwrap_or(println!("tmp a11ywatch directory create failed skipping."));
+            create_dir(tmp_dir)
+                .unwrap_or(println!("tmp a11ywatch directory create failed skipping."));
         }
         if !Path::new(&app_dir).exists() {
             create_dir(app_dir).unwrap_or(println!("app directory create failed skipping."));
@@ -317,7 +326,8 @@ impl TempFs {
                 if !app_dir.is_empty() {
                     // reset app directory contents [TODO: only clear certain contents instead entire dir]
                     if Path::new(&app_dir).exists() {
-                        remove_dir_all(&app_dir).unwrap_or(println!("cannot remove all directorys."))
+                        remove_dir_all(&app_dir)
+                            .unwrap_or(println!("cannot remove all directorys."))
                     }
                     create_dir(&app_dir).unwrap_or(println!("directory already exist skipping."));
                 }
