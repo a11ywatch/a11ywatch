@@ -32,6 +32,9 @@ pub struct Cli {
     /// Get results of the github html message
     #[clap(long)]
     pub results_parsed_github: bool,
+    /// Get results file parsed as report list of passed / failed
+    #[clap(short, long)]
+    pub results_parsed_list: bool,
     /// Get the total amount of issues between errors,warning,notice that occured for the result set.
     #[clap(long)]
     pub results_issues: bool,

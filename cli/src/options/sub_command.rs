@@ -82,6 +82,9 @@ pub enum Commands {
         /// platform to use like github
         #[clap(short, long)]
         platform: String,
+        /// pass fail list style
+        #[clap(short, long)]
+        list: bool,
     },
     /// Deploy the build on remote infrastructure [BETA - defaults: GCP]
     DEPLOY {

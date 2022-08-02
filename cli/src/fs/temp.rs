@@ -108,18 +108,24 @@ impl TempFs {
 
     /// read results from scan to string
     pub fn read_results(&self) -> String {
-        let mut file = File::open(&self.results_file).unwrap();
         let mut data = String::new();
-        file.read_to_string(&mut data).unwrap();
 
+        if Path::new(&self.results_file).exists() {
+            let mut file = File::open(&self.results_file).unwrap();
+            file.read_to_string(&mut data).unwrap();
+        }
+        
         data
     }
 
     /// read results from scan to string
     pub fn read_results_github(&self) -> String {
-        let mut file = File::open(&self.results_github_file).unwrap();
         let mut data = String::new();
-        file.read_to_string(&mut data).unwrap();
+
+        if Path::new(&self.results_github_file).exists() {
+            let mut file = File::open(&self.results_github_file).unwrap();
+            file.read_to_string(&mut data).unwrap();
+        }
 
         data
     }

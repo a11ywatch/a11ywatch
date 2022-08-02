@@ -10,7 +10,7 @@ pub mod utils;
 
 use self::formatters::{
     format_body, results_issues_count, results_issues_errors_count, results_issues_warnings_count,
-    results_to_string, results_to_string_github,
+    results_to_string, results_to_string_github, format_github_body, results_list_to_string
 };
 use crate::utils::Issue;
 use clap::Parser;
@@ -72,11 +72,16 @@ fn main() {
         println!("{}", results_to_string_github(&file_manager));
     }
 
+    if cli.results_parsed_list {
+        println!("{}", results_list_to_string(&file_manager));
+    }
+
     if cli.results_issues {
         let count = results_issues_count(&file_manager);
 
         println!("{}", count);
     }
+
     if cli.results_issues_errors {
         let count = results_issues_errors_count(&file_manager);
 
@@ -154,10 +159,17 @@ fn main() {
 
             println!("{}", json_results);
         }
-        Some(Commands::EXTRACT { platform }) => {
+        Some(Commands::EXTRACT { platform, list }) => {
             if platform == "github" {
-                let json_data = format_body(&file_manager, cli.github_results_path);
-                println!("{}", json_data);
+                // list report as a pass fail list
+                if *list {
+                    let report_message = results_list_to_string(&file_manager);
+                    let json_data = format_github_body(&report_message, &report_message);
+                    println!("{}", json_data);
+                } else {
+                    let json_data = format_body(&file_manager, cli.github_results_path);
+                    println!("{}", json_data);
+                }
             }
         }
         Some(Commands::CRAWL {
