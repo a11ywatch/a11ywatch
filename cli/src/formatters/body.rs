@@ -7,17 +7,27 @@ use std::str;
 /// read json results to string
 pub(crate) fn results_to_string(file_manager: &TempFs) -> String {
     let file_results: String = file_manager.read_results();
-    let v: Value = from_str(&file_results).unwrap();
 
-    v.to_string()
+    if !file_results.is_empty() {
+        let v: Value = from_str(&file_results).unwrap();
+    
+        v.to_string()
+    } else {
+        file_results
+    }
 }
 
 /// read github html format message
 pub(crate) fn results_to_string_github(file_manager: &TempFs) -> String {
     let file_results: String = file_manager.read_results_github();
-    let v: Value = from_str(&file_results).unwrap();
 
-    v.to_string()
+    if !file_results.is_empty() {
+        let v: Value = from_str(&file_results).unwrap();
+    
+        v.to_string()
+    } else {
+        file_results
+    }
 }
 
 pub(crate) fn results_to_value(file_manager: &TempFs) -> Value {
@@ -25,6 +35,27 @@ pub(crate) fn results_to_value(file_manager: &TempFs) -> Value {
     let v: Value = from_str(&file_results).unwrap();
 
     v
+}
+
+// the amount of total errors and warnings for the page from prev scan
+pub(crate) fn results_issues_count(file_manager: &TempFs) -> usize {
+    let (total, _errors, _warnings): (usize, usize, usize) = extract_issues_count(&file_manager);
+
+    total
+}
+
+// the amount of total errors and warnings for the page from prev scan
+pub(crate) fn results_issues_errors_count(file_manager: &TempFs) -> usize {
+    let (_total, errors, _warnings): (usize, usize, usize) = extract_issues_count(&file_manager);
+
+    errors
+}
+
+// the amount of total warnings and warnings for the page from prev scan
+pub(crate) fn results_issues_warnings_count(file_manager: &TempFs) -> usize {
+    let (_total, _errors, warnings): (usize, usize, usize) = extract_issues_count(&file_manager);
+
+    warnings
 }
 
 /// returns the total errors,warnings combined and seperate as a tuple (total,errors,warnings). [notices type not current used]
@@ -62,25 +93,48 @@ pub(crate) fn extract_issues_count(file_manager: &TempFs) -> (usize, usize, usiz
     (error_count + warning_count, error_count, warning_count)
 }
 
-// the amount of total errors and warnings for the page from prev scan
-pub(crate) fn results_issues_count(file_manager: &TempFs) -> usize {
-    let (total, _errors, _warnings): (usize, usize, usize) = extract_issues_count(&file_manager);
 
-    total
-}
+/// Get urls total urls with errors for each url
+pub(crate) fn get_report_url_errors(file_manager: &TempFs) -> String {
+    let json_data = results_to_value(&file_manager);
+    let data = &json_data["data"];
+    
+    // let mut error_count: usize = 0;
+    let mut url_count: usize = 0; // amount of urls
+    let mut pages_passed: usize = 0; // pages passed the scan
 
-// the amount of total errors and warnings for the page from prev scan
-pub(crate) fn results_issues_errors_count(file_manager: &TempFs) -> usize {
-    let (_total, errors, _warnings): (usize, usize, usize) = extract_issues_count(&file_manager);
+    let mut url_list = String::from(""); // list of reports
 
-    errors
-}
+    // loop through stream until and extract all valid content.
+    if data.is_array() {
+        let pages = data.as_array().unwrap();
 
-// the amount of total warnings and warnings for the page from prev scan
-pub(crate) fn results_issues_warnings_count(file_manager: &TempFs) -> usize {
-    let (_total, _errors, warnings): (usize, usize, usize) = extract_issues_count(&file_manager);
+        url_count = pages.len();
 
-    warnings
+        for page in pages {
+            let errors = &page["issuesInfo"]["errorCount"];
+            let errors: usize = format!("{}", errors).parse().unwrap();
+            let s = if errors == 1 {
+                ""
+            } else {
+                "s"
+            };
+            url_list.push_str(&format!("{} - {} error{s}\n", &page["url"].as_str().unwrap_or_default(), &errors));
+
+            if errors == 0 {
+                pages_passed += 1;
+            }
+            // error_count += errors;
+        }
+    }
+
+    let fail_pass = if pages_passed == url_count {
+        "✔"
+    } else {
+        "x"
+    };
+
+    format!("Ran A11yWatch on {url_count} URLs:\n\n{url_list}\n{fail_pass} {pages_passed}/{url_count} URLs passed")
 }
 
 // format the body for sending to github. Handles multi page and single page reports.
