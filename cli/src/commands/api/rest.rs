@@ -6,6 +6,12 @@ use std::env;
 use std::time::Instant;
 use ureq::{json, post, Error};
 
+static APP_USER_AGENT: &str = concat!(
+    env!("CARGO_PKG_NAME"),
+    "/",
+    env!("CARGO_PKG_VERSION"),
+);
+
 #[derive(Deserialize, Serialize, Debug, Default)]
 pub struct ApiResult {
     data: Option<Website>,
@@ -62,7 +68,7 @@ impl ApiClient {
         }
         .to_string();
 
-        let request_destination = format!("{}/api/crawl-stream", target_destination);
+        let request_destination = format!("{}/api/crawl-stream-slim", target_destination);
         let token = file_manager.get_token();
         let agent = ureq::agent();
 
@@ -77,43 +83,28 @@ impl ApiClient {
                 .post(&request_destination)
                 .set("Transfer-Encoding", "chunked")
         }
+        .set("X-Request-Client", &APP_USER_AGENT)
         .send_json(json!({
             "websiteUrl": url,
             "tld": tld,
             "subdomains": subdomains
         }))?;
-        let mut resp = resp.into_string().unwrap();
+        let mut resp: Vec<Website> = resp.into_json().unwrap();
         let duration = start.elapsed();
-        let len = resp.len();
-        let contains_trailing_comma = &resp[len - 2..];
 
-        // remove trailing comma from string
-        if !contains_trailing_comma.is_empty() {
-            resp.pop();
-            resp.pop();
-            resp.push(']');
-        }
+        // an extra object is sent for the json stream ending requiring pop
+        // this allows for fast streams
+        resp.pop();
 
-        let resp: Vec<ApiResult> = serde_json::from_str(&resp).unwrap();
-
-        let mut data_container: Vec<Website> = Vec::new();
-
-        for r in &resp {
-            let default_data: Website = Default::default();
-            let data = r.data.as_ref().unwrap_or(&default_data).to_owned();
-
-            data_container.push(data);
-        }
-
-        let res_len = data_container.len();
+        let res_len = resp.len();
         let mut res_end = "s";
         if res_len == 1 {
             res_end = "";
         }
 
         let mut results: CrawlApiResult = CrawlApiResult::default();
-
-        results.data = Some(data_container);
+                
+        results.data = Some(resp);
         results.message = format!("Crawled {} page{} in {:?}", res_len, res_end, duration);
         results.success = true;
 

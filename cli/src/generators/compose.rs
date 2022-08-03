@@ -37,6 +37,7 @@ services:
       - SCRIPTS_CDN_URL=${SCRIPTS_CDN_URL:-http://127.0.0.1:8090/api}
       - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
       - PAGESPEED_API_KEY=${PAGESPEED_API_KEY}
+      - AI_DISABLED=${AI_DISABLED:-false}
       - GRPC_HOST_MAV=mav:50053
       - GRPC_HOST_CDN=cdn-server:50054
     networks:
@@ -48,8 +49,8 @@ services:
     ports:
       - 50053
     environment:
-      - COMPUTER_VISION_ENDPOINT=${COMPUTER_VISION_ENDPOINT}
-      - COMPUTER_VISION_SUBSCRIPTION_KEY=${COMPUTER_VISION_SUBSCRIPTION_KEY}
+      - COMPUTER_VISION_ENDPOINT=${COMPUTER_VISION_ENDPOINT:-""}
+      - COMPUTER_VISION_SUBSCRIPTION_KEY=${COMPUTER_VISION_SUBSCRIPTION_KEY:-""}
     networks:
       - back-net
 
@@ -156,6 +157,12 @@ services:
   a11ywatch:
     container_name: a11ywatch
     image: a11ywatch/a11ywatch
+    environment:
+      - COMPUTER_VISION_ENDPOINT=${COMPUTER_VISION_ENDPOINT:-""}
+      - COMPUTER_VISION_SUBSCRIPTION_KEY=${COMPUTER_VISION_SUBSCRIPTION_KEY:-""}
+      - PAGESPEED_API_KEY=${PAGESPEED_API_KEY:-""}
+      - AI_DISABLED=${AI_DISABLED:-false}
+      - SUPER_MODE=${SUPER_MODE:-true}
     ports:
       - "3280:3280"
     networks:
