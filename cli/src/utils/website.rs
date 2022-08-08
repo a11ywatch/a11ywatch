@@ -1,5 +1,5 @@
-use crate::utils::{Issue, IssueInfo};
 use serde::{Deserialize, Serialize};
+use crate::utils::{Issue, IssueInfo};
 
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct LightHouse {
@@ -16,19 +16,58 @@ pub struct PageLoadTime {
 
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct Website {
+    /// target url
     pub url: String,
+    /// domain of the page
     pub domain: String,
-    #[serde(rename = "cdnConnected")]
-    pub cdn_connected: Option<bool>,
-    #[serde(rename = "issuesInfo")]
-    pub issues_info: Option<IssueInfo>,
     /// list of issues the website has
     pub issues: Option<Vec<Issue>>,
     /// is the website online
     pub online: Option<bool>,
-    #[serde(rename = "lastScanDate")]
-    pub last_scan_date: Option<String>,
+    /// lighthouse report data
     pub insight: Option<LightHouse>,
+    /// js cdn connected on domain
+    #[serde(rename = "cdnConnected")]
+    pub cdn_connected: Option<bool>,
+    #[serde(rename = "issuesInfo")]
+    pub issues_info: Option<IssueInfo>,
     #[serde(rename = "pageLoadTime")]
     pub page_load_time: Option<PageLoadTime>,
+    #[serde(rename = "lastScanDate")]
+    pub last_scan_date: Option<String>,
+}
+
+#[cfg(feature = "grpc")]
+use crate::rpc::client::apicore::Page;
+
+/// convert to website from page
+#[cfg(feature = "grpc")]
+impl From<Page> for Website {
+    fn from(page: Page) -> Self {
+        let mut website = Website::default();
+
+        website.url = page.url;
+        website.domain = page.domain;
+        website.cdn_connected = Some(page.cdn_connected);
+
+        let issues_info = page.issues_info.unwrap_or_default();
+
+        let issue_option = IssueInfo {
+            error_count: issues_info.error_count,
+            warning_count: issues_info.warning_count,
+            ada_score: issues_info.ada_score,
+            total_issues: issues_info.total_issues,
+            issue_meta: crate::utils::issue_info::IssueMeta {
+                skip_content_included: issues_info.issue_meta.unwrap_or_default().skip_content_included
+            },
+            issues_fixed_by_cdn: issues_info.issues_fixed_by_cdn,
+            notice_count: issues_info.notice_count,
+            possible_issues_fixed_by_cdn: issues_info.possible_issues_fixed_by_cdn,
+        };
+
+        website.issues_info = Some(issue_option);
+        website.last_scan_date = Some(page.last_scan_date);
+
+        website
+    }
 }

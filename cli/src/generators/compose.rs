@@ -8,7 +8,7 @@ services:
     image: a11ywatch/a11ywatch-core
     ports:
       - 3280:3280
-      - 50051
+      - 50051:50051
     depends_on:
       - mongodb
     environment:

@@ -56,10 +56,3 @@ cargo run # generate all clients OpenAPI clients.
 ## gRPC
 
 The gRC calls only work on self-hosted or enterprise accounts. None of the ports are exposed to the public for the gRPC API unless you are a partner.
-
-### Steps
-
-1. ~~Generate OpenAPI clients~~.
-2. ~~Configure auto generated between main clients~~.
-3. ~~Setup CI image to perform generation~~.
-4. ~~Add Release based on tag version~~.

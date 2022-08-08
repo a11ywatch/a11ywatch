@@ -1,11 +1,12 @@
 use crate::fs::temp::TempFs;
 use crate::utils::Website;
-use crate::EXTERNAL;
+use crate::rpc::{scan, crawl};
 
 use serde::{Deserialize, Serialize};
+
 use std::env;
 use std::time::Instant;
-use ureq::{json, post, Error};
+use ureq::{Error};
 
 pub static APP_USER_AGENT: &str = concat!(
     env!("CARGO_PKG_NAME"),
@@ -30,81 +31,44 @@ pub struct CrawlApiResult {
     pub code: i32,
 }
 
-
 #[derive(Debug, Default)]
 pub(crate) struct ApiClient {}
 
 impl ApiClient {
     /// Single page scan
-    pub fn scan_website(url: &str, file_manager: &TempFs) -> Result<ApiResult, Error> {
-        let target_destination: String = match env::var(EXTERNAL) {
-            Ok(_) => "https://api.a11ywatch.com",
-            Err(_) => "http://127.0.0.1:3280",
-        }
-        .to_string();
-
-        let request_destination = format!("{}/api/scan-simple", target_destination);
+    #[tokio::main(flavor = "current_thread")]
+    pub async fn scan_website(url: &str, file_manager: &TempFs) -> Result<ApiResult, Error> {
         let token = file_manager.get_token();
+        let mut resp: ApiResult = ApiResult::default();
 
-        let resp: ApiResult = if !token.is_empty() {
-            post(&request_destination).set("Authorization", &token)
-        } else {
-            post(&request_destination)
-        }
-        .send_json(json!({ "websiteUrl": url }))?
-        .into_json()?;
-
+        let data = scan(url.to_string(), token).await;
+        
+        resp.data = Some(data);
+        
         Ok(resp)
     }
-
     /// Site wide scan [Stream]
-    pub fn crawl_website(
+    #[tokio::main(flavor = "current_thread")]
+    pub async fn crawl_website(
         url: &str,
         subdomains: &bool,
         tld: &bool,
         file_manager: &TempFs,
     ) -> Result<CrawlApiResult, Error> {
-        let target_destination: String = match env::var(EXTERNAL) {
-            Ok(_) => "https://api.a11ywatch.com",
-            Err(_) => "http://127.0.0.1:3280",
-        }
-        .to_string();
-
-        let request_destination = format!("{}/api/crawl-stream-slim", target_destination);
-        let token = file_manager.get_token();
-        let agent = ureq::agent();
-
         let start = Instant::now();
-        let resp = if !token.is_empty() {
-            agent
-                .post(&request_destination)
-                .set("Transfer-Encoding", "chunked")
-                .set("Authorization", &token)
-        } else {
-            agent
-                .post(&request_destination)
-                .set("Transfer-Encoding", "chunked")
-        }
-        .set("X-Request-Client", &APP_USER_AGENT)
-        .send_json(json!({
-            "websiteUrl": url,
-            "tld": tld,
-            "subdomains": subdomains
-        }))?;
-        let mut resp: Vec<Website> = resp.into_json().unwrap();
-        let duration = start.elapsed();
 
-        // an extra object is sent for the json stream ending requiring pop
-        // this allows for fast streams
-        resp.pop();
+        let token = file_manager.get_token();
+        let mut results: CrawlApiResult = CrawlApiResult::default();
+
+        let resp = crawl(url.to_string(), token, *subdomains, *tld).await;
+        
+        let duration = start.elapsed();
 
         let res_len = resp.len();
         let mut res_end = "s";
         if res_len == 1 {
             res_end = "";
         }
-
-        let mut results: CrawlApiResult = CrawlApiResult::default();
                 
         results.data = Some(resp);
         results.message = format!("Crawled {} page{} in {:?}", res_len, res_end, duration);
@@ -115,6 +79,7 @@ impl ApiClient {
 }
 
 #[cfg(test)]
+#[cfg(feature = "grpc")]
 mod tests {
     use super::ApiClient;
     use super::TempFs;

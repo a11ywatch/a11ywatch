@@ -35,7 +35,7 @@ services:
       - ../../a11ywatch-core/src:/usr/src/app/src
     ports:
       - 3280:3280
-      - 50051
+      - 50051:50051
     depends_on:
       - mongodb
     environment:

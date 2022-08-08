@@ -1,5 +1,6 @@
 extern crate dirs;
 extern crate htr;
+
 pub mod commands;
 pub mod formatters;
 pub mod fs;
@@ -8,6 +9,13 @@ pub mod launchers;
 pub mod options;
 pub mod utils;
 
+#[cfg(feature = "grpc")]
+pub mod rpc;
+
+#[cfg(feature = "grpc")]
+#[macro_use]
+extern crate lazy_static;
+
 use self::formatters::{
     format_body, format_github_body, results_issues_count, results_issues_errors_count,
     results_issues_warnings_count, results_list_to_string, results_to_string,
@@ -15,7 +23,9 @@ use self::formatters::{
 };
 use crate::utils::Issue;
 use clap::Parser;
-use commands::{ApiClient, Build, Deploy, Start, Stop};
+
+use commands::{Build, Deploy, Start, Stop, ApiClient};
+
 use fs::TempFs;
 use options::{Cli, Commands};
 use serde_json::json;
@@ -153,6 +163,7 @@ fn main() {
             }
 
             let result = ApiClient::scan_website(&url, &file_manager).unwrap_or_default();
+
             let json_results = json!(&result);
 
             if *save {
@@ -207,8 +218,8 @@ fn main() {
             if *external {
                 env::set_var(EXTERNAL, external.to_string());
             }
-            let result =
-                ApiClient::crawl_website(&url, subdomains, tld, &file_manager).unwrap_or_default();
+            let result = ApiClient::crawl_website(&url, subdomains, tld, &file_manager).unwrap_or_default();
+
             let json_results = json!(result);
 
             if *save {

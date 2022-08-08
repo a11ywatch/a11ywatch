@@ -69,7 +69,7 @@ a11ywatch --set-cv-url https://$myvcvname.cognitiveservices.azure.com/
 Example options and commands `a11ywatch -h`:
 
 ```sh
-a11ywatch_cli 0.4.3
+a11ywatch_cli 0.6.51
 j-mendez <jeff@a11ywatch.com>
 A11yWatch accessibility CLI.
 
@@ -94,6 +94,9 @@ OPTIONS:
 
     -r, --results-parsed
             Get results file parsed to json
+
+    -r, --results-parsed-list
+            Get results file parsed as report list of passed / failed
 
         --results-issues
             Get the total amount of issues between errors,warning,notice that occured for the result
@@ -135,6 +138,18 @@ SUBCOMMANDS:
 ### Supported Architectures
 
 Mac, linux, and Windows.
+
+## Features
+
+You can enable the usage of a gRPC client instead of http by using the flag `--features grpc` on install.
+
+1. grpc - enable gRPC client [beta] (does not display issues only stats)
+
+## Help
+
+If you are trying to run a website that is running `localhost` inside a docker container you need to use your computers hostname instead.
+
+In terminal run the command `hostname` and then you can use it ex: `a11ywatch crawl --url $(hostname):3000`
 
 ### BETA
 

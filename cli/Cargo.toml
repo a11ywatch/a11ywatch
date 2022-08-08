@@ -1,6 +1,6 @@
 [package]
 name = "a11ywatch_cli"
-version = "0.6.51"
+version = "0.7.2"
 authors = ["j-mendez <jeff@a11ywatch.com>"]
 description = "A11yWatch accessibility CLI."
 repository = "https://github.com/a11ywatch/a11ywatch"
@@ -19,8 +19,18 @@ serde = { version = "1.0.136", features = ["derive"] }
 serde_json =  { version = "1.0.82" }
 dirs = "4.0"
 htr = "0.5.23"
+tonic = { version = "0.7.2", optional = true }
+lazy_static = { version = "1.4.0", optional = true }
+prost = { version = "0.10.0", optional = true }
+prost-types = { version = "0.10.0", optional = true }
+tokio = { version = "^1.20.0", features = [ "rt", "net", "macros" ], optional = true }
+
+[build-dependencies]
+tonic-build = { version = "0.7", optional = true }
 
 [[bin]]
 name = "a11ywatch"
 path = "src/main.rs"
 
+[features]
+grpc = ["dep:tonic-build", "dep:prost", "dep:lazy_static", "dep:tonic", "dep:prost-types", "dep:tokio"]

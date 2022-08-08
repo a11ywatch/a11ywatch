@@ -65,10 +65,6 @@ build/test.sh
 kubernetes/minikube-darwin-*
 # clients
 clients/target
-# ignore all generated api clients
-clients/libs/*_api_client/*
-!clients/libs/*_api_client/README.md
-!clients/libs/*_api_client/docs
 clients/openapitools.json
 
 #benches
@@ -80,3 +76,6 @@ pre-install.js
 package.json
 start.js
 uninstall.js
+
+# ignore all generated api clients
+!clients/src/proto/package.json
