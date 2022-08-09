@@ -1,7 +1,7 @@
 {
   "name": "@a11ywatch/protos",
-  "version": "0.3.0",
-  "description": "proto files for the A11yWatch system",
+  "version": "0.3.1",
+  "description": "Protocol buffers for the A11yWatch system",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
