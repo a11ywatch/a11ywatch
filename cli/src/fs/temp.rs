@@ -11,6 +11,8 @@ use std::path::Path;
 
 /// Manage file paths and contents for system
 pub(crate) struct TempFs {
+    /// temp directory for a11ywatch
+    tmp_dir: String,
     /// temp app directory for a11ywatch
     app_dir: String,
     /// backend infra compose file
@@ -45,10 +47,11 @@ pub(crate) trait Fs {
     fn set_token(&self) {}
     fn set_cv_url(&self) {}
     fn set_cv_token(&self) {}
-    fn ensure_temp_dir(&self);
+    fn ensure_temp_dir() {}
     fn create_compose_backend_file(&self, standalone: &bool);
     fn create_compose_frontend_file(&self);
     fn sync();
+    fn build(&self);
 }
 
 /// temporary file system
@@ -60,15 +63,13 @@ impl TempFs {
         let results_file = format!("{}/results.json", &app_dir);
         let results_github_file = format!("{}/results_github.json", &app_dir);
 
-        TempFs::ensure_temp_dir(&tmp_dir, &app_dir).unwrap();
-        TempFs::sync(&app_dir, &config_file).unwrap();
-
         Self {
             backend_compose: format!("{}/compose.yml", app_dir),
             frontend_compose: format!("{}/compose.frontend.yml", app_dir),
             results_file,
             config_file,
             app_dir,
+            tmp_dir,
             results_github_file,
         }
     }
@@ -78,8 +79,15 @@ impl TempFs {
         &self.app_dir
     }
 
+    // build project directory and make sure it always exist
+    pub fn build(&self) {
+        TempFs::ensure_temp_dir(&self.tmp_dir, &self.app_dir).unwrap(); // create project dir
+        TempFs::sync(&self.app_dir, &self.config_file).unwrap(); // sync versions
+    }
+
     /// create compose backend file is does not exist
     pub fn create_compose_backend_file(&mut self, standalone: &bool) -> std::io::Result<()> {
+        self.build();
         let sa = standalone == &true;
 
         let mut file = OpenOptions::new()
@@ -101,6 +109,7 @@ impl TempFs {
 
     /// create compose frontend file is does not exist
     pub fn create_compose_frontend_file(&mut self) -> std::io::Result<()> {
+        self.build();
         if !Path::new(&self.frontend_compose).exists() {
             let mut file = File::create(&self.frontend_compose)?;
             file.write_all(&generate_compose_frontend().as_bytes())?;
@@ -143,6 +152,7 @@ impl TempFs {
 
     /// set the api token to use for request
     pub fn set_token(&self, token: &String) -> std::io::Result<()> {
+        self.build();
         let file = File::open(&self.config_file)?;
         let mut prev_json: Value = from_reader(&file)?;
 
@@ -159,6 +169,7 @@ impl TempFs {
 
     /// set the Computer Vision api token to use for request
     pub fn set_cv_token(&self, token: &String) -> std::io::Result<()> {
+        self.build();
         let file = File::open(&self.config_file)?;
         let mut prev_json: Value = from_reader(&file)?;
 
@@ -177,6 +188,7 @@ impl TempFs {
 
     /// set the Computer Vision url to use for request
     pub fn set_cv_url(&self, u: &String) -> std::io::Result<()> {
+        self.build();
         let file = File::open(&self.config_file)?;
         let mut prev_json: Value = from_reader(&file)?;
 
@@ -195,6 +207,7 @@ impl TempFs {
 
     /// create an env file from the config
     pub fn create_env_file(&self) -> std::io::Result<()> {
+        self.build();
         let file = File::open(&self.config_file)?;
         let prev_json: Value = from_reader(&file)?;
         let env_path = format!("{}/.env", &self.app_dir);
@@ -285,6 +298,7 @@ impl TempFs {
 
     /// create compose frontend file is does not exist
     pub fn save_results(&self, json: &serde_json::Value) -> std::io::Result<()> {
+        self.build();
         let mut file = File::create(&self.results_file)?;
         file.write_all(&json.to_string().as_bytes())?;
 
@@ -293,6 +307,7 @@ impl TempFs {
 
     /// create compose frontend file is does not exist
     pub fn save_github_results(&self, json: &serde_json::Value) -> std::io::Result<()> {
+        self.build();
         let mut file = File::create(&self.results_github_file)?;
         file.write_all(&json.to_string().as_bytes())?;
 
@@ -365,14 +380,16 @@ impl Fs for TempFs {
             config_file: format!("{}/compose.json", app_dir),
             results_file,
             app_dir,
+            tmp_dir,
             results_github_file,
         }
     }
-    fn ensure_temp_dir(&self) {}
+    fn ensure_temp_dir() {}
     fn create_compose_backend_file(&self, _standalone: &bool) {}
     fn create_compose_frontend_file(&self) {}
     fn set_token(&self) {}
     fn set_cv_url(&self) {}
     fn set_cv_token(&self) {}
     fn sync() {}
+    fn build(&self) {}
 }
