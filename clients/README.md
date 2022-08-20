@@ -2,9 +2,7 @@
 
 This folder is used to handle the code to generate the clients.
 
-Clients generated via [protobuf files](./src/proto) and [OpenAPI](./src/schema/api.json).
-
-You can also get the protobuf files by using `npm i @a11ywatch/protos`.
+Clients generated using [protocol buffers](https://github.com/a11ywatch/protobuf) and [OpenAPI](./src/schema/api.json).
 
 ## Clients
 
@@ -26,7 +24,7 @@ You can view all of the clients source code [here on GitLab](https://gitlab.com/
 
 - [Java](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/java_api_client)
 
-- [Javascript](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/javascript_api_client)
+- [JavaScript](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/javascript_api_client)
 
 - [Lua](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/lua_api_client)
 
@@ -55,4 +53,4 @@ cargo run # generate all clients OpenAPI clients.
 
 ## gRPC
 
-The gRC calls only work on self-hosted or enterprise accounts. None of the ports are exposed to the public for the gRPC API unless you are a partner.
+The gRC calls only work on self-hosted or enterprise accounts.

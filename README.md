@@ -1,7 +1,7 @@
 <div align="center">
   <h1>A11yWatch</h1>
   <p>
-    <strong>A11yWatch is a powerful web accessibility toolkit made using Rust and Nodejs</strong>
+    <strong>A11yWatch is a powerful web accessibility toolkit made using Rust and JavaScript</strong>
   </p>
   <p>
 
@@ -35,14 +35,11 @@ services:
       - 3280:3280
 ```
 
-If you want to integrate your system with A11yWatch the simplest way is to use the nodejs [sidecar](https://github.com/A11yWatch/sidecar).
+If you want to integrate your system with A11yWatch the simplest way is to use the javascript [sidecar](https://github.com/a11ywatch/sidecar).
 
 ## Contributing
 
 Read the [contributing guide](./CONTRIBUTING.md) to learn about our development process, how to propose bug fixes and improvements, how to build and test your changes to A11yWatch.
-
-Notice that contributions go far beyond pull requests and commits.
-Although we love giving you the opportunity to put your stamp on A11yWatch, we also are thrilled to receive a variety of [other contributions](https://a11ywatch.com/faq).
 
 ## Support
 
