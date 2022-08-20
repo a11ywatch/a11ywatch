@@ -18,6 +18,8 @@ We have comparisons set against different languages and libs that can be used to
 
 ## Benchmark Results
 
+#### crawl-speed (Small Website)
+
 Case: `https://a11ywatch.com` multi site scan.
 10x simultaneous runs each ran via localhost to avoid latency.
 
@@ -26,3 +28,17 @@ Case: `https://a11ywatch.com` multi site scan.
 | **`Rust[a11ywatch]: with crawl 10 times against 28 urls`** | `1.1 s` (✅ **1.00x**) |
 | **`Nodejs[Pa11y]: with crawl 10 times against 25 urls`**   | `63 s` (✅ **1.00x**)  |
 | **`Nodejs[Axe]: with crawl 10 times against 25 urls`**     | `113 s` (✅ **1.00x**) |
+
+#### crawl-speed (Large Website)
+
+Test url: `https://www.hbo.com`
+
+7500 pages.
+
+runs with 10 samples:
+
+|                        | `libraries`               |
+| :--------------------- | :------------------------ |
+| **`A11yWatch: crawl`** | `2.5 mins` (✅ **1.00x**) |
+| **`Pa11y-CI: crawl`**  | `50+ hr` (✅ **1.00x**)   |
+| **`Axe: crawl`**       | `N/A` (✅ **1.00x**)      |

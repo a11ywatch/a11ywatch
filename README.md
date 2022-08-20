@@ -50,7 +50,7 @@ Case: `https://a11ywatch.com` multi site scan.
 
 A11yWatch handles 3 more urls since it can handle dynamic parameters for pages.
 It is important to handle parameters since the output of the page can change.
-A11yWatch shines brighter if the website is larger. It can handle running over 10k pages in under 10 mins with 8gb of memory on linux.
+A11yWatch shines brighter if the website is larger. It can handle running over 10k pages easily under 5 mins with 8gb of memory on linux.
 
 ## Contributing
 

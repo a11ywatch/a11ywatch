@@ -3,7 +3,7 @@ use crate::generators::compose::{
 };
 use serde_json::{from_reader, json, Value};
 use std::fs::OpenOptions;
-use std::fs::{create_dir, read_to_string, remove_dir_all, remove_file, File};
+use std::fs::{create_dir, read_to_string, remove_file, File};
 use std::io::prelude::*;
 use std::io::LineWriter;
 use std::io::{BufRead, BufReader};
@@ -342,12 +342,7 @@ impl TempFs {
 
             if version != current_version {
                 if !app_dir.is_empty() {
-                    // reset app directory contents [TODO: only clear certain contents instead entire dir]
-                    if Path::new(&app_dir).exists() {
-                        remove_dir_all(&app_dir)
-                            .unwrap_or(println!("cannot remove all directorys."))
-                    }
-                    create_dir(&app_dir).unwrap_or(println!("directory already exist skipping."));
+                    // TODO: handle directory cleanup
                 }
 
                 let json = json!({ "version": version });
