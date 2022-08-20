@@ -37,6 +37,21 @@ services:
 
 If you want to integrate your system with A11yWatch the simplest way is to use the javascript [sidecar](https://github.com/a11ywatch/sidecar).
 
+## [Benchmarks](./benchmarks)
+
+Case: `https://a11ywatch.com` multi site scan.
+10x simultaneous runs each ran via localhost to avoid latency.
+
+|                                                            | `libraries`            |
+| :--------------------------------------------------------- | :--------------------- |
+| **`Rust[a11ywatch]: with crawl 10 times against 28 urls`** | `1.1 s` (✅ **1.00x**) |
+| **`Nodejs[Pa11y]: with crawl 10 times against 25 urls`**   | `63 s` (✅ **1.00x**)  |
+| **`Nodejs[Axe]: with crawl 10 times against 25 urls`**     | `113 s` (✅ **1.00x**) |
+
+A11yWatch handles 3 more urls since it can handle dynamic parameters for pages.
+It is important to handle parameters since the output of the page can change.
+A11yWatch shines brighter if the website is larger. It can handle running over 10k pages in under 10 mins with 8gb of memory on linux.
+
 ## Contributing
 
 Read the [contributing guide](./CONTRIBUTING.md) to learn about our development process, how to propose bug fixes and improvements, how to build and test your changes to A11yWatch.
