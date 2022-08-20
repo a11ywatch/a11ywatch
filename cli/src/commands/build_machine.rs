@@ -20,7 +20,7 @@ impl Build {
             Command::new("npm")
                 .args(["i", "@a11ywatch/a11ywatch", "-g"])
                 .status()
-                .expect("Failed to execute command - compose down command");
+                .expect("Failed to execute command - npm install command");
         } else {
             file_manager.create_env_file().unwrap();
             file_manager

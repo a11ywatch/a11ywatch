@@ -31,6 +31,9 @@ pub enum Commands {
         /// standalone container [defaults to true]
         #[clap(short, long)]
         standalone: bool,
+        /// use the bun runtime - requires local flag as well [BETA].
+        #[clap(short, long)]
+        bun: bool,
     },
     /// Stop the project on the local machine [defaults to docker runtime]
     STOP {

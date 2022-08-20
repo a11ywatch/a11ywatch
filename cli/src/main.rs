@@ -34,6 +34,7 @@ use std::io::{self, Write};
 
 const INCLUDE_FRONTEND: &str = "INCLUDE_FRONTEND";
 const EXTERNAL: &str = "EXTERNAL";
+const BUN: &str = "BUN"; // bun runtime
 
 fn main() {
     let cli = Cli::parse();
@@ -123,8 +124,11 @@ fn main() {
             local,
             upgrade,
             standalone,
+            bun
         }) => {
             env::set_var(INCLUDE_FRONTEND, frontend.to_string());
+            env::set_var(BUN, bun.to_string());
+
             if *upgrade {
                 Build::upgrade(&local, &standalone);
             }

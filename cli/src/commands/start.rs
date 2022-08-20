@@ -1,6 +1,7 @@
 use crate::fs::TempFs;
 use crate::launchers::docker;
-use crate::INCLUDE_FRONTEND;
+use crate::{INCLUDE_FRONTEND, BUN};
+
 use std::env;
 use std::path::Path;
 use std::process::Command;
@@ -30,10 +31,28 @@ impl Start {
             let node_dir = node_dir.join("@a11ywatch/a11ywatch");
             let node_dir = node_dir.display();
 
-            Command::new("npm")
-                .args(["run", "start", "--prefix", &node_dir.to_string()])
-                .status()
-                .expect("Failed to execute @a11ywatch/a11ywatch command!");
+            let runtime: &str = match env::var(BUN) {
+                Ok(val) => {
+                    if val == "true" {
+                        "bun"
+                    } else {
+                        "node"
+                    }
+                },
+                Err(_) => "node",
+            };
+
+            if runtime == "bun" {
+                Command::new("bun")
+                    .args(["run", &format!("{}/{}", node_dir.to_string(), "server.js")])
+                    .status()
+                    .expect("Failed to execute @a11ywatch/a11ywatch bun command!");
+            } else {
+                Command::new("npm")
+                    .args(["run", "start", "--prefix", &node_dir.to_string()])
+                    .status()
+                    .expect("Failed to execute @a11ywatch/a11ywatch node command!");
+            }
         } else {
             if frontend {
                 file_manager.create_compose_frontend_file().unwrap();
