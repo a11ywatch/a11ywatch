@@ -12,7 +12,7 @@ services:
     depends_on:
       - mongodb
     environment:
-      - DB_URL=${DB_URL:-mongodb://mongodb:27017/?compressors=zlib&gssapiServiceName=mongodb}
+      - DB_URL=${DB_URL:-mongodb://mongodb:27017}
       - DB_NAME=${DB_NAME:-a11ywatch}
       - APOLLO_GRAPH_VARIANT=${APOLLO_GRAPH_VARIANT:-current}
       - APOLLO_SCHEMA_REPORTING=${APOLLO_SCHEMA_REPORTING:-false}

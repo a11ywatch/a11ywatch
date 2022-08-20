@@ -32,7 +32,7 @@ services:
       - APOLLO_GRAPH_VARIANT=${APOLLO_GRAPH_VARIANT:-current}
       - APOLLO_SCHEMA_REPORTING=${APOLLO_SCHEMA_REPORTING:-false}
       - CLIENT_URL=${CLIENT_URL:-http://localhost:3000}
-      - DB_URL=${DB_URL:-mongodb://mongodb:27017/?compressors=zlib&gssapiServiceName=mongodb}
+      - DB_URL=${DB_URL:-mongodb://mongodb:27017}
       - DB_NAME=${DB_NAME:-a11ywatch}
       - EMAIL_SERVICE_URL=${EMAIL_SERVICE_URL}
       - EMAIL_CLIENT_ID=${EMAIL_CLIENT_ID}
