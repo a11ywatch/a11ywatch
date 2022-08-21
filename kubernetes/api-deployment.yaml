@@ -36,7 +36,7 @@ spec:
             - name: DB_NAME
               value: a11ywatch
             - name: DB_URL
-              value: mongodb://mongodb:27017/?compressors=zlib&gssapiServiceName=mongodb
+              value: mongodb://mongodb:27017
             - name: EMAIL_CLIENT_ID
             - name: EMAIL_CLIENT_KEY
             - name: EMAIL_SERVICE_URL
