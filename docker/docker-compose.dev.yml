@@ -125,6 +125,7 @@ services:
       - 50055
     networks:
       - back-net
+      - front-net
     environment:
       - RUST_LOG=info
 
