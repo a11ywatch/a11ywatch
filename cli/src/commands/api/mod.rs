@@ -1,4 +1,3 @@
-
 #[cfg(not(feature = "grpc"))]
 pub mod rest;
 

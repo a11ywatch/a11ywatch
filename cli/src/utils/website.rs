@@ -1,5 +1,5 @@
-use serde::{Deserialize, Serialize};
 use crate::utils::{Issue, IssueInfo};
+use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct LightHouse {
@@ -58,7 +58,10 @@ impl From<Page> for Website {
             ada_score: issues_info.ada_score,
             total_issues: issues_info.total_issues,
             issue_meta: crate::utils::issue_info::IssueMeta {
-                skip_content_included: issues_info.issue_meta.unwrap_or_default().skip_content_included
+                skip_content_included: issues_info
+                    .issue_meta
+                    .unwrap_or_default()
+                    .skip_content_included,
             },
             issues_fixed_by_cdn: issues_info.issues_fixed_by_cdn,
             notice_count: issues_info.notice_count,

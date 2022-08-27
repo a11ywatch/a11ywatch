@@ -7,11 +7,7 @@ use std::env;
 use std::time::Instant;
 use ureq::{json, post, Error};
 
-pub static APP_USER_AGENT: &str = concat!(
-    env!("CARGO_PKG_NAME"),
-    "/",
-    env!("CARGO_PKG_VERSION"),
-);
+pub static APP_USER_AGENT: &str = concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"),);
 
 #[derive(Deserialize, Serialize, Debug, Default)]
 pub struct ApiResult {
@@ -29,7 +25,6 @@ pub struct CrawlApiResult {
     pub message: String,
     pub code: i32,
 }
-
 
 #[derive(Debug, Default)]
 pub(crate) struct ApiClient {}
@@ -54,6 +49,7 @@ impl ApiClient {
         .send_json(json!({ "websiteUrl": url }))?
         .into_json()?;
 
+        // TODO: add duration elasped
         Ok(resp)
     }
 
@@ -69,12 +65,12 @@ impl ApiClient {
             Err(_) => "http://127.0.0.1:3280",
         }
         .to_string();
-
         let request_destination = format!("{}/api/crawl-stream-slim", target_destination);
         let token = file_manager.get_token();
         let agent = ureq::agent();
 
         let start = Instant::now();
+
         let resp = if !token.is_empty() {
             agent
                 .post(&request_destination)
@@ -105,7 +101,7 @@ impl ApiClient {
         }
 
         let mut results: CrawlApiResult = CrawlApiResult::default();
-                
+
         results.data = Some(resp);
         results.message = format!("Crawled {} page{} in {:?}", res_len, res_end, duration);
         results.success = true;

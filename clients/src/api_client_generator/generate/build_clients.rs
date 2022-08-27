@@ -1,10 +1,10 @@
-use std::fs::{File, create_dir};
-use std::path::Path;
 use serde::Deserialize;
+use std::fs;
+use std::fs::{create_dir, File};
+use std::path::Path;
+use std::path::PathBuf;
 use std::process::Command;
 use std::thread;
-use std::path::PathBuf;
-use std::fs;
 
 /// individual coding language from the rest schema
 #[derive(Debug, Deserialize)]
@@ -13,7 +13,7 @@ struct Language {
     name: String,
 }
 
-/// rest schema 
+/// rest schema
 #[derive(Debug, Deserialize)]
 struct Rest {
     /// the languages to target client generating
@@ -25,9 +25,12 @@ pub fn generate_clients() {
     println!("building js client...");
     let srcdir = PathBuf::from("./src");
     // schema abs path to string
-    let schema_dir = format!("{}/schema/", fs::canonicalize(&srcdir).unwrap().to_string_lossy());
+    let schema_dir = format!(
+        "{}/schema/",
+        fs::canonicalize(&srcdir).unwrap().to_string_lossy()
+    );
     let dist_dir = "../../a11ywatch_clients/";
-    
+
     // make sure a11ywatch_clients folder exist
     if !Path::new(&dist_dir).exists() {
         create_dir(&dist_dir).unwrap();
@@ -37,7 +40,7 @@ pub fn generate_clients() {
     let dist_dir = fs::canonicalize(&dist_dir).unwrap();
     // dist abs path to string
     let dist_dir = &dist_dir.to_string_lossy();
-    
+
     let file = File::open(format!("{}/rest.json", schema_dir)).unwrap();
     let rest: Rest = serde_json::from_reader(file).expect("JSON not formatted correctly");
 
@@ -49,7 +52,15 @@ pub fn generate_clients() {
         let language_dir = format!("{}/{}_api_client", &dist_dir, &lang.name);
 
         Command::new("openapi-generator-cli")
-            .args(["generate", "-i",  &api_file_loc, "-g", &lang.name, "-o", &language_dir])
+            .args([
+                "generate",
+                "-i",
+                &api_file_loc,
+                "-g",
+                &lang.name,
+                "-o",
+                &language_dir,
+            ])
             .status()
             .expect("Failed to execute command - openapi-generator");
 
@@ -60,7 +71,7 @@ pub fn generate_clients() {
                     .args(["install", "--prefix", &language_dir])
                     .status()
                     .expect("Failed to install to npm");
-                
+
                 Command::new("npm")
                     .args(["publish", &language_dir])
                     .status()

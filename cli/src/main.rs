@@ -1,4 +1,5 @@
 extern crate dirs;
+extern crate env_logger;
 extern crate htr;
 
 pub mod commands;
@@ -21,10 +22,11 @@ use self::formatters::{
     results_issues_warnings_count, results_list_to_string, results_to_string,
     results_to_string_github,
 };
+
 use crate::utils::Issue;
 use clap::Parser;
 
-use commands::{Build, Deploy, Start, Stop, ApiClient};
+use commands::{ApiClient, Build, Deploy, Start, Stop};
 
 use fs::TempFs;
 use options::{Cli, Commands};
@@ -124,7 +126,7 @@ fn main() {
             local,
             upgrade,
             standalone,
-            bun
+            bun,
         }) => {
             env::set_var(INCLUDE_FRONTEND, frontend.to_string());
             env::set_var(BUN, bun.to_string());
@@ -167,7 +169,6 @@ fn main() {
             }
 
             let result = ApiClient::scan_website(&url, &file_manager).unwrap_or_default();
-
             let json_results = json!(&result);
 
             if *save {
@@ -182,23 +183,10 @@ fn main() {
         }
         Some(Commands::EXTRACT { platform, list }) => {
             if platform == "github" {
-                // list report as a pass fail list
+                // list report as pass fail list
                 if *list {
-                    let mut report_message =
-                        String::from("<details><summary>A11yWatch testing results</summary><br>");
                     let results = results_list_to_string(&file_manager);
-
-                    report_message.push_str(&format!(
-                        r#"
-
-```
-{}
-```
-
-"#,
-                        &results
-                    ));
-                    report_message.push_str("</details>");
+                    let report_message = utils::format_results(results);
                     let json_data = format_github_body(&report_message, &report_message);
                     file_manager
                         .save_github_results(&json_data)
@@ -218,12 +206,24 @@ fn main() {
             subdomains,
             tld,
             fix,
+            debug,
         }) => {
             if *external {
                 env::set_var(EXTERNAL, external.to_string());
             }
-            let result = ApiClient::crawl_website(&url, subdomains, tld, &file_manager).unwrap_or_default();
-
+            if *debug {
+                env::set_var(
+                    "RUST_LOG",
+                    if cfg!(feature = "grpc") {
+                        "a11ywatch::rpc::client=debug"
+                    } else {
+                        "ureq=debug"
+                    },
+                );
+                env_logger::init();
+            }
+            let result =
+                ApiClient::crawl_website(&url, subdomains, tld, &file_manager).unwrap_or_default();
             let json_results = json!(result);
 
             if *save {

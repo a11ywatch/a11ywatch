@@ -146,7 +146,7 @@ impl TempFs {
         if Path::new(&self.config_file).exists() {
             let file = File::open(&self.config_file).unwrap();
             let json: Value = from_reader(&file).unwrap();
-    
+
             json["token"].as_str().unwrap_or_default().into()
         } else {
             "".into()

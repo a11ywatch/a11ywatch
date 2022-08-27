@@ -34,3 +34,23 @@ pub fn get_api() -> String {
         project_repo_name, project_user_name, project_branch_name
     )
 }
+
+// format results to send a basic message on github
+pub fn format_results(results: String) -> String {
+    let mut report_message =
+        String::from("<details><summary>A11yWatch testing results</summary><br>");
+
+    report_message.push_str(&format!(
+        r#"
+
+    ```
+    {}
+    ```
+
+    "#,
+        &results
+    ));
+    report_message.push_str("</details>");
+
+    report_message
+}

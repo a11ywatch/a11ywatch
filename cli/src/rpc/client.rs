@@ -2,13 +2,14 @@ pub mod apicore {
     tonic::include_proto!("apicore");
 }
 
+use log;
 use std::env::var;
 use tonic::transport::Channel;
 use tonic::Request;
 
-pub use apicore::{core_service_client::CoreServiceClient, CrawlParams};
-use crate::EXTERNAL;
 use crate::utils::Website;
+use crate::EXTERNAL;
+pub use apicore::{core_service_client::CoreServiceClient, CrawlParams};
 
 /// create gRPC client from the API CORE server.
 pub async fn create_client() -> Result<CoreServiceClient<Channel>, tonic::transport::Error> {
@@ -26,10 +27,7 @@ pub async fn create_client() -> Result<CoreServiceClient<Channel>, tonic::transp
 }
 
 /// run accessibility single page results.
-pub async fn scan(
-    url: String,
-    authorization: String,
-) -> Website {
+pub async fn scan(url: String, authorization: String) -> Website {
     let mut client = create_client().await.unwrap();
     let page = CrawlParams {
         url,
@@ -47,7 +45,7 @@ pub async fn crawl(
     url: String,
     authorization: String,
     subdomains: bool,
-    tld: bool
+    tld: bool,
 ) -> Vec<Website> {
     let mut client = create_client().await.unwrap();
     let page = CrawlParams {
@@ -60,10 +58,13 @@ pub async fn crawl(
     let request = Request::new(page);
     let mut stream = client.crawl(request).await.unwrap().into_inner();
 
+    // process incoming websites into collection.
     let mut websites: Vec<Website> = Vec::new();
 
     while let Some(res) = stream.message().await.unwrap() {
-        websites.push(res.data.unwrap_or_default().to_owned().into())
+        let page = res.data.unwrap_or_default();
+        log::debug!("processed - {}", &page.url);
+        websites.push(page.into())
     }
 
     websites

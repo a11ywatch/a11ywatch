@@ -1,18 +1,14 @@
 use crate::fs::temp::TempFs;
+use crate::rpc::{crawl, scan};
 use crate::utils::Website;
-use crate::rpc::{scan, crawl};
 
 use serde::{Deserialize, Serialize};
 
 use std::env;
 use std::time::Instant;
-use ureq::{Error};
+use ureq::Error;
 
-pub static APP_USER_AGENT: &str = concat!(
-    env!("CARGO_PKG_NAME"),
-    "/",
-    env!("CARGO_PKG_VERSION"),
-);
+pub static APP_USER_AGENT: &str = concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"),);
 
 #[derive(Deserialize, Serialize, Debug, Default)]
 pub struct ApiResult {
@@ -41,10 +37,14 @@ impl ApiClient {
         let token = file_manager.get_token();
         let mut resp: ApiResult = ApiResult::default();
 
+        let start = Instant::now();
         let data = scan(url.to_string(), token).await;
-        
+        let duration = start.elapsed();
+
         resp.data = Some(data);
-        
+        resp.success = true;
+        resp.message = format!("Scan completed in {:?}", duration);
+
         Ok(resp)
     }
     /// Site wide scan [Stream]
@@ -55,13 +55,13 @@ impl ApiClient {
         tld: &bool,
         file_manager: &TempFs,
     ) -> Result<CrawlApiResult, Error> {
-        let start = Instant::now();
-
         let token = file_manager.get_token();
         let mut results: CrawlApiResult = CrawlApiResult::default();
 
+        let start = Instant::now();
+
         let resp = crawl(url.to_string(), token, *subdomains, *tld).await;
-        
+
         let duration = start.elapsed();
 
         let res_len = resp.len();
@@ -69,7 +69,7 @@ impl ApiClient {
         if res_len == 1 {
             res_end = "";
         }
-                
+
         results.data = Some(resp);
         results.message = format!("Crawled {} page{} in {:?}", res_len, res_end, duration);
         results.success = true;

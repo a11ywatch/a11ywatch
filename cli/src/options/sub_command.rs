@@ -79,6 +79,9 @@ pub enum Commands {
         /// attempt to fix the code being applied with recommendations
         #[clap(short, long)]
         fix: bool,
+        /// enable log output on crawl
+        #[clap(short, long)]
+        debug: bool,
     },
     /// Extract results in formats for platforms
     EXTRACT {

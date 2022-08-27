@@ -11,6 +11,8 @@ Get the CLI by running one of the commands below.
 cargo install a11ywatch_cli
 # install via npm
 npm i a11ywatch-cli -g
+# install gRPC enabled client to use with local instances
+cargo install a11ywatch_cli --features grpc  --path .
 ```
 
 Startup:
@@ -18,7 +20,6 @@ Startup:
 ```sh
 # build the instance first, this allows configuring architecture specifics like apple m1 chips.
 a11ywatch build
-
 # start the instance. If you need the front-end client passing the -f option [min of 1.25gb of memory required alloc to docker resource].
 a11ywatch start
 # if you need to upgrade the instance to new images run with the upgrade flag.
@@ -144,8 +145,10 @@ Mac, linux, and Windows.
 ## Features
 
 You can enable the usage of a gRPC client instead of http by using the flag `--features grpc` on install.
+This runs drastically faster on large websites and allows logs on stream per crawl to get a better idea on
+what is going on.
 
-1. grpc - enable gRPC client [beta] (does not display issues only stats)
+1. grpc - enable gRPC client [beta] (does not display issues only stats).
 
 ## Help
 

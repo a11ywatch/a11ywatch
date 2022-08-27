@@ -1,6 +1,6 @@
 use crate::fs::TempFs;
 use crate::launchers::docker;
-use crate::{INCLUDE_FRONTEND, BUN};
+use crate::{BUN, INCLUDE_FRONTEND};
 
 use std::env;
 use std::path::Path;
@@ -13,7 +13,6 @@ impl Start {
     /// start the a11ywatch application through docker or locally.
     pub fn process(local: &bool, standalone: &bool) -> bool {
         let mut file_manager = TempFs::new();
-
         let frontend: bool = match env::var(INCLUDE_FRONTEND) {
             Ok(val) => val == "true",
             Err(_) => false,
@@ -38,7 +37,7 @@ impl Start {
                     } else {
                         "node"
                     }
-                },
+                }
                 Err(_) => "node",
             };
 
