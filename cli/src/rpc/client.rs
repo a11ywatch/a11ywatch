@@ -61,7 +61,7 @@ pub async fn crawl(
     // process incoming websites into collection.
     let mut websites: Vec<Website> = Vec::new();
 
-    while let Some(res) = stream.message().await.unwrap() {
+    while let Some(res) = stream.message().await.unwrap_or_default() {
         let page = res.data.unwrap_or_default();
         log::debug!("processed - {}", &page.url);
         websites.push(page.into())
