@@ -58,6 +58,7 @@ impl ApiClient {
         url: &str,
         subdomains: &bool,
         tld: &bool,
+        norobo: &bool,
         file_manager: &TempFs,
     ) -> Result<CrawlApiResult, Error> {
         let target_destination: String = match env::var(EXTERNAL) {
@@ -85,7 +86,8 @@ impl ApiClient {
         .send_json(json!({
             "websiteUrl": url,
             "tld": tld,
-            "subdomains": subdomains
+            "subdomains": subdomains,
+            "robots": norobo == &false
         }))?;
         let mut resp: Vec<Website> = resp.into_json().unwrap();
         let duration = start.elapsed();

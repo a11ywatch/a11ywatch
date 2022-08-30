@@ -181,30 +181,13 @@ fn main() {
 
             println!("{}", json_results);
         }
-        Some(Commands::EXTRACT { platform, list }) => {
-            if platform == "github" {
-                // list report as pass fail list
-                if *list {
-                    let results = results_list_to_string(&file_manager);
-                    let report_message = utils::format_results(results);
-                    let json_data = format_github_body(&report_message, &report_message);
-                    file_manager
-                        .save_github_results(&json_data)
-                        .unwrap_or_default();
-
-                    println!("{}", json_data);
-                } else {
-                    let json_data = format_body(&file_manager, cli.github_results_path);
-                    println!("{}", json_data);
-                }
-            }
-        }
         Some(Commands::CRAWL {
             url,
             external,
             save,
             subdomains,
             tld,
+            norobo,
             fix,
             debug,
         }) => {
@@ -223,7 +206,7 @@ fn main() {
                 env_logger::init();
             }
             let result =
-                ApiClient::crawl_website(&url, subdomains, tld, &file_manager).unwrap_or_default();
+                ApiClient::crawl_website(&url, subdomains, tld, norobo, &file_manager).unwrap_or_default();
             let json_results = json!(result);
 
             if *save {
@@ -235,6 +218,24 @@ fn main() {
             }
 
             println!("{}", json_results);
+        }
+        Some(Commands::EXTRACT { platform, list }) => {
+            if platform == "github" {
+                // list report as pass fail list
+                if *list {
+                    let results = results_list_to_string(&file_manager);
+                    let report_message = utils::format_results(results);
+                    let json_data = format_github_body(&report_message, &report_message);
+                    file_manager
+                        .save_github_results(&json_data)
+                        .unwrap_or_default();
+
+                    println!("{}", json_data);
+                } else {
+                    let json_data = format_body(&file_manager, cli.github_results_path);
+                    println!("{}", json_data);
+                }
+            }
         }
         None => {}
     }

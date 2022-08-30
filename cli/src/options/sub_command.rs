@@ -76,6 +76,9 @@ pub enum Commands {
         /// Include different TLD extensions matching hostname
         #[clap(short, long)]
         tld: bool,
+        /// Do not respect the robots.txt file
+        #[clap(short, long)]
+        norobo: bool,
         /// attempt to fix the code being applied with recommendations
         #[clap(short, long)]
         fix: bool,

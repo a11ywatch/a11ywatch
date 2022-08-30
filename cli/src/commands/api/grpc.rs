@@ -53,6 +53,7 @@ impl ApiClient {
         url: &str,
         subdomains: &bool,
         tld: &bool,
+        norobo: &bool,
         file_manager: &TempFs,
     ) -> Result<CrawlApiResult, Error> {
         let token = file_manager.get_token();
@@ -60,7 +61,7 @@ impl ApiClient {
 
         let start = Instant::now();
 
-        let resp = crawl(url.to_string(), token, *subdomains, *tld).await;
+        let resp = crawl(url.to_string(), token, *subdomains, *tld, *norobo).await;
 
         let duration = start.elapsed();
 
