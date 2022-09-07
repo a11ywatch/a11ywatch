@@ -44,7 +44,7 @@ Case: `https://a11ywatch.com` multi site scan.
 
 |                                                            | `libraries`            |
 | :--------------------------------------------------------- | :--------------------- |
-| **`Rust[a11ywatch]: with crawl 10 times against 28 urls`** | `1.1 s` (✅ **1.00x**) |
+| **`Rust[a11ywatch]: with crawl 10 times against 28 urls`** | `0.1 s` (✅ **1.00x**) |
 | **`Nodejs[Pa11y]: with crawl 10 times against 25 urls`**   | `63 s` (✅ **1.00x**)  |
 | **`Nodejs[Axe]: with crawl 10 times against 25 urls`**     | `113 s` (✅ **1.00x**) |
 
