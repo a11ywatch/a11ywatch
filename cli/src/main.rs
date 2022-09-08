@@ -200,7 +200,7 @@ fn main() {
                     if cfg!(feature = "grpc") {
                         "a11ywatch::rpc::client=debug"
                     } else {
-                        "ureq=debug"
+                        "reqwest=debug"
                     },
                 );
                 env_logger::init();

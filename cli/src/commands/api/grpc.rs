@@ -6,7 +6,6 @@ use serde::{Deserialize, Serialize};
 
 use std::env;
 use std::time::Instant;
-use ureq::Error;
 
 pub static APP_USER_AGENT: &str = concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"),);
 
@@ -33,7 +32,7 @@ pub(crate) struct ApiClient {}
 impl ApiClient {
     /// Single page scan
     #[tokio::main]
-    pub async fn scan_website(url: &str, file_manager: &TempFs) -> Result<ApiResult, Error> {
+    pub async fn scan_website(url: &str, file_manager: &TempFs) -> Result<ApiResult, ()> {
         let token = file_manager.get_token();
         let mut resp: ApiResult = ApiResult::default();
 
@@ -55,7 +54,7 @@ impl ApiClient {
         tld: &bool,
         norobo: &bool,
         file_manager: &TempFs,
-    ) -> Result<CrawlApiResult, Error> {
+    ) -> Result<CrawlApiResult, ()> {
         let token = file_manager.get_token();
         let mut results: CrawlApiResult = CrawlApiResult::default();
 
