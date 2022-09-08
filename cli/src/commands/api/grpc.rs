@@ -32,7 +32,7 @@ pub(crate) struct ApiClient {}
 
 impl ApiClient {
     /// Single page scan
-    #[tokio::main(flavor = "current_thread")]
+    #[tokio::main]
     pub async fn scan_website(url: &str, file_manager: &TempFs) -> Result<ApiResult, Error> {
         let token = file_manager.get_token();
         let mut resp: ApiResult = ApiResult::default();
@@ -48,7 +48,7 @@ impl ApiClient {
         Ok(resp)
     }
     /// Site wide scan [Stream]
-    #[tokio::main(flavor = "current_thread")]
+    #[tokio::main]
     pub async fn crawl_website(
         url: &str,
         subdomains: &bool,

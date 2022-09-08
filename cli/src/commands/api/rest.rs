@@ -48,7 +48,7 @@ impl ApiClient {
         }
         .send_json(json!({ "websiteUrl": url }))?
         .into_json()?;
-
+        
         // TODO: add duration elasped
         Ok(resp)
     }
