@@ -118,7 +118,7 @@ services:
     container_name: crawler
     build:
       context: ../../crawler
-      dockerfile: Dockerfile.dev
+      dockerfile: docker/Dockerfile.dev
     volumes:
       - ../../crawler/src:/usr/src/app/src
     ports:
@@ -138,18 +138,6 @@ services:
       - mongodb:/data/db
     environment:
       - MONGO_INITDB_DATABASE=${DB_NAME:-a11ywatch}
-    networks:
-      - back-net
-
-  mongoclient:
-    container_name: mongoclient
-    image: mongo-express
-    ports:
-      - "3100:8081"
-    environment:
-      - ME_CONFIG_MONGODB_URL=${HOST:-mongodb://mongodb:27017/?compressors=zlib&gssapiServiceName=mongodb}
-    depends_on:
-      - mongodb
     networks:
       - back-net
 
@@ -219,6 +207,18 @@ services:
       ]
     ports:
       - "9222:9222"
+    networks:
+      - back-net
+
+  mongoclient:
+    container_name: mongoclient
+    image: mongo-express
+    ports:
+      - "3100:8081"
+    environment:
+      - ME_CONFIG_MONGODB_URL=${HOST:-mongodb://mongodb:27017/?compressors=zlib&gssapiServiceName=mongodb}
+    depends_on:
+      - mongodb
     networks:
       - back-net
 

@@ -117,7 +117,7 @@ services:
     container_name: crawler
     build:
       context: ../../crawler
-      dockerfile: Dockerfile
+      dockerfile: docker/Dockerfile
     volumes:
       - ../../crawler/src:/usr/src/app/src
     ports:
