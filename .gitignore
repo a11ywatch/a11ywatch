@@ -74,8 +74,10 @@ benchmarks/node_modules
 # tmp store move to CI and rust generation
 pre-install.js
 package.json
+package-lock.json
 start.js
 uninstall.js
+node_modules
 
 # ignore all generated api clients
 !clients/src/proto/package.json
