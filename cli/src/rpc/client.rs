@@ -46,7 +46,7 @@ pub async fn crawl(
     authorization: String,
     subdomains: bool,
     tld: bool,
-    norobo: bool
+    norobo: bool,
 ) -> Vec<Website> {
     let mut client = create_client().await.unwrap();
     let page = CrawlParams {

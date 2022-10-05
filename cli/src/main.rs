@@ -205,8 +205,8 @@ fn main() {
                 );
                 env_logger::init();
             }
-            let result =
-                ApiClient::crawl_website(&url, subdomains, tld, norobo, &file_manager).unwrap_or_default();
+            let result = ApiClient::crawl_website(&url, subdomains, tld, norobo, &file_manager)
+                .unwrap_or_default();
             let json_results = json!(result);
 
             if *save {

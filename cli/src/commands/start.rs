@@ -49,7 +49,7 @@ impl Start {
             } else {
                 Command::new("npm")
                     .args(["run", "start", "--prefix", &node_dir.to_string()])
-                    .status()
+                    .spawn()
                     .expect("Failed to execute @a11ywatch/a11ywatch node command!");
             }
         } else {

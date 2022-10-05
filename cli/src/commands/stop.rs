@@ -14,12 +14,28 @@ impl Stop {
             Ok(val) => val == "true",
             Err(_) => false,
         };
-        // todo: destroy exact process
         if *local {
-            Command::new("killall")
-                .args(["-9", "node"])
-                .status()
-                .expect("Failed to execute killall command.");
+            // match Command::new("pkill").args(["mongod-*"]).status() {
+            //     Ok(_) => {}
+            //     _ => {
+            //         println!("mongo already shutdown.");
+            //     }
+            // };
+
+            match Command::new("killall").args(["-9", "node"]).status() {
+                Ok(_) => {}
+                _ => {
+                    println!("Failed to execute killall command.");
+                }
+            };
+
+            match Command::new("pkill").args(["website_crawler"]).status() {
+                Ok(_) => {}
+                _ => {
+                    println!("crawler already shutdown.");
+                }
+            };
+
         } else {
             docker::stop_service(&frontend, &file_manager);
         }

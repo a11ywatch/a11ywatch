@@ -2,11 +2,11 @@ use crate::fs::temp::TempFs;
 use crate::utils::Website;
 use crate::EXTERNAL;
 
+use reqwest::blocking;
+use reqwest::Error;
 use serde::{Deserialize, Serialize};
 use std::env;
 use std::time::Instant;
-use reqwest::blocking;
-use reqwest::{Error};
 
 pub static APP_USER_AGENT: &str = concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"),);
 
@@ -48,17 +48,16 @@ impl ApiClient {
 
         let resp = if !token.is_empty() {
             client
-            .post(&request_destination)
-            .header("Authorization",  &token)
+                .post(&request_destination)
+                .header("Authorization", &token)
         } else {
-            client
-            .post(&request_destination)
+            client.post(&request_destination)
         }
         .header("Content-Type", "application/json; charset=utf-8")
         .body(body)
         .send()
         .unwrap();
-        
+
         let resp: ApiResult = resp.json().unwrap_or_default();
 
         // TODO: add duration elasped
@@ -84,8 +83,14 @@ impl ApiClient {
 
         let start = Instant::now();
 
-        let body = format!(r#"{{ "websiteUrl": "{}", "tld": {}, "subdomains": {}, "robots": {}  }}"#, url, tld, subdomains, norobo == &false);
-        
+        let body = format!(
+            r#"{{ "websiteUrl": "{}", "tld": {}, "subdomains": {}, "robots": {}  }}"#,
+            url,
+            tld,
+            subdomains,
+            norobo == &false
+        );
+
         let resp = if !token.is_empty() {
             agent
                 .post(&request_destination)
@@ -101,7 +106,7 @@ impl ApiClient {
         .body(body)
         .send()
         .unwrap();
-        
+
         let mut resp: Vec<Website> = resp.json().unwrap_or_default();
 
         let duration = start.elapsed();
