@@ -14,6 +14,7 @@ impl Stop {
             Ok(val) => val == "true",
             Err(_) => false,
         };
+        // todo: destroy exact process
         if *local {
             Command::new("killall")
                 .args(["-9", "node"])

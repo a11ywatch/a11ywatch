@@ -148,13 +148,13 @@ pub(crate) fn get_report_url_errors(file_manager: &TempFs) -> String {
 /// format the body for github on by url report
 pub(crate) fn format_github_body(body: &str, title: &str) -> Value {
     // truncate the message
-    if body.chars().count() > 65536 {
+    if body.chars().count() > 60000 {
         let mut b = body.to_owned();
         b.insert_str(
             title.chars().count() + 1,
-            "\n<p>This list exceeds 65536 chars and is truncated...</p>\n",
+            "\n<p>This list exceeds 60000 chars and is truncated...</p>\n",
         );
-        b.truncate(65520);
+        b.truncate(60000);
 
         json!({
             "body": b,
