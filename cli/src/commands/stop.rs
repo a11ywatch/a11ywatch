@@ -35,7 +35,6 @@ impl Stop {
                     println!("crawler already shutdown.");
                 }
             };
-
         } else {
             docker::stop_service(&frontend, &file_manager);
         }

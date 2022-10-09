@@ -43,11 +43,11 @@ pub fn format_results(results: String) -> String {
     report_message.push_str(&format!(
         r#"
 
-    ```
-    {}
-    ```
+```
+{}
+```
 
-    "#,
+"#,
         &results
     ));
     report_message.push_str("</details>");
