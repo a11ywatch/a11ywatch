@@ -13,6 +13,9 @@ spec:
     - name: "3280"
       port: 3280
       targetPort: 3280
+    - name: "50050"
+      port: 50050
+      targetPort: 50050
     - name: "50051"
       port: 50051
       targetPort: 50051

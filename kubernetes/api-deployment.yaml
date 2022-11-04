@@ -63,6 +63,7 @@ spec:
           name: api
           ports:
             - containerPort: 3280
+            - containerPort: 50050
             - containerPort: 50051
           resources: {}
       restartPolicy: Always

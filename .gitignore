@@ -81,3 +81,9 @@ node_modules
 
 # ignore all generated api clients
 !clients/src/proto/package.json
+
+# videos
+cli/demo.tape
+cli/demo.gif
+cli/out.gif
+cli/demo.mp4
