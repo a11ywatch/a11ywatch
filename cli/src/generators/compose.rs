@@ -9,6 +9,7 @@ services:
     ports:
       - 3280:3280
       - 50050:50050
+      - 50051
     depends_on:
       - mongodb
     environment:
