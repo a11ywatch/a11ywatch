@@ -15,8 +15,8 @@ pub use apicore::{core_service_client::CoreServiceClient, CrawlParams};
 pub async fn create_client() -> Result<CoreServiceClient<Channel>, tonic::transport::Error> {
     lazy_static! {
         static ref RPC_CLIENT: String = match var(EXTERNAL) {
-            Ok(_) => "https://api.a11ywatch.com:50051",
-            Err(_) => "http://127.0.0.1:50051",
+            Ok(_) => "https://api.a11ywatch.com:50050",
+            Err(_) => "http://127.0.0.1:50050",
         }
         .to_string();
     };

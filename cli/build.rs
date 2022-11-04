@@ -1,4 +1,3 @@
-#[cfg(feature = "grpc")]
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use std::env;
     use std::process::Command;
@@ -22,10 +21,5 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         out_dir
     ))?;
 
-    Ok(())
-}
-
-#[cfg(not(feature = "grpc"))]
-fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }

@@ -9,11 +9,8 @@ pub mod generators;
 pub mod launchers;
 pub mod options;
 pub mod utils;
-
-#[cfg(feature = "grpc")]
 pub mod rpc;
 
-#[cfg(feature = "grpc")]
 #[macro_use]
 extern crate lazy_static;
 
@@ -197,11 +194,7 @@ fn main() {
             if *debug {
                 env::set_var(
                     "RUST_LOG",
-                    if cfg!(feature = "grpc") {
-                        "a11ywatch::rpc::client=debug"
-                    } else {
-                        "reqwest=debug"
-                    },
+                    "a11ywatch::rpc::client=debug"
                 );
                 env_logger::init();
             }

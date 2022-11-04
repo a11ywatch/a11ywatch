@@ -1,4 +1,6 @@
 use crate::utils::{Issue, IssueInfo};
+use crate::rpc::client::apicore::Page;
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
@@ -37,11 +39,7 @@ pub struct Website {
     pub last_scan_date: Option<String>,
 }
 
-#[cfg(feature = "grpc")]
-use crate::rpc::client::apicore::Page;
-
 /// convert to website from page
-#[cfg(feature = "grpc")]
 impl From<Page> for Website {
     fn from(page: Page) -> Self {
         let mut website = Website::default();
@@ -70,6 +68,20 @@ impl From<Page> for Website {
 
         website.issues_info = Some(issue_option);
         website.last_scan_date = Some(page.last_scan_date);
+
+        // todo: add trait compiled
+        let issues: Vec<Issue> = page.issues.into_iter().map(|i| Issue {
+            issue_type: i.r#type, // todo: convert proto buffer to issueType
+            type_code: i.type_code,
+            code: i.code,
+            context: i.context,
+            message: i.message,
+            selector: i.selector,
+            runner: i.runner,
+            recurrence: i.recurrence,
+        }).collect();
+
+        website.issues = Some(issues);
 
         website
     }

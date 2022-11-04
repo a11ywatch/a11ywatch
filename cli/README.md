@@ -11,8 +11,6 @@ Get the CLI by running one of the commands below.
 cargo install a11ywatch_cli
 # install via npm
 npm i a11ywatch-cli -g
-# install gRPC enabled client to use with local instances
-cargo install a11ywatch_cli --features grpc
 ```
 
 Startup:
@@ -46,8 +44,6 @@ a11ywatch crawl --url https://a11ywatch.com -d -n -s && a11ywatch --results-pars
 ```
 
 If you experience issues the `cargo install a11ywatch_cli` command, try running `rustup update stable` to make sure your cargo version is up to date.
-
-Tip: You can also skip running the `a11ywatch start` command if you are going to use the `--external` flag for `scans & crawls` - (requires a valid JWT from `https://a11ywatch.com`). Add the `--debug` flag in order to enable log output.
 
 ## ENV
 
@@ -143,14 +139,6 @@ SUBCOMMANDS:
 ### Supported Architectures
 
 Mac, linux, and Windows.
-
-## Features
-
-You can enable the usage of a gRPC client instead of http by using the flag `--features grpc` on install.
-This runs drastically faster on large websites and allows logs on stream per crawl to get a better idea on
-what is going on.
-
-1. grpc - enable gRPC client [beta] (does not display issues only stats).
 
 ## Help
 
