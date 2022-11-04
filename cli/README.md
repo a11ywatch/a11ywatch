@@ -70,7 +70,7 @@ a11ywatch --set-cv-url https://$myvcvname.cognitiveservices.azure.com/
 Example options and commands `a11ywatch -h`:
 
 ```sh
-a11ywatch_cli 0.6.51
+a11ywatch_cli 0.8.3
 j-mendez <jeff@a11ywatch.com>
 A11yWatch accessibility CLI.
 

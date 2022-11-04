@@ -10,7 +10,9 @@ on:
 jobs:
   run-container:
     name: End to End
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    env:
+      CRAWLER_IMAGE: debian
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v3
@@ -25,7 +27,7 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - name: Install the CLI
         run: |
-          cargo install  --path ./cli --force
+          cargo install --path ./cli --force
       - name: Upgrade Docker Images
         run: a11ywatch build --upgrade
         shell: bash
@@ -41,9 +43,9 @@ jobs:
               attempt=$(( $attempt + 1 ))
               echo "Waiting for server to be up (attempt: $attempt)..."
               result=$(docker logs api)
-              if grep "^Server ready" <<< $result; then
+              if grep "^gRPC clients connected - pagemind, crawler, and mav." <<< $result; then
                 echo "A11yWatch ready!"
-                sleep 6.5
+                sleep 2
                 break
               fi
               sleep 0.3
@@ -51,17 +53,17 @@ jobs:
       - name: Run Scan Single page
         run: a11ywatch scan -u https://a11ywatch.com
       - name: Run Crawl Multi Page
-        run: a11ywatch crawl -u https://a11ywatch.com --save
+        run: a11ywatch crawl -u https://a11ywatch.com -s
       - name: Run Crawl Multi Page with Subdomains
         run: a11ywatch crawl -u https://a11ywatch.com --subdomains
       - name: Run Crawl Multi Page with TLD
         run: a11ywatch crawl -u https://a11ywatch.com  --tld
       - name: Run Crawl Multi Page with Subdomains & TLD
-        run: a11ywatch crawl -u https://a11ywatch.com --subdomains --tld --save
+        run: a11ywatch crawl -u https://a11ywatch.com --subdomains --tld -s
 
   run-container-sa:
     name: End to End Stand Alone
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v3
@@ -94,7 +96,7 @@ jobs:
               result=$(docker logs a11ywatch)
               if grep "^Server ready" <<< $result; then
                 echo "A11yWatch ready!"
-                sleep 6.5
+                sleep 2
                 break
               fi
               sleep 0.3

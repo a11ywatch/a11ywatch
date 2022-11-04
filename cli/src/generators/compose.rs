@@ -169,6 +169,7 @@ services:
       - SUPER_MODE=${SUPER_MODE:-true}
     ports:
       - "3280:3280"
+      - "50050:50050"
       - "50051:50051"
     networks:
       - front-net
