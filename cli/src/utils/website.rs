@@ -1,5 +1,5 @@
-use crate::utils::{Issue, IssueInfo};
 use crate::rpc::client::apicore::Page;
+use crate::utils::{Issue, IssueInfo};
 
 use serde::{Deserialize, Serialize};
 
@@ -70,16 +70,20 @@ impl From<Page> for Website {
         website.last_scan_date = Some(page.last_scan_date);
 
         // todo: add trait compiled
-        let issues: Vec<Issue> = page.issues.into_iter().map(|i| Issue {
-            issue_type: i.r#type, // todo: convert proto buffer to issueType
-            type_code: i.type_code,
-            code: i.code,
-            context: i.context,
-            message: i.message,
-            selector: i.selector,
-            runner: i.runner,
-            recurrence: i.recurrence,
-        }).collect();
+        let issues: Vec<Issue> = page
+            .issues
+            .into_iter()
+            .map(|i| Issue {
+                issue_type: i.r#type, // todo: convert proto buffer to issueType
+                type_code: i.type_code,
+                code: i.code,
+                context: i.context,
+                message: i.message,
+                selector: i.selector,
+                runner: i.runner,
+                recurrence: i.recurrence,
+            })
+            .collect();
 
         website.issues = Some(issues);
 

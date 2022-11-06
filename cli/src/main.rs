@@ -8,8 +8,8 @@ pub mod fs;
 pub mod generators;
 pub mod launchers;
 pub mod options;
-pub mod utils;
 pub mod rpc;
+pub mod utils;
 
 #[macro_use]
 extern crate lazy_static;
@@ -192,10 +192,7 @@ fn main() {
                 env::set_var(EXTERNAL, external.to_string());
             }
             if *debug {
-                env::set_var(
-                    "RUST_LOG",
-                    "a11ywatch::rpc::client=debug"
-                );
+                env::set_var("RUST_LOG", "a11ywatch::rpc::client=debug");
                 env_logger::init();
             }
             let result = ApiClient::crawl_website(&url, subdomains, tld, norobo, &file_manager)

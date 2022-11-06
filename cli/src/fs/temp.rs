@@ -217,6 +217,7 @@ impl TempFs {
         let env_path_tmp = format!("{}/env.txt", &self.app_dir);
 
         let m1_chip = cfg!(all(target_os = "macos", target_pointer_width = "64"));
+        let linux = cfg!(target_os = "linux");
 
         if !Path::new(&env_path).exists() {
             File::create(&env_path)?;
@@ -243,10 +244,9 @@ impl TempFs {
         // keep track of keys already wrote to file.
         let mut wrote_c_v_s_k = false;
         let mut wrote_c_v_e = false;
-        let mut wrote_m1 = false;
+        let mut wrote_crawler = false;
 
         let mut writer: LineWriter<File> = LineWriter::new(file_tmp);
-
         let reader = BufReader::new(&file);
 
         // map allowed env keys to file
@@ -260,7 +260,10 @@ impl TempFs {
                     wrote_c_v_e = true;
                 } else if m1_chip && item.contains(&"CRAWLER_IMAGE=darwin-arm64") {
                     writer.write_all("CRAWLER_IMAGE=darwin-arm64\n".to_string().as_bytes())?;
-                    wrote_m1 = true;
+                    wrote_crawler = true;
+                } else if linux && item.contains(&"CRAWLER_IMAGE=debian") {
+                    writer.write_all("CRAWLER_IMAGE=debian\n".to_string().as_bytes())?;
+                    wrote_crawler = true;
                 } else {
                     writer.write_all(format!("{}\n", item).to_string().as_bytes())?;
                 };
@@ -277,9 +280,14 @@ impl TempFs {
                     .as_bytes(),
             )?;
         };
-        if m1_chip && !wrote_m1 {
-            writer.write_all("CRAWLER_IMAGE=darwin-arm64\n".to_string().as_bytes())?;
-        };
+
+        if !wrote_crawler {
+            if m1_chip {
+                writer.write_all("CRAWLER_IMAGE=darwin-arm64\n".to_string().as_bytes())?;
+            } else if linux {
+                writer.write_all("CRAWLER_IMAGE=debian\n".to_string().as_bytes())?;
+            };
+        }
 
         let mut file = OpenOptions::new()
             .write(true)
