@@ -2,6 +2,7 @@ use crate::fs::temp::TempFs;
 use crate::rpc::{crawl, scan};
 use crate::utils::Website;
 
+use crate::rpc::client::apicore::Page;
 use serde::{Deserialize, Serialize};
 
 use std::env;
@@ -20,7 +21,7 @@ pub struct ApiResult {
 // site wide crawl long job handling
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct CrawlApiResult {
-    pub data: Option<Vec<Website>>,
+    pub data: Option<Vec<Page>>,
     pub success: bool,
     pub message: String,
     pub code: i32,

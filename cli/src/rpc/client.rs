@@ -9,7 +9,7 @@ use tonic::Request;
 
 use crate::utils::Website;
 use crate::EXTERNAL;
-pub use apicore::{core_service_client::CoreServiceClient, CrawlParams};
+pub use apicore::{core_service_client::CoreServiceClient, CrawlParams, Page};
 
 /// create gRPC client from the API CORE server.
 pub async fn create_client() -> Result<CoreServiceClient<Channel>, tonic::transport::Error> {
@@ -47,7 +47,7 @@ pub async fn crawl(
     subdomains: bool,
     tld: bool,
     norobo: bool,
-) -> Vec<Website> {
+) -> Vec<Page> {
     let mut client = create_client().await.unwrap();
     let page = CrawlParams {
         url,
@@ -60,13 +60,12 @@ pub async fn crawl(
     let request = Request::new(page);
     let mut stream = client.crawl(request).await.unwrap().into_inner();
 
-    // process incoming websites into collection.
-    let mut websites: Vec<Website> = Vec::new();
+    let mut websites: Vec<Page> = Vec::new();
 
     while let Some(res) = stream.message().await.unwrap_or_default() {
         let page = res.data.unwrap_or_default();
         log::debug!("processed - {}", &page.url);
-        websites.push(page.into())
+        websites.push(page)
     }
 
     websites

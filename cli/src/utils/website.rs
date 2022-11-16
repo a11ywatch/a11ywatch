@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct LightHouse {
+    /// lighthouse report data as json string
     pub json: String,
 }
 

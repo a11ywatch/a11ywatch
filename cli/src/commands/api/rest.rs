@@ -32,6 +32,7 @@ pub(crate) struct ApiClient {}
 
 impl ApiClient {
     /// Single page scan
+    #[allow(dead_code)]
     pub fn scan_website(url: &str, file_manager: &TempFs) -> Result<ApiResult, Error> {
         let target_destination: String = match env::var(EXTERNAL) {
             Ok(_) => "https://api.a11ywatch.com",
@@ -65,6 +66,7 @@ impl ApiClient {
     }
 
     /// Site wide scan [Stream]
+    #[allow(dead_code)]
     pub fn crawl_website(
         url: &str,
         subdomains: &bool,
