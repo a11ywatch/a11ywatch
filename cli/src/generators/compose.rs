@@ -41,6 +41,7 @@ services:
       - AI_DISABLED=${AI_DISABLED:-false}
       - GRPC_HOST_MAV=mav:50053
       - GRPC_HOST_CDN=cdn-server:50054
+      - GRPC_HOST_CORE=api:50051
     networks:
       - back-net
 

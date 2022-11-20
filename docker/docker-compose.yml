@@ -17,6 +17,7 @@ services:
       - CRISP_WEBSITE_ID=${CRISP_WEBSITE_ID}
       - STRIPE_KEY=${STRIPE_KEY_WEB}
       - DOCKER_CONTAINER=${DOCKER_CONTAINER:-true}
+      - NEXT_PUBLIC_REWARDS=${NEXT_PUBLIC_REWARDS}
   api:
     container_name: api
     image: a11ywatch/a11ywatch-core
@@ -84,6 +85,7 @@ services:
       - SCRIPTS_CDN_URL_HOST=${SCRIPTS_CDN_URL_HOST:-http://localhost:8090/cdn}
       - PAGESPEED_API_KEY=${PAGESPEED_API_KEY}
       - GRPC_HOST_MAV=mav:50053
+      - GRPC_HOST_CORE=api:50051
       - GRPC_HOST_CDN=cdn-server:50054
     extra_hosts:
       - "host.docker.internal:host-gateway"

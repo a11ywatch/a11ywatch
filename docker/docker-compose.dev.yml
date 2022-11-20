@@ -23,6 +23,7 @@ services:
       - GITHUB_TOKEN=${GITHUB_TOKEN}
       - CRISP_WEBSITE_ID=${CRISP_WEBSITE_ID}
       - DOCKER_CONTAINER=${DOCKER_CONTAINER:-true}
+      - NEXT_PUBLIC_REWARDS=${NEXT_PUBLIC_REWARDS}
     networks:
       - front-net
 
@@ -102,6 +103,7 @@ services:
       - ASSETS_CDN=${ASSETS_CDN:-http://localhost:8090}
       - PAGESPEED_API_KEY=${PAGESPEED_API_KEY}
       - GRPC_HOST_MAV=mav:50053
+      - GRPC_HOST_CORE=api:50051
       - GRPC_HOST_CDN=cdn-server:50054
     networks:
       - back-net
