@@ -48,6 +48,10 @@ git clone https://github.com/a11ywatch/pagemind.git
 git clone https://github.com/a11ywatch/crawler.git
 git clone https://github.com/a11ywatch/elastic-cdn.git
 git clone https://github.com/a11ywatch/mav.git
+git clone https://github.com/a11ywatch/chrome.git
+
+# navigate to main control repo
+cd a11ywatch
 ```
 
 ```sh

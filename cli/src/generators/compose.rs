@@ -97,50 +97,9 @@ services:
   chrome:
     image: a11ywatch/chrome
     container_name: chrome
-    command:
-      [
-        chromium-browser,
-        '--headless',
-        '--no-sandbox',
-        '--hide-scrollbars',
-        '--mute-audio',
-        '--no-first-run',
-        '--remote-debugging-address=0.0.0.0',
-        '--remote-debugging-port=9222',
-        '--max-wait-for-load=2500',
-        '--allow-running-insecure-content',
-        '--autoplay-policy=user-gesture-required',
-        '--ignore-certificate-errors',
-        '--no-default-browser-check',
-        '--metrics-recording-only',
-        '--disable-default-apps',
-        '--disable-storage-reset',
-        '--disable-dev-shm-usage',
-        '--disable-http2',
-        '--disable-domain-reliability',
-        '--disable-component-update',
-        '--disable-sync',
-        '--disable-background-networking',
-        '--disable-background-timer-throttling',
-        '--disable-notifications',
-        '--disable-accelerated-2d-canvas',
-        '--disable-accelerated-video-decode',
-        '--disable-extensions',
-        '--disable-popup-blocking',
-        '--disable-renderer-backgrounding',
-        '--disable-client-side-phishing-detection',
-        '--disable-setuid-sandbox',
-        '--disable-hang-monitor',
-        '--disable-features=ScriptStreaming,TranslateUI,BlinkGenPropertyTrees',
-        '--disable-backgrounding-occluded-windows',
-        '--disable-component-extensions-with-background-pages',
-        '--disable-renderer-backgrounding',
-        '--disable-threaded-animation',
-        '--disable-threaded-compositing',
-        '--enable-background-thread-pool',
-      ]
     ports:
       - 9222:9222
+      - 6000:6000
     networks:
       - back-net
 
