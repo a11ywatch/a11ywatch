@@ -84,6 +84,8 @@ services:
       - STRIPE_H4_PLAN_YEARLY=${STRIPE_H4_PLAN_YEARLY}
       - STRIPE_H5_PLAN=${STRIPE_H5_PLAN}
       - STRIPE_H5_PLAN_YEARLY=${STRIPE_H5_PLAN_YEARLY}
+      - STRIPE_WH_SECRET=${STRIPE_WH_SECRETS}
+      - SCRIPTS_ENABLED=${SCRIPTS_ENABLED}
     networks:
       - back-net
       - front-net
