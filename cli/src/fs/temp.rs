@@ -288,7 +288,9 @@ impl TempFs {
         if !wrote_crawler {
             if m1_max_chip {
                 writer.write_all("CRAWLER_IMAGE=darwin-arm64\n".to_string().as_bytes())?;
-            }
+            } else if linux {
+                writer.write_all("CRAWLER_IMAGE=debian\n".to_string().as_bytes())?;
+            };
         }
 
         let mut file = OpenOptions::new()
