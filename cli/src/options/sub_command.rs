@@ -22,7 +22,7 @@ pub enum Commands {
         /// start the local machine with frontend client
         #[clap(short, long)]
         frontend: bool,
-        /// start the local machine non docker if true [TODO]
+        /// start the local machine non docker if true
         #[clap(short, long)]
         local: bool,
         /// Ugrade docker images for container on start.
