@@ -264,6 +264,9 @@ impl TempFs {
                 } else if linux && item.contains(&"CRAWLER_IMAGE=debian") {
                     writer.write_all("CRAWLER_IMAGE=debian\n".to_string().as_bytes())?;
                     wrote_crawler = true;
+                } else if linux && item.contains(&"CRAWLER_IMAGE=alpine") {
+                    writer.write_all("CRAWLER_IMAGE=alpine\n".to_string().as_bytes())?;
+                    wrote_crawler = true;
                 } else {
                     writer.write_all(format!("{}\n", item).to_string().as_bytes())?;
                 };
@@ -285,7 +288,7 @@ impl TempFs {
             if m1_chip {
                 writer.write_all("CRAWLER_IMAGE=darwin-arm64\n".to_string().as_bytes())?;
             } else if linux {
-                writer.write_all("CRAWLER_IMAGE=debian\n".to_string().as_bytes())?;
+                writer.write_all("CRAWLER_IMAGE=alpine\n".to_string().as_bytes())?;
             };
         }
 
