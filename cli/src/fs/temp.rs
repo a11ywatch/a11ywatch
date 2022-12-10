@@ -288,7 +288,7 @@ impl TempFs {
             if m1_chip {
                 writer.write_all("CRAWLER_IMAGE=darwin-arm64\n".to_string().as_bytes())?;
             } else if linux {
-                writer.write_all("CRAWLER_IMAGE=alpine\n".to_string().as_bytes())?;
+                writer.write_all("CRAWLER_IMAGE=debian\n".to_string().as_bytes())?;
             };
         }
 
