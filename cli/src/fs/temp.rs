@@ -216,7 +216,8 @@ impl TempFs {
         let env_path = format!("{}/.env", &self.app_dir);
         let env_path_tmp = format!("{}/env.txt", &self.app_dir);
 
-        let m1_chip = cfg!(all(target_os = "macos", target_pointer_width = "64"));
+        // built from Apple M1 Max
+        let m1_max_chip = cfg!(all(target_os = "macos", target_arch = "aarch64", target_pointer_width = "64"));
         let linux = cfg!(target_os = "linux");
 
         if !Path::new(&env_path).exists() {
@@ -258,7 +259,7 @@ impl TempFs {
                 } else if !cv_url.is_empty() && item.contains(&c_v_e) {
                     writer.write_all(format!("{c_v_e}={}\n", cv_url).to_string().as_bytes())?;
                     wrote_c_v_e = true;
-                } else if m1_chip && item.contains(&"CRAWLER_IMAGE=darwin-arm64") {
+                } else if m1_max_chip && item.contains(&"CRAWLER_IMAGE=darwin-arm64") {
                     writer.write_all("CRAWLER_IMAGE=darwin-arm64\n".to_string().as_bytes())?;
                     wrote_crawler = true;
                 } else if linux && item.contains(&"CRAWLER_IMAGE=debian") {
@@ -285,7 +286,7 @@ impl TempFs {
         };
 
         if !wrote_crawler {
-            if m1_chip {
+            if m1_max_chip {
                 writer.write_all("CRAWLER_IMAGE=darwin-arm64\n".to_string().as_bytes())?;
             } else if linux {
                 writer.write_all("CRAWLER_IMAGE=debian\n".to_string().as_bytes())?;
