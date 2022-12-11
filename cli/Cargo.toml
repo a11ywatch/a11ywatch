@@ -1,6 +1,6 @@
 [package]
 name = "a11ywatch_cli"
-version = "0.8.14"
+version = "0.8.16"
 authors = ["j-mendez <jeff@a11ywatch.com>"]
 description = "A11yWatch accessibility CLI."
 repository = "https://github.com/a11ywatch/a11ywatch"
@@ -26,6 +26,7 @@ tokio = { version = "^1.23.0", features = [ "rt", "rt-multi-thread", "net", "mac
 env_logger = "0.9.0"
 log = "0.4.17"
 reqwest = { version = "^0.11.11", features = ["json", "brotli", "blocking"] }
+os_info = { version = "3", default-features = false }
 
 [build-dependencies]
 tonic-build = { version = "0.7" }
