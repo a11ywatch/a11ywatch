@@ -246,22 +246,19 @@ impl TempFs {
         let mut writer: LineWriter<File> = LineWriter::new(file_tmp);
         let reader = BufReader::new(&file);
 
-        // built from Apple M1 Max
-        let m1_max_chip = cfg!(all(target_os = "macos", target_arch = "aarch64", target_pointer_width = "64"));
-        let linux = cfg!(target_os = "linux");
-
         // map allowed env keys to file
         for line in reader.lines() {
             if let Ok(item) = line {
+                // crawler exist in env path ignore re-write
+                if item.starts_with(&"CRAWLER_IMAGE=") {
+                    wrote_crawler = true;
+                };
                 if !cv_token.is_empty() && item.contains(&c_v_s_k) {
                     writer.write_all(format!("{c_v_s_k}={}\n", cv_token).to_string().as_bytes())?;
                     wrote_c_v_s_k = true;
                 } else if !cv_url.is_empty() && item.contains(&c_v_e) {
                     writer.write_all(format!("{c_v_e}={}\n", cv_url).to_string().as_bytes())?;
                     wrote_c_v_e = true;
-                } else if m1_max_chip && item.contains(&"CRAWLER_IMAGE=darwin-arm64") {
-                    writer.write_all("CRAWLER_IMAGE=darwin-arm64\n".to_string().as_bytes())?;
-                    wrote_crawler = true;
                 }  else {
                     writer.write_all(format!("{}\n", item).to_string().as_bytes())?;
                 };
@@ -281,10 +278,22 @@ impl TempFs {
         };
 
         if !wrote_crawler {
-            if m1_max_chip {
+            // m1 max
+            if cfg!(all(target_os = "macos", target_arch = "aarch64", target_pointer_width = "64")) {
                 writer.write_all("CRAWLER_IMAGE=darwin-arm64\n".to_string().as_bytes())?;
-            } else if linux {
-                writer.write_all("CRAWLER_IMAGE=ubuntu\n".to_string().as_bytes())?;
+            } else if cfg!(target_os = "linux") {
+                let info = os_info::get();
+                let os_type = info.os_type();
+
+                let c_os = if os_type == os_info::Type::Ubuntu {
+                    "ubuntu"
+                } else if os_type == os_info::Type::Alpine {
+                    "alpine"
+                } else {
+                    "debian"
+                };
+
+                writer.write_all(format!("CRAWLER_IMAGE={c_os}\n").to_string().as_bytes())?;
             };
         };
 
