@@ -58,6 +58,9 @@ pub enum Commands {
         /// attempt to fix the code being applied with recommendations
         #[clap(short, long)]
         fix: bool,
+        #[clap(long)]
+        /// disable stdout (useful for CI usage and large outputs)
+        noout: bool
     },
     /// Site wide scan a website url for issues.
     CRAWL {
@@ -85,6 +88,9 @@ pub enum Commands {
         /// enable log output on crawl
         #[clap(short, long)]
         debug: bool,
+        #[clap(long)]
+        /// disable stdout (useful for CI usage and large outputs)
+        noout: bool
     },
     /// Extract results in formats for platforms
     EXTRACT {

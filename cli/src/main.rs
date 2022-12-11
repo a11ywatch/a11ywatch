@@ -160,23 +160,26 @@ fn main() {
             external,
             save,
             fix,
+            noout
         }) => {
             if *external {
                 env::set_var(EXTERNAL, external.to_string());
-            }
+            };
 
             let result = ApiClient::scan_website(&url, &file_manager).unwrap_or_default();
             let json_results = json!(&result);
 
             if *save {
                 file_manager.save_results(&json_results).unwrap();
-            }
+            };
 
             if *fix {
                 fs::code_fix::apply_fix(&json_results);
-            }
+            };
 
-            println!("{}", json_results);
+            if !noout {
+                println!("{}", json_results)
+            };
         }
         Some(Commands::CRAWL {
             url,
@@ -187,6 +190,7 @@ fn main() {
             norobo,
             fix,
             debug,
+            noout
         }) => {
             if *external {
                 env::set_var(EXTERNAL, external.to_string());
@@ -201,13 +205,15 @@ fn main() {
 
             if *save {
                 TempFs::new().save_results(&json_results).unwrap();
-            }
+            };
 
             if *fix {
                 fs::code_fix::apply_fix(&json_results);
-            }
+            };
 
-            println!("{}", json_results);
+            if !noout {
+                println!("{}", json_results)
+            };
         }
         Some(Commands::EXTRACT { platform, list }) => {
             if platform == "github" {
