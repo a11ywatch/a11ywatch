@@ -121,7 +121,7 @@ version: '3.9'
 services:
   a11ywatch:
     container_name: a11ywatch
-    image: a11ywatch/a11ywatch
+    image: "a11ywatch/a11ywatch:${A11YWATCH_IMAGE:-latest}"
     environment:
       - COMPUTER_VISION_ENDPOINT=${COMPUTER_VISION_ENDPOINT:-""}
       - COMPUTER_VISION_SUBSCRIPTION_KEY=${COMPUTER_VISION_SUBSCRIPTION_KEY:-""}
@@ -132,6 +132,7 @@ services:
       - "3280:3280"
       - "50050:50050"
       - "50051:50051"
+      - "8090:8090"
     networks:
       - front-net
   

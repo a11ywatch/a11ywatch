@@ -1,7 +1,7 @@
 <div align="center">
   <h1>A11yWatch</h1>
   <p>
-    <strong>A11yWatch is a powerful web accessibility toolkit made using Rust and JavaScript</strong>
+    <strong>A11yWatch is a powerful web accessibility platform made using Rust and JavaScript</strong>
   </p>
   <p>
 

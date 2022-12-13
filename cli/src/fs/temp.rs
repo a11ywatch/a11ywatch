@@ -281,6 +281,8 @@ impl TempFs {
             // m1 max
             if cfg!(all(target_os = "macos", target_arch = "aarch64", target_pointer_width = "64")) {
                 writer.write_all("CRAWLER_IMAGE=darwin-arm64\n".to_string().as_bytes())?;
+                // stand alone image if used
+                writer.write_all("A11YWATCH_IMAGE=darwin\n".to_string().as_bytes())?;
             } else if cfg!(target_os = "linux") {
                 let info = os_info::get();
                 let os_type = info.os_type();
