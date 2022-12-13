@@ -110,6 +110,7 @@ services:
       - front-net
     ports:
       - 50054
+      - 8090:8090
 
   crawler:
     container_name: crawler

@@ -61,6 +61,7 @@ services:
     image: a11ywatch/cdn-server
     ports:
       - 50054
+      - 8090:8090
     networks:
       - back-net
 

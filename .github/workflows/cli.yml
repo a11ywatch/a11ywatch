@@ -43,7 +43,7 @@ jobs:
               attempt=$(( $attempt + 1 ))
               echo "Waiting for server to be up (attempt: $attempt)..."
               result=$(docker logs api)
-              if grep "^gRPC clients connected - pagemind, crawler, and mav." <<< $result; then
+              if grep "^gRPC clients connected" <<< $result; then
                 echo "A11yWatch ready!"
                 sleep 2
                 break

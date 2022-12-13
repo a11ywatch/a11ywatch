@@ -134,6 +134,7 @@ services:
       - ../../elastic-cdn/src:/usr/src/app/src
     ports:
       - 50054
+      - 8090:8090
     networks:
       - back-net
 
