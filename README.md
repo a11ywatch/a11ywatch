@@ -36,28 +36,7 @@ https://user-images.githubusercontent.com/8095978/200062932-22fd962e-1e9a-4b56-9
 
 ## Development
 
-Run the following commands inside a folder to create the workspace.
-
-```sh
-mkdir a11ywatch_workspace && cd a11ywatch_workspace
-
-git clone https://github.com/a11ywatch/a11ywatch.git
-git clone https://github.com/a11ywatch/web.git
-git clone https://github.com/a11ywatch/core.git
-git clone https://github.com/a11ywatch/pagemind.git
-git clone https://github.com/a11ywatch/crawler.git
-git clone https://github.com/a11ywatch/elastic-cdn.git
-git clone https://github.com/a11ywatch/mav.git
-git clone https://github.com/a11ywatch/chrome.git
-
-# navigate to main control repo
-cd a11ywatch
-docker-compose --file ./docker/docker-compose.yml up # view http://localhost:3280 or http://localhost:3280/graphql
-```
-
-The web application starts on port 80 when running `docker-compose up` or [Kubernetes](./kubernetes/).
-You can also replace the `docker-compose.yml` with `docker-compose.dev.yml` to build development images and use
-the env var WEB_PORT to control the front-end port start ex: `WEB_PORT=3000 docker-compose --file ./docker/docker-compose.yml up`.
+View the [contributing docs](https://docs.a11ywatch.com/documentation/contributing/) to get started.
 
 ## [Benchmarks](./benchmarks)
 
