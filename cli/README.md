@@ -70,7 +70,7 @@ a11ywatch --set-cv-url https://$myvcvname.cognitiveservices.azure.com/
 Example options and commands `a11ywatch -h`:
 
 ```sh
-a11ywatch_cli 0.8.3
+a11ywatch_cli 0.8.21
 j-mendez <jeff@a11ywatch.com>
 A11yWatch accessibility CLI.
 
@@ -130,6 +130,7 @@ SUBCOMMANDS:
     deploy       Deploy the build on remote infrastructure [BETA - defaults: GCP]
     extract      Extract results in formats for platforms
     help         Print this message or the help of the given subcommand(s)
+    login        Authenticate current session
     scan         Single page scan a website url for issues
     start        Start the application on the local machine [defaults to docker runtime]
     stop         Stop the project on the local machine [defaults to docker runtime]
