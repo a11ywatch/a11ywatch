@@ -1,7 +1,7 @@
 <div align="center">
   <h1>A11yWatch</h1>
   <p>
-    <strong>A11yWatch is a powerful web accessibility platform made using Rust and JavaScript</strong>
+    <strong>A11yWatch is a open source web accessibility platform for staying inclusive</strong>
   </p>
   <p>
 
@@ -52,14 +52,12 @@ git clone https://github.com/a11ywatch/chrome.git
 
 # navigate to main control repo
 cd a11ywatch
-```
-
-```sh
 docker-compose --file ./docker/docker-compose.yml up # view http://localhost:3280 or http://localhost:3280/graphql
-WEB_PORT=3000 docker-compose --file ./docker/docker-compose.yml up # start front-end on different port
 ```
 
 The web application starts on port 80 when running `docker-compose up` or [Kubernetes](./kubernetes/).
+You can also replace the `docker-compose.yml` with `docker-compose.dev.yml` to build development images and use
+the env var WEB_PORT to control the front-end port start ex: `WEB_PORT=3000 docker-compose --file ./docker/docker-compose.yml up`.
 
 ## [Benchmarks](./benchmarks)
 
@@ -72,7 +70,7 @@ Case: `https://a11ywatch.com` multi site scan.
 | **`Nodejs[Pa11y-Wave]: crawl 10 times against 25 urls`**   | `63 s`            |
 | **`Nodejs[Axe-Deque]: crawl 10 times against 25 urls`**    | `113 s`           |
 
-A11yWatch builds confidence due to handling dynamic parameters and amount of coverage from reports.
+A11yWatch helps builds confidence due to handling dynamic parameters and amount of coverage from reports.
 It can handle up to 150k pages easily under 1 min with 8gb of memory on linux.
 
 ## Contributing
