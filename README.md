@@ -135,61 +135,6 @@ api.crawlWebsite(opts, callback);
 
 ```
 
-### [Sidecar](https://github.com/a11ywatch/sidecar)
-
-You can also use javascript and the sidecar (sidecar can start the entire instance without the CLI or docker).
-
-If you already have a server up you can set the env var `DISABLE_HTTP=true` to disable the sidecar http server and use it as 
-a library client. Example below showing how to use the Sidecar.
-
-```ts
-import { scan, multiPageScan, crawlList } from "@a11ywatch/a11ywatch";
-
-// single page website scan.
-await scan({ url: "https://a11ywatch.com" });
-
-// all pages
-await multiPageScan({ url: "https://a11ywatch.com" });
-
-// all pages and subdomains
-await multiPageScan({
-  url: "https://a11ywatch.com",
-  subdomains: true,
-});
-
-// all pages and tld extensions
-await multiPageScan({ url: "https://a11ywatch.com", tld: true });
-
-// all pages, subdomains, and tld extensions
-await multiPageScan({
-  url: "https://a11ywatch.com",
-  subdomains: true,
-  tld: true,
-});
-
-// multi page scan with callback on each result asynchronously
-const callback = ({ data }) => {
-  console.log(data);
-};
-await multiPageScan(
-  {
-    url: "https://a11ywatch.com",
-  },
-  callback
-);
-
-// crawl a list of static urls - does not perform site wide scans
-const pages = await crawlList({
-  pages: [
-    "https://a11ywatch.com",
-    "https://newegg.com",
-    "https://www.a11yproject.com",
-    "https://nodejs.org",
-  ],
-  userId: 0,
-});
-```
-
 ## Development
 
 View the [contributing docs](https://docs.a11ywatch.com/documentation/contributing/) to get started.

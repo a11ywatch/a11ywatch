@@ -13,12 +13,19 @@ cargo install a11ywatch_cli
 npm i a11ywatch-cli -g
 ```
 
-Startup:
+Build init:
 
 ```sh
 # build the instance first, this allows configuring architecture specifics like apple m1 chips.
 a11ywatch build
-# start the instance. If you need the front-end client passing the -f option [min of 1.25gb of memory required alloc to docker resource].
+```
+
+Startup:
+
+Use one of the following commands to start the instance. If you need the front-end client passing the -f option [min of 1.25gb of memory required alloc to docker resource].
+
+```sh
+# start the instance.
 a11ywatch start
 # if you need to upgrade the instance to new images run with the upgrade flag.
 a11ywatch start --upgrade
