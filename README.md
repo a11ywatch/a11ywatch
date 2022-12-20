@@ -11,13 +11,29 @@
   </p>
 </div>
 
-## Getting Started
+
+## Installing
 
 The [CLI](./cli/README.md) can be used to test and build your own instance anywhere.<br>
 We have [clients](./clients) in multiple languages and protocols to integrate with your app easier.<br>
 See the [documentation](https://docs.a11ywatch.com) for more information on getting started with development and etc.
 
-You can also use the [docker image](https://hub.docker.com/r/a11ywatch/a11ywatch) with all of the services in one container except the web application.
+If you want to integrate your system with A11yWatch the simplest way is to use the javascript [sidecar](https://github.com/a11ywatch/sidecar).
+
+Example of a multi page crawl example with valid a11ywatch instance up ex: (`a11ywatch start`):
+
+https://user-images.githubusercontent.com/8095978/200062932-22fd962e-1e9a-4b56-9200-f19bdc5e6da8.mp4
+
+## Getting Started
+
+The [A11yWatch CLI](./cli/README.md) provides entry points into the system using `a11ywatch start` command.
+
+Run `a11ywatch start -s` command for the slim standalone build.
+In order to use the A11yWatch website UI pass the `-f` option ex:  `a11ywatch start -f`.
+
+We provide the [standlone docker image](https://hub.docker.com/r/a11ywatch/a11ywatch) with the services in one image except the web application starting default on port `3280`, you can skip this step if you ran `a11ywatch start`.
+
+The following shows starting up the standalone image with [docker compose](https://docs.docker.com/compose/).
 
 ```yml
 version: "3.9"
@@ -28,11 +44,151 @@ services:
       - 3280:3280
 ```
 
-If you want to integrate your system with A11yWatch the simplest way is to use the javascript [sidecar](https://github.com/a11ywatch/sidecar).
+## Common Commands and Usage
 
-Multi page crawl example with valid a11ywatch instance up ex: (`a11ywatch start`).
+Here are some common commands for communicating with the platform after you have a valid instance up.
 
-https://user-images.githubusercontent.com/8095978/200062932-22fd962e-1e9a-4b56-9200-f19bdc5e6da8.mp4
+### CLI Commands
+
+Single page scan and store results.
+
+`a11ywatch scan --url https://a11ywatch.com -s`
+
+Multi page scan and store results.
+
+`a11ywatch crawl --url https://a11ywatch.com -s -d`
+
+Apply Code generation fixes using the `--fix` flag.
+
+`a11ywatch crawl --url https://a11ywatch.com -s -d --fix`
+
+### HTTP
+
+Single page scan.
+
+```
+curl --location --request POST 'http://localhost:3280/api/scan-simple' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "url": "https://a11ywatch.com"
+}'
+```
+
+Multi page scan.
+
+```
+curl --location --request POST 'http://localhost:3280/api/crawl' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "url": "https://a11ywatch.com",
+    "subdomains": false,
+    "tld": false,
+    "robots": false
+}'
+```
+
+Multi page scan streamed.
+
+```
+curl --location --request POST 'http://localhost:3280/api/crawl' \
+--header 'Transfer-Encoding: chunked' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "url": "https://a11ywatch.com",
+    "subdomains": false,
+    "tld": false,
+    "robots": false
+}'
+```
+
+### JS
+
+You can use the pure [javascript client](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/javascript_api_client) following:
+
+First `npm i a11ywatch_client --save`
+
+```ts
+import A11ywatchClient from 'a11ywatch_client'
+
+const defaultClient = A11ywatchClient.ApiClient.instance;
+// Configure Bearer (JWT) access token for authorization: bearerAuth
+const bearerAuth = defaultClient.authentications['bearerAuth'];
+bearerAuth.accessToken = "YOUR ACCESS TOKEN"
+
+const api = new A11ywatchClient.ReportsApi()
+const opts = {
+  'url': "https://a11ywatch.com", // {String} The page url
+  'subdomains': false, // {Boolean} Enable subdomains detection
+  'tld': false, // {Boolean} Enable TLD detection
+  'robots': false // {Boolean} Respect robots.txt file
+};
+
+const callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+
+api.crawlWebsite(opts, callback);
+
+```
+
+### [Sidecar](https://github.com/a11ywatch/sidecar)
+
+You can also use javascript and the sidecar (sidecar can start the entire instance without the CLI or docker).
+
+If you already have a server up you can set the env var `DISABLE_HTTP=true` to disable the sidecar http server and use it as 
+a library client. Example below showing how to use the Sidecar.
+
+```ts
+import { scan, multiPageScan, crawlList } from "@a11ywatch/a11ywatch";
+
+// single page website scan.
+await scan({ url: "https://a11ywatch.com" });
+
+// all pages
+await multiPageScan({ url: "https://a11ywatch.com" });
+
+// all pages and subdomains
+await multiPageScan({
+  url: "https://a11ywatch.com",
+  subdomains: true,
+});
+
+// all pages and tld extensions
+await multiPageScan({ url: "https://a11ywatch.com", tld: true });
+
+// all pages, subdomains, and tld extensions
+await multiPageScan({
+  url: "https://a11ywatch.com",
+  subdomains: true,
+  tld: true,
+});
+
+// multi page scan with callback on each result asynchronously
+const callback = ({ data }) => {
+  console.log(data);
+};
+await multiPageScan(
+  {
+    url: "https://a11ywatch.com",
+  },
+  callback
+);
+
+// crawl a list of static urls - does not perform site wide scans
+const pages = await crawlList({
+  pages: [
+    "https://a11ywatch.com",
+    "https://newegg.com",
+    "https://www.a11yproject.com",
+    "https://nodejs.org",
+  ],
+  userId: 0,
+});
+```
 
 ## Development
 
@@ -54,7 +210,7 @@ It can handle up to 150k pages easily under 1 min with 8gb of memory on linux.
 
 ## Contributing
 
-Read the [contributing guide](./CONTRIBUTING.md) to learn about our development process, how to propose bug fixes and improvements, how to build and test your changes to A11yWatch.
+Read the [contributing guide](./CONTRIBUTING.md) to learn about the development process, how to propose bug fixes and improvements, how to build and test your changes to A11yWatch.
 
 ## Support
 
@@ -63,4 +219,4 @@ if you still need help please contact us [contact](https://docs.a11ywatch.com/do
 
 ## LICENSE
 
-check the license file in the root of the project.
+Check the license file in the root of the project.
