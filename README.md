@@ -12,6 +12,12 @@
 </div>
 
 
+## Pre-requisites
+
+* [Rust](https://www.rust-lang.org/tools/install) is required if building locally.
+* [Nodejs](https://nodejs.org/en/download/) is required if building locally.
+* [Docker](https://docs.docker.com/get-docker/) is required if you are not building locally.
+
 ## Installing
 
 The [CLI](./cli/README.md) can be used to test and build your own instance anywhere.<br>
@@ -28,21 +34,29 @@ https://user-images.githubusercontent.com/8095978/200062932-22fd962e-1e9a-4b56-9
 
 The [A11yWatch CLI](./cli/README.md) provides entry points into the system using `a11ywatch start` command.
 
-Run `a11ywatch start -s` command for the slim standalone build.
-In order to use the A11yWatch website UI pass the `-f` option ex:  `a11ywatch start -f`.
+Example using the CLI to run some reports below:
 
-We provide the [standlone docker image](https://hub.docker.com/r/a11ywatch/a11ywatch) with the services in one image except the web application starting default on port `3280`, you can skip this step if you ran `a11ywatch start`.
-
-The following shows starting up the standalone image with [docker compose](https://docs.docker.com/compose/).
-
-```yml
-version: "3.9"
-services:
-  a11ywatch:
-    image: a11ywatch/a11ywatch
-    ports:
-      - 3280:3280
+```sh
+# install via cargo
+cargo install a11ywatch_cli
+# install via npm
+npm i a11ywatch-cli -g
 ```
+
+First run the `a11ywatch build` to setup the project configuration.
+
+Start the backend and front-end with `a11ywatch start -f` or using `a11ywatch start -f -l` for local installs (non docker).
+
+Perform a multi page website crawl with  `a11ywatch crawl` ex: `a11ywatch crawl --url https://a11ywatch.com -s -d`.
+
+Get the last run pass fail in a report after to show pass/fail status `a11ywatch --results-parsed-list`.
+
+To bring down the instance run `a11ywatch stop` command can shutdown the instance(s) completely. 
+
+The `start` and `build` command share some of the same flags to setup the config required before runtime init. You can switch context or targets at any time
+using the `start` command since the build command is set to prep the instance and some outside configurations before the application starts.
+
+All of the commands and flags you can add the `--help` to get details on what is available.
 
 ## Common Commands and Usage
 
@@ -100,6 +114,10 @@ curl --location --request POST 'http://localhost:3280/api/crawl' \
     "robots": false
 }'
 ```
+
+### Docker
+
+We provide the [standlone docker image](https://hub.docker.com/r/a11ywatch/a11ywatch) with the services in one image except the web application starting default on port `3280`, you can skip this step if you are using the CLI.
 
 ## Development
 
