@@ -20,7 +20,7 @@ See the [documentation](https://docs.a11ywatch.com) for more information on gett
 
 If you want to integrate your system with A11yWatch the simplest way is to use the javascript [sidecar](https://github.com/a11ywatch/sidecar).
 
-Example of a multi page crawl example with valid a11ywatch instance up ex: (`a11ywatch start`):
+Example of a multi page crawl example with valid instance up ex: (`a11ywatch start`):
 
 https://user-images.githubusercontent.com/8095978/200062932-22fd962e-1e9a-4b56-9200-f19bdc5e6da8.mp4
 
@@ -99,40 +99,6 @@ curl --location --request POST 'http://localhost:3280/api/crawl' \
     "tld": false,
     "robots": false
 }'
-```
-
-### JS
-
-You can use the pure [javascript client](https://gitlab.com/j-mendez/a11ywatch-clients/-/tree/main/javascript_api_client) following:
-
-First `npm i a11ywatch_client --save`
-
-```ts
-import A11ywatchClient from 'a11ywatch_client'
-
-const defaultClient = A11ywatchClient.ApiClient.instance;
-// Configure Bearer (JWT) access token for authorization: bearerAuth
-const bearerAuth = defaultClient.authentications['bearerAuth'];
-bearerAuth.accessToken = "YOUR ACCESS TOKEN"
-
-const api = new A11ywatchClient.ReportsApi()
-const opts = {
-  'url': "https://a11ywatch.com", // {String} The page url
-  'subdomains': false, // {Boolean} Enable subdomains detection
-  'tld': false, // {Boolean} Enable TLD detection
-  'robots': false // {Boolean} Respect robots.txt file
-};
-
-const callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-
-api.crawlWebsite(opts, callback);
-
 ```
 
 ## Development
