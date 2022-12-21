@@ -3,7 +3,7 @@
   "info": {
     "title": "A11ywatch Client",
     "description": "The web accessibility tool built for scale.  For this sample, you can use the api key \"special-key\" to test the authorization filters",
-    "version": "0.4.1",
+    "version": "0.6.61",
     "termsOfService": "https://a11ywatch.com/terms-of-service",
     "contact": {
       "name": "API Support",
@@ -12,7 +12,7 @@
     },
     "license": {
       "name": "MIT",
-      "url": "https://github.com/A11yWatch/a11ywatch/blob/main/LICENSE"
+      "url": "https://github.com/a11ywatch/a11ywatch/blob/main/LICENSE"
     }
   },
   "servers": [
@@ -461,6 +461,36 @@
     "/scan-simple": {
       "post": {
         "tags": ["reports"],
+        "summary": "Scan a website for issues without storing data and limited responses.",
+        "description": "",
+        "operationId": "scanWebsiteSimple",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Websites"
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Report"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/scan": {
+      "post": {
+        "tags": ["reports"],
         "summary": "Scan a website for issues",
         "description": "",
         "operationId": "scanWebsite",
@@ -553,6 +583,36 @@
                       "items": {
                         "$ref": "#/components/schemas/Report"
                       }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/websites-sync": {
+      "post": {
+        "tags": ["reports"],
+        "summary": "Multi-page crawl all websites attached to account",
+        "description": "",
+        "operationId": "crawlWebsitesSync",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
                     }
                   }
                 }
