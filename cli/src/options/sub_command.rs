@@ -100,29 +100,5 @@ pub enum Commands {
         /// pass fail list style
         #[clap(short, long)]
         list: bool,
-    },
-    /// Deploy the build on remote infrastructure [BETA - defaults: GCP]
-    DEPLOY {
-        /// deploy backend and frontend service.
-        #[clap(short, long)]
-        all: bool,
-        /// deploy frontend service
-        #[clap(short, long)]
-        frontend: bool,
-        /// deploy backend service
-        #[clap(short, long)]
-        backend: bool,
-    },
-    /// Destroy the build on remote infrastructure [BETA - defaults: GCP]
-    TERMINATE {
-        /// terminate backend and frontend service
-        #[clap(short, long)]
-        all: bool,
-        /// terminate frontend service
-        #[clap(short, long)]
-        frontend: bool,
-        /// terminate backend service
-        #[clap(short, long)]
-        backend: bool,
-    },
+    }
 }

@@ -153,12 +153,3 @@ Mac, linux, and Windows.
 If you are trying to run a website that is running `localhost` inside a docker container you need to use your computers hostname instead.
 
 In terminal run the command `hostname` and then you can use it ex: `a11ywatch crawl --url $(hostname):3000`
-
-### BETA
-
-The following commands are currently in BETA and require you to have the repo locally [tf-provider](https://github.com/A11yWatch/terraform-provider) and set to your directory.
-
-1. deploy (TERRAFORM)
-1. destroy (TERRAFORM)
-
-The scan sub command with the runner option and the remote deployment commands are a work in progress. You may experience issues with the sub commands, feel free to leave an issue when found. In general the CLI is in BETA and may contain breaking changes until v1.

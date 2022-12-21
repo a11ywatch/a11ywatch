@@ -23,7 +23,7 @@ use self::formatters::{
 use crate::utils::Issue;
 use clap::Parser;
 
-use commands::{ApiClient, Build, Deploy, Start, Stop};
+use commands::{ApiClient, Build, Start, Stop};
 
 use fs::TempFs;
 use options::{Cli, Commands};
@@ -136,24 +136,6 @@ fn main() {
         Some(Commands::STOP { frontend, local }) => {
             env::set_var(INCLUDE_FRONTEND, frontend.to_string());
             Stop::process(&local);
-        }
-        Some(Commands::DEPLOY {
-            frontend,
-            all,
-            backend,
-        }) => {
-            if !frontend && !backend {
-                Deploy::process(&all);
-            }
-        }
-        Some(Commands::TERMINATE {
-            frontend,
-            all,
-            backend,
-        }) => {
-            if !frontend && !backend {
-                Deploy::process_terminate(&all);
-            }
         }
         Some(Commands::SCAN {
             url,
