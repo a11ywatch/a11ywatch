@@ -26,7 +26,7 @@ See the [documentation](https://docs.a11ywatch.com) for more information on gett
 
 If you want to integrate your system with A11yWatch the simplest way is to use the javascript [sidecar](https://github.com/a11ywatch/sidecar).
 
-Example of a multi page crawl example with valid instance up ex: (`a11ywatch start`):
+Example of a multi page crawl example with valid instance up using `a11ywatch_cli 0.8.23`:
 
 https://user-images.githubusercontent.com/8095978/200062932-22fd962e-1e9a-4b56-9200-f19bdc5e6da8.mp4
 
