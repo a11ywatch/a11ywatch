@@ -26,10 +26,6 @@ See the [documentation](https://docs.a11ywatch.com) for more information on gett
 
 If you want to integrate your system with A11yWatch the simplest way is to use the javascript [sidecar](https://github.com/a11ywatch/sidecar).
 
-Example of a multi page crawl example with valid instance up using `a11ywatch_cli 0.8.23`:
-
-https://user-images.githubusercontent.com/8095978/200062932-22fd962e-1e9a-4b56-9200-f19bdc5e6da8.mp4
-
 ## Getting Started
 
 The [A11yWatch CLI](./cli/README.md) provides entry points into the system using `a11ywatch start` command.
@@ -57,6 +53,10 @@ The `start` and `build` command share some of the same flags to setup the config
 using the `start` command since the build command is set to prep the instance and some outside configurations before the application starts.
 
 All of the commands and flags you can add the `--help` to get details on what is available.
+
+Example of a multi page crawl example with valid instance up using `a11ywatch_cli 0.8.23`:
+
+https://user-images.githubusercontent.com/8095978/200062932-22fd962e-1e9a-4b56-9200-f19bdc5e6da8.mp4
 
 ## Common Commands and Usage
 
