@@ -2,7 +2,8 @@
 
 The A11yWatch Command Line Interface. View the [cli-docs](https://docs.a11ywatch.com/documentation/cli/) for more complete info.
 
-If you are on Ubuntu OpenSSL is required:
+If you are on Ubuntu OpenSSL is required. 
+You may need to add the command `sudo` before `apt-get`.
 
 ```sh
 apt-get update && apt upgrade -y && apt-get install -y --no-install-recommends build-essential gcc cmake libc6 libssl-dev pkg-config
