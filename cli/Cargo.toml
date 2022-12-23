@@ -1,6 +1,6 @@
 [package]
 name = "a11ywatch_cli"
-version = "0.8.23"
+version = "0.8.25"
 authors = ["j-mendez <jeff@a11ywatch.com>"]
 description = "A11yWatch web accessibility CLI."
 repository = "https://github.com/a11ywatch/a11ywatch"
@@ -27,9 +27,19 @@ env_logger = "0.9.0"
 log = "0.4.17"
 reqwest = { version = "^0.11.11", features = ["json", "brotli", "blocking"] }
 os_info = { version = "3", default-features = false }
+openssl = { version = "0.10.45", optional = true }
 
 [build-dependencies]
-tonic-build = { version = "0.7" }
+tonic-build = { version = "0.7.2" }
+
+[target.'cfg(target_os = "freebsd")'.dependencies.openssl]
+version = "0.10.45"
+
+[features]
+default = ["all"]
+all = ["dist-clients"]
+dist-clients = []
+dist-vendor = ["openssl"]
 
 [[bin]]
 name = "a11ywatch"

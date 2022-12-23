@@ -9,6 +9,8 @@ You may need to add the command `sudo` before `apt-get`.
 apt-get update && apt upgrade -y && apt-get install -y --no-install-recommends build-essential gcc cmake libc6 libssl-dev pkg-config
 ```
 
+Vendoring OpenSSL is available by using the feature flag `dist-vendor` upon install ex: `cargo install --path . --features dist-vendor`. The flag is also available following [RTN Consuming](https://github.com/a11ywatch/rust-to-npm) for node installs via npm.
+
 ## Build
 
 Get the CLI by running one of the commands below.
