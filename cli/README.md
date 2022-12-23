@@ -38,7 +38,7 @@ Use one of the following commands to start the instance. If you need the front-e
 a11ywatch start
 # if you need to upgrade the instance to new images run with the upgrade flag.
 a11ywatch start --upgrade
-# start the instance with the front-end on port 3270.
+# start the instance with the front-end on port 3270 by default.
 a11ywatch start -f
 ```
 
@@ -86,9 +86,9 @@ a11ywatch --set-cv-url https://$myvcvname.cognitiveservices.azure.com/
 Example options and commands `a11ywatch -h`:
 
 ```sh
-a11ywatch_cli 0.8.21
+a11ywatch_cli 0.8.24
 j-mendez <jeff@a11ywatch.com>
-A11yWatch accessibility CLI.
+A11yWatch web accessibility CLI.
 
 USAGE:
     a11ywatch [OPTIONS] [SUBCOMMAND]
@@ -116,8 +116,8 @@ OPTIONS:
             Get results file parsed as report list of passed / failed
 
         --results-issues
-            Get the total amount of issues between errors,warning,notice that occurred for the result
-            set
+            Get the total amount of issues between errors,warning,notice that occurred for the
+            result set
 
         --results-issues-errors
             Get the total amount of issues of type error from result set
@@ -141,16 +141,13 @@ OPTIONS:
             Print version information
 
 SUBCOMMANDS:
-    build        Build the project on the local machine [defaults to docker runtime]
-    crawl        Site wide scan a website url for issues
-    deploy       Deploy the build on remote infrastructure [BETA - defaults: GCP]
-    extract      Extract results in formats for platforms
-    help         Print this message or the help of the given subcommand(s)
-    login        Authenticate current session
-    scan         Single page scan a website url for issues
-    start        Start the application on the local machine [defaults to docker runtime]
-    stop         Stop the project on the local machine [defaults to docker runtime]
-    terminate    Destroy the build on remote infrastructure [BETA - defaults: GCP]
+    build      Build the project on the local machine [defaults to docker runtime]
+    crawl      Site wide scan a website url for issues
+    extract    Extract results in formats for platforms
+    help       Print this message or the help of the given subcommand(s)
+    scan       Single page scan a website url for issues
+    start      Start the application on the local machine [defaults to docker runtime]
+    stop       Stop the project on the local machine [defaults to docker runtime]
 ```
 
 ### Supported Architectures
@@ -161,4 +158,6 @@ Mac, linux, and Windows.
 
 If you are trying to run a website that is running `localhost` inside a docker container you need to use your computers hostname instead.
 
-In terminal run the command `hostname` and then you can use it ex: `a11ywatch crawl --url $(hostname):3000`
+In terminal run the command `hostname` and then you can use it ex: `a11ywatch crawl --url $(hostname):3000`.
+
+At the moment the front-end client does not ship when building locally or the `-l` flag on the CLI and only available for the docker runtime default option. 

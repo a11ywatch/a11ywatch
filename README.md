@@ -28,100 +28,46 @@ If you want to integrate your system with A11yWatch the simplest way is to use t
 
 ## Getting Started
 
-The [A11yWatch CLI](./cli/README.md) provides entry points into the system using `a11ywatch start` command.
+### A11yWatch CLI
 
-Example using the CLI to run some reports below:
+[A11yWatch CLI](./cli/README.md) is the fastest way to get started with A11yWatch. It brings the tools to manage infrastructure, powerful commands for interactivity, and provides the ability to automate workflows using tools like Github Actions and more.
 
-```sh
-# install via cargo
-cargo install a11ywatch_cli
-# install via npm
-npm i a11ywatch-cli -g
-```
-
-First run the `a11ywatch build` to setup the project configuration.
-
-Start the backend and front-end with `a11ywatch start -f` or using `a11ywatch start -f -l` for local installs (non docker).
-
-Perform a multi page website crawl with  `a11ywatch crawl` ex: `a11ywatch crawl --url https://a11ywatch.com -s -d`.
-
-Get the last run pass fail in a report after to show pass/fail status `a11ywatch --results-parsed-list`.
-
-To bring down the instance run `a11ywatch stop` command can shutdown the instance(s) completely. 
-
-The `start` and `build` command share some of the same flags to setup the config required before runtime init. You can switch context or targets at any time
-using the `start` command since the build command is set to prep the instance and some outside configurations before the application starts.
-
-All of the commands and flags you can add the `--help` to get details on what is available.
-
-Example of a multi page crawl example with valid instance up using `a11ywatch_cli 0.8.23`:
+Example of a multi page crawl with valid instance up using `a11ywatch_cli v0.8.23`:
 
 https://user-images.githubusercontent.com/8095978/200062932-22fd962e-1e9a-4b56-9200-f19bdc5e6da8.mp4
 
-## Common Commands and Usage
-
-Here are some common commands for communicating with the platform after you have a valid instance up.
-
-### CLI Commands
-
-Single page scan and store results.
-
-`a11ywatch scan --url https://a11ywatch.com -s`
-
-Multi page scan and store results.
-
-`a11ywatch crawl --url https://a11ywatch.com -s -d`
-
-Apply Code generation fixes using the `--fix` flag.
-
-`a11ywatch crawl --url https://a11ywatch.com -s -d --fix`
-
-### HTTP
-
-Single page scan.
-
-```
-curl --location --request POST 'http://localhost:3280/api/scan-simple' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "url": "https://a11ywatch.com"
-}'
-```
-
-Multi page scan.
-
-```
-curl --location --request POST 'http://localhost:3280/api/crawl' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "url": "https://a11ywatch.com",
-    "subdomains": false,
-    "tld": false,
-    "robots": false
-}'
-```
-
-Multi page scan streamed.
-
-```
-curl --location --request POST 'http://localhost:3280/api/crawl' \
---header 'Transfer-Encoding: chunked' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "url": "https://a11ywatch.com",
-    "subdomains": false,
-    "tld": false,
-    "robots": false
-}'
-```
+For a step by step [view the docs](https://docs.a11ywatch.com/documentation/cli/).
 
 ### Docker
 
-We provide the [standlone docker image](https://hub.docker.com/r/a11ywatch/a11ywatch) with the services in one image except the web application starting default on port `3280`, you can skip this step if you are using the CLI.
+You can also get started using the [standlone docker image](https://hub.docker.com/r/a11ywatch/a11ywatch) locally or self host it.
+
+With a valid docker installation up in a new folder run the following command (replace `latest` with `darwin` on macOS or use the `IMAGE` env var):
+
+```sh
+# create the bridge network for front-end and backend
+docker network create --driver bridge a11ywatch-net
+# start the backend
+docker run -p 3280:3280 -v ${PWD}:/a11ywatch/conf \
+  --network a11ywatch-net \
+  --name a11ywatch-backend \
+  -e SUPER_MODE=true \
+  a11ywatch/a11ywatch:${IMAGE:-latest}
+# start the frontend
+docker run -p 3000:3000 -v ${PWD}:/a11ywatch/conf \
+  --network a11ywatch-net \
+  --name a11ywatch-frontend \
+  -e SUPER_MODE=true \
+  a11ywatch/web
+```
+
+Afterwards open http://localhost:3000 in your browser to continue.
+
+For step by step instructions, [view the docs](https://docs.a11ywatch.com/documentation/self-hosting-start/).
 
 ## Development
 
-View the [contributing docs](https://docs.a11ywatch.com/documentation/contributing/) to get started.
+View the [contributing docs](https://docs.a11ywatch.com/documentation/self-hosting-start/#docker) to get started.
 
 ## [Benchmarks](./benchmarks)
 

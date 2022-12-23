@@ -51,7 +51,7 @@ impl Start {
                     .args(["run", "start", "--prefix", &node_dir.to_string()])
                     .spawn()
                     .expect("Failed to execute @a11ywatch/a11ywatch node command!");
-            }
+            }            
         } else {
             if frontend {
                 file_manager.create_compose_frontend_file().unwrap();

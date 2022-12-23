@@ -185,7 +185,11 @@ services:
 
   chrome:
     container_name: chrome
-    image: a11ywatch/chrome
+    build:
+      context: ../../chrome
+      dockerfile: Dockerfile
+    volumes:
+      - ../../chrome/src:/usr/src/app/src
     ports:
       - "9222:9222"
       - "6000:6000"
