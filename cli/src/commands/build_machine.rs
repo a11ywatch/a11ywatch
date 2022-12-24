@@ -22,6 +22,12 @@ impl Build {
                 .status()
                 .expect("Failed to execute command - npm install @a11ywatch/a11ywatch command");
 
+            // pin cross-platform kill-port for security, possible alternatives to simply pipe windows cmd commands
+            Command::new("npm")
+                .args(["i", "kill-port@2.0.1", "-g"])
+                .status()
+                .expect("Failed to execute command - npm install kill-port command");
+
             let web_folder_tmp = format!("{}/web_tmp", file_manager.get_temp_dir());
             let web_folder = format!("{}/web", file_manager.get_temp_dir());
 

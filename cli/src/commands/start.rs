@@ -44,7 +44,7 @@ impl Start {
             if runtime == "bun" {
                 Command::new("bun")
                     .args(["run", &format!("{}/{}", node_dir.to_string(), "server.js")])
-                    .status()
+                    .spawn()
                     .expect("Failed to execute @a11ywatch/a11ywatch bun command!");
 
                 if frontend {

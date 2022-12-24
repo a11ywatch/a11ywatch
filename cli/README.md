@@ -160,4 +160,4 @@ If you are trying to run a website that is running `localhost` inside a docker c
 
 In terminal run the command `hostname` and then you can use it ex: `a11ywatch crawl --url $(hostname):3000`.
 
-At the moment the front-end client does not ship when building locally or the `-l` flag on the CLI and only available for the docker runtime default option. 
+In order to stop services make sure to pass in the proper flags that were used to build/start the instances. 
