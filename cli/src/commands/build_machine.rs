@@ -21,6 +21,62 @@ impl Build {
                 .args(["i", "@a11ywatch/a11ywatch", "-g"])
                 .status()
                 .expect("Failed to execute command - npm install @a11ywatch/a11ywatch command");
+
+            let web_folder_tmp = format!("{}/web_tmp", file_manager.get_temp_dir());
+            let web_folder = format!("{}/web", file_manager.get_temp_dir());
+
+            if frontend {
+                // install the codebase via npm for versioning ability
+                Command::new("npm")
+                    .args(["i", "--prefix", &web_folder_tmp, "@a11ywatch/web"])
+                    .status()
+                    .expect("Failed to execute npm i command inside @a11ywatch/web!");
+
+                if cfg!(windows) {
+                    Command::new("copy")
+                        .args([
+                            &format!("{}/{}", &web_folder_tmp, "node_modules/@a11ywatch/web/"),
+                            &web_folder,
+                        ])
+                        .status()
+                        .expect("Failed to execute copy command!");
+
+                    Command::new("rmdir")
+                        .args(["-s", &format!("{}", &web_folder_tmp)])
+                        .status()
+                        .expect("Failed to execute rmdir command!");
+                } else if cfg!(unix) {
+                    Command::new("cp")
+                        .args([
+                            "-R",
+                            &format!("{}/{}", &web_folder_tmp, "node_modules/@a11ywatch/web/"),
+                            &web_folder,
+                        ])
+                        .status()
+                        .expect("Failed to execute cp command!");
+                    Command::new("rm")
+                        .args(["-R", &format!("{}", &web_folder_tmp)])
+                        .status()
+                        .expect("Failed to execute rm command!");
+                };
+
+                // force install @types/react issues apollo deprecated version. All other modules should be pinned for security.
+                Command::new("npm")
+                    .args([
+                        "--prefix",
+                        &format!("{}/", &web_folder),
+                        "install",
+                        "./",
+                        "--force",
+                    ])
+                    .status()
+                    .expect("Failed to execute @a11ywatch/web i command!");
+
+                Command::new("npm")
+                    .args(["run", "build", "--prefix", &web_folder])
+                    .status()
+                    .expect("Failed to execute @a11ywatch/web build command!");
+            }
         } else {
             file_manager.create_env_file().unwrap();
             file_manager

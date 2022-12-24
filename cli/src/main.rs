@@ -142,7 +142,7 @@ fn main() {
             external,
             save,
             fix,
-            noout
+            noout,
         }) => {
             if *external {
                 env::set_var(EXTERNAL, external.to_string());
@@ -172,7 +172,7 @@ fn main() {
             norobo,
             fix,
             debug,
-            noout
+            noout,
         }) => {
             if *external {
                 env::set_var(EXTERNAL, external.to_string());

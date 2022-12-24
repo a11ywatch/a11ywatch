@@ -60,7 +60,7 @@ pub enum Commands {
         fix: bool,
         #[clap(long)]
         /// disable stdout (useful for CI usage and large outputs)
-        noout: bool
+        noout: bool,
     },
     /// Site wide scan a website url for issues.
     CRAWL {
@@ -90,7 +90,7 @@ pub enum Commands {
         debug: bool,
         #[clap(long)]
         /// disable stdout (useful for CI usage and large outputs)
-        noout: bool
+        noout: bool,
     },
     /// Extract results in formats for platforms
     EXTRACT {
@@ -100,5 +100,5 @@ pub enum Commands {
         /// pass fail list style
         #[clap(short, long)]
         list: bool,
-    }
+    },
 }

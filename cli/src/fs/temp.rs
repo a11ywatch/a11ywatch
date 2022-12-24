@@ -259,7 +259,7 @@ impl TempFs {
                 } else if !cv_url.is_empty() && item.contains(&c_v_e) {
                     writer.write_all(format!("{c_v_e}={}\n", cv_url).to_string().as_bytes())?;
                     wrote_c_v_e = true;
-                }  else {
+                } else {
                     writer.write_all(format!("{}\n", item).to_string().as_bytes())?;
                 };
             }
@@ -279,7 +279,11 @@ impl TempFs {
 
         if !wrote_crawler {
             // m1 max
-            if cfg!(all(target_os = "macos", target_arch = "aarch64", target_pointer_width = "64")) {
+            if cfg!(all(
+                target_os = "macos",
+                target_arch = "aarch64",
+                target_pointer_width = "64"
+            )) {
                 writer.write_all("CRAWLER_IMAGE=darwin-arm64\n".to_string().as_bytes())?;
                 // stand alone image if used
                 writer.write_all("A11YWATCH_IMAGE=darwin\n".to_string().as_bytes())?;
