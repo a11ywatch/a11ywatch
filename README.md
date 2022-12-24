@@ -63,6 +63,10 @@ docker run -p 3000:3000 -v ${PWD}:/a11ywatch/conf \
 
 Afterwards open http://localhost:3000 in your browser to continue.
 
+Example of the dashboard crawling multi websites with live updates:
+
+https://user-images.githubusercontent.com/8095978/209417141-c287dbab-5b00-4d2b-b19a-dad013403718.mp4
+
 For step by step instructions, [view the docs](https://docs.a11ywatch.com/documentation/self-hosting-start/).
 
 ## Development
