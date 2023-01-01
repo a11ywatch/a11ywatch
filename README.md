@@ -75,6 +75,8 @@ View the [contributing docs](https://docs.a11ywatch.com/documentation/self-hosti
 
 ## [Benchmarks](./benchmarks)
 
+### Local (no latency)
+
 Case: `https://a11ywatch.com` multi site scan.
 10x simultaneous runs each ran via localhost to avoid latency.
 
@@ -83,6 +85,30 @@ Case: `https://a11ywatch.com` multi site scan.
 | **`Rust[A11yWatch]: crawl 10 times against 28 urls`**      | `20 ms`           |
 | **`Nodejs[Pa11y-Wave]: crawl 10 times against 25 urls`**   | `63 s`            |
 | **`Nodejs[Axe-Deque]: crawl 10 times against 25 urls`**    | `113 s`           |
+
+### External (latency)
+
+Benchmarks using the [CLI](./cli/) and [hyperfine](https://github.com/sharkdp/hyperfine) with network latency non localhost.
+
+Single page scan:
+
+```
+hyperfine 'a11ywatch scan -u https://a11ywatch.com' 
+
+Benchmark 1: a11ywatch scan -u https://a11ywatch.com
+  Time (mean ± σ):     336.0 ms ±  27.0 ms    [User: 2.3 ms, System: 2.7 ms]
+  Range (min … max):   281.3 ms … 365.8 ms    10 runs
+```
+
+Multi page scan (26 pages):
+
+```
+hyperfine 'a11ywatch crawl -u https://a11ywatch.com' 
+
+Benchmark 1: a11ywatch crawl -u https://a11ywatch.com
+  Time (mean ± σ):      1.765 s ±  0.048 s    [User: 0.005 s, System: 0.004 s]
+  Range (min … max):    1.729 s …  1.879 s    10 runs
+```
 
 A11yWatch helps builds confidence due to handling dynamic parameters and amount of coverage from reports.
 It can handle up to 150k pages easily under 1 min with 8gb of memory on linux.
