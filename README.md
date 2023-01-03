@@ -113,6 +113,10 @@ Benchmark 1: a11ywatch crawl -u https://a11ywatch.com
 A11yWatch helps builds confidence due to handling dynamic parameters and amount of coverage from reports.
 It can handle up to 150k pages easily under 1 min with 8gb of memory on linux.
 
+## [Integration Examples](https://github.com/a11ywatch/a11ywatch-examples)
+
+Some examples on how to integrate with the system. Learn how to use the [react-a11ywatch-js](https://github.com/a11ywatch/react-a11ywatch-js) hooks and components lib to build custom products or tools.
+
 ## Contributing
 
 Read the [contributing guide](./CONTRIBUTING.md) to learn about the development process, how to propose bug fixes and improvements, how to build and test your changes to A11yWatch.
