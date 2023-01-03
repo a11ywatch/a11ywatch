@@ -521,39 +521,6 @@
     "/crawl": {
       "post": {
         "tags": ["reports"],
-        "summary": "Multi-page crawl a website for issues",
-        "description": "",
-        "operationId": "crawlWebsite",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/Websites"
-        },
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Report"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "405": {
-            "description": "Invalid input"
-          }
-        }
-      }
-    },
-    "/crawl-stream": {
-      "post": {
-        "tags": ["reports"],
         "summary": "Multi-page crawl a website streaming issues on found",
         "description": "",
         "operationId": "crawlWebsiteStream",
