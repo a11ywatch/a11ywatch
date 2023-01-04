@@ -29,7 +29,6 @@
     "/website": {
       "get": {
         "tags": ["websites"],
-        "title": "Get Website",
         "summary": "Find website by Domain",
         "description": "Returns a website when DOMAIN == website.domain.  Empty strings will simulate API error conditions",
         "operationId": "getWebsiteByDomain",
@@ -135,7 +134,6 @@
     "/list/website": {
       "get": {
         "tags": ["collection"],
-        "title": "Get Websites",
         "summary": "Returns websites for the user in alphabetical order",
         "description": "Returns a map of websites",
         "operationId": "getWebsites",
@@ -226,7 +224,6 @@
     "/list/pages": {
       "get": {
         "tags": ["collection"],
-        "title": "Get Pages",
         "summary": "List the pages in order for a website",
         "description": "",
         "operationId": "getPages",
@@ -278,7 +275,6 @@
     "/list/analytics": {
       "get": {
         "tags": ["collection"],
-        "title": "Get Analytics",
         "summary": "Get the analytics for a website",
         "description": "",
         "operationId": "getAnalytics",
@@ -330,7 +326,6 @@
     "/list/pagespeed": {
       "get": {
         "tags": ["collection"],
-        "title": "Get PageSpeed",
         "summary": "Get the pagespeed for a website",
         "description": "",
         "operationId": "getPageSpeed",
@@ -382,7 +377,6 @@
     "/user": {
       "get": {
         "tags": ["user"],
-        "title": "Get User",
         "summary": "Get user",
         "description": "Retrieve the current user.",
         "operationId": "getUsers",
