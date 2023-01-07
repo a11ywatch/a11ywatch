@@ -24,13 +24,17 @@ The [CLI](./cli/README.md) can be used to test and build your own instance anywh
 We have [clients](./clients) in multiple languages and protocols to integrate with your app easier.<br>
 See the [documentation](https://docs.a11ywatch.com) for more information on getting started with development and etc.
 
-If you want to integrate your system with A11yWatch the simplest way is to use the javascript [sidecar](https://github.com/a11ywatch/sidecar).
-
 ## Getting Started
+
+### A11yWatch Cloud
+
+[A11yWatch Cloud](https://a11ywatch.com) is the fastest way to get started with A11yWatch. It provides managed infrastructure as well as an instant and free access for development projects and concepts.
+
+For a step-by-step guide on A11yWatch Cloud, [see the docs](https://docs.a11ywatch.com/documentation/cloud/).
 
 ### A11yWatch CLI
 
-[A11yWatch CLI](./cli/README.md) is the fastest way to get started with A11yWatch. It brings the tools to manage infrastructure, powerful commands for interactivity, and provides the ability to automate workflows using tools like Github Actions and more.
+[A11yWatch CLI](./cli/README.md) is an alternative way to get started with A11yWatch. It brings the tools to manage infrastructure, powerful commands for interactivity, and has the ability to automate workflows using tools like Github Actions and more.
 
 Example of a multi page crawl with valid instance up using `a11ywatch_cli v0.8.23`:
 
@@ -68,6 +72,11 @@ Example of the dashboard crawling multi websites with live updates:
 https://user-images.githubusercontent.com/8095978/209417141-c287dbab-5b00-4d2b-b19a-dad013403718.mp4
 
 For step by step instructions, [view the docs](https://docs.a11ywatch.com/documentation/self-hosting-start/).
+
+### SideCar
+
+If you want to integrate your system with A11yWatch the simplest way is to use the javascript [sidecar](https://github.com/a11ywatch/sidecar).
+The sidecar provides utility methods and launches the system locally for integration with nodejs.
 
 ## Development
 
