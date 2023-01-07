@@ -81,9 +81,9 @@ pub(crate) fn extract_issues_count(file_manager: &TempFs) -> (usize, usize, usiz
         let pages = data.as_array().unwrap();
 
         for page in pages {
-            let errors = &page["issuesInfo"]["errorCount"];
+            let errors = &page["issues_info"]["warning_count"];
             let errors: usize = format!("{}", errors).parse().unwrap_or_default();
-            let warnings = &page["issuesInfo"]["warningCount"];
+            let warnings = &page["issues_info"]["warning_count"];
             let warnings: usize = format!("{}", warnings).parse().unwrap_or_default();
 
             error_count += errors;
@@ -92,9 +92,9 @@ pub(crate) fn extract_issues_count(file_manager: &TempFs) -> (usize, usize, usiz
     }
 
     if data.is_object() {
-        let errors = &data["issuesInfo"]["errorCount"];
+        let errors = &data["issues_info"]["warning_count"];
         let errors: usize = format!("{}", errors).parse().unwrap_or_default();
-        let warnings = &data["issuesInfo"]["warningCount"];
+        let warnings = &data["issues_info"]["warning_count"];
         let warnings: usize = format!("{}", warnings).parse().unwrap_or_default();
 
         error_count += errors;
