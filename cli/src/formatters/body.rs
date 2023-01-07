@@ -117,12 +117,12 @@ pub(crate) fn get_report_url_errors(file_manager: &TempFs) -> String {
     // loop through stream until and extract all valid content.
     if data.is_array() {
         let pages = data.as_array().unwrap();
-
         url_count = pages.len();
 
         for page in pages {
-            let errors = &page["issuesInfo"]["errorCount"];
+            let errors = &page["issues_info"]["error_count"];
             let errors: usize = format!("{}", errors).parse().unwrap_or_default();
+
             let s = if errors == 1 { "" } else { "s" };
             url_list.push_str(&format!(
                 " > {} - {} error{s}\n",
