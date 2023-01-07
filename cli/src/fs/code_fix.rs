@@ -101,7 +101,7 @@ pub fn apply_fix(json_results: &Value) {
         if issues.is_array() {
             assure_module_exist("ripgrep");
             let react_project = determine_react_project();
-            for issue in issues.as_array() {
+            while let Some(issue) = issues.as_array() {
                 for item in issue.clone() {
                     let iss: Issue = serde_json::from_value(item).unwrap();
                     let message = iss.message.to_string();
@@ -155,14 +155,14 @@ pub fn apply_fix(json_results: &Value) {
         }
     } else if data.is_array() {
         let react_project = determine_react_project();
-        for d in data.as_array() {
+        while let Some(d) = data.as_array() {
             for item in d.clone() {
                 let it = item.clone();
                 let issues = it.get("issues").unwrap();
 
                 if issues.is_array() {
                     assure_module_exist("ripgrep");
-                    for issue in issues.as_array() {
+                    if let Some(issue) = issues.as_array() {
                         for item in issue.clone() {
                             let iss: Issue = serde_json::from_value(item).unwrap();
                             let message = iss.message.to_string();

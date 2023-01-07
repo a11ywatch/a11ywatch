@@ -86,7 +86,7 @@ a11ywatch --set-cv-url https://$myvcvname.cognitiveservices.azure.com/
 Example options and commands `a11ywatch -h`:
 
 ```sh
-a11ywatch_cli 0.8.24
+a11ywatch_cli 0.8.31
 j-mendez <jeff@a11ywatch.com>
 A11yWatch web accessibility CLI.
 
@@ -109,11 +109,11 @@ OPTIONS:
     -h, --help
             Print help information
 
-    -r, --results-parsed
-            Get results file parsed to json
-
     -r, --results-parsed-list
             Get results file parsed as report list of passed / failed
+
+    -R, --results-parsed
+            Get results file parsed to json
 
         --results-issues
             Get the total amount of issues between errors,warning,notice that occurred for the

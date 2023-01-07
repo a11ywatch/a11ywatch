@@ -27,7 +27,7 @@ pub struct Cli {
     #[clap(short, long)]
     pub github_api_url: bool,
     /// Get results file parsed to json
-    #[clap(short, long)]
+    #[clap(short = 'R', long)]
     pub results_parsed: bool,
     /// Get results of the github html message
     #[clap(long)]
