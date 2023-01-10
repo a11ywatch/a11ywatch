@@ -69,11 +69,11 @@ Afterwards open http://localhost:3000 in your browser to continue.
 
 Example of the dashboard crawling multi websites with live updates:
 
-https://user-images.githubusercontent.com/8095978/209417141-c287dbab-5b00-4d2b-b19a-dad013403718.mp4
+https://user-images.githubusercontent.com/8095978/211600555-086516d9-403c-42bf-9f80-6e7da2354f40.mp4
 
 For step by step instructions, [view the docs](https://docs.a11ywatch.com/documentation/self-hosting-start/).
 
-### SideCar
+### Sidecar
 
 If you want to integrate your system with A11yWatch the simplest way is to use the javascript [sidecar](https://github.com/a11ywatch/sidecar).
 The sidecar provides utility methods and launches the system locally for integration with nodejs.
