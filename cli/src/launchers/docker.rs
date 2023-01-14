@@ -23,7 +23,7 @@ pub(crate) fn build_backend(file_manager: &TempFs) {
     Command::new("docker-compose")
         .args(docker_args)
         .status()
-        .expect("Failed to execute compose-compose command.");
+        .expect("Failed to execute docker-compose command.");
 }
 
 /// Run docker image upgrades across services.
