@@ -46,7 +46,7 @@ Actions:
 
 ```sh
 # scan a url and pipe the stdout to a file.
-a11ywatch scan -d --url https://a11ywatch.com > results.json
+a11ywatch scan --url https://a11ywatch.com > results.json
 # scan a url and attempt to fix code based on recommendations [installs the fast ripgrep crate for search].
 a11ywatch scan --url https://a11ywatch.com --fix
 # scan a website multi page and pipe the stdout to a file.
