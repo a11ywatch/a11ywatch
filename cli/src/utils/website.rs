@@ -54,7 +54,7 @@ impl From<Page> for Website {
         let issue_option = IssueInfo {
             error_count: issues_info.error_count,
             warning_count: issues_info.warning_count,
-            ada_score: issues_info.ada_score,
+            access_score: issues_info.access_score,
             total_issues: issues_info.total_issues,
             issue_meta: crate::utils::issue_info::IssueMeta {
                 skip_content_included: issues_info

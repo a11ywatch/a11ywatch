@@ -8,8 +8,8 @@ pub struct IssueMeta {
 
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct IssueInfo {
-    #[serde(rename = "adaScore")]
-    pub ada_score: i32,
+    #[serde(rename = "accessScore")]
+    pub access_score: i32,
     #[serde(rename = "totalIssues")]
     pub total_issues: i32,
     #[serde(rename = "possibleIssuesFixedByCdn")]

@@ -866,7 +866,7 @@
       },
       "IssuesInfo": {
         "properties": {
-          "adaScoreAverage": {
+          "accessScoreAverage": {
             "type": "integer",
             "format": "int64"
           },
@@ -960,7 +960,7 @@
             "type": "integer",
             "format": "int64"
           },
-          "adaScore": {
+          "accessScore": {
             "type": "integer",
             "format": "int64"
           },
