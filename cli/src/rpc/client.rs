@@ -47,6 +47,7 @@ pub async fn crawl(
     subdomains: bool,
     tld: bool,
     norobo: bool,
+    sitemap: bool
 ) -> Vec<Page> {
     let mut client = create_client().await.unwrap();
     let page = CrawlParams {
@@ -55,6 +56,7 @@ pub async fn crawl(
         subdomains,
         tld,
         norobo,
+        sitemap,
         ..Default::default()
     };
     let request = Request::new(page);

@@ -4,7 +4,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let out_dir = env::var("OUT_DIR").unwrap();
 
     Command::new("npm")
-        .args(["i", "--prefix", &out_dir, "@a11ywatch/protos@0.3.16"])
+        .args(["i", "--prefix", &out_dir, "@a11ywatch/protos@0.3.18"])
         .output()
         .expect("failed to execute npm install process");
 

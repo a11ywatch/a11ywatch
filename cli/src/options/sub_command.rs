@@ -64,18 +64,21 @@ pub enum Commands {
     },
     /// Site wide scan a website url for issues.
     CRAWL {
-        /// target url to scan
+        /// Target url to scan.
         #[clap(short, long)]
         url: String,
-        /// whether to use the a11ywatch external api
+        /// Whether to use the a11ywatch external api.
         #[clap(short, long)]
         external: bool,
-        /// save the results of the scan to tmp
+        /// Save the results of the scan to tmp folder.
         #[clap(short, long)]
         save: bool,
-        /// Include subdomains
+        /// Include subdomains in crawl.
         #[clap(short = 'S', long)]
         subdomains: bool,
+        /// Extend crawl with sitemap list.
+        #[clap(long)]
+        sitemap: bool,
         /// Include different TLD extensions matching hostname
         #[clap(short, long)]
         tld: bool,

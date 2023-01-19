@@ -55,13 +55,14 @@ impl ApiClient {
         tld: &bool,
         norobo: &bool,
         file_manager: &TempFs,
+        sitemap: &bool
     ) -> Result<CrawlApiResult, ()> {
         let token = file_manager.get_token();
         let mut results: CrawlApiResult = CrawlApiResult::default();
 
         let start = Instant::now();
 
-        let resp = crawl(url.to_string(), token, *subdomains, *tld, *norobo).await;
+        let resp = crawl(url.to_string(), token, *subdomains, *tld, *norobo, *sitemap).await;
 
         let duration = start.elapsed();
 
