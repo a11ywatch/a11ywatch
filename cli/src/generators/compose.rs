@@ -83,15 +83,6 @@ services:
     networks:
       - back-net
 
-  cdn-server:
-    container_name: cdn-server
-    image: a11ywatch/cdn-server
-    ports:
-      - 50054
-      - 8090:8090
-    networks:
-      - back-net
-
   crawler:
     container_name: crawler
     image: "a11ywatch/crawler:${CRAWLER_IMAGE:-debian}"

@@ -103,16 +103,6 @@ services:
       - COMPUTER_VISION_ENDPOINT=${COMPUTER_VISION_ENDPOINT}
       - COMPUTER_VISION_SUBSCRIPTION_KEY=${COMPUTER_VISION_SUBSCRIPTION_KEY}
 
-  cdn-server:
-    container_name: cdn-server
-    image: a11ywatch/cdn-server
-    networks:
-      - back-net
-      - front-net
-    ports:
-      - 50054
-      - 8090:8090
-
   crawler:
     container_name: crawler
     image: "a11ywatch/crawler:${CRAWLER_IMAGE:-latest}"
