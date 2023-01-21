@@ -55,7 +55,7 @@ impl ApiClient {
         tld: &bool,
         norobo: &bool,
         file_manager: &TempFs,
-        sitemap: &bool
+        sitemap: &bool,
     ) -> Result<CrawlApiResult, ()> {
         let token = file_manager.get_token();
         let mut results: CrawlApiResult = CrawlApiResult::default();

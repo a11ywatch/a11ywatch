@@ -2,7 +2,7 @@ use crate::fs::TempFs;
 use crate::launchers::docker;
 use crate::INCLUDE_FRONTEND;
 use std::env;
-use std::process::{Command};
+use std::process::Command;
 
 #[derive(Debug, Default)]
 pub struct Stop {}
@@ -21,9 +21,12 @@ impl Stop {
             //         println!("mongo already shutdown.");
             //     }
             // };
-            
+
             // todo: control redis, mongodb, chrome shutdowns
-            match Command::new("kill-port").args(["3000", "3280", "50051", "50052", "50053", "50054", "50055"]).status() {
+            match Command::new("kill-port")
+                .args(["3000", "3280", "50051", "50052", "50053", "50054", "50055"])
+                .status()
+            {
                 Ok(_) => {}
                 _ => {
                     println!("Failed to execute kill-port command. Try to install it first with the command `npm i kill-port -g`.");

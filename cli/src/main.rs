@@ -173,7 +173,7 @@ fn main() {
             fix,
             debug,
             noout,
-            sitemap
+            sitemap,
         }) => {
             if *external {
                 env::set_var(EXTERNAL, external.to_string());
@@ -182,8 +182,9 @@ fn main() {
                 env::set_var("RUST_LOG", "a11ywatch::rpc::client=debug");
                 env_logger::init();
             }
-            let result = ApiClient::crawl_website(&url, subdomains, tld, norobo, &file_manager, sitemap)
-                .unwrap_or_default();
+            let result =
+                ApiClient::crawl_website(&url, subdomains, tld, norobo, &file_manager, sitemap)
+                    .unwrap_or_default();
             let json_results = json!(result);
 
             if *save {

@@ -2,12 +2,22 @@
 
 The A11yWatch Command Line Interface. View the [cli-docs](https://docs.a11ywatch.com/documentation/cli/) for more complete info.
 
+## Installation
+
+[Protoc](https://grpc.io/docs/protoc-installation/) is required to compile.
+
+### Linux
+
 If you are on Ubuntu OpenSSL is required. 
 You may need to add the command `sudo` before `apt-get`.
 
 ```sh
 apt-get update && apt upgrade -y && apt-get install -y --no-install-recommends build-essential gcc cmake libc6 libssl-dev pkg-config
 ```
+
+### Windows
+
+Cmake is required on windows.
 
 Vendoring OpenSSL is available by using the feature flag `dist-vendor` upon install ex: `cargo install --path . --features dist-vendor`. The flag is also available following [RTN Consuming](https://github.com/a11ywatch/rust-to-npm) for node installs via npm.
 
