@@ -17,7 +17,7 @@ apt-get update && apt upgrade -y && apt-get install -y --no-install-recommends b
 
 ### Windows
 
-Cmake is required on windows.
+[Cmake](https://cmake.org/) is required on windows.
 
 Vendoring OpenSSL is available by using the feature flag `dist-vendor` upon install ex: `cargo install --path . --features dist-vendor`. The flag is also available following [RTN Consuming](https://github.com/a11ywatch/rust-to-npm) for node installs via npm.
 
@@ -28,7 +28,7 @@ Get the CLI by running one of the commands below.
 ```sh
 # install via cargo
 cargo install a11ywatch_cli
-# install via npm
+# or install via npm
 npm i a11ywatch-cli -g
 ```
 

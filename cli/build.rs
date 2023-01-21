@@ -1,18 +1,4 @@
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    use std::env;
-    use std::process::Command;
-    let out_dir = env::var("OUT_DIR").unwrap();
-
-    match Command::new("npm")
-        .args(["i", "--prefix", &out_dir, "@a11ywatch/protos@0.3.18"])
-        .output()
-    {
-        Ok(_) => {}
-        Err(_) => {
-            println!("failed to npm install @a11ywatch/protos@0.3.18");
-        }
-    }
-
     tonic_build::configure()
         .build_server(false)
         .extern_path(".google.protobuf.Struct", "::prost::alloc::string::String")
@@ -45,22 +31,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             "#[derive(serde::Deserialize, serde::Serialize)]",
         )
         .compile(
-            &[format!(
-                "{}/node_modules/@a11ywatch/protos/apicore.proto",
-                &out_dir
-            )],
-            &[&out_dir],
+            &["proto/apicore.proto"],
+            &["proto"],
         )?;
 
-    tonic_build::compile_protos(format!(
-        "{}/node_modules/@a11ywatch/protos/crawler.proto",
-        out_dir
-    ))?;
-
-    tonic_build::compile_protos(format!(
-        "{}/node_modules/@a11ywatch/protos/health.proto",
-        out_dir
-    ))?;
+    tonic_build::compile_protos("proto/crawler.proto")?;
+    tonic_build::compile_protos("proto/health.proto")?;
 
     Ok(())
 }

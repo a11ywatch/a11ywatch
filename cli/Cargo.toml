@@ -1,6 +1,6 @@
 [package]
 name = "a11ywatch_cli"
-version = "0.8.41"
+version = "0.8.42"
 authors = ["j-mendez <jeff@a11ywatch.com>"]
 description = "A11yWatch web accessibility CLI."
 repository = "https://github.com/a11ywatch/a11ywatch"
@@ -9,7 +9,7 @@ keywords = ["a11ywatch", "accessibility", "web", "website_improvement"]
 categories = ["accessibility", "command-line-utilities", "development-tools::build-utils"]
 license = "MIT"
 documentation = "https://docs.rs/a11ywatch_cli"
-include = ["src/*", "build.rs", "LICENSE", "README.md"]
+include = ["src/*", "build.rs", "proto/*", "LICENSE", "README.md"]
 edition = "2018"
 
 [dependencies]
