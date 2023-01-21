@@ -4,7 +4,7 @@ The A11yWatch Command Line Interface. View the [cli-docs](https://docs.a11ywatch
 
 ## Installation
 
-[Protoc](https://grpc.io/docs/protoc-installation/) is required to compile.
+[Protoc](https://grpc.io/docs/protoc-installation/) is required to compile. Vendoring OpenSSL is available by using the feature flag `dist-vendor` upon install ex: `cargo install --path . --features dist-vendor`. The flag is also available following [RTN Consuming](https://github.com/a11ywatch/rust-to-npm) for node installs via npm.
 
 ### Linux
 
@@ -18,8 +18,6 @@ apt-get update && apt upgrade -y && apt-get install -y --no-install-recommends b
 ### Windows
 
 [Cmake](https://cmake.org/) is required on windows.
-
-Vendoring OpenSSL is available by using the feature flag `dist-vendor` upon install ex: `cargo install --path . --features dist-vendor`. The flag is also available following [RTN Consuming](https://github.com/a11ywatch/rust-to-npm) for node installs via npm.
 
 ## Build
 
@@ -43,13 +41,30 @@ Startup:
 
 Use one of the following commands to start the instance. If you need the front-end client passing the -f option [min of 1.25gb of memory required alloc to docker resource].
 
+
 ```sh
-# start the instance.
+# start the instance requires docker running.
 a11ywatch start
-# if you need to upgrade the instance to new images run with the upgrade flag.
-a11ywatch start --upgrade
-# start the instance with the front-end on port 3270 by default.
+```
+
+```sh
+# Start the instance with the front-end on port 3270 by default requires docker running..
 a11ywatch start -f
+```
+
+```sh
+# You can also start the system local via `nodejs` monolith.
+a11ywatch start --local
+```
+
+```sh
+# Use the `--standalone` flag to use the monolith in docker.
+a11ywatch start --standalone
+```
+
+```sh
+# If you need to upgrade the instance to new images run with the upgrade flag - can also be used with the build command.
+a11ywatch start --upgrade
 ```
 
 Actions:
