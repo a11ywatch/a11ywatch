@@ -91,13 +91,13 @@ Case: `https://a11ywatch.com` multi site scan.
 
 |                                                            | `libraries`       |
 | :--------------------------------------------------------- | :---------------- |
-| **`Rust[A11yWatch]: crawl 10 times against 28 urls`**      | `20 ms`           |
+| **`Rust[A11yWatch]: crawl 10 times against 30 urls`**      | `1.2 ms`          |
 | **`Nodejs[Pa11y-Wave]: crawl 10 times against 25 urls`**   | `63 s`            |
 | **`Nodejs[Axe-Deque]: crawl 10 times against 25 urls`**    | `113 s`           |
 
 ### External (latency)
 
-Benchmarks using the [CLI](./cli/) and [hyperfine](https://github.com/sharkdp/hyperfine) with network latency non localhost.
+Benchmarks using the [CLI](./cli/) and [hyperfine](https://github.com/sharkdp/hyperfine) with network latency.
 
 Single page scan:
 
@@ -105,18 +105,18 @@ Single page scan:
 hyperfine 'a11ywatch scan -u https://a11ywatch.com' 
 
 Benchmark 1: a11ywatch scan -u https://a11ywatch.com
-  Time (mean ± σ):     336.0 ms ±  27.0 ms    [User: 2.3 ms, System: 2.7 ms]
-  Range (min … max):   281.3 ms … 365.8 ms    10 runs
+  Time (mean ± σ):     218.9 ms ±  20.1 ms    [User: 1.9 ms, System: 2.8 ms]
+  Range (min … max):   196.7 ms … 308.6 ms    11 runs
 ```
 
-Multi page scan (26 pages):
+Multi page scan (30 pages):
 
 ```
 hyperfine 'a11ywatch crawl -u https://a11ywatch.com' 
 
 Benchmark 1: a11ywatch crawl -u https://a11ywatch.com
-  Time (mean ± σ):      1.765 s ±  0.048 s    [User: 0.005 s, System: 0.004 s]
-  Range (min … max):    1.729 s …  1.879 s    10 runs
+  Time (mean ± σ):      1.343 s ±  0.052 s    [User: 0.003 s, System: 0.003 s]
+  Range (min … max):    1.271 s …  1.428 s    10 runs
 ```
 
 A11yWatch helps builds confidence due to handling dynamic parameters and amount of coverage from reports.
