@@ -28,22 +28,9 @@ message Headers {
    string value = 2; // value of the key.
 }
 
-// upsert script params
-message ScriptParams {
-   bool editScript = 1; // should this edit the script?
-   string url = 2; // page url for the request.
-   Script script = 3; // pass in script object.
-   string newScript = 4; // new script to replace content?
-}
-
 // meta details for the page to include extra supportive features. 
 message IssueMeta {
-   bool skipContentIncluded = 1; // add a skip content button onto the script if not found.
-}
-
-// script meta adjustments
-message ScriptMeta {
-   bool skipContentEnabled = 1; // is skip content enabled for the page
+   bool skipContentIncluded = 1; // skip content button found.
 }
 
 // info to use to gather all stats for the issues on the page.
@@ -77,18 +64,6 @@ message Issue {
    int32 recurrence = 8; // how many times the issue appeared.
 }
 
-// javascript that runs to attempt to fix the page.
-message Script {
-   string pageUrl = 1; // the page url that ran the request.
-   string domain = 2; // the domain of the page.
-   string script = 3; // the fix script body contents without <script></script>.
-   string cdnUrlMinified = 4; //  the cdn url for accessibility fixes custom to the page minified.
-   string cdnUrl = 5; // the cdn url for accessibility fixes custom to the page.
-   bool cdnConnected = 6; // determine if accessibility cdn is connected.
-   IssueMeta issueMeta = 7; // extra info to determine stats on the issues.
-   ScriptMeta scriptMeta = 8; // meta information to help track script stats.
-}
-
 // fields that build that Website that is treated as a Page.
 message Page {
    string domain = 1; // the domain for the request [example.com].
@@ -99,8 +74,7 @@ message Page {
    IssueInfo issuesInfo = 6; // issues on the page.
    string lastScanDate = 7; // the last date of the scan.
    repeated Issue issues = 8; // all of the issues that relate to the page.
-   Script script = 9; // the page script body contents without <script> tags.
-   uint32 userId = 10; // the user that made the request.
+   uint32 userId = 9; // the user that made the request.
 }
 
 // send streamed response
