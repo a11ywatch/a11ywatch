@@ -1,7 +1,7 @@
 <div align="center">
   <h1>A11yWatch</h1>
   <p>
-    <strong>A11yWatch is a open source web accessibility platform for staying inclusive</strong>
+    <strong>A11yWatch the open source web accessibility platform for staying inclusive</strong>
   </p>
   <p>
 
@@ -25,6 +25,8 @@ We have [clients](./clients) in multiple languages and protocols to integrate wi
 See the [documentation](https://docs.a11ywatch.com) for more information on getting started with development and etc.
 
 ## Getting Started
+
+To get started with the fastest and most precise web accessibility platform pick between the Cloud, CLI, Docker, or Sidecar.
 
 ### A11yWatch Cloud
 
@@ -120,7 +122,7 @@ Benchmark 1: a11ywatch crawl -u https://a11ywatch.com
 ```
 
 A11yWatch helps builds confidence due to handling dynamic parameters and amount of coverage from reports.
-It can handle up to 150k pages easily under 1 min with 8gb of memory on linux.
+The system can handle up to 1 million pages under 1 min with 8gb of memory on linux without a sweat.
 
 ## [Integration Examples](https://github.com/a11ywatch/a11ywatch-examples)
 
