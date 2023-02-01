@@ -12,6 +12,10 @@
 </div>
 
 
+A11yWatch Lite is a previous and open-source version of A11yWatch (a paid, hosted Web accessibility and Vitals Tool). It was the first version of our software, and has been downloaded a lot!
+
+While we are no longer adding features to this Lite version, we will be continuing to maintain it long-term and fix any bugs that come up.
+
 ## Pre-requisites
 
 * [Rust](https://www.rust-lang.org/tools/install) is required if building locally.
@@ -128,9 +132,10 @@ The system can handle up to 1 million pages under 1 min with 8gb of memory on li
 
 Some examples on how to integrate with the system. Learn how to use the [react-a11ywatch-js](https://github.com/a11ywatch/react-a11ywatch-js) hooks and components lib to build custom products or tools.
 
-## Contributing
 
-Read the [contributing guide](./CONTRIBUTING.md) to learn about the development process, how to propose bug fixes and improvements, how to build and test your changes to A11yWatch.
+## A11yWatch Lite vs A11yWatch
+
+A11yWatch is much more detailed, feature-rich, and faster, than A11yWatch Lite.
 
 ## Support
 
