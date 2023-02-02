@@ -24,7 +24,7 @@ impl Stop {
 
             // todo: control redis, mongodb, chrome shutdowns
             match Command::new("kill-port")
-                .args(["3000", "3280", "50051", "50052", "50053", "50054", "50055"])
+                .args(["3000", "3280", "50051", "50052", "50053", "50055"])
                 .status()
             {
                 Ok(_) => {}
