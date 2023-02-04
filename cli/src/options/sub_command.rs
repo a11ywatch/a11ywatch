@@ -2,7 +2,7 @@ use clap::Subcommand;
 
 #[derive(Subcommand)]
 pub enum Commands {
-    /// Build the project on the local machine [defaults to docker runtime]
+    /// Build A11yWatch Lite on the local machine [defaults to docker runtime]
     BUILD {
         /// create machine with frontend client
         #[clap(short, long)]
@@ -17,7 +17,7 @@ pub enum Commands {
         #[clap(short, long)]
         standalone: bool,
     },
-    /// Start the application on the local machine [defaults to docker runtime]
+    /// Start A11yWatch Lite on the local machine [defaults to docker runtime]
     START {
         /// start the local machine with frontend client
         #[clap(short, long)]
@@ -35,7 +35,7 @@ pub enum Commands {
         #[clap(short, long)]
         bun: bool,
     },
-    /// Stop the project on the local machine [defaults to docker runtime]
+    /// Stop A11yWatch Lite on the local machine [defaults to docker runtime]
     STOP {
         /// stop the local machine with frontend client.
         #[clap(short, long)]

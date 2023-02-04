@@ -16,6 +16,12 @@ A11yWatch Lite is a previous and open-source version of A11yWatch (a paid, hoste
 
 While we are no longer adding features to this Lite version, we will be continuing to maintain it long-term and fix any bugs that come up.
 
+## A11yWatch Lite vs A11yWatch
+
+A11yWatch is much more detailed, feature-rich, and faster, than A11yWatch Lite. [Sign up](https://a11ywatch.com) for A11yWatch for free today. We offer high performance API
+integrations for paid accounts that will save your wallet in folds and better mother nature. Web accessibility automation in the current tools outside of A11yWatch
+can be very harmful due to the cost for the latency, improper algorithms and protocols that waste tons of energy/cpu cycles, and much more due to the state of the challenges of the job without the expertise and dedication required.
+
 ## Pre-requisites
 
 * [Rust](https://www.rust-lang.org/tools/install) is required if building locally.
@@ -132,10 +138,6 @@ The system can handle up to 1 million pages under 1 min with 8gb of memory on li
 
 Some examples on how to integrate with the system. Learn how to use the [react-a11ywatch-js](https://github.com/a11ywatch/react-a11ywatch-js) hooks and components lib to build custom products or tools.
 
-
-## A11yWatch Lite vs A11yWatch
-
-A11yWatch is much more detailed, feature-rich, and faster, than A11yWatch Lite.
 
 ## Support
 

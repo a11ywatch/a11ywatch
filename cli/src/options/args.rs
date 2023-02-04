@@ -1,14 +1,14 @@
 use crate::options::sub_command::Commands;
 use clap::Parser;
 
-/// program to build, deploy, integrate, and run a11ywatch.
+/// program to build, deploy, integrate, and run A11yWatch and A11yWatch Lite.
 #[derive(Parser)]
 #[clap(author, version, about, long_about = None)]
 pub struct Cli {
     /// Build main sub commands
     #[clap(subcommand)]
     pub command: Option<Commands>,
-    /// Set the API token to use for request
+    /// Set the API token to use for requests
     #[clap(short, long)]
     pub set_token: Option<String>,
     /// Set the Computer Vision API token to use for request
