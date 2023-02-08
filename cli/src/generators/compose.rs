@@ -28,7 +28,6 @@ services:
       - REDIS_CLIENT=${REDIS_CLIENT:-redis://redis:6379}
       - REDIS_HOST=redis
       - DOCKER_CONTAINER=${DOCKER_CONTAINER:-true}
-      - SCRIPTS_ENABLED=${SCRIPTS_ENABLED:-true}
     networks:
       - back-net
       - front-net
@@ -59,7 +58,7 @@ services:
 
   crawler:
     container_name: crawler
-    image: "a11ywatch/crawler:${CRAWLER_IMAGE:-debian}"
+    image: a11ywatch/crawler:${CRAWLER_IMAGE:-debian}
     ports:
       - 50055
     networks:
@@ -113,7 +112,7 @@ version: '3.9'
 services:
   a11ywatch:
     container_name: a11ywatch
-    image: "a11ywatch/a11ywatch:${A11YWATCH_IMAGE:-latest}"
+    image: a11ywatch/a11ywatch:${A11YWATCH_IMAGE:-latest}
     environment:
       - COMPUTER_VISION_ENDPOINT=${COMPUTER_VISION_ENDPOINT:-""}
       - COMPUTER_VISION_SUBSCRIPTION_KEY=${COMPUTER_VISION_SUBSCRIPTION_KEY:-""}
