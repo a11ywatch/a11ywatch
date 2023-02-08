@@ -18,6 +18,9 @@ We have comparisons set against different languages and libs that can be used to
 
 ## Benchmark Results
 
+All benchmarks are done on 7gb linux machines with 2 cors. 
+The linux builds run better than the mac builds due to IO differences and crawler memory backends.
+
 #### crawl-speed (Small Website)
 
 Case: `https://a11ywatch.com` multi site scan.
@@ -25,7 +28,7 @@ Case: `https://a11ywatch.com` multi site scan.
 
 |                                                            | `libraries`            |
 | :--------------------------------------------------------- | :--------------------- |
-| **`Rust[a11ywatch]: with crawl 10 times against 28 urls`** | `20 ms` (**1.00x**)    |
+| **`Rust[a11ywatch]: with crawl 10 times against 28 urls`** | `1 ms` (**1.00x**)    |
 | **`Nodejs[Pa11y]: with crawl 10 times against 25 urls`**   | `63 s` (**1.00x**)     |
 | **`Nodejs[Axe]: with crawl 10 times against 25 urls`**     | `113 s` (**1.00x**)    |
 
@@ -39,6 +42,6 @@ runs with 10 samples:
 
 |                        | `libraries`               |
 | :--------------------- | :------------------------ |
-| **`A11yWatch: crawl`** | `2.5 mins` (✅ **1.00x**) |
+| **`A11yWatch: crawl`** | `30s` (✅ **1.00x**)    |
 | **`Pa11y-CI: crawl`**  | `50+ hr` (✅ **1.00x**)   |
 | **`Axe: crawl`**       | `N/A` (✅ **1.00x**)      |

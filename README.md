@@ -96,6 +96,8 @@ View the [contributing docs](https://docs.a11ywatch.com/documentation/self-hosti
 
 ## [Benchmarks](./benchmarks)
 
+Benchmarks below are done on a Apple M1 Max 64gb memory.
+
 ### Local (no latency)
 
 Case: `https://a11ywatch.com` multi site scan.
@@ -103,7 +105,7 @@ Case: `https://a11ywatch.com` multi site scan.
 
 |                                                            | `libraries`       |
 | :--------------------------------------------------------- | :---------------- |
-| **`Rust[A11yWatch]: crawl 10 times against 30 urls`**      | `1.2 ms`          |
+| **`Rust[A11yWatch]: crawl 10 times against 30 urls`**      | `10 ms`          |
 | **`Nodejs[Pa11y-Wave]: crawl 10 times against 25 urls`**   | `63 s`            |
 | **`Nodejs[Axe-Deque]: crawl 10 times against 25 urls`**    | `113 s`           |
 
@@ -117,8 +119,8 @@ Single page scan:
 hyperfine 'a11ywatch scan -u https://a11ywatch.com' 
 
 Benchmark 1: a11ywatch scan -u https://a11ywatch.com
-  Time (mean ± σ):     218.9 ms ±  20.1 ms    [User: 1.9 ms, System: 2.8 ms]
-  Range (min … max):   196.7 ms … 308.6 ms    11 runs
+  Time (mean ± σ):     109.44 ms ±  10 ms    [User: 1.9 ms, System: 2.8 ms]
+  Range (min … max):   98.35 ms … 154.3 ms    11 runs
 ```
 
 Multi page scan (30 pages):
@@ -127,8 +129,8 @@ Multi page scan (30 pages):
 hyperfine 'a11ywatch crawl -u https://a11ywatch.com' 
 
 Benchmark 1: a11ywatch crawl -u https://a11ywatch.com
-  Time (mean ± σ):      1.343 s ±  0.052 s    [User: 0.003 s, System: 0.003 s]
-  Range (min … max):    1.271 s …  1.428 s    10 runs
+  Time (mean ± σ):      0.6715 s ±  0.026 s    [User: 0.003 s, System: 0.003 s]
+  Range (min … max):    0.6355 s …  0.714 s    10 runs
 ```
 
 A11yWatch helps builds confidence due to handling dynamic parameters and amount of coverage from reports.
