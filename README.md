@@ -1,7 +1,7 @@
 <div align="center">
   <h1>A11yWatch</h1>
   <p>
-    <strong>A11yWatch the open source web accessibility platform for staying inclusive</strong>
+    <strong>The fast, precise, and sophisticated web accessibility automation tool for staying inclusive</strong>
   </p>
   <p>
 
@@ -20,7 +20,7 @@ While we are no longer adding features to this Lite version, we will be continui
 
 A11yWatch is much more detailed, feature-rich, and faster, than A11yWatch Lite. [Sign up](https://a11ywatch.com) for A11yWatch for free today. We offer high performance API
 integrations for paid accounts that will save your wallet in folds and better mother nature. Web accessibility automation in the current tools outside of A11yWatch
-can be very harmful due to the cost for the latency, improper algorithms and protocols that waste tons of energy/cpu cycles, and much more due to the state of the challenges of the job without the expertise and dedication required.
+can be very harmful due to the cost for the latency, improper algorithms and protocols that waste tons of energy/cpu cycles, and much more due to the state of the challenges of the job without the expertise and dedication required. A11yWatch leads automation tools for speed & efficiency, accuracy, and robustness when it comes to testing accessibility with more coverage than any other.
 
 ## Pre-requisites
 
