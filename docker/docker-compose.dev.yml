@@ -150,9 +150,10 @@ services:
 
   redis:
     container_name: redis
-    image: redis:7.0-rc2-alpine
+    image: redis:7.0.9-alpine
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
+    command: redis-server --loglevel verbose --port 6379
     networks:
       - back-net
     ports:
