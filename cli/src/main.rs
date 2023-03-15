@@ -11,6 +11,7 @@ pub mod options;
 pub mod rpc;
 pub mod utils;
 
+#[cfg(feature = "litemode")]
 #[macro_use]
 extern crate lazy_static;
 
@@ -148,7 +149,12 @@ fn main() {
                 env::set_var(EXTERNAL, external.to_string());
             };
 
-            let result = ApiClient::scan_website(&url, &file_manager).unwrap_or_default();
+            let result = if *external && cfg!(feature = "grpc") {
+                commands::api::rest::ApiClient::scan_website(&url, &file_manager)
+             } else {
+                ApiClient::scan_website(&url, &file_manager)
+            }.unwrap_or_default();
+
             let json_results = json!(&result);
 
             if *save {
@@ -178,13 +184,25 @@ fn main() {
             if *external {
                 env::set_var(EXTERNAL, external.to_string());
             }
+
             if *debug {
-                env::set_var("RUST_LOG", "a11ywatch::rpc::client=debug");
+                env::set_var("RUST_LOG", "a11ywatch::rpc::client=debug,a11ywatch::commands::api::rest=debug");
                 env_logger::init();
             }
-            let result =
+
+            let result = if *external && cfg!(feature = "grpc") {
+                commands::api::rest::ApiClient::crawl_website(
+                    &url,
+                    subdomains,
+                    tld,
+                    norobo,
+                    &file_manager,
+                    sitemap,
+                )
+            } else {
                 ApiClient::crawl_website(&url, subdomains, tld, norobo, &file_manager, sitemap)
-                    .unwrap_or_default();
+            }.unwrap_or_default();
+
             let json_results = json!(result);
 
             if *save {

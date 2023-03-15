@@ -1,3 +1,4 @@
+#[cfg(feature = "litemode")]
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     tonic_build::configure()
         .build_server(false)
@@ -30,13 +31,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             "apicore.IssueMeta",
             "#[derive(serde::Deserialize, serde::Serialize)]",
         )
-        .compile(
-            &["proto/apicore.proto"],
-            &["proto"],
-        )?;
+        .compile(&["proto/apicore.proto"], &["proto"])?;
 
     tonic_build::compile_protos("proto/crawler.proto")?;
     tonic_build::compile_protos("proto/health.proto")?;
 
+    Ok(())
+}
+
+#[cfg(not(feature = "litemode"))]
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }

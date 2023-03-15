@@ -4,6 +4,12 @@ The A11yWatch Command Line Interface. View the [cli-docs](https://docs.a11ywatch
 
 ## Installation
 
+1. `cargo install a11ywatch_cli`
+
+Optional:
+
+If you are using Lite mode you can add the feature flag `grpc` to compile protoc and tonic.
+
 [Protoc](https://grpc.io/docs/protoc-installation/) is required to compile. Vendoring OpenSSL is available by using the feature flag `dist-vendor` upon install ex: `cargo install --path . --features dist-vendor`. The flag is also available following [RTN Consuming](https://github.com/a11ywatch/rust-to-npm) for node installs via npm.
 
 ### Linux
@@ -111,7 +117,7 @@ a11ywatch --set-cv-url https://$myvcvname.cognitiveservices.azure.com/
 Example options and commands `a11ywatch -h`:
 
 ```sh
-a11ywatch_cli 0.8.45
+a11ywatch_cli 0.9.0
 j-mendez <jeff@a11ywatch.com>
 A11yWatch web accessibility CLI.
 
@@ -178,6 +184,10 @@ SUBCOMMANDS:
 ### Supported Architectures
 
 Mac, linux, and Windows.
+
+## Features
+
+1. `grpc` - use gRPC to connect to the litemode instance.
 
 ## Help
 
