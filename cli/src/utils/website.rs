@@ -1,7 +1,9 @@
-use crate::rpc::client::apicore::Page;
-use crate::utils::{Issue, IssueInfo};
-
 use serde::{Deserialize, Serialize};
+
+#[cfg(feature = "litemode")]
+use crate::rpc::client::apicore::Page;
+
+use crate::utils::{Issue, IssueInfo};
 
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct LightHouse {
@@ -9,6 +11,7 @@ pub struct LightHouse {
     pub json: String,
 }
 
+#[cfg(feature = "litemode")]
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct PageLoadTime {
     pub duration: i32,
@@ -17,6 +20,15 @@ pub struct PageLoadTime {
     pub color: String,
 }
 
+#[cfg(not(feature = "litemode"))]
+#[derive(Deserialize, Serialize, Debug, Default, Clone)]
+pub struct PageLoadTime {
+    pub duration: i32,
+    #[serde(rename = "durationFormated")]
+    pub duration_formated: String,
+}
+
+#[cfg(feature = "litemode")]
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct Website {
     /// target url
@@ -40,6 +52,26 @@ pub struct Website {
     pub last_scan_date: Option<String>,
 }
 
+#[cfg(not(feature = "litemode"))]
+#[derive(Deserialize, Serialize, Debug, Default, Clone)]
+pub struct Website {
+    /// target url
+    pub url: String,
+    /// domain of the page
+    pub domain: String,
+    /// list of issues the website has
+    pub issues: Option<Vec<Issue>>,
+    /// is the website online
+    pub online: Option<bool>,
+    #[serde(rename = "issuesInfo")]
+    pub issues_info: Option<IssueInfo>,
+    #[serde(rename = "pageLoadTime")]
+    pub page_load_time: Option<PageLoadTime>,
+    #[serde(rename = "lastScanDate")]
+    pub last_scan_date: Option<String>,
+}
+
+#[cfg(feature = "litemode")]
 /// convert to website from page
 impl From<Page> for Website {
     fn from(page: Page) -> Self {

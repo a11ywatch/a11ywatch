@@ -11,6 +11,7 @@ pub mod options;
 pub mod rpc;
 pub mod utils;
 
+#[cfg(feature = "litemode")]
 #[macro_use]
 extern crate lazy_static;
 
