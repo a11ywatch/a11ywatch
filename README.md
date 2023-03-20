@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>A11yWatch</h1>
+  <h1>A11yWatch Lite</h1>
   <p>
     <strong>The fast, precise, and sophisticated web accessibility automation tool for staying inclusive</strong>
   </p>
