@@ -10,6 +10,7 @@ services:
       - ../../a11ywatch-web/next.config.js:/app/next.config.js
       - ../../a11ywatch-web/tailwind.config.js:/app/tailwind.config.js
       - ../../a11ywatch-web/public:/app/public
+      - ../../a11ywatch-web/locales:/app/locales
     ports:
       - "3000:3000"
     environment:
@@ -17,13 +18,10 @@ services:
       - WEB_SOCKET_URL=${WEB_SOCKET_URL:-ws://localhost:3280/graphql}
       - NODE_ENV=${NODE_ENV:-development}
       - STRIPE_KEY=${STRIPE_KEY_WEB}
-      - INTERCOM_APPID=${INTERCOM_APPID}
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
       - GITHUB_TOKEN=${GITHUB_TOKEN}
-      - CRISP_WEBSITE_ID=${CRISP_WEBSITE_ID}
       - DOCKER_CONTAINER=${DOCKER_CONTAINER:-true}
-      - NEXT_PUBLIC_REWARDS=${NEXT_PUBLIC_REWARDS}
     networks:
       - front-net
 
