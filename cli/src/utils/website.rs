@@ -94,9 +94,7 @@ impl From<Page> for Website {
                     .unwrap_or_default()
                     .skip_content_included,
             },
-            issues_fixed_by_cdn: issues_info.issues_fixed_by_cdn,
-            notice_count: issues_info.notice_count,
-            possible_issues_fixed_by_cdn: issues_info.possible_issues_fixed_by_cdn,
+            notice_count: issues_info.notice_count
         };
 
         website.issues_info = Some(issue_option);
