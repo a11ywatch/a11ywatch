@@ -61,6 +61,9 @@ pub enum Commands {
         #[clap(long)]
         /// disable stdout (useful for CI usage and large outputs)
         noout: bool,
+        /// store results as CSV
+        #[clap(short, long)]
+        csv: bool,
     },
     /// Site wide scan a website url for issues.
     CRAWL {
@@ -94,6 +97,9 @@ pub enum Commands {
         #[clap(long)]
         /// disable stdout (useful for CI usage and large outputs)
         noout: bool,
+        /// store results as CSV
+        #[clap(short, long)]
+        csv: bool,
     },
     /// Extract results in formats for platforms
     EXTRACT {

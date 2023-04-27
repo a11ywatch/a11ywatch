@@ -94,7 +94,7 @@ impl From<Page> for Website {
                     .unwrap_or_default()
                     .skip_content_included,
             },
-            notice_count: issues_info.notice_count
+            notice_count: issues_info.notice_count,
         };
 
         website.issues_info = Some(issue_option);

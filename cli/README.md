@@ -80,14 +80,18 @@ Actions:
 a11ywatch scan --url https://a11ywatch.com > results.json
 # scan a url and attempt to fix code based on recommendations [installs the fast ripgrep crate for search].
 a11ywatch scan --url https://a11ywatch.com --fix
+# scan and store results as csv to disk.
+a11ywatch scan --save --csv --url https://a11ywatch.com
 # scan a website multi page and pipe the stdout to a file.
 a11ywatch crawl --url https://a11ywatch.com > results.json
 # scan a website multi page and include subdomains.
 a11ywatch crawl --url https://a11ywatch.com -S > results.json
 # scan a website multi page and include subdomains and all TLD extensions.
 a11ywatch crawl --url https://a11ywatch.com -S -t > results.json
-# scan a website multi page and get results parsed as checklist
+# scan a website multi page and get results parsed as checklist.
 a11ywatch crawl --url https://a11ywatch.com -d -n -s && a11ywatch --results-parsed-list
+# crawl and store results as csv to disk.
+a11ywatch crawl --save --csv --url https://a11ywatch.com
 ```
 
 If you experience issues the `cargo install a11ywatch_cli` command, try running `rustup update stable` to make sure your cargo version is up to date.
@@ -117,7 +121,7 @@ a11ywatch --set-cv-url https://$myvcvname.cognitiveservices.azure.com/
 Example options and commands `a11ywatch -h`:
 
 ```sh
-a11ywatch_cli 0.9.0
+a11ywatch_cli 0.10.0
 j-mendez <jeff@a11ywatch.com>
 A11yWatch web accessibility CLI.
 

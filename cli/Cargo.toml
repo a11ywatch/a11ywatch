@@ -1,6 +1,6 @@
 [package]
 name = "a11ywatch_cli"
-version = "0.9.3"
+version = "0.10.1"
 authors = ["j-mendez <jeff@a11ywatch.com>"]
 description = "A11yWatch web accessibility CLI."
 repository = "https://github.com/a11ywatch/a11ywatch"
@@ -28,6 +28,7 @@ log = "0.4.17"
 os_info = { version = "3", default-features = false }
 openssl = { version = "0.10.45", optional = true }
 reqwest = { version = "^0.11.11", features = ["json", "brotli", "blocking"] }
+csv = "1.2.1"
 
 [build-dependencies]
 tonic-build = { version = "0.7.2", optional = true }

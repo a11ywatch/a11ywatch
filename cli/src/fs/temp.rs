@@ -141,7 +141,7 @@ impl TempFs {
         data
     }
 
-    /// set the api token to use for request
+    /// get the api token to use for request
     pub fn get_token(&self) -> String {
         if Path::new(&self.config_file).exists() {
             let file = File::open(&self.config_file).unwrap();
@@ -321,7 +321,7 @@ impl TempFs {
         Ok(())
     }
 
-    /// create compose frontend file is does not exist
+    /// write to a file json results
     pub fn save_results(&self, json: &serde_json::Value) -> std::io::Result<()> {
         self.build();
         let mut file = File::create(&self.results_file)?;
@@ -330,7 +330,17 @@ impl TempFs {
         Ok(())
     }
 
-    /// create compose frontend file is does not exist
+    /// write to a cwd csv results
+    pub fn save_csv_results(&self, buf: &[u8], file_name: &String) -> std::io::Result<()> {
+        self.build();
+        let mut file = File::create(file_name)?;
+
+        file.write_all(buf)?;
+
+        Ok(())
+    }
+
+    /// write to the github upload file
     pub fn save_github_results(&self, json: &serde_json::Value) -> std::io::Result<()> {
         self.build();
         let mut file = File::create(&self.results_github_file)?;

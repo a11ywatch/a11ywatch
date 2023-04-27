@@ -9,19 +9,20 @@ use std::collections::HashMap;
 use std::env;
 use std::time::Instant;
 
+/// single scan audit api results
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct ApiResult {
-    data: Option<Website>,
-    success: bool,
+    pub data: Option<Website>,
+    pub success: bool,
     message: String,
     code: i32,
 }
 
-// site wide crawl long job handling
+// site wide crawl results
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct CrawlApiResult {
-    data: Option<Vec<Website>>,
-    success: bool,
+    pub data: Option<Vec<Website>>,
+    pub success: bool,
     message: String,
     code: i32,
 }

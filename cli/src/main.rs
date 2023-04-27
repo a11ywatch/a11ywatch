@@ -31,6 +31,7 @@ use options::{Cli, Commands};
 use serde_json::json;
 use std::env;
 use std::io::{self, Write};
+use utils::{process_crawl_csv, process_csv};
 
 const INCLUDE_FRONTEND: &str = "INCLUDE_FRONTEND";
 const EXTERNAL: &str = "EXTERNAL";
@@ -144,6 +145,7 @@ fn main() {
             save,
             fix,
             noout,
+            csv,
         }) => {
             if *external {
                 env::set_var(EXTERNAL, external.to_string());
@@ -151,23 +153,53 @@ fn main() {
 
             let result = if *external && cfg!(feature = "grpc") {
                 commands::api::rest::ApiClient::scan_website(&url, &file_manager)
-             } else {
+            } else {
                 ApiClient::scan_website(&url, &file_manager)
-            }.unwrap_or_default();
+            }
+            .unwrap_or_default();
 
             let json_results = json!(&result);
-
-            if *save {
-                file_manager.save_results(&json_results).unwrap();
-            };
 
             if *fix {
                 fs::code_fix::apply_fix(&json_results);
             };
 
-            if !noout {
-                println!("{}", json_results)
-            };
+            if *csv {
+                // todo: pass in save and handle io store per iteration instead of holding all in memory
+                let csv_results = process_csv(&result);
+
+                if *save {
+                    file_manager.save_results(&json_results).unwrap();
+                    file_manager
+                        .save_csv_results(
+                            &csv_results,
+                            &format!(
+                                "{}-scan.csv",
+                                &url.replace(
+                                    if url.starts_with("https://") {
+                                        "https://"
+                                    } else {
+                                        "http://"
+                                    },
+                                    ""
+                                )
+                            ),
+                        )
+                        .unwrap();
+                };
+
+                if !noout {
+                    println!("{}", String::from_utf8(csv_results).unwrap())
+                };
+            } else {
+                if *save {
+                    file_manager.save_results(&json_results).unwrap();
+                };
+
+                if !noout {
+                    println!("{}", json_results)
+                };
+            }
         }
         Some(Commands::CRAWL {
             url,
@@ -180,13 +212,17 @@ fn main() {
             debug,
             noout,
             sitemap,
+            csv,
         }) => {
             if *external {
                 env::set_var(EXTERNAL, external.to_string());
             }
 
             if *debug {
-                env::set_var("RUST_LOG", "a11ywatch::rpc::client=debug,a11ywatch::commands::api::rest=debug");
+                env::set_var(
+                    "RUST_LOG",
+                    "a11ywatch::rpc::client=debug,a11ywatch::commands::api::rest=debug",
+                );
                 env_logger::init();
             }
 
@@ -201,20 +237,49 @@ fn main() {
                 )
             } else {
                 ApiClient::crawl_website(&url, subdomains, tld, norobo, &file_manager, sitemap)
-            }.unwrap_or_default();
+            }
+            .unwrap_or_default();
 
             let json_results = json!(result);
-
-            if *save {
-                TempFs::new().save_results(&json_results).unwrap();
-            };
 
             if *fix {
                 fs::code_fix::apply_fix(&json_results);
             };
 
-            if !noout {
-                println!("{}", json_results)
+            if *csv {
+                let csv_results = process_crawl_csv(&result);
+
+                if *save {
+                    TempFs::new().save_results(&json_results).unwrap();
+                    file_manager
+                        .save_csv_results(
+                            &csv_results,
+                            &format!(
+                                "{}-crawl.csv",
+                                &&url.replace(
+                                    if url.starts_with("https://") {
+                                        "https://"
+                                    } else {
+                                        "http://"
+                                    },
+                                    ""
+                                )
+                            ),
+                        )
+                        .unwrap();
+                };
+
+                if !noout {
+                    println!("{}", String::from_utf8(csv_results).unwrap())
+                };
+            } else {
+                if *save {
+                    TempFs::new().save_results(&json_results).unwrap();
+                };
+
+                if !noout {
+                    println!("{}", json_results)
+                };
             };
         }
         Some(Commands::EXTRACT { platform, list }) => {
