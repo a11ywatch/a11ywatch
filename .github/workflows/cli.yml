@@ -83,24 +83,8 @@ jobs:
         run: a11ywatch build -s --upgrade
         shell: bash
       - name: Run Server
-        run: a11ywatch start --standalone
+        run: a11ywatch start --standalone --local
         shell: bash
-      - name: Wait for Healthy Container
-        shell: bash
-        run: |
-          attempt=0
-
-          while [ $attempt -le 30 ]; do
-              attempt=$(( $attempt + 1 ))
-              echo "Waiting for server to be up (attempt: $attempt)..."
-              result=$(docker logs a11ywatch)
-              if grep "^Server ready" <<< $result; then
-                echo "A11yWatch ready!"
-                sleep 2
-                break
-              fi
-              sleep 0.3
-          done
       - name: Run Scan Single page
         run: a11ywatch scan -u https://a11ywatch.com
       - name: Run Crawl Multi Page
