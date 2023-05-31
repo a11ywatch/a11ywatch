@@ -1,9 +1,9 @@
 {
-  "openapi": "3.0.9",
+  "openapi": "3.0.21",
   "info": {
     "title": "A11ywatch Client",
-    "description": "The web accessibility tool built for scale.  For this sample, you can use the api key \"special-key\" to test the authorization filters",
-    "version": "0.6.61",
+    "description": "The web accessibility tool built for scale.",
+    "version": "0.7.66",
     "termsOfService": "https://a11ywatch.com/terms-of-service",
     "contact": {
       "name": "API Support",
@@ -854,7 +854,10 @@
             "type": "string"
           },
           "issues": {
-            "$ref": "#/components/schemas/PageIssue"
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PageIssue"
+            }
           },
           "issuesInfo": {
             "$ref": "#/components/schemas/IssuesInfo"
@@ -1027,7 +1030,7 @@
       "PageLoadTime": {
         "properties": {
           "duration": {
-            "type": "int32"
+            "type": "number"
           },
           "durationFormated": {
             "type": "string"
