@@ -2,7 +2,6 @@ use serde::{Deserialize, Serialize};
 
 #[cfg(feature = "litemode")]
 use crate::rpc::client::apicore::Page;
-
 use crate::utils::{Issue, IssueInfo};
 
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]

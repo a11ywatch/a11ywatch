@@ -26,13 +26,13 @@ jobs:
       - name: Rust to NPM CLI Install
         uses: baptiste0928/cargo-install@v1
         with:
-          crate: rust-to-npm
-          version: "0.4.3"
+          crate: rust-to-npm-cli
+          version: "0.4.12"
       - name: RTN Deploy to Crates.io and NPM
         run: |
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           cd ./cli
-          rust-to-npm deploy -b -n a11ywatch-cli
+          rust-to-npm-cli deploy -b -n a11ywatch-cli
         shell: bash
         env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
