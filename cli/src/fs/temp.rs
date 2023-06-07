@@ -352,11 +352,14 @@ impl TempFs {
     /// make sure the tmp directory is created for the app
     fn ensure_temp_dir(tmp_dir: &str, app_dir: &str) -> std::io::Result<()> {
         if !Path::new(tmp_dir).exists() {
-            create_dir(tmp_dir)
-                .unwrap_or(println!("tmp a11ywatch directory create failed skipping."));
+            match create_dir(tmp_dir) {
+                _ => ()
+            }
         }
         if !Path::new(&app_dir).exists() {
-            create_dir(app_dir).unwrap_or(println!("app directory create failed skipping."));
+            match create_dir(app_dir) {
+                _ => ()
+            }
         }
         Ok(())
     }

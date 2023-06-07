@@ -45,6 +45,14 @@ fn main() {
     let cv_token = cli.set_cv_token.unwrap_or_default();
     let cv_url = cli.set_cv_url.unwrap_or_default();
 
+    if cli.clear_token {
+        file_manager.set_token(&Default::default()).unwrap();
+    }
+
+    if cli.clear_cv_token {
+        file_manager.set_cv_token(&Default::default()).unwrap();
+    }
+
     if !api_token.is_empty() {
         file_manager.set_token(&api_token).unwrap();
         io::stdout()

@@ -11,9 +11,15 @@ pub struct Cli {
     /// Set the API token to use for requests
     #[clap(short, long)]
     pub set_token: Option<String>,
+    /// Clear the API token to use for requests
+    #[clap(short, long)]
+    pub clear_token: bool,
     /// Set the Computer Vision API token to use for request
     #[clap(long)]
     pub set_cv_token: Option<String>,
+    /// Clear the Computer Vision API token to use for request
+    #[clap(long)]
+    pub clear_cv_token: bool,
     /// Set the Computer Vision API endpoint to use for request
     #[clap(long)]
     pub set_cv_url: Option<String>,

@@ -113,7 +113,7 @@ PAGESPEED_API_KEY="REPLACE_WITH_PAGESPEED_API_KEY"
 You can also use the CLI to configure your Computer Vision creditials.
 
 ```sh
-# replace $mycv_token and $myvcvname with your project name and CV API url
+# replace $mycv_token and $myvcvname with your project name and ComputerVision API url
 a11ywatch --set-cv-token $mycv_token
 a11ywatch --set-cv-url https://$myvcvname.cognitiveservices.azure.com/
 ```
@@ -121,7 +121,7 @@ a11ywatch --set-cv-url https://$myvcvname.cognitiveservices.azure.com/
 Example options and commands `a11ywatch -h`:
 
 ```sh
-a11ywatch_cli 0.10.0
+a11ywatch_cli 0.10.3
 j-mendez <jeff@a11ywatch.com>
 A11yWatch web accessibility CLI.
 
@@ -129,6 +129,12 @@ USAGE:
     a11ywatch [OPTIONS] [SUBCOMMAND]
 
 OPTIONS:
+    -c, --clear-token
+            Clear the API token to use for requests
+
+        --clear-cv-token
+            Clear the Computer Vision API token to use for request
+
     -f, --find-results
             Log file results path
 
@@ -164,7 +170,7 @@ OPTIONS:
             Get results of the github html message
 
     -s, --set-token <SET_TOKEN>
-            Set the API token to use for request
+            Set the API token to use for requests
 
         --set-cv-token <SET_CV_TOKEN>
             Set the Computer Vision API token to use for request
@@ -176,13 +182,13 @@ OPTIONS:
             Print version information
 
 SUBCOMMANDS:
-    build      Build the project on the local machine [defaults to docker runtime]
+    build      Build A11yWatch Lite on the local machine [defaults to docker runtime]
     crawl      Site wide scan a website url for issues
     extract    Extract results in formats for platforms
     help       Print this message or the help of the given subcommand(s)
     scan       Single page scan a website url for issues
-    start      Start the application on the local machine [defaults to docker runtime]
-    stop       Stop the project on the local machine [defaults to docker runtime]
+    start      Start A11yWatch Lite on the local machine [defaults to docker runtime]
+    stop       Stop A11yWatch Lite on the local machine [defaults to docker runtime]
 ```
 
 ### Supported Architectures
