@@ -92,7 +92,7 @@ The sidecar provides utility methods and launches the system locally for integra
 
 ## Development
 
-View the [contributing docs](https://docs.a11ywatch.com/documentation/self-hosting-start/#docker) to get started.
+View the [contributing docs](https://docs.a11ywatch.com/documentation/contributing/) to get started.
 
 ## [Benchmarks](./benchmarks)
 
