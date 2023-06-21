@@ -1,6 +1,6 @@
 [package]
 name = "a11ywatch_cli"
-version = "0.10.3"
+version = "0.10.4"
 authors = ["j-mendez <jeff@a11ywatch.com>"]
 description = "A11yWatch web accessibility CLI."
 repository = "https://github.com/a11ywatch/a11ywatch"
