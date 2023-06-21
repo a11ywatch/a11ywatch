@@ -81,9 +81,9 @@ pub(crate) fn extract_issues_count(file_manager: &TempFs) -> (usize, usize, usiz
         let pages = data.as_array().unwrap();
 
         for page in pages {
-            let errors = &page["issues_info"]["warning_count"];
+            let errors = &page["issuesInfo"]["errorCount"];
             let errors: usize = format!("{}", errors).parse().unwrap_or_default();
-            let warnings = &page["issues_info"]["warning_count"];
+            let warnings = &page["issuesInfo"]["warningCount"];
             let warnings: usize = format!("{}", warnings).parse().unwrap_or_default();
 
             error_count += errors;
@@ -92,9 +92,9 @@ pub(crate) fn extract_issues_count(file_manager: &TempFs) -> (usize, usize, usiz
     }
 
     if data.is_object() {
-        let errors = &data["issues_info"]["warning_count"];
+        let errors = &data["issuesInfo"]["errorCount"];
         let errors: usize = format!("{}", errors).parse().unwrap_or_default();
-        let warnings = &data["issues_info"]["warning_count"];
+        let warnings = &data["issuesInfo"]["warningCount"];
         let warnings: usize = format!("{}", warnings).parse().unwrap_or_default();
 
         error_count += errors;
@@ -120,7 +120,7 @@ pub(crate) fn get_report_url_errors(file_manager: &TempFs) -> String {
         url_count = pages.len();
 
         for page in pages {
-            let errors = &page["issues_info"]["error_count"];
+            let errors = &page["issuesInfo"]["errorCount"];
             let errors: usize = format!("{}", errors).parse().unwrap_or_default();
 
             let s = if errors == 1 { "" } else { "s" };
@@ -133,6 +133,21 @@ pub(crate) fn get_report_url_errors(file_manager: &TempFs) -> String {
             if errors == 0 {
                 pages_passed += 1;
             }
+        }
+    } else if data.is_object() {
+        url_count = 1;
+        let errors = &data["issuesInfo"]["errorCount"];
+        let errors: usize = format!("{}", errors).parse().unwrap_or_default();
+
+        let s = if errors == 1 { "" } else { "s" };
+        url_list.push_str(&format!(
+            " > {} - {} error{s}\n",
+            &data["url"].as_str().unwrap_or_default(),
+            &errors
+        ));
+
+        if errors == 0 {
+            pages_passed += 1;
         }
     }
 
