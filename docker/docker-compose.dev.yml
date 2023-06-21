@@ -3,14 +3,14 @@ services:
   web:
     container_name: web
     build:
-      context: ../../a11ywatch-web
+      context: ../../a11ywatch-web-lite
       dockerfile: Dockerfile.dev
     volumes:
-      - ../../a11ywatch-web/src:/app/src
-      - ../../a11ywatch-web/next.config.js:/app/next.config.js
-      - ../../a11ywatch-web/tailwind.config.js:/app/tailwind.config.js
-      - ../../a11ywatch-web/public:/app/public
-      - ../../a11ywatch-web/locales:/app/locales
+      - ../../a11ywatch-web-lite/src:/app/src
+      - ../../a11ywatch-web-lite/next.config.js:/app/next.config.js
+      - ../../a11ywatch-web-lite/tailwind.config.js:/app/tailwind.config.js
+      - ../../a11ywatch-web-lite/public:/app/public
+      - ../../a11ywatch-web-lite/locales:/app/locales
     ports:
       - "3000:3000"
     environment:
