@@ -11,6 +11,9 @@
   </p>
 </div>
 
+[![en](https://img.shields.io/badge/lang-en-white.svg)](README.md)
+[![ja](https://img.shields.io/badge/lang-ja-red.svg)](README.ja.md)
+[![es](https://img.shields.io/badge/lang-es-teal.svg)](README.es.md)
 
 A11yWatch Lite is a previous and open-source version of A11yWatch (a paid, hosted Web accessibility and Vitals Tool). It was the first version of our software, and has been downloaded a lot!
 
@@ -139,7 +142,6 @@ The system can handle up to 1 million pages under 1 min with 8gb of memory on li
 ## [Integration Examples](https://github.com/a11ywatch/a11ywatch-examples)
 
 Some examples on how to integrate with the system. Learn how to use the [react-a11ywatch-js](https://github.com/a11ywatch/react-a11ywatch-js) hooks and components lib to build custom products or tools.
-
 
 ## Support
 
