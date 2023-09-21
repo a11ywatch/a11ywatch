@@ -17,6 +17,12 @@ pub struct Cli {
     /// Set the Computer Vision API token to use for request
     #[clap(long)]
     pub set_cv_token: Option<String>,
+    /// Enable recording audits to a directory
+    #[clap(long)]
+    pub set_recording: Option<String>,
+    /// Clear the recording preventing storing video
+    #[clap(long)]
+    pub clear_recording: bool,
     /// Clear the Computer Vision API token to use for request
     #[clap(long)]
     pub clear_cv_token: bool,

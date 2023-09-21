@@ -47,6 +47,7 @@ pub(crate) trait Fs {
     fn set_token(&self) {}
     fn set_cv_url(&self) {}
     fn set_cv_token(&self) {}
+    fn set_recording(&self) {}
     fn ensure_temp_dir() {}
     fn create_compose_backend_file(&self, standalone: &bool);
     fn create_compose_frontend_file(&self);
@@ -189,6 +190,25 @@ impl TempFs {
         Ok(())
     }
 
+    /// Enable/disable recording audits to a directory
+    pub fn set_recording(&self, recording: &String) -> std::io::Result<()> {
+        self.build();
+        let file = File::open(&self.config_file)?;
+        let mut prev_json: Value = from_reader(&file)?;
+
+        let json = json!({ "pagemind_recording": &recording });
+
+        merge(&mut prev_json, &json);
+
+        let mut file = File::create(&self.config_file)?;
+
+        file.write_all(&prev_json.to_string().as_bytes())?;
+
+        self.create_env_file().unwrap();
+
+        Ok(())
+    }
+
     /// set the Computer Vision url to use for request
     pub fn set_cv_url(&self, u: &String) -> std::io::Result<()> {
         self.build();
@@ -233,15 +253,18 @@ impl TempFs {
 
         let cv_token = prev_json["cv_token"].as_str().unwrap_or_default();
         let cv_url = prev_json["cv_url"].as_str().unwrap_or_default();
+        let pagemind_recording = prev_json["pagemind_recording"].as_str().unwrap_or_default();
 
         // custom API keys
         let c_v_s_k = "COMPUTER_VISION_SUBSCRIPTION_KEY";
         let c_v_e = "COMPUTER_VISION_ENDPOINT";
+        let p_r = "PAGEMIND_RECORD";
 
         // keep track of keys already wrote to file.
         let mut wrote_c_v_s_k = false;
         let mut wrote_c_v_e = false;
         let mut wrote_crawler = false;
+        let mut wrote_p_v = false;
 
         let mut writer: LineWriter<File> = LineWriter::new(file_tmp);
         let reader = BufReader::new(&file);
@@ -259,6 +282,9 @@ impl TempFs {
                 } else if !cv_url.is_empty() && item.contains(&c_v_e) {
                     writer.write_all(format!("{c_v_e}={}\n", cv_url).to_string().as_bytes())?;
                     wrote_c_v_e = true;
+                } else if !pagemind_recording.is_empty() && item.contains(&p_r) {
+                    writer.write_all(format!("{p_r}={}\n", pagemind_recording).to_string().as_bytes())?;
+                    wrote_p_v = true;
                 } else {
                     writer.write_all(format!("{}\n", item).to_string().as_bytes())?;
                 };
@@ -271,12 +297,20 @@ impl TempFs {
 
         if !cv_url.is_empty() && !wrote_c_v_e {
             writer.write_all(
-                format!("COMPUTER_VISION_ENDPOINT={}\n", cv_url)
+                format!("{c_v_e}={}\n", cv_url)
                     .to_string()
                     .as_bytes(),
             )?;
         };
 
+        if !pagemind_recording.is_empty() && !wrote_p_v {
+            writer.write_all(
+                format!("{p_r}={}\n", pagemind_recording)
+                    .to_string()
+                    .as_bytes(),
+            )?;
+        };
+        
         if !wrote_crawler {
             // m1 max
             if cfg!(all(

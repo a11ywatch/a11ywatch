@@ -112,18 +112,19 @@ PAGESPEED_API_KEY="REPLACE_WITH_PAGESPEED_API_KEY"
 PAGEMIND_RECORD=
 ```
 
-You can also use the CLI to configure your Computer Vision creditials.
+You can also use the CLI to configure settings like Computer Vision creditials, Recording Video, and more.
 
 ```sh
 # replace $mycv_token and $myvcvname with your project name and ComputerVision API url
 a11ywatch --set-cv-token $mycv_token
 a11ywatch --set-cv-url https://$myvcvname.cognitiveservices.azure.com/
+a11ywatch --set-recording ./recordings
 ```
 
 Example options and commands `a11ywatch -h`:
 
 ```sh
-a11ywatch_cli 0.10.3
+a11ywatch_cli 0.10.7
 j-mendez <jeff@a11ywatch.com>
 A11yWatch web accessibility CLI.
 
@@ -136,6 +137,9 @@ OPTIONS:
 
         --clear-cv-token
             Clear the Computer Vision API token to use for request
+
+        --clear-recording
+            Clear the recording preventing storing video
 
     -f, --find-results
             Log file results path
@@ -179,6 +183,9 @@ OPTIONS:
 
         --set-cv-url <SET_CV_URL>
             Set the Computer Vision API endpoint to use for request
+
+        --set-recording <SET_RECORDING>
+            Enable recording audits to a directory
 
     -V, --version
             Print version information

@@ -44,6 +44,7 @@ fn main() {
     let api_token = cli.set_token.unwrap_or_default();
     let cv_token = cli.set_cv_token.unwrap_or_default();
     let cv_url = cli.set_cv_url.unwrap_or_default();
+    let p_r = cli.set_recording.unwrap_or_default();
 
     if cli.clear_token {
         file_manager.set_token(&Default::default()).unwrap();
@@ -51,6 +52,10 @@ fn main() {
 
     if cli.clear_cv_token {
         file_manager.set_cv_token(&Default::default()).unwrap();
+    }
+
+    if cli.clear_recording {
+        file_manager.set_recording(&Default::default()).unwrap();
     }
 
     if !api_token.is_empty() {
@@ -66,6 +71,10 @@ fn main() {
 
     if !cv_url.is_empty() {
         file_manager.set_cv_url(&cv_url).unwrap();
+    }
+
+    if !p_r.is_empty() {
+        file_manager.set_recording(&p_r).unwrap();
     }
 
     if cli.find_results {
