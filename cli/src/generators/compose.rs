@@ -38,10 +38,11 @@ services:
     ports:
       - 50052
     environment:
-      - PAGESPEED_API_KEY=${PAGESPEED_API_KEY:-""}
       - AI_DISABLED=${AI_DISABLED:-false}
       - GRPC_HOST_MAV=mav:50053
       - GRPC_HOST_CORE=api:50051
+      - PAGEMIND_RECORD=${PAGEMIND_RECORD}
+      - PAGESPEED_API_KEY=${PAGESPEED_API_KEY:-""}
     networks:
       - back-net
 

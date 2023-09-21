@@ -108,6 +108,8 @@ Example of a `.env` file below:
 COMPUTER_VISION_SUBSCRIPTION_KEY="REPLACE_WITH_KEY"
 COMPUTER_VISION_ENDPOINT="REPLACE_WITH_ENDPOINT"
 PAGESPEED_API_KEY="REPLACE_WITH_PAGESPEED_API_KEY"
+# set to a directory or true in order to enable recordings in litemode
+PAGEMIND_RECORD=
 ```
 
 You can also use the CLI to configure your Computer Vision creditials.
