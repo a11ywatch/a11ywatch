@@ -28,7 +28,15 @@ impl Start {
             let stdout = &stdout.trim().replace("\n", "");
             let node_dir_base = Path::new(&stdout);
             let node_dir = node_dir_base.join("@a11ywatch/a11ywatch");
+
+            // make sure file exist always
+            if !Path::new(&node_dir).exists() {
+                println!("Installing A11yWatch Lite...");
+                crate::Build::process(&local, &standalone);
+            }
+
             let node_dir = node_dir.display();
+
 
             let runtime: &str = match env::var(BUN) {
                 Ok(val) => {
