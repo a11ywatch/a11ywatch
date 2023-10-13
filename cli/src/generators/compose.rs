@@ -28,6 +28,7 @@ services:
       - REDIS_CLIENT=${REDIS_CLIENT:-redis://redis:6379}
       - REDIS_HOST=redis
       - DOCKER_CONTAINER=${DOCKER_CONTAINER:-true}
+      - A11YWATCH_UA=${A11YWATCH_UA:-""}
     networks:
       - back-net
       - front-net

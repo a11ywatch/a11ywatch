@@ -190,6 +190,25 @@ impl TempFs {
         Ok(())
     }
 
+    /// set the User-Agent for the request
+    pub fn set_ua(&self, ua: &String) -> std::io::Result<()> {
+        self.build();
+        let file = File::open(&self.config_file)?;
+        let mut prev_json: Value = from_reader(&file)?;
+
+        let json = json!({ "ua": &ua });
+
+        merge(&mut prev_json, &json);
+
+        let mut file = File::create(&self.config_file)?;
+
+        file.write_all(&prev_json.to_string().as_bytes())?;
+
+        self.create_env_file().unwrap();
+
+        Ok(())
+    }
+
     /// Enable/disable recording audits to a directory
     pub fn set_recording(&self, recording: &String) -> std::io::Result<()> {
         self.build();
@@ -254,17 +273,20 @@ impl TempFs {
         let cv_token = prev_json["cv_token"].as_str().unwrap_or_default();
         let cv_url = prev_json["cv_url"].as_str().unwrap_or_default();
         let pagemind_recording = prev_json["pagemind_recording"].as_str().unwrap_or_default();
+        let app_agent = prev_json["ua"].as_str().unwrap_or_default();
 
         // custom API keys
         let c_v_s_k = "COMPUTER_VISION_SUBSCRIPTION_KEY";
         let c_v_e = "COMPUTER_VISION_ENDPOINT";
         let p_r = "PAGEMIND_RECORD";
+        let a_ua = "A11YWATCH_UA";
 
         // keep track of keys already wrote to file.
         let mut wrote_c_v_s_k = false;
         let mut wrote_c_v_e = false;
         let mut wrote_crawler = false;
         let mut wrote_p_v = false;
+        let mut wrote_a_ua = false;
 
         let mut writer: LineWriter<File> = LineWriter::new(file_tmp);
         let reader = BufReader::new(&file);
@@ -285,11 +307,18 @@ impl TempFs {
                 } else if !pagemind_recording.is_empty() && item.contains(&p_r) {
                     writer.write_all(format!("{p_r}={}\n", pagemind_recording).to_string().as_bytes())?;
                     wrote_p_v = true;
+                } else if !app_agent.is_empty() && item.contains(&a_ua) {
+                    writer.write_all(format!("{a_ua}={}\n", app_agent).to_string().as_bytes())?;
+                    wrote_a_ua = true;
                 } else {
                     writer.write_all(format!("{}\n", item).to_string().as_bytes())?;
                 };
             }
         }
+
+        if !app_agent.is_empty() && !wrote_a_ua {
+            writer.write_all(format!("{a_ua}={}\n", app_agent).to_string().as_bytes())?;
+        };
 
         if !cv_token.is_empty() && !wrote_c_v_s_k {
             writer.write_all(format!("{c_v_s_k}={}\n", cv_token).to_string().as_bytes())?;
