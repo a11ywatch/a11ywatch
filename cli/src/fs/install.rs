@@ -14,7 +14,8 @@ pub fn assure_module_exist(module: &str) {
             .args([
                 "install",
                 module,
-                if ripgrep { "--vers 13.0.0" } else { "" },
+                if ripgrep { "--vers" } else { "" },
+                if ripgrep { "13.0.0" } else { "" },
             ])
             .status()
             .expect("Failed to execute cargo install {module}");
