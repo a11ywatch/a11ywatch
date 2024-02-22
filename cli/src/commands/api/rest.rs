@@ -15,7 +15,7 @@ pub struct ApiResult {
     pub data: Option<Website>,
     pub success: bool,
     message: String,
-    code: i32,
+    code: Option<i32>,
 }
 
 // site wide crawl results
@@ -24,7 +24,7 @@ pub struct CrawlApiResult {
     pub data: Option<Vec<Website>>,
     pub success: bool,
     message: String,
-    code: i32,
+    code: Option<i32>,
 }
 
 /// crawl form
@@ -107,6 +107,7 @@ impl ApiClient {
         };
 
         let start = Instant::now();
+        
         let resp: Vec<ApiResult> = client?
             .post(&request_destination)
             .bearer_auth(token)

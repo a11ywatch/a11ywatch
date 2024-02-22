@@ -305,7 +305,11 @@ impl TempFs {
                     writer.write_all(format!("{c_v_e}={}\n", cv_url).to_string().as_bytes())?;
                     wrote_c_v_e = true;
                 } else if !pagemind_recording.is_empty() && item.contains(&p_r) {
-                    writer.write_all(format!("{p_r}={}\n", pagemind_recording).to_string().as_bytes())?;
+                    writer.write_all(
+                        format!("{p_r}={}\n", pagemind_recording)
+                            .to_string()
+                            .as_bytes(),
+                    )?;
                     wrote_p_v = true;
                 } else if !app_agent.is_empty() && item.contains(&a_ua) {
                     writer.write_all(format!("{a_ua}={}\n", app_agent).to_string().as_bytes())?;
@@ -325,11 +329,7 @@ impl TempFs {
         };
 
         if !cv_url.is_empty() && !wrote_c_v_e {
-            writer.write_all(
-                format!("{c_v_e}={}\n", cv_url)
-                    .to_string()
-                    .as_bytes(),
-            )?;
+            writer.write_all(format!("{c_v_e}={}\n", cv_url).to_string().as_bytes())?;
         };
 
         if !pagemind_recording.is_empty() && !wrote_p_v {
@@ -339,7 +339,7 @@ impl TempFs {
                     .as_bytes(),
             )?;
         };
-        
+
         if !wrote_crawler {
             // m1 max
             if cfg!(all(
@@ -416,12 +416,12 @@ impl TempFs {
     fn ensure_temp_dir(tmp_dir: &str, app_dir: &str) -> std::io::Result<()> {
         if !Path::new(tmp_dir).exists() {
             match create_dir(tmp_dir) {
-                _ => ()
+                _ => (),
             }
         }
         if !Path::new(&app_dir).exists() {
             match create_dir(app_dir) {
-                _ => ()
+                _ => (),
             }
         }
         Ok(())

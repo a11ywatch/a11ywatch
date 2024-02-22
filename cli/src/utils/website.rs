@@ -10,24 +10,15 @@ pub struct LightHouse {
     pub json: String,
 }
 
-#[cfg(feature = "litemode")]
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct PageLoadTime {
-    pub duration: i32,
+    pub duration: u32,
     #[serde(rename = "durationFormated")]
     pub duration_formated: String,
+    #[cfg(feature = "litemode")]
     pub color: String,
 }
 
-#[cfg(not(feature = "litemode"))]
-#[derive(Deserialize, Serialize, Debug, Default, Clone)]
-pub struct PageLoadTime {
-    pub duration: i32,
-    #[serde(rename = "durationFormated")]
-    pub duration_formated: String,
-}
-
-#[cfg(feature = "litemode")]
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct Website {
     /// target url
@@ -38,30 +29,17 @@ pub struct Website {
     pub issues: Option<Vec<Issue>>,
     /// is the website online
     pub online: Option<bool>,
+    #[cfg(feature = "litemode")]
     /// lighthouse report data
     pub insight: Option<LightHouse>,
     /// js cdn connected on domain
+    #[cfg(feature = "litemode")]
     #[serde(rename = "cdnConnected")]
     pub cdn_connected: Option<bool>,
-    #[serde(rename = "issuesInfo")]
-    pub issues_info: Option<IssueInfo>,
-    #[serde(rename = "pageLoadTime")]
-    pub page_load_time: Option<PageLoadTime>,
-    #[serde(rename = "lastScanDate")]
-    pub last_scan_date: Option<String>,
-}
-
-#[cfg(not(feature = "litemode"))]
-#[derive(Deserialize, Serialize, Debug, Default, Clone)]
-pub struct Website {
-    /// target url
-    pub url: String,
-    /// domain of the page
-    pub domain: String,
-    /// list of issues the website has
-    pub issues: Option<Vec<Issue>>,
-    /// is the website online
-    pub online: Option<bool>,
+    /// the user identifier
+    #[cfg(not(feature = "litemode"))]
+    #[serde(rename = "userId")]
+    pub user_id: Option<u32>,
     #[serde(rename = "issuesInfo")]
     pub issues_info: Option<IssueInfo>,
     #[serde(rename = "pageLoadTime")]

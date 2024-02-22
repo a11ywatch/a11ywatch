@@ -37,7 +37,6 @@ impl Start {
 
             let node_dir = node_dir.display();
 
-
             let runtime: &str = match env::var(BUN) {
                 Ok(val) => {
                     if val == "true" {
